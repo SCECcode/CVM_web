@@ -1,0 +1,25 @@
+## run as installer of the system stack
+#   
+# to be run on remote host system(linux)
+
+## build UCVM 
+./setup/run-build-UCVM
+./setup/run-build-UCVM_web
+
+git clone git@github.com:meihuisu/ucvm_plotly_web.git plotly_profile
+
+source model/UCVM/conf/ucvm_env.sh
+
+conda install -y numpy matplotlib basemap basemap-data-hires
+
+cd $UCVM_INSTALL_PATH
+git clone https://github.com/SCECcode/ucvm_plotting.git
+cd ucvm_plotting
+
+##? sudo /usr/local/share/anaconda2/bin/pip install dist/ucvm_plotting-0.0.4.tar.gz
+sudo /usr/local/share/anaconda2/bin/pip install dist/ucvm_plotting-0.0.4.tar.gz
+
+## copy epsg from /home/mei/anaconda2/share/proj to $UCVM_INSTALL_PATH/lib/proj/share/proj 
+## /var/www/html/UCVM_web_test/web/model/UCVM_TARGET/lib/proj/share/proj
+## hum.. /usr/local/share/anaconda2/share/proj  
+    

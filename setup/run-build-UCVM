@@ -1,0 +1,60 @@
+#/bin/bash
+
+source setup/setup_UCVM.sh
+
+mkdir -p $UCVM_INSTALL_PATH
+
+mkdir -p $TOP_UCVM_DIR/model
+cd $TOP_UCVM_DIR/model
+
+#git clone https://github.com/SCECcode/ucvm.git UCVM
+#git clone https://github.com/SCECcode/ucvm.git -b withSCPBR UCVM
+git clone https://github.com/SCECcode/ucvm.git -b withSFCVM UCVM
+
+cd $UCVM_SRC_PATH/largefiles
+if [ "$(uname)" == "Darwin" ]; then
+##export CC=gcc
+./get_largefiles.py -m cvms,cvms5,cvmsi
+else
+./get_largefiles.py -m sfcvm,cca,cs242
+#./get_largefiles.py -m wfcvm,cca,cencal,cvms,cvmsi,cvms5,cvmh,ivlsu,cvlsu,albacore,sjfz,cvmhlabn,cvmhsgbn,cvmhvbn,cvmhibbn,cvmhrbn,cvmhsbbn,cvmhsbcbn,cvmhsmbn,cvmhstbn
+fi
+
+if [ "$(uname)" != "Darwin" ]; then
+  cd $UCVM_SRC_PATH/largefiles; ./check_largefiles_md5.py
+fi
+cd $UCVM_SRC_PATH/largefiles; ./stage_largefiles.py
+
+## because of the new PROJ/ucvm_setup.py
+unset PROJ_LIB
+
+export CC=gcc10-gcc
+export CXX=gcc10-g++
+cd $UCVM_SRC_PATH
+./ucvm_setup.py -a -d -p $UCVM_INSTALL_PATH &> ucvm_setup_install.log
+
+if [ "$(uname)" == "Darwin" ]; then
+## proj4 can not handle this
+  unset PROJ_LIB
+fi
+
+cd $UCVM_SRC_PATH; make runcheck
+
+## make sure everything in installed model is globally readable
+chmod -R +r $UCVM_INSTALL_PATH/model
+
+## only if it is on my local mac
+if [ "$(uname)" == "Darwin" ]; then
+    source conf/ucvm_env.sh
+## anaconda2 needs this but breaks proj4
+##??    export PROJ_LIB=/Users/mei/anaconda2/share/proj
+##
+    conda install -y numpy matplotlib basemap basemap-data-hires
+    cd $UCVM_INSTALL_PATH
+    git clone https://github.com/SCECcode/ucvm_plotting.git
+    cd ucvm_plotting
+    ./unpack-dist
+fi
+
+echo "..EXITING.."
+exit

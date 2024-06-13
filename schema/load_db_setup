@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p /home/postgres/CVM
+cp -Rv /app/schema/data /home/postgres/CVM/
+cp -Rv /app/schema/sql  /home/postgres/CVM/

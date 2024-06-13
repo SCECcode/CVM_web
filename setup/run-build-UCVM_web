@@ -1,0 +1,13 @@
+#!/bin/bash
+
+## run at top level
+
+source setup/setup_UCVM_web.sh
+
+chmod og+rw $TOP_UCVM_WEB_DIR/result
+
+## make sure the datafile are readable by web user
+
+chmod -R og+r $UCVM_WEB_INSTALL_PATH/model
+
+exit
