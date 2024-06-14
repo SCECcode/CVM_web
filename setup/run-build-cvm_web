@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./setup/setup_cvm.h
+
+## make sure the result are readable by web user
+chmod og+rw $TOP_CVM_WEB_DIR/result
+
+## make sure the ucvm's datafile are readable by web user
+chmod -R og+r $UCVM_INSTALL_PATH/model
