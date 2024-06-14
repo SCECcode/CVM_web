@@ -13,12 +13,8 @@ RUN yum install -y httpd && \
 	amazon-linux-extras install -y php7.2 && \
 	yum install -y php php-pgsql 
 
-XX
-RUN mkdir /home/postgres
-RUN chown postgres /home/postgres
-RUN su postgres -c /app/doc/run-as-postgres
 
-
+RUN ./setup/run-web-setup
 
 CMD ["apachectl", "-D", "FOREGROUND"]
 
