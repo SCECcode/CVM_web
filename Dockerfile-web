@@ -5,7 +5,6 @@ WORKDIR /app
 COPY . /app
 
 COPY ./doc/cvm.conf /etc/httpd/conf.d/
-COPY ./custom-php.ini /etc/php.d/custom-php.ini
 
 RUN yum install -y tar mkdir sudo which git wget
 

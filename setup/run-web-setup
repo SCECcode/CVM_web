@@ -24,6 +24,9 @@ sudo /usr/local/share/anaconda2/bin/conda install -y basemap-data-hires
 sudo /usr/local/share/anaconda2/bin/conda install -y pip
 
 ## build UCVM 
+
+pwd
+
 ./setup/run-build-ucvm
 ./setup/run-build-cvm_web
 
