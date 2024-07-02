@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./setup/setup_cvm.h
+source /setup/setup_cvm.sh
 
 ## make sure the result are readable by web user
 chmod og+rw $TOP_CVM_WEB_DIR/result

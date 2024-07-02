@@ -1,19 +1,25 @@
 FROM amazonlinux:2
 
+ENV CC=gcc10-gcc
+ENV CXX=gcc10-g++
+ENV TOP_CVM_WEB_DIR=/app/web
+ENV UCVM_TOP_DIR=/usr/local/share/model
+ENV UCVM_SRC_PATH=$UCVM_TOP_DIR/ucvm
+ENV UCVM_INSTALL_PATH=$UCVM_TOP_DIR/ucvm_install
+
 WORKDIR /app
 
 COPY . /app
 
 COPY ./doc/cvm.conf /etc/httpd/conf.d/
 
-RUN yum install -y tar mkdir sudo which git wget
+RUN yum install -y tar mkdir sudo which git wget gawk
 
 RUN yum install -y httpd && \
 	amazon-linux-extras install -y php7.2 && \
 	yum install -y php php-pgsql 
 
-
-RUN ./setup/run-web-setup
+RUN /app/setup/run-web-setup
 
 CMD ["apachectl", "-D", "FOREGROUND"]
 

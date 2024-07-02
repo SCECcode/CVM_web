@@ -1,43 +1,57 @@
 ## run as installer of the system stack
 #   
 # to be run on remote host system(linux)
+#
 
-rm -rf Anaconda2-2019.07-Linux-x86_64.sh
+source setup/setup_cvm.sh
 
-yum install -y git
-yum install -y gcc10.x86_64
-yum install -y gcc10-gfortran.x86_64
-yum install -y autotools
-yum install -y autoconf
-yum install -y aclocal
-yum install -y automake
+rm -rf  Anaconda3-2024.02-1-Linux-x86_64.sh 
 
-wget https://repo.anaconda.com/archive/Anaconda2-2019.07-Linux-x86_64.sh
-sudo bash Anaconda2-2019.07-Linux-x86_64.sh -b -f -p /usr/local/share/anaconda2
+yum install -y git 
+yum install -y gcc10.x86_64 gcc10-gfortran.x86_64 binutils.x86_64 gcc10-c++.x86_64 gcc10-binutils.x86_64
+yum install -y autotools autoconf aclocal automake libtool.x86_64 file
+yum install -y perl-CPAN.noarch 
+yum install -y pkgconfig.x86_64
+yum install -y zlib.x86_64
+#yum install -y zlib-devel.x86_64
 
-rm -rf Anaconda2-2019.07-Linux-x86_64.sh
+yum install -y gcc.x86_64 gcc-c++.x86_64
+yum install -y gcc-gfortran.x86_64 gcc-binutils.x86_64
+
+## install for perl (openssl needs these)
+yum install -y perl-Module-Load.noarch perl-ExtUtils-MakeMaker.noarch perl-ExtUtils-Install.noarch perl-ExtUtils-Manifest.noarch perl.x86_64 perl-Module-Load.noarch perl-Module-Load-Conditional.noarch perl-Params-Check.noarch perl-version.x86_64 
+
+### 24.5.0, old one is 4.7.10
+wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
+bash Anaconda3-2024.02-1-Linux-x86_64.sh -b -f -p /usr/local/share/anaconda3
+
+rm -rf  Anaconda3-2024.02-1-Linux-x86_64.sh 
+
+source /usr/local/share/anaconda3/bin/activate
+conda init
+
+#wget https://repo.anaconda.com/archive/Anaconda2-2019.07-Linux-x86_64.sh
+#sudo bash Anaconda2-2019.07-Linux-x86_64.sh -b -f -p /usr/local/share/anaconda2
+
+#rm -rf Anaconda2-2019.07-Linux-x86_64.sh
 
 ## python basemap, basemap-data-hires, matplotlib
-sudo /usr/local/share/anaconda2/bin/conda install -y matplotlib
-sudo /usr/local/share/anaconda2/bin/conda install -y basemap
-sudo /usr/local/share/anaconda2/bin/conda install -y basemap-data-hires
-sudo /usr/local/share/anaconda2/bin/conda install -y pip
+/usr/local/share/anaconda3/bin/python -m pip install matplotlib basemap basemap-data-hires
+#/usr/local/share/anaconda3/bin/conda list basemap
 
 ## build UCVM 
-
-pwd
-
+ 
 ./setup/run-build-ucvm
-./setup/run-build-cvm_web
+#./setup/run-build-cvm_web
 
-source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
+#source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 
-cd $TOP_CVM_WEB_DIR/web
-git clone git@github.com:meihuisu/ucvm_plotly_web.git plotly_profile
+#cd $TOP_CVM_WEB_DIR/web
+#git clone git@github.com:meihuisu/ucvm_plotly_web.git plotly_profile
 
-cd $UCVM_INSTALL_PATH
-git clone https://github.com/SCECcode/ucvm_plotting.git
-cd ucvm_plotting
-sudo /usr/local/share/anaconda2/bin/pip install dist/ucvm_plotting-0.0.4.tar.gz
+#cd $UCVM_INSTALL_PATH
+#git clone https://github.com/SCECcode/ucvm_plotting.git
+#cd ucvm_plotting
+#/usr/local/share/anaconda3/bin/pip install dist/ucvm_plotting-0.0.4.tar.gz
 
     

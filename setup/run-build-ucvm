@@ -1,44 +1,31 @@
 #/bin/bash
 #
-./setup/setup_cvm.h
+#
+export TOP_CVM_WEB_DIR=/app/web
+export UCVM_TOP_DIR=/usr/local/share/model
+export UCVM_SRC_PATH=$UCVM_TOP_DIR/ucvm
+export UCVM_INSTALL_PATH=$UCVM_TOP_DIR/ucvm_install
 
+#export CC=gcc10-gcc
+#export CXX=gcc10-g++
+
+mkdir -p $UCVM_TOP_DIR
 mkdir -p $UCVM_INSTALL_PATH
 
-mkdir -p $TOP_CVM_WEB_DIR/web/model
-cd $TOP_CVM_WEB_DIR/web/model
-
+cd $UCVM_TOP_DIR
 git clone https://github.com/SCECcode/ucvm.git -b withSFCVM ucvm
+#git clone https://github.com/SCECcode/ucvm.git -b testMei ucvm
 
 cd $UCVM_SRC_PATH/largefiles
-./get_largefiles.py -m sfcvm,cca,cs242
-
-#./get_largefiles.py -m wfcvm,cca,cencal,cvms,cvmsi,cvms5,cvmh,ivlsu,cvlsu,albacore,sjfz,cvmhlabn,cvmhsgbn,cvmhvbn,cvmhibbn,cvmhrbn,cvmhsbbn,cvmhsbcbn,cvmhsmbn,cvmhstbn
-
-if [ "$(uname)" != "Darwin" ]; then
-  cd $UCVM_SRC_PATH/largefiles; ./check_largefiles_md5.py
-fi
-cd $UCVM_SRC_PATH/largefiles; ./stage_largefiles.py
-
-export CC=gcc10-gcc
-export CXX=gcc10-g++
+./get_largefiles.py -m sfcvm,cca,cvmsi
+./check_largefiles_md5.py
+./stage_largefiles.py
 
 cd $UCVM_SRC_PATH
 ./ucvm_setup.py -a -d -p $UCVM_INSTALL_PATH &> ucvm_setup_install.log
 
-cd $UCVM_SRC_PATH; make runcheck
+#cd $UCVM_SRC_PATH; make runcheck
 
 ## make sure everything in installed model is globally readable
-chmod -R +r $UCVM_INSTALL_PATH/model
-
-## only if it is on my local mac
-if [ "$(uname)" == "Darwin" ]; then
-    source conf/ucvm_env.sh
-    conda install -y numpy matplotlib basemap basemap-data-hires
-    cd $UCVM_INSTALL_PATH
-    git clone https://github.com/SCECcode/ucvm_plotting.git
-    cd ucvm_plotting
-    ./unpack-dist
-fi
-
-echo "..EXITING.."
-exit
+#chmod -R +r $UCVM_INSTALL_PATH/model
+echo "..done run-build-ucvm.."
