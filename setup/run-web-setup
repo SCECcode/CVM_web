@@ -1,19 +1,17 @@
-## run as installer of the system stack
-#   
-# to be run on remote host system(linux)
-#
 
-source setup/setup_cvm.sh
+# run-web-setup
+
+source setup/setup_cvm_web.sh
 
 rm -rf  Anaconda3-2024.02-1-Linux-x86_64.sh 
 
-yum install -y git 
+yum install -y tar mkdir sudo which git wget gawk
 yum install -y gcc10.x86_64 gcc10-gfortran.x86_64 binutils.x86_64 gcc10-c++.x86_64 gcc10-binutils.x86_64
 yum install -y autotools autoconf aclocal automake libtool.x86_64 file
 yum install -y perl-CPAN.noarch 
 yum install -y pkgconfig.x86_64
 yum install -y zlib.x86_64
-#yum install -y zlib-devel.x86_64
+yum install -y zlib-devel.x86_64
 
 yum install -y gcc.x86_64 gcc-c++.x86_64
 yum install -y gcc-gfortran.x86_64 gcc-binutils.x86_64
@@ -40,18 +38,23 @@ conda init
 #/usr/local/share/anaconda3/bin/conda list basemap
 
 ## build UCVM 
- 
 ./setup/run-build-ucvm
-#./setup/run-build-cvm_web
+# make sure the ucvm's datafile are readable by web user
+ls $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 
-#source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
+## setup plotting  
+mkdir -p $PLOTTING_TOP_DIR
 
-#cd $TOP_CVM_WEB_DIR/web
-#git clone git@github.com:meihuisu/ucvm_plotly_web.git plotly_profile
+## setup web permission
+chmod og+rw $CVM_WEB_TOP_DIR/result
 
-#cd $UCVM_INSTALL_PATH
-#git clone https://github.com/SCECcode/ucvm_plotting.git
-#cd ucvm_plotting
-#/usr/local/share/anaconda3/bin/pip install dist/ucvm_plotting-0.0.4.tar.gz
+cd $PLOTTING_TOP_DIR
+git clone https://github.com/meihuisu/ucvm_plotly_web.git plotly_profile
 
-    
+git clone https://github.com/SCECcode/ucvm_plotting.git
+cd ucvm_plotting
+/usr/local/share/anaconda3/bin/pip install dist/ucvm_plotting-0.0.4.tar.gz
+
+if [ -f $UCVM_INSTALL_PATH/conf/ucvm_env.sh ]; then
+  source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
+fi    

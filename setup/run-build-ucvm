@@ -1,20 +1,14 @@
-#/bin/bash
-#
-#
-export TOP_CVM_WEB_DIR=/app/web
-export UCVM_TOP_DIR=/usr/local/share/model
-export UCVM_SRC_PATH=$UCVM_TOP_DIR/ucvm
-export UCVM_INSTALL_PATH=$UCVM_TOP_DIR/ucvm_install
+#!/bin/bash
+# run-build-ucvm
 
-#export CC=gcc10-gcc
-#export CXX=gcc10-g++
+source setup/setup_cvm_web.sh
 
 mkdir -p $UCVM_TOP_DIR
 mkdir -p $UCVM_INSTALL_PATH
 
 cd $UCVM_TOP_DIR
-git clone https://github.com/SCECcode/ucvm.git -b withSFCVM ucvm
-#git clone https://github.com/SCECcode/ucvm.git -b testMei ucvm
+#git clone https://github.com/SCECcode/ucvm.git -b withSFCVM src
+git clone https://github.com/SCECcode/ucvm.git -b testMei src
 
 cd $UCVM_SRC_PATH/largefiles
 ./get_largefiles.py -m sfcvm,cca,cvmsi
@@ -27,5 +21,5 @@ cd $UCVM_SRC_PATH
 #cd $UCVM_SRC_PATH; make runcheck
 
 ## make sure everything in installed model is globally readable
-#chmod -R +r $UCVM_INSTALL_PATH/model
+chmod -R og+r $UCVM_INSTALL_PATH/model
 echo "..done run-build-ucvm.."
