@@ -25,6 +25,8 @@ $floors = ($_GET['floors']);
 $datatype = ($_GET['datatype']);
 $uid = ($_GET['uid']);
 
+$InstallLoc= getenv('UCVM_INSTALL_PATH');
+
 $secondlat = ($_GET['secondlat']);
 $secondlon = ($_GET['secondlon']);
 
@@ -61,8 +63,7 @@ if($datatype != 'vs30') {
    $lstr=" -L ".$floors.$lstr;
   }
 
-  $qstub=" -d ".$datatype." -c ".$model." -s ".$sval." -a sd -o ".$file." -n ../model/UCVM_TARGET/conf/ucvm.conf -i ../model/UCVM_TARGET ";
-#  $qstub=" -d ".$datatype." -c ".$model." -s ".$sval." -a s -o ".$file." -n ../model/UCVM_TARGET/conf/ucvm.conf -i ../model/UCVM_TARGET ";
+  $qstub=" -d ".$datatype." -c ".$model." -s ".$sval." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc;
 
   if( $zmode == 'd') {
     $query= $envstr." plot_horizontal_slice.py ".$qstub.$lstr;
@@ -71,7 +72,7 @@ if($datatype != 'vs30') {
   }
   } else {
     $lstr = " -b ".$firstlat.",".$firstlon." -u ".$secondlat.",".$secondlon;
-    $qstub=" -s ".$sval." -c ".$model." -a dd -o ".$file." -i ../model/UCVM_TARGET";
+    $qstub=" -s ".$sval." -c ".$model." -a dd -o ".$file." -i ".$InstallLoc;
     $query= $envstr." plot_vs30_etree_map.py".$qstub.$lstr;
 }
 

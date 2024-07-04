@@ -5,7 +5,7 @@ $header = getHeader("Viewer");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SCEC Community Models Viewer (prototype)</title>
+    <title>SCEC Community Velocity Model Viewer (ANOTHER prototype)</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -36,11 +36,9 @@ $header = getHeader("Viewer");
     <script type='text/javascript' src='js/vendor/jszip.js'></script>
     <script type='text/javascript' src='js/vendor/jquery.floatThead.min.js'></script>
     <script type='text/javascript' src='js/vendor/jquery.tabletojson.min.js'></script>
-    <!--
-    https://leaflet.github.io/Leaflet.draw/docs/Leaflet.draw-latest.html#l-draw
-    this is for including the Leaflet.draw plugin
-    -->
+
     <link rel="stylesheet" href="plugin/Leaflet.draw/leaflet.draw.css">
+
     <script type='text/javascript' src="plugin/Leaflet.draw/Leaflet.draw.js"></script>
     <script type='text/javascript' src="plugin/Leaflet.draw/Leaflet.Draw.Event.js"></script>
     <script type='text/javascript' src="plugin/Leaflet.draw/Toolbar.js"></script>
@@ -76,6 +74,7 @@ $header = getHeader("Viewer");
     <script type="text/javascript" src="js/ucvm_leaflet.js"></script>
     <script type="text/javascript" src="js/ucvm_layer.js"></script>
     <script type="text/javascript" src="js/ucvm_region.js"></script>
+    <!-- ??? -->
     <script type="text/javascript" src="js/ucvm_region_util.js"></script>
     <script type="text/javascript" src="js/ucvm_util.js"></script>
     <script type="text/javascript" src="js/ucvm_ui.js"></script>
@@ -134,7 +133,7 @@ TODO: need a new id
 
     <div class="row">
         <div class="col-12">
-            <p>The <a href="https://www.scec.org/research/ucvm">SCEC Community Models (CM) Viewer </a> provides an integrated view of SCEC CVMs, CFM, GFM and CTM models and also offers a browser access to the latest SCEC Unified Community Velocity Model(UCVM). User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from UCVM.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
+            <p>The <a href="https://www.scec.org/research/ucvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from UCVM.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
         </div>
     </div>
 

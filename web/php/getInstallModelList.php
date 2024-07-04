@@ -8,7 +8,9 @@
 
 $result=array();
 
-$Files = glob("../model/UCVM_TARGET/model/*");
+$InstallLoc= getenv('UCVM_INSTALL_PATH');
+$Files = glob($InstallLoc."/model/*");
+
 foreach ($Files as $file) {
     $bname=basename($file);
     array_push($result,$bname);

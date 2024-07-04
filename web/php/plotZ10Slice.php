@@ -18,6 +18,8 @@ $firstlon = ($_GET['firstlon']);
 $secondlat = ($_GET['secondlat']);
 $secondlon = ($_GET['secondlon']);
 
+$InstallLoc= getenv('UCVM_INSTALL_PATH');
+
 $envstr=makeEnvString();
 
 $lval= round(($secondlat - $firstlat), 3);
@@ -41,7 +43,7 @@ if ($sval == 0) {
 $file="../result/".$uid."z10.png";
 
 $lstr = " -b ".$firstlat.",".$firstlon." -u ".$secondlat.",".$secondlon;
-$qstub= " -c ".$model." -s ".$sval." -a d -o ".$file." -n ../model/UCVM_TARGET/conf/ucvm.conf -i ../model/UCVM_TARGET ";
+$qstub= " -c ".$model." -s ".$sval." -a d -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc;
 $query= $envstr." plot_z10_map.py ".$qstub.$lstr;
 
 $result = exec(escapeshellcmd($query), $retval, $status);

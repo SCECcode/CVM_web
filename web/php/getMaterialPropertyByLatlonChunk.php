@@ -15,6 +15,8 @@ $chunkid = intVal($_GET['chunkid']);
 $uid = ($_GET['uid']);
 $lastchunks = intVal($_GET['chunks'])-1;
 
+$InstallLoc= getenv('UCVM_INSTALL_PATH');
+
 /* if chunkid == 0, it is first chunk, create 
    the .json file in result/UCVM_uid_p_matprops.json, 
    other ones, just 'append'               */
@@ -62,7 +64,7 @@ if ($floors != 'none') {
   $estr=' -L '.$floors.$estr;
 }
 
-$query="../model/UCVM_TARGET/utilities/run_ucvm_query.sh -m ".$model." -f ../model/UCVM_TARGET/conf/ucvm.conf ".$estr;
+$query= $InstallLoc."/utilities/run_ucvm_query.sh -m ".$model." -f ".$InstallLoc."/conf/ucvm.conf ".$estr;
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 

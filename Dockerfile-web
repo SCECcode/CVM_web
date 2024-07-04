@@ -2,6 +2,7 @@ FROM amazonlinux:2
 
 ENV CVM_WEB_TOP_DIR=/app/web
 ENV PLOTTING_TOP_DIR=/usr/local/share/plotting
+ENV ANACONDA3_TOP_DIR=/usr/local/share/anaconda3
 ENV UCVM_TOP_DIR=/usr/local/share/ucvm
 
 ENV UCVM_SRC_PATH=$UCVM_TOP_DIR/src

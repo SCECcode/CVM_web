@@ -25,6 +25,8 @@ $zstart = ($_GET['zstart']);
 $datatype = ($_GET['datatype']);
 $uid = ($_GET['uid']);
 
+$InstallLoc= getenv('UCVM_INSTALL_PATH');
+
 $secondlat = ($_GET['secondlat']);
 $secondlon = ($_GET['secondlon']);
 
@@ -49,12 +51,14 @@ if ($floors != 'none') {
 
 $vval= intval(((float)$z-(float)$zstart)/100); 
 $lstr=$lstr ." -e ".$z;
-$qstub=" -s ".$zstart." -h ".$hval." -d ".$datatype." -c ".$model." -a sd -o ".$file." -n ../model/UCVM_TARGET/conf/ucvm.conf -i ../model/UCVM_TARGET "."-v ".$vval;
+$qstub=" -s ".$zstart." -h ".$hval." -d ".$datatype." -c ".$model." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc." -v ".$vval;
 if ($zmode == 'e') {
     $query= $envstr." plot_elevation_cross_section.py".$qstub.$lstr;
     } else {
         $query= $envstr." plot_cross_section.py".$qstub.$lstr;
 }
+
+print($query);
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 

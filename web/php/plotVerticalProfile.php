@@ -19,6 +19,8 @@ $zrange = ($_GET['zrange']);
 $floors = ($_GET['floors']);
 $uid = ($_GET['uid']);
 
+$InstallLoc= getenv('UCVM_INSTALL_PATH');
+
 $file="../result/".$uid."_v.png";
 
 $envstr=makeEnvString();
@@ -36,13 +38,15 @@ if ($comment != 'none') {
   $lstr = " -C ".$comment.$lstr;
 }
 
-$qstub=" -n ../model/UCVM_TARGET/conf/ucvm.conf -i ../model/UCVM_TARGET -d vs,vp,density -c ".$model." -o ".$file;
+$qstub=" -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc." -d vs,vp,density -c ".$model." -o ".$file;
 
 if ($zmode == 'e') {
   $query= $envstr." plot_elevation_profile.py ".$qstub.$lstr;
   } else {
     $query= $envstr." plot_depth_profile.py ".$qstub.$lstr;
 }
+
+#print($query);
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 

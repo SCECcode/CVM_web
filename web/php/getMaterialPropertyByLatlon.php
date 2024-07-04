@@ -14,6 +14,8 @@ $zrange = ($_GET['zrange']);
 $floors = ($_GET['floors']);
 $uid = ($_GET['uid']);
 
+$InstallLoc= getenv('UCVM_INSTALL_PATH');
+
 $estr = " -b -l ".$lat.",".$lon.",".$z." ";
 
 if ($zmode == 'e') {
@@ -28,13 +30,8 @@ if ($floors != 'none') {
   $estr=" -L ".$floors.$estr;
 }
 
-$query="../model/UCVM_TARGET/utilities/run_ucvm_query.sh -m ".$model." -f ../model/UCVM_TARGET/conf/ucvm.conf ".$estr;
-
-#print $query;
-
+$query=$InstallLoc."/utilities/run_ucvm_query.sh -m ".$model." -f ".$InstallLoc."/conf/ucvm.conf ".$estr;
 $result = exec(escapeshellcmd($query), $retval, $status);
-
-#print $result;
 
 $item=json_decode($result);
 $item->{"Zmode"} = $zmode;
