@@ -58,7 +58,7 @@ if ($zmode == 'e') {
         $query= $envstr." plot_cross_section.py".$qstub.$lstr;
 }
 
-print($query);
+#print($query);
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 

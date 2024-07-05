@@ -1,11 +1,11 @@
 <?php
 function makeEnvString() {
    $myhost = gethostname();
-   $installLoc= getenv('UCVM_INSTALL_PATH');
+   $InstallLoc= getenv('UCVM_INSTALL_PATH');
    $conda3Loc= getenv('ANACONDA3_TOP_DIR');
-   $projstr= $installLoc."/lib/proj/share/proj ";
+   $projstr= $InstallLoc."/lib/proj/share/proj ";
    $pathstr= $conda3Loc."/bin:".$conda3Loc."/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ";
-   $pythonstr=$installLoc."/plotting/ucvm_plotting ";
+   $pythonstr=$InstallLoc."/plotting/ucvm_plotting ";
    $envstr="PROJ_LIB=".$projstr."PATH=".$pathstr."PYTHONPATH=".$pythonstr;
    return $envstr;
 }
