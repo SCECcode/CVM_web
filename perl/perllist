@@ -1,0 +1,28 @@
+
+perl-Module-Load.noarch
+perl-ExtUtils-MakeMaker.noarch
+perl-ExtUtils-Install.noarch
+perl-ExtUtils-Manifest.noarch
+perl.x86_64
+perl-Module-Load.noarch 
+perl-Module-Load-Conditional.noarch 
+perl-Params-Check.noarch
+perl-version.x86_64 
+  
+  /usr/share/perl5/vendor_perl/Params/Check.pm
+/usr/share/perl5/Locale/Maketext/Simple.pm
+  /usr/share/perl5/vendor_perl/Module/Load/Conditional.pm
+  /usr/share/perl5/vendor_perl/Module/Load.pm
+  /usr/share/perl5/vendor_perl/Module/Metadata.pm
+/usr/lib64/perl5/vendor_perl/version.pm
+/usr/share/perl5/vendor_perl/version/vpp.pm
+/usr/lib64/perl5/vendor_perl/version/regex.pm
+  /usr/share/perl5/vendor_perl/ExtUtils/MakeMaker.pm
+  /usr/share/perl5/vendor_perl/ExtUtils/MakeMaker/Config.pm
+  /usr/share/perl5/vendor_perl/ExtUtils/MY.pm
+  /usr/share/perl5/vendor_perl/ExtUtils/MM.pm
+  /usr/share/perl5/vendor_perl/ExtUtils/MM_Any.pm
+  /usr/share/perl5/vendor_perl/ExtUtils/MM_Unix.pm
+/usr/share/perl5/vendor_perl/ExtUtils/Liblist.pm
+/usr/share/perl5/vendor_perl/ExtUtils/Liblist/Kid.pm
+

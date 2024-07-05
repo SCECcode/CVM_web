@@ -1,0 +1,45 @@
+pcsc-lite-devel.x86_64 : PC/SC Lite development files
+pcsc-lite-devel.i686 : PC/SC Lite development files
+perl-AppConfig.noarch : Perl module for reading configuration files
+perl-Archive-Tar.noarch : A module for Perl manipulation of .tar files
+perl-CPAN-Changes.noarch : Read and write Changes files
+perl-CPAN-Meta-YAML.noarch : Read and write a subset of YAML for CPAN Meta files
+perl-CSS-Tiny.noarch : Read/Write .css files with as little code as possible
+perl-Config-Simple.noarch : Simple configuration file class
+perl-Config-Tiny.noarch : Perl module for reading and writing .ini style configuration files
+perl-DB_File.x86_64 : Perl5 access to Berkeley DB version 1.x
+perl-ExtUtils-Install.noarch : Install files from here to there
+perl-ExtUtils-MakeMaker.noarch : Create a module Makefile
+perl-ExtUtils-Manifest.noarch : Utilities to write and check a MANIFEST file
+perl-File-Find-Rule-Perl.noarch : Common rules for searching for Perl things
+perl-File-HomeDir.noarch : Find your home and other directories on any platform
+perl-File-Listing.noarch : Parse directory listing
+perl-File-Path.noarch : Create or remove directory trees
+perl-File-Which.noarch : Portable implementation of the 'which' utility
+perl-File-pushd.noarch : Change directory temporarily for a limited scope
+perl-Font-AFM.noarch : Perl interface to Adobe Font Metrics files
+perl-Font-TTF.noarch : Perl library for modifying TTF font files
+perl-IO-HTML.noarch : Open an HTML file with automatic character set detection
+perl-IO-String.noarch : Emulate file interface for in-core strings
+perl-Image-Xbm.noarch : Load, create, manipulate and save xbm image files in Perl
+perl-Image-Xpm.noarch : Load, create, manipulate and save xpm image files in Perl
+perl-LWP-MediaTypes.noarch : Guess media type for a file or a URL
+perl-Module-Load.noarch : Run-time require of both modules and files
+perl-Module-Manifest.noarch : Parse and examine a Perl distribution MANIFEST file
+perl-Module-Metadata.noarch : Gather package and POD information from perl module files
+perl-Parse-CPAN-Meta.noarch : Parse META.yml and META.json CPAN meta-data files
+perl-PathTools.x86_64 : PathTools Perl module (Cwd, File::Spec)
+perl-Test-CPAN-Meta.noarch : Validation of the META.yml file in a CPAN distribution
+perl-Test-Pod.noarch : Test POD files for correctness
+perl-Test-Spelling.noarch : Check for spelling errors in POD files
+perl-Text-Diff.noarch : Perform diffs on files and record sets
+perl-YAML-Tiny.noarch : Read/Write YAML files with as little code as possible
+perl-devel.x86_64 : Header #files for use in perl development
+phonon-devel.x86_64 : Developer files for phonon
+php-common.x86_64 : Common files for PHP
+php-devel.x86_64 : Files needed for building PHP extensions
+php-pecl-apcu-devel.noarch : Development files for php-pecl-apcu
+php-pecl-igbinary-devel.noarch : Development files for php-pecl-igbinary
+php-pecl-imagick-devel.noarch : Development files for php-pecl-imagick
+php-pecl-msgpack-devel.noa
+

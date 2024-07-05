@@ -1,0 +1,16 @@
+ls /usr/share/perl5/vendor_perl/Params/Check.pm
+ls /usr/share/perl5/Locale/Maketext/Simple.pm
+ls /usr/share/perl5/vendor_perl/Module/Load/Conditional.pm
+ls /usr/share/perl5/vendor_perl/Module/Load.pm
+ls /usr/share/perl5/vendor_perl/Module/Metadata.pm
+ls /usr/lib64/perl5/vendor_perl/version.pm
+ls /usr/share/perl5/vendor_perl/version/vpp.pm
+ls /usr/lib64/perl5/vendor_perl/version/regex.pm
+ls /usr/share/perl5/vendor_perl/ExtUtils/MakeMaker.pm
+ls /usr/share/perl5/vendor_perl/ExtUtils/MakeMaker/Config.pm
+ls /usr/share/perl5/vendor_perl/ExtUtils/MY.pm
+ls /usr/share/perl5/vendor_perl/ExtUtils/MM.pm
+ls /usr/share/perl5/vendor_perl/ExtUtils/MM_Any.pm
+ls /usr/share/perl5/vendor_perl/ExtUtils/MM_Unix.pm
+ls /usr/share/perl5/vendor_perl/ExtUtils/Liblist.pm
+ls /usr/share/perl5/vendor_perl/ExtUtils/Liblist/Kid.pm
