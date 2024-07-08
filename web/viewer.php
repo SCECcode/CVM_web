@@ -31,7 +31,10 @@ $header = getHeader("Viewer");
     <script type='text/javascript' src='js/vendor/jquery.csv.js'></script>
     <script type='text/javascript' src='js/vendor/bootstrap.min.js'></script>
     <script type='text/javascript' src='js/vendor/jquery-ui.js'></script>
-    <script type='text/javascript' src='js/vendor/ersi-leaflet.js'></script>
+
+    <script type='text/javascript' src='js/vendor/esri-leaflet.js'></script>
+    <script type='text/javascript' src='js/vendor/esri-leaflet-vector.js' crossorigin=""></script>
+
     <script type='text/javascript' src='js/vendor/FileSaver.js'></script>
     <script type='text/javascript' src='js/vendor/jszip.js'></script>
     <script type='text/javascript' src='js/vendor/jquery.floatThead.min.js'></script>
@@ -140,10 +143,10 @@ TODO: need a new id
 <!--- MISC --->
 <div id="miscTools">
   <div class="d-flex flex-row justify-content-end">
-    <button class="btn cvm-small-btn" title="display CFM6.0 faults" onclick='toggleShowCFM()'>
-       <span id="cvm_cfm_btn" class="glyphicon glyphicon-ok-sign"></span>CFM6.0</button>
+    <button class="btn cvm-small-btn" title="display CFM6.1 faults" onclick='toggleShowCFM()'>
+       <span id="cvm_cfm_btn" class="glyphicon glyphicon-ok-sign"></span>CFM6.1</button>
     <button class="btn cvm-small-btn" title="display GFM regions" onclick='toggleShowCRM()'>
-       <span id="cvm_crm_btn" class="glyphicon glyphicon-ok-sign"></span>GFM1.0</button>
+       <span id="cvm_crm_btn" class="glyphicon glyphicon-ok-sign"></span>GFM</button>
     <button class="btn cvm-small-btn" title="display CTM regions" onclick='toggleShowCTM()'>
        <span id="cvm_ctm_btn" class="glyphicon glyphicon-ok-sign"></span>CTM</button>
 <!--
