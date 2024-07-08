@@ -1,5 +1,5 @@
 /* required styles */
-.ucvm-table table th {
+.cvm-table table th {
   background: whitesmoke;
 }
 
@@ -85,7 +85,7 @@ table { width: 100%; border-collapse: collapse;}
 table, td, th { border: 1px solid #ced4d5; padding: 2px 2px 2px 10px;}
 th {text-align: left; background: #D5D5D5;}
 
-.ucvm-top-small-btn {
+.cvm-top-small-btn {
           background: transparent; 
           padding: 6px 6px;
           font-size: 14px;
@@ -98,12 +98,12 @@ th {text-align: left; background: #D5D5D5;}
           border: none !important;
           }
 
-.ucvm-top-small-btn:hover {
+.cvm-top-small-btn:hover {
           color: #DC3545;
           display: inline-block;
           }
 
-.ucvm-active {
+.cvm-active {
         color: #DC3545;
         }
 
@@ -119,30 +119,30 @@ th {text-align: left; background: #D5D5D5;}
        animation: glowing 5000ms infinite;
       }
 
-.ucvm-small-btn {
+.cvm-small-btn {
           background: transparent; 
           color: #990000;
           border: none; 
           display: inline-block;
           }
 
-.ucvm-small-btn:hover {
+.cvm-small-btn:hover {
           color: #DC3545;
           border: none;
           display: inline-block;
           }
 
-.ucvm-small-btn:disabled {
+.cvm-small-btn:disabled {
          color: white;
         }
 
-.ucvm-table {
+.cvm-table {
           max-height: 67vh;
           border: 1px solid grey;
           overflow: auto;
         }
 
-.ucvm-top-btn {
+.cvm-top-btn {
           background: #D5D5D5; 
           padding: 1px 3px;
           border: 2px solid #D9D9D9;
@@ -152,11 +152,11 @@ th {text-align: left; background: #D5D5D5;}
           display: inline-block;
         }
 
-.ucvm-top-btn:hover {
+.cvm-top-btn:hover {
           color: #990000;
 }
 
-.ucvm-top-btn:active, .ucvm-top-btn.active {
+.cvm-top-btn:active, .cvm-top-btn.active {
           border:2px solid #990000; 
 }
 
@@ -164,7 +164,7 @@ th {text-align: left; background: #D5D5D5;}
 	border:2px solid #990000;
 }
 
-.ucvm-btn {
+.cvm-btn {
           background: white; 
           border: 0px solid #D5D5D5;
           color: black;
@@ -174,11 +174,11 @@ th {text-align: left; background: #D5D5D5;}
         }
 
 
-.ucvm-btn:disabled {
+.cvm-btn:disabled {
          color: white;
         }
 
-.ucvm-div {
+.cvm-div {
         position:relative;
         left: 10px;
         width:90%;

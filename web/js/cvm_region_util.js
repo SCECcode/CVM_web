@@ -1,11 +1,11 @@
 /****
 
-  ucvm_region_util.js
+  cvm_region_util.js
 
 ****/
 
 // information on model 
-var UCVM_installed=[];
+var CVM_installed=[];
 
 // str is a blob { 'models': ['cvmh','cvms5'] }
 function makeInstallModelList(str) {
@@ -24,17 +24,17 @@ function makeInstallModelList(str) {
   var i;
   for(i=0;i<cnt;i++) {
     var item=mlist[i];
-    UCVM_installed.push(item);
+    CVM_installed.push(item);
   }
 
   setup_modeltype();
 }
 
 function isModelInstalled(pname) {
-  var cnt=UCVM_installed.length;
+  var cnt=CVM_installed.length;
   var i=0;
   for(i=0; i<cnt;i++) {
-     if(UCVM_installed[i]==pname) {
+     if(CVM_installed[i]==pname) {
         return 1;
      }
   }
@@ -43,7 +43,7 @@ function isModelInstalled(pname) {
 
 function makeModelSelection()
 {
-   var tb=UCVM_tb['models'];
+   var tb=CVM_tb['models'];
    var cnt=tb.length;
    var i;
    var option;
@@ -339,7 +339,7 @@ isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")
 }
 
 function getModelColor(target_nm) {
-   var tb=UCVM_tb['models'];
+   var tb=CVM_tb['models'];
    var icnt=tb.length;
    var i;
    for(i=0; i<icnt; i++) {
@@ -354,7 +354,7 @@ function getModelColor(target_nm) {
 
 // this is an optional field, vs30/topo etree map
 function getModelMap(target_nm) {
-   var tb=UCVM_tb['models'];
+   var tb=CVM_tb['models'];
    var icnt=tb.length;
    var i;
    for(i=0; i<icnt; i++) {
@@ -371,7 +371,7 @@ function getModelMap(target_nm) {
 function makeLatlngsCoordinate(target_nm) {
 
    var ret=[];
-   var tb=UCVM_tb['models'];
+   var tb=CVM_tb['models'];
    var icnt=tb.length;
    var lon, lat;
    var i,j;
@@ -394,12 +394,12 @@ function makeLatlngsCoordinate(target_nm) {
 }
 
 function makeModelTable() {
-   var tb=UCVM_tb['models'];
+   var tb=CVM_tb['models'];
    var cnt=tb.length;
    var i;
-   var tbhtml="<table><tbody><tr><td style=\"border:1px solid white;\">UCVM Model Table</td></tr></tbody></table>";
-   tbhtml=tbhtml+"<div class=\"ucvm-table\"><table><tbody>";
-   tbhtml=tbhtml+"<tr><th style=\"width:8vw\"><b>Model</b></th><th style=\"width:6vw\"><b>UCVM abbreviation</b></th><th style=\"width:40vw\"><b>Description</b></th></tr>";
+   var tbhtml="<table><tbody><tr><td style=\"border:1px solid white;\">CVM Model Table</td></tr></tbody></table>";
+   tbhtml=tbhtml+"<div class=\"cvm-table\"><table><tbody>";
+   tbhtml=tbhtml+"<tr><th style=\"width:8vw\"><b>Model</b></th><th style=\"width:6vw\"><b>CVM abbreviation</b></th><th style=\"width:40vw\"><b>Description</b></th></tr>";
 
    for( i=0; i<cnt; i++) {
      var item=tb[i];
@@ -417,7 +417,7 @@ function makeModelTable() {
 }
 
 function _getModelItemWithID(id) {
-   var tb=UCVM_tb['models'];
+   var tb=CVM_tb['models'];
    var cnt=tb.length;
    var i;
    for(i=0; i<cnt;i++) {
@@ -443,7 +443,7 @@ function getModelNameWithType(t) {
    var rt="";
    var mlist=t.split(',');
    var mcnt=mlist.length;
-   var tlist=UCVM_tb['models'];
+   var tlist=CVM_tb['models'];
    var tcnt=tlist.length;
    var i,j;
 
@@ -466,7 +466,7 @@ function getModelNameWithType(t) {
    return rt;
 }
 function getZModeNameWithType(t) {
-   var tb=UCVM_tb['zmodes'];
+   var tb=CVM_tb['zmodes'];
    var cnt=tb.length;
    var i;
    for(i=0; i<cnt;i++) {
@@ -498,7 +498,7 @@ function getModelCoordinatesWithID(id) {
 
 function getAllModelNames() {
    var ret=[];
-   var tb=UCVM_tb['models'];
+   var tb=CVM_tb['models'];
    var cnt=tb.length;
    var i,item,aname;
    for(i=0; i<cnt; i++) {
@@ -510,7 +510,7 @@ function getAllModelNames() {
 }
 
 function showInTable(key) {
-   var tb=UCVM_tb['descript'];
+   var tb=CVM_tb['descript'];
    var cnt=tb.length;
    for( i=0; i<cnt; i++) {
      var item=tb[i];
@@ -524,11 +524,11 @@ function showInTable(key) {
 }
 
 function makeParametersTable() {
-   var tb=UCVM_tb['descript'];
+   var tb=CVM_tb['descript'];
    var cnt=tb.length;
    var i;
-   var tbhtml="<table><tbody><tr><td style=\"border:1px solid white;\">UCVM Parameters Table</td></tr></tbody></table>";
-   tbhtml=tbhtml+"<div class=\"ucvm-table\"><table><tbody>";
+   var tbhtml="<table><tbody><tr><td style=\"border:1px solid white;\">CVM Parameters Table</td></tr></tbody></table>";
+   tbhtml=tbhtml+"<div class=\"cvm-table\"><table><tbody>";
    tbhtml=tbhtml+"<tr><th style=\"width:10vw\"><b>Parameter</b></th><th style=\"width:45vw\"><b>Description</b></th></tr>";
    for( i=0; i<cnt; i++) {
      var item=tb[i];
@@ -545,11 +545,11 @@ function makeParametersTable() {
 
 
 function makeFileFormatTable() {
-   var tb=UCVM_tb['fileformats'];
+   var tb=CVM_tb['fileformats'];
    var cnt=tb.length;
    var i;
    var tbhtml="<table><tbody><tr><td style=\"border:1px solid white;\">File Format Table</td></tr></tbody></table>";
-   tbhtml=tbhtml+"<div class=\"ucvm-table\"><table><tbody>";
+   tbhtml=tbhtml+"<div class=\"cvm-table\"><table><tbody>";
    tbhtml=tbhtml+"<tr><th style=\"width:12vw\"><b>Format</b></th><th style=\"width:4vw\"><b>suffix</b></th><th style=\"width:40vw\"><b>Description</b></th></tr>";
 
    for( i=0; i<cnt; i++) {
@@ -565,11 +565,11 @@ function makeFileFormatTable() {
 }
 
 function makeZModeTable() {
-   var tb=UCVM_tb['zmodes'];
+   var tb=CVM_tb['zmodes'];
    var cnt=tb.length;
    var i;
    var tbhtml="<table><tbody><tr><td style=\"border:1px solid white;\">Z Mode Table</td></tr></tbody></table>";
-   tbhtml=tbhtml+"<div class=\"ucvm-table\"><table><tbody>";
+   tbhtml=tbhtml+"<div class=\"cvm-table\"><table><tbody>";
    tbhtml=tbhtml+"<tr><th style=\"width:8vw\"><b>Mode</b></th><th style=\"width:40vw\"><b>Description</b></th></tr>";
 
    for( i=0; i<cnt; i++) {

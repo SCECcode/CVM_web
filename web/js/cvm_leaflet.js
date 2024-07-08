@@ -1,5 +1,5 @@
 /***
-   ucvm_leaflet.js
+   cvm_leaflet.js
 ***/
 
 var scecAttribution ='<a href="https://www.scec.org">SCEC</a>';
@@ -101,7 +101,7 @@ function setup_viewer()
   currentLayer = esri_topographic;
 
 // ==> mymap <==
-  mymap = L.map('UCVM_plot', { drawControl:false, layers: [esri_topographic, basemap], zoomControl:true} );
+  mymap = L.map('CVM_plot', { drawControl:false, layers: [esri_topographic, basemap], zoomControl:true} );
   mymap.setView([34.3, -118.4], 6);
   mymap.attributionControl.addAttribution(scecAttribution);
 

@@ -1,5 +1,5 @@
 /***
-   ucvm_ui.js
+   cvm_ui.js
 ***/
 
 // global flag to show if material property is at the very start of
@@ -21,19 +21,19 @@ var hold_mptable=1;
     $resultarray->data= $uid."_c_data.bin";
 ****/
 // [ {"uid":uid, "blob":blob } ]
-var ucvm_metaplottb_list=[];
+var cvm_metaplottb_list=[];
 
-// tracking the layer that contains CFM5.2 faults
-var ucvm_cfm_layer;
+// tracking the layer that contains CFM6.1 faults
+var cvm_cfm_layer;
 var show_cfm=false;
 // tracking the layer that contains CRM regions
-var ucvm_crm_layer;
+var cvm_crm_layer;
 var show_crm=false;
 // tracking the layer that contains CTM regions
-var ucvm_ctm_layer;
+var cvm_ctm_layer;
 var show_ctm=false;
 // tracking the layer that contains CRM latlon points 
-var ucvm_crm_point_layer;
+var cvm_crm_point_layer;
 var show_crm_point=false;
 
 
@@ -62,70 +62,70 @@ function setup_ZMode() {
 }
 
 function setup_CFM() {
-   ucvm_cfm_layer=readLocalAndProcessActiveCFMGeo();
+   cvm_cfm_layer=readLocalAndProcessActiveCFMGeo();
 }
 
 function toggleShowCFM() {
    show_cfm=!show_cfm;
    if(show_cfm) {
-     viewermap.addLayer(ucvm_cfm_layer);
-     $('#ucvm_cfm_btn').removeClass('glyphicon-ok-sign');
-     $('#ucvm_cfm_btn').addClass('glyphicon-remove-sign');
+     viewermap.addLayer(cvm_cfm_layer);
+     $('#cvm_cfm_btn').removeClass('glyphicon-ok-sign');
+     $('#cvm_cfm_btn').addClass('glyphicon-remove-sign');
      } else {
-       viewermap.removeLayer(ucvm_cfm_layer); 
-       $('#ucvm_cfm_btn').addClass('glyphicon-ok-sign');
-       $('#ucvm_cfm_btn').removeClass('glyphicon-remove-sign');
+       viewermap.removeLayer(cvm_cfm_layer); 
+       $('#cvm_cfm_btn').addClass('glyphicon-ok-sign');
+       $('#cvm_cfm_btn').removeClass('glyphicon-remove-sign');
    }
 } 
 
 function setup_CRM() {
-   ucvm_crm_layer=readLocalAndProcessActiveCRMGeo();
+   cvm_crm_layer=readLocalAndProcessActiveCRMGeo();
 }
 
 function toggleShowCRM() {
    show_crm=!show_crm;
    if(show_crm) {
-     viewermap.addLayer(ucvm_crm_layer);
-     $('#ucvm_crm_btn').removeClass('glyphicon-ok-sign');
-     $('#ucvm_crm_btn').addClass('glyphicon-remove-sign');
+     viewermap.addLayer(cvm_crm_layer);
+     $('#cvm_crm_btn').removeClass('glyphicon-ok-sign');
+     $('#cvm_crm_btn').addClass('glyphicon-remove-sign');
      } else {
-       viewermap.removeLayer(ucvm_crm_layer); 
-       $('#ucvm_crm_btn').addClass('glyphicon-ok-sign');
-       $('#ucvm_crm_btn').removeClass('glyphicon-remove-sign');
+       viewermap.removeLayer(cvm_crm_layer); 
+       $('#cvm_crm_btn').addClass('glyphicon-ok-sign');
+       $('#cvm_crm_btn').removeClass('glyphicon-remove-sign');
    }
 } 
 
 function setup_CTM() {
-   ucvm_ctm_layer=readLocalAndProcessActiveCTMGeo();
+   cvm_ctm_layer=readLocalAndProcessActiveCTMGeo();
 }
 
 function toggleShowCTM() {
    show_ctm=!show_ctm;
    if(show_ctm) {
-     viewermap.addLayer(ucvm_ctm_layer);
-     $('#ucvm_ctm_btn').removeClass('glyphicon-ok-sign');
-     $('#ucvm_ctm_btn').addClass('glyphicon-remove-sign');
+     viewermap.addLayer(cvm_ctm_layer);
+     $('#cvm_ctm_btn').removeClass('glyphicon-ok-sign');
+     $('#cvm_ctm_btn').addClass('glyphicon-remove-sign');
      } else {
-       viewermap.removeLayer(ucvm_ctm_layer);
-       $('#ucvm_ctm_btn').addClass('glyphicon-ok-sign');
-       $('#ucvm_ctm_btn').removeClass('glyphicon-remove-sign');
+       viewermap.removeLayer(cvm_ctm_layer);
+       $('#cvm_ctm_btn').addClass('glyphicon-ok-sign');
+       $('#cvm_ctm_btn').removeClass('glyphicon-remove-sign');
    }
 }
 
 function setup_CRMPoints() {
-   ucvm_crm_point_layer=readLocalAndProcessActiveLatlon();
+   cvm_crm_point_layer=readLocalAndProcessActiveLatlon();
 }
 
 function toggleShowCRMPoints() {
    show_crm_point=!show_crm_point;
    if(show_crm_point) {
-     viewermap.addLayer(ucvm_crm_point_layer);
-     $('#ucvm_crm_point_btn').removeClass('glyphicon-ok-sign');
-     $('#ucvm_crm_point_btn').addClass('glyphicon-remove-sign');
+     viewermap.addLayer(cvm_crm_point_layer);
+     $('#cvm_crm_point_btn').removeClass('glyphicon-ok-sign');
+     $('#cvm_crm_point_btn').addClass('glyphicon-remove-sign');
      } else {
-       viewermap.removeLayer(ucvm_crm_point_layer); 
-       $('#ucvm_crm_point_btn').addClass('glyphicon-ok-sign');
-       $('#ucvm_crm_point_btn').removeClass('glyphicon-remove-sign');
+       viewermap.removeLayer(cvm_crm_point_layer); 
+       $('#cvm_crm_point_btn').addClass('glyphicon-ok-sign');
+       $('#cvm_crm_point_btn').removeClass('glyphicon-remove-sign');
    }
 } 
 
@@ -239,7 +239,7 @@ function makeDownloadLinks(str) {
 
 // plot + various datafiles
 function insertMetaPlotResultTable(note,uid,str) {
-    ucvm_metaplottb_list.push( { uid:uid, blob:str });
+    cvm_metaplottb_list.push( { uid:uid, blob:str });
     var html=makeDownloadLinks(str);
     makeMetaPlotResultTable(note,uid,html);
 }
@@ -248,7 +248,7 @@ function makeMetaPlotResultTable(note,uid,html) {
     
     var table=document.getElementById("metadataPlotTable");
     var hasLayer=find_layer_from_list(uid);
-    if (ucvm_metaplottb_list.length == 1) {
+    if (cvm_metaplottb_list.length == 1) {
       table.deleteRow(0); // delete the holdover
 //label
       var row=table.insertRow(-1);
@@ -259,7 +259,7 @@ function makeMetaPlotResultTable(note,uid,html) {
 // insert at the end, row=table.insertRow(-1);
     row=table.insertRow(1);
     if(hasLayer!=0) {
-        row.innerHTML="<td style=\"width:10vw\">"+uid+"<td style=\"width:4px\"><button class=\"btn btn-sm ucvm-small-btn\" title=\"toggle the layer\" onclick=toggle_a_layergroup(\""+uid+"\");><span value=0 id=\"ucvm_layer_"+uid+"\" class=\"glyphicon glyphicon-eye-open\"></span></button></td></td><td style=\"width:24vw\">"+html+"</td><td style=\"width:24vw\">"+note+"</td>";
+        row.innerHTML="<td style=\"width:10vw\">"+uid+"<td style=\"width:4px\"><button class=\"btn btn-sm cvm-small-btn\" title=\"toggle the layer\" onclick=toggle_a_layergroup(\""+uid+"\");><span value=0 id=\"cvm_layer_"+uid+"\" class=\"glyphicon glyphicon-eye-open\"></span></button></td></td><td style=\"width:24vw\">"+html+"</td><td style=\"width:24vw\">"+note+"</td>";
       } else {
         row.innerHTML="<td style=\"width:10vw\">"+uid+"<td style=\"width:4px\"></td></td><td style=\"width:24vw\">"+html+"</td><td style=\"width:24vw\">"+note+"</td>";
     }
@@ -341,7 +341,7 @@ function makeMPTable(uid,str)
            datablob=JSON.parse(datablob);
         }
 
-        var mpline="<td style=\"width:4px\"><button class=\"btn btn-sm ucvm-small-btn\" title=\"toggle the layer\" onclick=toggle_a_layergroup(\""+uid+"\");><span value=0 id=\"ucvm_layer_"+uid+"\" class=\"glyphicon glyphicon-eye-open\"></span></button></td>";
+        var mpline="<td style=\"width:4px\"><button class=\"btn btn-sm cvm-small-btn\" title=\"toggle the layer\" onclick=toggle_a_layergroup(\""+uid+"\");><span value=0 id=\"cvm_layer_"+uid+"\" class=\"glyphicon glyphicon-eye-open\"></span></button></td>";
 
         var tmp;
         for(i=0; i<sz; i++) {
@@ -383,7 +383,7 @@ function saveAsCSVBlobFile(data, timestamp)
 {
 //http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
 //   var rnd= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    var fname="UCVM_"+timestamp+".csv";
+    var fname="CVM_"+timestamp+".csv";
     var blob = new Blob([data], {
         type: "text/plain;charset=utf-8"
     });
@@ -408,7 +408,7 @@ function saveAsBlobFile(data, timestamp)
 {
 //http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
 //   var rnd= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    var fname="UCVM_"+timestamp+".json";
+    var fname="CVM_"+timestamp+".json";
     var blob = new Blob([data], {
         type: "text/plain;charset=utf-8"
     });
@@ -470,11 +470,11 @@ function collapse_mp_table()
    var v=elm.style.display;
    if(v=="none") {
      elm.style.display='block';
-     $('#ucvm_collapse_mp_btn').removeClass('ucvm-active');
+     $('#cvm_collapse_mp_btn').removeClass('cvm-active');
      $('#mpCollapseLi').text("Collapse");
      } else {
        elm.style.display='none';
-       $('#ucvm_collapse_mp_btn').addClass('ucvm-active');
+       $('#cvm_collapse_mp_btn').addClass('cvm-active');
        $('#mpCollapseLi').text("Expand");
    }
 }
@@ -514,11 +514,11 @@ function collapse_mpr_table()
    var v=elm.style.display;
    if(v=="none") {
      elm.style.display='block';
-     $('#ucvm_collapse_result_btn').removeClass('ucvm-active');
+     $('#cvm_collapse_result_btn').removeClass('cvm-active');
       $('#mprCollapseLi').text("Collapse");
      } else {
        elm.style.display='none';
-       $('#ucvm_collapse_result_btn').addClass('ucvm-active');
+       $('#cvm_collapse_result_btn').addClass('cvm-active');
        $('#mprCollapseLi').text("Expand");
    }
 }

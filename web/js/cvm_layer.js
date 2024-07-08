@@ -1,5 +1,5 @@
 /***
-   ucvm_layer.js
+   cvm_layer.js
 ***/
 
 // control whether the main mouseover control should be active or not
@@ -9,20 +9,20 @@ var skipPopup=false;
    tracking data structure
 ***/
 
-// leaflet layer for ucvm model boundaries
+// leaflet layer for cvm model boundaries
 // oidx is the order index, when there are more than 1 model visible, the oidx 
 // denotes the ordering. 1,2,3 etc
 // [ { "model": modelname, "layer": layer, "style":styleblob, 'visible':1, 'oidx':v }, ... ]
-var ucvm_model_list =[];
+var cvm_model_list =[];
 
 // material properties returned from backend per lat lon point
-// mpblob is what ucvm_query returns
+// mpblob is what cvm_query returns
 // [ { "uid": uid, "mp": mpblob }, ... ]
-var ucvm_mp_list=[];
+var cvm_mp_list=[];
 
 // meta list for a query, per job,
 // meta is a json blob for timestamp, mode..
-var ucvm_meta_list=[];
+var cvm_meta_list=[];
 // [ { "uid":uid, "meta": metablob }, ... ]
 
 
@@ -39,37 +39,37 @@ const EYE_NORMAL=0,
 
 // leaflet layer for query, group=LayerGroup
 // [ { "uid": uid, "type": type_enum, "group":group, 'highlight':0/1/2 }, ... ]
-var ucvm_layer_list =[];
+var cvm_layer_list =[];
 
 // { { "uid":uid, "filename":filename}]}
-var ucvm_point_file_list=[];
+var cvm_point_file_list=[];
 
 // material property point
 // { { "uid":uid, "latlngs":[{"lat":a,"lon":b}]}
-var ucvm_point_list=[];
+var cvm_point_list=[];
 
 // material property by file
 // { { "uid":uid, "latlngs":[{"lat":a,"lon":b},...,{"lat":c,"lon":d}]}
-var ucvm_file_points_list=[];
+var cvm_file_points_list=[];
 
 // depth profile, also track the material property blob 
 // { { "uid":uid, "latlngs":[{"lat":a,"lon":b}]}
-var ucvm_profile_list=[];
+var cvm_profile_list=[];
 
 // cross section
 // latlngs can be more than 2 if there are multiple segments
 // { { "uid":uid, "latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]}
-var ucvm_line_list=[];
+var cvm_line_list=[];
 
 // horizontal area, 
 // { { "uid":uid, "latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]}
-var ucvm_area_list=[];
+var cvm_area_list=[];
 
 /*****************************************************************
 *****************************************************************/
 // suppress all  model layer on the map
 function remove_all_models() {
-  ucvm_model_list.forEach(function(element) {
+  cvm_model_list.forEach(function(element) {
       var l=element['layer'];
       if(element['visible']=1) {
         element['visible']=0;
@@ -80,10 +80,10 @@ function remove_all_models() {
 }
 
 function load_a_model(name, order) {
-   var cnt=ucvm_model_list.length;
+   var cnt=cvm_model_list.length;
    var i;
    for(i=0;i<cnt;i++) {
-     var t=ucvm_model_list[i];
+     var t=cvm_model_list[i];
      if(t['model'] == name ) {
        if(t['visible']==0) {
           t['visible']=1; 
@@ -99,10 +99,10 @@ function load_a_model(name, order) {
 }
 
 function remove_a_model(name) {
-   var cnt=ucvm_model_list.length;
+   var cnt=cvm_model_list.length;
    var i;
    for(i=0;i<cnt;i++) {
-     var t=ucvm_model_list[i];
+     var t=cvm_model_list[i];
      if(t['name'] == name ) {
        if(t['visible']==1) {
           t['visible']=0; 
@@ -128,7 +128,7 @@ function make_all_model_layer() {
       var color=getModelColor(name);
       var latlngs=makeLatlngsCoordinate(name);
       var layer=makeModelLayer(latlngs,color);
-      ucvm_model_list.push({"model": name, "layer": layer, "visible": 0, "oidx":0 });
+      cvm_model_list.push({"model": name, "layer": layer, "visible": 0, "oidx":0 });
    }
 
    { // initialize with the default model
@@ -152,17 +152,17 @@ function load_selected_model(modelstr) {
 }
 
 function insert_materialproperty(uid, mp) {
-   ucvm_mp_list.push( { "uid":uid, "mp":mp });
+   cvm_mp_list.push( { "uid":uid, "mp":mp });
 }
 
 function clear_materialproperty() {
-   ucvm_mp_list=[];
+   cvm_mp_list=[];
 }
 
 function get_materialproperty(target_uid) {
-  var cnt=ucvm_mp_list.length;
+  var cnt=cvm_mp_list.length;
   for(var i=0; i<cnt; i++) {
-    var element=ucvm_mp_list[i];
+    var element=cvm_mp_list[i];
     if (target_uid == element['uid']) {
        var mp=element["mp"];
        return mp;
@@ -173,9 +173,9 @@ function get_materialproperty(target_uid) {
 
 function get_all_materialproperty() {
   var mplist=[];
-  var cnt=ucvm_mp_list.length;
+  var cnt=cvm_mp_list.length;
   for(var i=0; i<cnt; i++) {
-    var element=ucvm_mp_list[i];
+    var element=cvm_mp_list[i];
     mplist.push(element["mp"]);
   }
   return mplist;
@@ -185,7 +185,7 @@ function get_all_materialproperty() {
 /* return meta item if id is in the meta list */
 function find_meta_from_list(target_uid) {
    var found=0;
-   ucvm_meta_list.forEach(function(element) {
+   cvm_meta_list.forEach(function(element) {
      if ( element['uid'] == target_uid )
         found=element;
    });
@@ -200,7 +200,7 @@ function get_leaflet_id(layer) {
 function find_layer_from_list(target_uid)
 {
    var found=0;
-   ucvm_layer_list.forEach(function(element) {
+   cvm_layer_list.forEach(function(element) {
      if ( element['uid'] == target_uid )
         found=element;
    });
@@ -208,21 +208,21 @@ function find_layer_from_list(target_uid)
 }
 
 function remove_all_layers() {
-   ucvm_layer_list.forEach(function(element) {
+   cvm_layer_list.forEach(function(element) {
      var uid=element['uid'];
      var type=element['type'];
      var group=element['group'];
      switch (type)  {
-       case POINT_ENUM: removeFromList(ucvm_point_list,uid); break;
-       case LINE_ENUM: removeFromList(ucvm_line_list,uid); break;
-       case PROFILE_ENUM: removeFromList(ucvm_profile_list,uid); break;
-       case AREA_ENUM: removeFromList(ucvm_area_list,uid); break;
+       case POINT_ENUM: removeFromList(cvm_point_list,uid); break;
+       case LINE_ENUM: removeFromList(cvm_line_list,uid); break;
+       case PROFILE_ENUM: removeFromList(cvm_profile_list,uid); break;
+       case AREA_ENUM: removeFromList(cvm_area_list,uid); break;
      };
      group.eachLayer(function(layer) {
        viewermap.removeLayer(layer);
      });
    });
-   ucvm_layer_list=[];
+   cvm_layer_list=[];
 }
 
 function reset_dirty_uid() {
@@ -234,18 +234,18 @@ function remove_a_layer(uid) {
    if(t) {
      var type=t['type'];
      switch (type)  {
-       case POINT_ENUM: removeFromList(ucvm_point_list,uid); break;
-       case LINE_ENUM: removeFromList(ucvm_line_list,uid); break;
-       case PROFILE_ENUM: removeFromList(ucvm_profile_list,uid); break;
-       case AREA_ENUM: removeFromList(ucvm_area_list,uid); break;
+       case POINT_ENUM: removeFromList(cvm_point_list,uid); break;
+       case LINE_ENUM: removeFromList(cvm_line_list,uid); break;
+       case PROFILE_ENUM: removeFromList(cvm_profile_list,uid); break;
+       case AREA_ENUM: removeFromList(cvm_area_list,uid); break;
      };
      var group=t['group'];
      group.eachLayer(function(layer) {
          viewermap.removeLayer(layer);
      });
-     var idx = ucvm_layer_list.indexOf(t);
+     var idx = cvm_layer_list.indexOf(t);
      if (idx > -1) {
-       ucvm_layer_list.splice(idx, 1);
+       cvm_layer_list.splice(idx, 1);
      }
   }
 }
@@ -256,7 +256,7 @@ function load_a_layergroup(uid,type,group,highlight) {
      window.console.log("already plotted this layer ",uid);
      return;
    }
-   ucvm_layer_list.push({"uid":uid, "type":type, "group": group,"highlight":highlight});
+   cvm_layer_list.push({"uid":uid, "type":type, "group": group,"highlight":highlight});
 }
 
 function add_a_layer(uid,layer) {
@@ -344,18 +344,18 @@ function toggle_a_layergroup(uid) {
       if(h==EYE_NORMAL) {
         highlight_layergroup(group);
         found['highlight']=EYE_HIGHLIGHT;
-        $('#ucvm_layer_'+uid).addClass('ucvm-active');
+        $('#cvm_layer_'+uid).addClass('cvm-active');
       } else if (h==EYE_HIGHLIGHT) {
         hide_layergroup(group);
         found['highlight']=EYE_HIDE;
-        $('#ucvm_layer_'+uid).removeClass('ucvm-active');
-        $('#ucvm_layer_'+uid).removeClass('glyphicon-eye-open');
-        $('#ucvm_layer_'+uid).addClass('glyphicon-eye-close');
+        $('#cvm_layer_'+uid).removeClass('cvm-active');
+        $('#cvm_layer_'+uid).removeClass('glyphicon-eye-open');
+        $('#cvm_layer_'+uid).addClass('glyphicon-eye-close');
       } else if (h==EYE_HIDE) {
         unhighlight_layergroup(group);
         found['highlight']=EYE_NORMAL;
-        $('#ucvm_layer_'+uid).addClass('glyphicon-eye-open');
-        $('#ucvm_layer_'+uid).removeClass('glyphicon-eye-close');
+        $('#cvm_layer_'+uid).addClass('glyphicon-eye-open');
+        $('#cvm_layer_'+uid).removeClass('glyphicon-eye-close');
       }
       } else {
         window.console.log("toggle_a_layergroup.. can not find this uid ",uid);
@@ -367,7 +367,7 @@ function toggle_a_layergroup(uid) {
 function add_bounding_area(uid, a,b,c,d) {
   var group=addAreaLayerGroup(a,b,c,d);
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]};
-  ucvm_area_list.push(tmp);
+  cvm_area_list.push(tmp);
   load_a_layergroup(uid, AREA_ENUM, group, EYE_NORMAL);
 }
 
@@ -380,10 +380,10 @@ function add_bounding_area_layer(layer,a,b,c,d) {
   if(dirty_layer_uid) {
     remove_a_layer(dirty_layer_uid);
   }
-  var uid=getRnd("UCVM");
+  var uid=getRnd("CVM");
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]};
   set_area_latlons(uid,a,b,c,d);
-  ucvm_area_list.push(tmp);
+  cvm_area_list.push(tmp);
   var group=L.layerGroup([layer]);
   viewermap.addLayer(group);
 
@@ -393,14 +393,14 @@ function add_bounding_area_layer(layer,a,b,c,d) {
 /*** special handle for a file of points ***/
 function add_file_of_point(uid, fobj) {
   var tmp={"uid":uid,"file":fobj.name};
-  ucvm_point_file_list.push(tmp);
+  cvm_point_file_list.push(tmp);
 }
 
 function add_bounding_file_points(uid, darray) {
    var latlngs=makeLatlngs(darray);
    var group=addPointsLayerGroup(latlngs);
    var tmp={"uid":uid, "latlngs":latlngs};
-   ucvm_file_points_list.push(tmp);
+   cvm_file_points_list.push(tmp);
    load_a_layergroup(uid, POINT_ENUM, group, EYE_HIGHLIGHT);
 }
 
@@ -410,7 +410,7 @@ function add_bounding_point(uid,a,b) {
   }
   var group=addPointLayerGroup(a,b);
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
-  ucvm_point_list.push(tmp);
+  cvm_point_list.push(tmp);
   load_a_layergroup(uid,POINT_ENUM,group, EYE_NORMAL);
 }
 
@@ -418,10 +418,10 @@ function add_bounding_point_layer(layer,a,b) {
   if(dirty_layer_uid) {
     remove_a_layer(dirty_layer_uid);
   }
-  var uid=getRnd("UCVM");
+  var uid=getRnd("CVM");
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
   set_point_latlons(uid,a,b);
-  ucvm_point_list.push(tmp);
+  cvm_point_list.push(tmp);
   var group=L.layerGroup([layer]);
   viewermap.addLayer(group);
 
@@ -437,7 +437,7 @@ function add_bounding_profile(uid,a,b) {
   window.console.log("adding_bounding_profile");
   var group=addProfileLayerGroup(a,b);
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
-  ucvm_profile_list.push(tmp);
+  cvm_profile_list.push(tmp);
   load_a_layergroup(uid,PROFILE_ENUM,group,EYE_NORMAL);
 }
 
@@ -446,10 +446,10 @@ function add_bounding_profile_layer(layer,a,b) {
   if(dirty_layer_uid) {
     remove_a_layer(dirty_layer_uid);
   }
-  var uid=getRnd("UCVM");
+  var uid=getRnd("CVM");
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
   set_profile_latlons(uid,a,b);
-  ucvm_profile_list.push(tmp);
+  cvm_profile_list.push(tmp);
   var group=L.layerGroup([layer]);
   viewermap.addLayer(group);
 
@@ -466,7 +466,7 @@ function remove_bounding_profile_layer(uid) {
 function add_bounding_line(uid,a,b,c,d) {
   var group =addLineLayerGroup(a,b,c,d);
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]};
-  ucvm_line_list.push(tmp);
+  cvm_line_list.push(tmp);
   load_a_layergroup(uid,LINE_ENUM,group);
 }
 
@@ -478,10 +478,10 @@ function add_bounding_line_layer(layer,a,b,c,d) {
   if(dirty_layer_uid) {
     remove_a_layer(dirty_layer_uid);
   }
-  var uid=getRnd("UCVM");
+  var uid=getRnd("CVM");
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]};
   set_line_latlons(uid,a,b,c,d);
-  ucvm_line_list.push(tmp);
+  cvm_line_list.push(tmp);
   var group=L.layerGroup([layer]);
   viewermap.addLayer(group);
 

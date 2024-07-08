@@ -1,5 +1,5 @@
 /***
-   ucvm_query.js
+   cvm_query.js
 
 ***/
 
@@ -162,7 +162,7 @@ function getMaterialPropertyByLatlon() {
     }
 
     if(uid == '') {
-      uid=getRnd("UCVM");
+      uid=getRnd("CVM");
       set_point_UID(uid);    
       // must be coming from the sidebar and so need to plot on map..
       add_bounding_point(uid,latstr,lonstr);
@@ -215,7 +215,7 @@ function plotCrossSection() {
 
     var uid=document.getElementById("lineUIDTxt").value;
     if(uid == '') {
-      uid=getRnd("UCVM");
+      uid=getRnd("CVM");
       set_line_UID(uid);
       add_bounding_line(uid,firstlatstr,firstlonstr,secondlatstr,secondlonstr);
       } else {    
@@ -322,7 +322,7 @@ function plotVerticalProfile() {
     if(uid != '') {
       reset_dirty_uid();
       } else {
-        uid=getRnd("UCVM");
+        uid=getRnd("CVM");
     }
 
     // setup a dataarray
@@ -356,7 +356,7 @@ function plotHorizontalSlice() {
     }
 
     if(uid == '') {
-      uid=getRnd("UCVM");
+      uid=getRnd("CVM");
       set_area_UID(uid);
       add_bounding_area(uid,firstlatstr,firstlonstr,secondlatstr,secondlonstr);
       } else {    
@@ -417,7 +417,7 @@ function plotZ10Slice() {
     }
 
     if(uid == '') {
-      uid=getRnd("UCVM");
+      uid=getRnd("CVM");
       set_area_UID(uid);
       add_bounding_area(uid,firstlatstr,firstlonstr,secondlatstr,secondlonstr);
       } else {    
@@ -470,7 +470,7 @@ function plotZ25Slice() {
     }
 
     if(uid == '') {
-      uid=getRnd("UCVM");
+      uid=getRnd("CVM");
       set_area_UID(uid);
       add_bounding_area(uid,firstlatstr,firstlonstr,secondlatstr,secondlonstr);
       } else {    

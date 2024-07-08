@@ -41,7 +41,7 @@ function plotly_profile_run(){
 
 /**** the profile uid ***/
 function get_all_highlight_profile_list() {
-   var cnt=ucvm_profile_list.length;
+   var cnt=cvm_profile_list.length;
    var plist=[];
    if(cnt == 0) { // none to look at
      window.console.log("no highlighted profile data");
@@ -51,7 +51,7 @@ function get_all_highlight_profile_list() {
      var item;
      var uid;
      for(i=0;i<cnt;i++) {
-       item=ucvm_profile_list[i];
+       item=cvm_profile_list[i];
        uid=item['uid']; 
        // it is highlighted 
        if(isLayergroupHigh(uid)) {

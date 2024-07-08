@@ -1,6 +1,6 @@
 /**
 
-  ucvm_sidebar.js
+  cvm_sidebar.js
 
 **/
 

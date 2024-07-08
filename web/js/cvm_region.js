@@ -1,6 +1,6 @@
 /****
 
-  ucvm_region.js
+  cvm_region.js
 
 ****/
 /* small cs242
@@ -10,7 +10,7 @@
 {'lon':-122.160679,'lat':37.801680},
 */
 
-var UCVM_tb={
+var CVM_tb={
 "models": [
     {'id':24,
      'model name':'CS 242',

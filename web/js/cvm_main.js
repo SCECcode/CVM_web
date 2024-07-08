@@ -1,5 +1,5 @@
 /***
-   ucvm_main.c
+   cvm_main.c
 
 ***/
 

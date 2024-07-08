@@ -1,5 +1,5 @@
 /***
-   ucvm_state.js
+   cvm_state.js
 
 ***/
 
@@ -8,7 +8,7 @@
 //   tracks uid+meta in external state_uid.json
 function saveUserStateToFile(stateblob) {
    var uid=getRnd("");
-   var sname="ucvm_state_"+uid+".json";
+   var sname="cvm_state_"+uid+".json";
 }
 
 

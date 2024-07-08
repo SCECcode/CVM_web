@@ -20,7 +20,7 @@ $header = getHeader("Viewer");
     <link rel="stylesheet" href="css/vendor/glyphicons.css">
     <link rel="stylesheet" href="css/vendor/animation.css">
 
-    <link rel="stylesheet" href="css/ucvm-ui.css">
+    <link rel="stylesheet" href="css/cvm-ui.css">
     <link rel="stylesheet" href="css/scec-ui.css">
     <link rel="stylesheet" href="css/sidebar.css">
 
@@ -69,24 +69,24 @@ $header = getHeader("Viewer");
     <script type='text/javascript' src="plugin/Leaflet.draw/edit/handler/Edit.CircleMarker.js"></script>
     <script type='text/javascript' src="plugin/Leaflet.draw/edit/handler/Edit.Circle.js"></script>
 
-    <!-- ucvm js -->
+    <!-- cvm js -->
     <script type="text/javascript" src="js/debug.js"></script>
-    <script type="text/javascript" src="js/ucvm_leaflet.js"></script>
-    <script type="text/javascript" src="js/ucvm_layer.js"></script>
-    <script type="text/javascript" src="js/ucvm_region.js"></script>
+    <script type="text/javascript" src="js/cvm_leaflet.js"></script>
+    <script type="text/javascript" src="js/cvm_layer.js"></script>
+    <script type="text/javascript" src="js/cvm_region.js"></script>
     <!-- ??? -->
-    <script type="text/javascript" src="js/ucvm_region_util.js"></script>
-    <script type="text/javascript" src="js/ucvm_util.js"></script>
-    <script type="text/javascript" src="js/ucvm_ui.js"></script>
-    <script type="text/javascript" src="js/ucvm_main.js"></script>
-    <script type="text/javascript" src="js/ucvm_query.js"></script>
-    <script type="text/javascript" src="js/ucvm_sidebar.js"></script>
-    <script type="text/javascript" src="js/ucvm_state.js"></script>
+    <script type="text/javascript" src="js/cvm_region_util.js"></script>
+    <script type="text/javascript" src="js/cvm_util.js"></script>
+    <script type="text/javascript" src="js/cvm_ui.js"></script>
+    <script type="text/javascript" src="js/cvm_main.js"></script>
+    <script type="text/javascript" src="js/cvm_query.js"></script>
+    <script type="text/javascript" src="js/cvm_sidebar.js"></script>
+    <script type="text/javascript" src="js/cvm_state.js"></script>
     <script type="text/javascript" src="js/cxm_misc_util.js"></script>
     <script type="text/javascript" src="js/gfm_region.js"></script>
 
     <!-- plotly profile -->
-    <script type="text/javascript" src="js/ucvm_profile_util.js"></script>
+    <script type="text/javascript" src="js/cvm_profile_util.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics o
 TODO: need a new id
@@ -133,22 +133,22 @@ TODO: need a new id
 
     <div class="row">
         <div class="col-12">
-            <p>The <a href="https://www.scec.org/research/ucvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from UCVM.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
+            <p>The <a href="https://www.scec.org/research/ucvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
         </div>
     </div>
 
 <!--- MISC --->
 <div id="miscTools">
   <div class="d-flex flex-row justify-content-end">
-    <button class="btn ucvm-small-btn" title="display CFM5.3 faults" onclick='toggleShowCFM()'>
-       <span id="ucvm_cfm_btn" class="glyphicon glyphicon-ok-sign"></span>CFM5.3</button>
-    <button class="btn ucvm-small-btn" title="display GFM regions" onclick='toggleShowCRM()'>
-       <span id="ucvm_crm_btn" class="glyphicon glyphicon-ok-sign"></span>GFM1.0</button>
-    <button class="btn ucvm-small-btn" title="display CTM regions" onclick='toggleShowCTM()'>
-       <span id="ucvm_ctm_btn" class="glyphicon glyphicon-ok-sign"></span>CTM</button>
+    <button class="btn cvm-small-btn" title="display CFM6.0 faults" onclick='toggleShowCFM()'>
+       <span id="cvm_cfm_btn" class="glyphicon glyphicon-ok-sign"></span>CFM6.0</button>
+    <button class="btn cvm-small-btn" title="display GFM regions" onclick='toggleShowCRM()'>
+       <span id="cvm_crm_btn" class="glyphicon glyphicon-ok-sign"></span>GFM1.0</button>
+    <button class="btn cvm-small-btn" title="display CTM regions" onclick='toggleShowCTM()'>
+       <span id="cvm_ctm_btn" class="glyphicon glyphicon-ok-sign"></span>CTM</button>
 <!--
-    <button class="btn ucvm-small-btn" title="display CRM points" onclick='toggleShowCRMPoints()'>
-       <span id="ucvm_crm_point_btn" class="glyphicon glyphicon-ok-sign"></span>CRM Points</button>
+    <button class="btn cvm-small-btn" title="display CRM points" onclick='toggleShowCRMPoints()'>
+       <span id="cvm_crm_point_btn" class="glyphicon glyphicon-ok-sign"></span>CRM Points</button>
 -->
    </div>
 </div>
@@ -161,7 +161,7 @@ TODO: need a new id
 
   <!-- hidden btn to do profile comparison -->
     <div>
-        <button id="plotProfileBtn" onclick="" class="btn ucvm-small-btn" data-toggle="modal" data-target="#modalProfile" style="display:none" onclick="$('#sidebar').hide();"></button>
+        <button id="plotProfileBtn" onclick="" class="btn cvm-small-btn" data-toggle="modal" data-target="#modalProfile" style="display:none" onclick="$('#sidebar').hide();"></button>
     </div>
 
     <div id="content-container" class="row flex-row flex-wrap">
@@ -171,7 +171,7 @@ TODO: need a new id
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="modelType" >Select Model Type</label>
                 </div>
-                <select id="modelType" class="custom-select"></select>&nbsp;<button class="btn ucvm-top-small-btn" data-toggle="modal" data-target="#modalmt" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+                <select id="modelType" class="custom-select"></select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalmt" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div>
 <!-- special pull-out for elygtl -->
             <div id="zrange" class="input-group mt-1" style="display:none;"> 
@@ -232,7 +232,7 @@ TODO: need a new id
                 <select id="zModeType" class="custom-select">
                     <option value="d">Depth</option>
                     <option value="e">Elevation</option>
-                </select>&nbsp;<button class="btn ucvm-top-small-btn" data-toggle="modal" data-target="#modalzm" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+                </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzm" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div>
             <div class="input-group filters">
                 <select id="search-type" class="custom-select">
@@ -255,7 +255,7 @@ TODO: need a new id
                             <div id='startMenu' class='menu'>
                                 <div class="row mt-2 pl-5">
                                     <div class="col-12 mt-2" style="font-size:14px" >
-                                       <h5><span class="glyphicon glyphicon-chevron-down"></span> Pick a UCVM model</h5>
+                                       <h5><span class="glyphicon glyphicon-chevron-down"></span> Pick a CVM model</h5>
                                        <h5><span class="glyphicon glyphicon-chevron-down"></span> Select either Depth or Elevation mode</h5>
                                        <h5><span class="glyphicon glyphicon-chevron-down"></span> Select an option</h5>
                                        <div class="col-10">
@@ -313,7 +313,7 @@ TODO: need a new id
                                     </div>
                                     <div class="col-0 pr-0">
                                         <button id="pointBtn" type="button" title="query with latlon"
-                                                class="btn btn-default ucvm-small-btn " onclick="processByLatlonForPoint()">
+                                                class="btn btn-default cvm-small-btn " onclick="processByLatlonForPoint()">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
@@ -323,9 +323,9 @@ TODO: need a new id
                                 </div>
                                 <div class="mt-2">
                                      <input class="form-control" id='infileBtn' type='file' onchange='selectLocalFiles(this.files,1)' style='display:none;'></input>
-                                     <button id="fileSelectBtn" class="btn ucvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("infileBtn").click();'>
+                                     <button id="fileSelectBtn" class="btn cvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("infileBtn").click();'>
                                      <span class="glyphicon glyphicon-file"></span> Select file to use</button>
-<button class="btn ucvm-top-small-btn" data-toggle="modal" data-target="#modalfile" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalfile" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
                             </div>
                         </li>
@@ -382,7 +382,7 @@ TODO: need a new id
                                     </div>
                                     <div class="col-0 pr-0">
                                         <button id="profileBtn" type="button" title="query with latlon"
-                                                class="btn btn-default ucvm-small-btn " onclick="processByLatlonForProfile()">
+                                                class="btn btn-default cvm-small-btn " onclick="processByLatlonForProfile()">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
@@ -390,9 +390,9 @@ TODO: need a new id
 <!---XXX----->
                                 <div class="mt-2">
                                      <input class="form-control" id='inprofilefileBtn' type='file' onchange='selectLocalFiles(this.files,0)' style='display:none;'></input>
-                                     <button id="profilefileSelectBtn" class="btn ucvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("inprofilefileBtn").click();'>
+                                     <button id="profilefileSelectBtn" class="btn cvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("inprofilefileBtn").click();'>
                                      <span class="glyphicon glyphicon-file"></span> Select file to use</button>
-<button class="btn ucvm-top-small-btn" data-toggle="modal" data-target="#modalprofilefile" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalprofilefile" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
 <!---XXX----->
                             </div>
@@ -465,7 +465,7 @@ TODO: need a new id
                                     </div>
                                     <div class="col-0 pr-0">
                                         <button id="areaBtn" type="button" title="query with latlon"
-                                                class="btn btn-default ucvm-small-btn " onclick="processByLatlonForLine()">
+                                                class="btn btn-default cvm-small-btn " onclick="processByLatlonForLine()">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
@@ -537,7 +537,7 @@ TODO: need a new id
                                     </div>
                                     <div class="col-0 pr-0">
                                         <button id="areaBtn" type="button" title="query with latlon"
-                                                class="btn btn-default ucvm-small-btn " onclick="processByLatlonForArea()">
+                                                class="btn btn-default cvm-small-btn " onclick="processByLatlonForArea()">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
@@ -559,18 +559,22 @@ TODO: need a new id
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="mapLayer">Select Map Type</label>
                     </div>
-                    <select id="mapLayer" class="custom-select custom-select-sm" onchange="switchBaseLayer(this.value);">
+                    <select id="mapLayer" class="custom-select custom-select-sm"
+                                           onchange="switchLayer(this.value);">
                         <option selected value="esri topo">ESRI Topographic</option>
-                        <option value="esri NG">ESRI National Geographic</option>
                         <option value="esri imagery">ESRI Imagery</option>
+                        <option value="jawg light">Jawg Light</option>
+                        <option value="jawg dark">Jawg Dark</option>
+                        <option value="osm streets relief">OSM Streets Relief</option>
                         <option value="otm topo">OTM Topographic</option>
                         <option value="osm street">OSM Street</option>
+                        <option value="esri terrain">ESRI Terrain</option>
                     </select>
                 </div>
             </div>
             <div class="row mapData">
                 <div class="col-12 pr-0 pl-2 pt-0"> 
-                    <div class="row w-100 mb-1" id='UCVM_plot'
+                    <div class="row w-100 mb-1" id='CVM_plot'
                          style="position:relative;border:solid 1px #ced4da; height:576px;">
                     </div>
                 </div>
@@ -580,8 +584,8 @@ TODO: need a new id
         <div id="result-container" class="row d-flex flex-column">
 
            <div class="col-12 flex-row" align="end">
-               <button class="btn ucvm-top-small-btn" title="download all the material property in the table" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
-               <button class="btn ucvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalParameters" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button></td>
+               <button class="btn cvm-top-small-btn" title="download all the material property in the table" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
+               <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalParameters" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button></td>
             </div>
             <div class="col-12 mb-0" id="mp-table">
                 <div id="materialPropertyTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
@@ -594,13 +598,13 @@ TODO: need a new id
             </div> <!-- mp-table -->
 
             <div class="col-12 flex-row" align="end">
-                <button class="btn ucvm-top-small-btn dropdown-toggle" data-toggle="dropdown"></button>
+                <button class="btn cvm-top-small-btn dropdown-toggle" data-toggle="dropdown"></button>
                 <ul id='processMetaPlotResultTableList' class="dropdown-menu list-inline" role="menu">
                    <li data-id='s' hidden >Save All</li>
                    <li id='mprCollapseLi' data-id='c' hidden>Collapse</li>
                    <li data-id='p'>plot Depth Profile</li>
                 </ul>
-                <button class="btn ucvm-top-small-btn" data-toggle="modal" data-target="#modalff" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button></td>
+                <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalff" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button></td>
             </div>
             <div class="col-12  mt-0 mb-4" id="result-table">
                <div id="metadataPlotTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">

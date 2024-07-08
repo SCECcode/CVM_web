@@ -1,5 +1,5 @@
 /***
-   ucvm_util.js
+   cvm_util.js
 
 ***/
 
@@ -347,7 +347,7 @@ function readAndProcessLocalFileForPoint(fobj) {
     if(chunks == 1)
        chunk_size=cnt;
 
-    var uid=getRnd("UCVM");
+    var uid=getRnd("CVM");
      
     add_file_of_point(uid,fobj);
     getMaterialPropertyByLatlonList(uid,fdata,0, chunks, chunk_size);
