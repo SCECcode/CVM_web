@@ -26,6 +26,7 @@ $header = getHeader("Viewer");
 
     <script type="text/javascript" src="js/vendor/leaflet.js"></script>
     <script type='text/javascript' src='js/vendor/leaflet.awesome-markers.js'></script>
+
     <script type='text/javascript' src='js/vendor/popper.min.js'></script>
     <script type='text/javascript' src='js/vendor/jquery.min.js'></script>
     <script type='text/javascript' src='js/vendor/jquery.csv.js'></script>
@@ -37,6 +38,10 @@ $header = getHeader("Viewer");
 
     <script type='text/javascript' src='js/vendor/FileSaver.js'></script>
     <script type='text/javascript' src='js/vendor/jszip.js'></script>
+
+    <script type='text/javascript' src='js/vendor/leaflet-kmz-src.js'></script>
+    <script type='text/javascript' src='js/vendor/leaflet.markercluster-src.js'></script>
+
     <script type='text/javascript' src='js/vendor/jquery.floatThead.min.js'></script>
     <script type='text/javascript' src='js/vendor/jquery.tabletojson.min.js'></script>
 
@@ -87,6 +92,7 @@ $header = getHeader("Viewer");
     <script type="text/javascript" src="js/cvm_state.js"></script>
     <script type="text/javascript" src="js/cxm_misc_util.js"></script>
     <script type="text/javascript" src="js/gfm_region.js"></script>
+    <script type="text/javascript" src="js/cxm_kml.js?v=1"></script>
 
     <!-- plotly profile -->
     <script type="text/javascript" src="js/cvm_profile_util.js"></script>
@@ -556,8 +562,26 @@ TODO: need a new id
             </div> <!-- pull-out -->
           </div>
         </div> <!-- control-container -->
-        <div id="map-container" class="col-7">
-            <div class="col-8 d-flex mb-1" style="margin-left:35%">
+        <div id="map-container" class="col-7" style="border:1px solid green">
+
+
+
+            <div class="col-8 d-flex mb-1" style="margin-left:35%; border:1px solid red;">
+
+<!-- KML/KMZ overlay -->
+            <div id="kml-row" class="col-2 custom-control-inline mb-1">
+                    <input id="fileKML" type='file' multiple onchange='uploadKMLFile(this.files)' style='display:none;'></input>
+                    <button id="kmlBtn" class="btn"
+                      onclick='javascript:document.getElementById("fileKML").click();'
+                      title="Upload your own kml/kmz file to be displayed on the map interface. We currently support points, lines, paths, polygons, and image overlays (kmz only)."
+                      style="color:#395057;background-color:#f2f2f2;border:1px solid #ced4da;border-radius:0.2rem;padding:0.15rem 0.5rem;"><span>Upload kml/kmz</span></button>
+                    <button id="kmlSelectBtn" class="btn cxm-small-no-btn"
+                      title="Show/Hide uploaded kml/kmz files"
+                      style="display:none;" data-toggle="modal" data-target="#modalkmlselect">
+                      <span id="eye_kml"  class="glyphicon glyphicon-eye-open"></span></button>
+            </div> <!-- kml-row -->
+
+
                 <div class="input-group input-group-sm" id="map-controls">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="mapLayer">Select Map Type</label>
@@ -624,6 +648,26 @@ TODO: need a new id
         </div> <!-- wrap result -->
     </div> <!-- content-container -->
 </div> <!-- container main -->
+
+<!--Modal: (modalkmlselect) -->
+<div class="modal" id="modalkmlselect" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-small" id="modalkmlselectDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalkmlselectContent">
+      <!--Body-->
+      <div class="modal-body" id="modalkmlselectBody">
+        <div class="row col-md-12 ml-auto" style="overflow:hidden;">
+          <div class="col-12" id="kmlselectTable-container" style="font-size:14pt"></div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-outline-primary btn-md" data-dismiss="modal">Close</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalkmlselect-->
 
 <!--Modal: Parameters Table -->
 <div class="modal" id="modalParameters" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
