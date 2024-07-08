@@ -4,6 +4,9 @@
 
 var scecAttribution ='<a href="https://www.scec.org">SCEC</a>';
 
+var init_map_zoom_level = 6.0;
+var init_map_coordinates = [34.3, -118.4];
+
 // This is leaflet specific utilities
 var rectangle_options = {
        showArea: false,
@@ -66,44 +69,67 @@ function refresh_map()
   if (viewermap == undefined) {
     window.console.log("refresh_map: BAD BAD BAD");
     } else {
-      viewermap.setView([34.3, -118.4], 6);
+      viewermap.setView(init_map_coordinates,init_map_zoom_level);
   }
 }
 
 function setup_viewer()
 {
 // esri
-  var esri_topographic = L.esri.basemapLayer("Topographic");
-  var esri_imagery = L.esri.basemapLayer("Imagery");
-  var esri_ng = L.esri.basemapLayer("NationalGeographic");
+// web@scec.org  - ArcGIS apiKey, https://leaflet-extras.github.io/leaflet-providers/preview/
+// https://www.esri.com/arcgis-blog/products/developers/developers/open-source-developers-time-to-upgrade-to-the-new-arcgis-basemap-layer-service/
+
+  var esri_apiKey = "AAPK2ee0c01ab6d24308b9e833c6b6752e69Vo4_5Uhi_bMaLmlYedIB7N-3yuFv-QBkdyjXZZridaef1A823FMPeLXqVJ-ePKNy";
+  var esri_topographic = L.esri.Vector.vectorBasemapLayer("ArcGIS:Topographic", {apikey: esri_apiKey});
+  var esri_imagery = L.esri.Vector.vectorBasemapLayer("ArcGIS:Imagery", {apikey: esri_apiKey});
+  var osm_streets_relief= L.esri.Vector.vectorBasemapLayer("OSM:StreetsRelief", {apikey: esri_apiKey});
+  var esri_terrain = L.esri.Vector.vectorBasemapLayer("ArcGIS:Terrain", {apikey: esri_apiKey});
 
 // otm topo
   var topoURL='https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
   var topoAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreeMap</a> contributors,<a href=http://viewfinderpanoramas.org"> SRTM</a> | &copy; <a href="https://www.opentopomap.org/copyright">OpenTopoMap</a>(CC-BY-SA)';
- L.tileLayer(topoURL, { detectRetina: true, attribution: topoAttribution})
+  L.tileLayer(topoURL, { detectRetina: true, attribution: topoAttribution, maxZoom:16 })
 
-  var otm_topographic = L.tileLayer(topoURL, { detectRetina: true, attribution: topoAttribution});
+  var otm_topographic = L.tileLayer(topoURL, { detectRetina: true, attribution: topoAttribution, maxZoom:16});
+
+  var jawg_dark = L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	minZoom: 0,
+	maxZoom: 16,
+	accessToken: 'hv01XLPeyXg9OUGzUzaH4R0yA108K1Y4MWmkxidYRe5ThWqv2ZSJbADyrhCZtE4l'});
+
+  var jawg_light = L.tileLayer('https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	minZoom: 0,
+	maxZoom: 16,
+	accessToken: 'hv01XLPeyXg9OUGzUzaH4R0yA108K1Y4MWmkxidYRe5ThWqv2ZSJbADyrhCZtE4l' });
 
 // osm street
   var openURL='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   var openAttribution ='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-  var osm_street=L.tileLayer(openURL, {attribution: openAttribution});
+  var osm_street=L.tileLayer(openURL, {attribution: openAttribution, maxZoom:16});
 
   baseLayers = {
     "esri topo" : esri_topographic,
-    "esri NG" : esri_ng,
     "esri imagery" : esri_imagery,
+    "jawg light" : jawg_light,
+    "jawg dark" : jawg_dark,
+    "osm streets relief" : osm_streets_relief,
     "otm topo": otm_topographic,
-    "osm street" : osm_street
+    "osm street" : osm_street,
+    "esri terrain": esri_terrain
   };
+
   var overLayer = {};
   var basemap = L.layerGroup();
   currentLayer = esri_topographic;
 
 // ==> mymap <==
-  mymap = L.map('CVM_plot', { drawControl:false, layers: [esri_topographic, basemap], zoomControl:true} );
-  mymap.setView([34.3, -118.4], 6);
+  mymap = L.map('CVM_plot', { zoomSnap: 0.25, drawControl:false, zoomControl:true, maxZoom:16} );
+  mymap.setView(init_map_coordinates,init_map_zoom_level);
   mymap.attributionControl.addAttribution(scecAttribution);
+
+  esri_topographic.addTo(mymap);
 
 // basemap selection
   var ctrl_div=document.getElementById('external_leaflet_control');
@@ -138,11 +164,11 @@ function setup_viewer()
       drawProfile();
       return;
     }
-    if( in_drawing_line() ) { 
+    if( in_drawing_line() ) {
       drawLine();
       return;
     }
-    if( in_drawing_area()) { 
+    if( in_drawing_area()) {
       drawArea();
       return;
     }
@@ -169,8 +195,8 @@ function setup_viewer()
   mymap.on('mouseover', onMapMouseOver);
   mymap.on('mouseout', onMapMouseOut);
 
+// ??? not sure
   L.marker([-120,32], {icon: myIcon}).addTo(mymap);
-
 
 // ==> point drawing control <==
   pointDrawer = new L.Draw.Marker(mymap, point_options);
@@ -180,43 +206,19 @@ function setup_viewer()
   lineDrawer = new L.Draw.Polyline(mymap, line_options);
 // ==> area/rectangle drawing control <==
   rectangleDrawer = new L.Draw.Rectangle(mymap, rectangle_options);
+// enable the expand view key
+  $("#CVM_plot").prepend($("#expand-view-key-container").html());
 
-  mymap.on(L.Draw.Event.CREATED, function (e) {
-    var type = e.layerType,
-        layer = e.layer;
-
-    if (type === 'rectangle') {  // tracks retangles
-        // get the boundary of the rectangle
-        var latlngs=layer.getLatLngs();
-        // first one is always the south-west,
-        // third one is always the north-east
-        var loclist=latlngs[0];
-        var sw=loclist[0];
-        var ne=loclist[2];
-        if(sw != undefined && ne != undefined) {
-          add_bounding_area_layer(layer,sw['lat'],sw['lng'],ne['lat'],ne['lng']);
-        }
-    } else if (type === 'marker') {  // can be a point or a profile
-        var sw=layer.getLatLng();
-        if( in_drawing_profile() ) {
-          add_bounding_profile_layer(layer,sw['lat'],sw['lng']);
-          } else {
-            add_bounding_point_layer(layer,sw['lat'],sw['lng']);
-        }
-    } else if (type === 'polyline') {  // tracks lines
-        var latlngs=layer.getLatLngs();
-        var sw=latlngs[0];
-        var ne=latlngs[1];
-        if(sw != undefined && ne != undefined) {
-          add_bounding_line_layer(layer,sw['lat'],sw['lng'],ne['lat'],ne['lng']);
-        }
-    }
-  });
-
+// should  only have 1, adjust the attribution's location
+  let v= document.getElementsByClassName("leaflet-control-attribution")[0];
+  v.style.right="1.5rem";
+  v.style.height="1.4rem";
+  v.style.width="35rem";
 
 // finally,
   return mymap;
 }
+
 
 function drawArea(){ rectangleDrawer.enable(); }
 function skipArea(){ rectangleDrawer.disable(); }
