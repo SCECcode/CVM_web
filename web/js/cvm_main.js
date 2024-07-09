@@ -15,9 +15,11 @@ jQuery(document).ready(function() {
   setup_fileFormat();
   setup_parameter();
   setup_ZMode();
+
   setup_CFM();
   setup_CRM();
   setup_CTM();
+
 //  setup_CRMPoints();
 
   $(".popup").hide();
@@ -108,6 +110,31 @@ jQuery(document).ready(function() {
   $("#plotProfileBtn").click(function(e) {
       plotly_profile_run();
   });
+
+    $("#cvm-model-cfm").on('click', function () {
+        if ($(this).prop('checked')) {
+            CXM.showCFMFaults(viewermap);
+        } else {
+            CXM.hideCFMFaults(viewermap);
+        }
+    });
+    
+    $("#cvm-model-gfm").change(function() {
+      if ($("#cgm-model-gfm").prop('checked')) { 
+          CXM.showGFMRegions(viewermap);
+          } else {
+              CXM.hideGFMRegions(viewermap);
+      } 
+    });     
+
+    $("#cvm-model-ctm").change(function() {
+      if ($("#cgm-model-ctm").prop('checked')) {
+          CXM.showGFMRegions(viewermap);
+          } else {
+              CXM.hideGFMRegions(viewermap);
+      }
+    });
+
 
 }) // end of MAIN
 

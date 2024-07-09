@@ -93,6 +93,7 @@ $header = getHeader("Viewer");
     <script type="text/javascript" src="js/cxm_misc_util.js"></script>
     <script type="text/javascript" src="js/gfm_region.js"></script>
     <script type="text/javascript" src="js/cxm_kml.js?v=1"></script>
+    <script type="text/javascript" src="js/cxm_model_util.js?v=1"></script>
 
     <!-- plotly profile -->
     <script type="text/javascript" src="js/cvm_profile_util.js"></script>
@@ -127,124 +128,182 @@ TODO: need a new id
 
     </script>
 </head>
+
 <body>
 <?php echo $header; ?>
 
+<div class="container container-fluid">
 
-<div class="container main container-fluid">
+<div id="cvmMain" class="main">
+
+<!-- hidden btn to do profile comparison -->
+    <div>
+        <button id="plotProfileBtn" onclick="" class="btn cvm-small-btn" data-toggle="modal" data-target="#modalProfile" style="display:none" onclick="$('#sidebar').hide();"></button>
+    </div>
+
+<!-- spinners -->
     <div class="spinDialog" style="position:absolute;top:50%;left:50%; z-index:9999;">
         <div id="spinIconForProperty" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
         <div id="spinIconForListProperty" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
         <div id="spinIconForProfile" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
         <div id="spinIconForLine" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i> </div>
         <div id="spinIconForArea" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
+    </div> <!-- spinDialog -->
+
+<!-- intro -->
+    <div id="top-intro" class="row">
+        <p>The <a href="https://www.scec.org/research/ucvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <p>The <a href="https://www.scec.org/research/ucvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
-        </div>
-    </div>
-
-<!--- MISC --->
-<div id="miscTools">
-  <div class="d-flex flex-row justify-content-end">
-    <button class="btn cvm-small-btn" title="display CFM6.1 faults" onclick='toggleShowCFM()'>
-       <span id="cvm_cfm_btn" class="glyphicon glyphicon-ok-sign"></span>CFM6.1</button>
-    <button class="btn cvm-small-btn" title="display GFM regions" onclick='toggleShowCRM()'>
-       <span id="cvm_crm_btn" class="glyphicon glyphicon-ok-sign"></span>GFM</button>
-    <button class="btn cvm-small-btn" title="display CTM regions" onclick='toggleShowCTM()'>
-       <span id="cvm_ctm_btn" class="glyphicon glyphicon-ok-sign"></span>CTM</button>
-<!--
-    <button class="btn cvm-small-btn" title="display CRM points" onclick='toggleShowCRMPoints()'>
-       <span id="cvm_crm_point_btn" class="glyphicon glyphicon-ok-sign"></span>CRM Points</button>
--->
-   </div>
-</div>
-   
+<!-- leaflet control -->
     <div class="row" style="display:none;">
         <div class="col justify-content-end custom-control-inline">
             <div style="display:none;" id="external_leaflet_control"></div>
         </div>
     </div>
 
-  <!-- hidden btn to do profile comparison -->
-    <div>
-        <button id="plotProfileBtn" onclick="" class="btn cvm-small-btn" data-toggle="modal" data-target="#modalProfile" style="display:none" onclick="$('#sidebar').hide();"></button>
-    </div>
-
-    <div id="content-container" class="row flex-row flex-wrap">
-        <div id="control-container" class="col-5">
-          <div class="col-12 mt-4" style="padding-top:10px; padding-left:0px; padding-righ:0px">
-            <div class="input-group filters mb-1">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="modelType" >Select Model Type</label>
+<!-- top-control-row-2 -->
+    <div id="top-control-row-2" class="row justify-content-end" style="border:0px solid blue">
+            <div id='model-options' class="form-check-inline">
+                <div class="form-check form-check-inline">
+                     <label class='form-check-label ml-1 mini-option'
+                             title='Show Community Fault Model v6.1 on map'
+                             for="cvm-model-cfm">
+                     <input class='form-check-inline mr-1'
+                             type="checkbox"
+                             id="cvm-model-cfm" value="1" />CFM6.1
+                     </label>
                 </div>
-                <select id="modelType" class="custom-select"></select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalmt" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+
+                <div class="form-check form-check-inline">
+                    <label class='form-check-label ml-1 mini-option'
+                             title='Show Community Geological Framework regions on map'
+                             for="cvm-model-gfm">
+                    <input class='form-check-inline mr-1'
+                             type="checkbox"
+                             id="cvm-model-gfm" value="1" />GFM
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class='form-check-label ml-1 mini-option'
+                             title='Show Community Thermal Model regions on map'
+                             for="cvm-model-ctm">
+                    <input class='form-check-inline mr-1'
+                             type="checkbox"
+                             id="cvm-model-ctm" value="1" />CTM
+                    </label>
+                </div>
             </div>
+
+<!-- KML/KMZ overlay -->
+            <div id="kml-row" class="col-2 custom-control-inline">
+                    <input id="fileKML" type='file' multiple onchange='uploadKMLFile(this.files)' style='display:none;'></input>
+                    <button id="kmlBtn" class="btn"
+                      onclick='javascript:document.getElementById("fileKML").click();'
+                      title="Upload your own kml/kmz file to be displayed on the map interface. We currently support points, lines, paths, polygons, and image overlays (kmz only)."
+                      style="color:#395057;background-color:#f2f2f2;border:1px solid #ced4da;border-radius:0.2rem;padding:0.15rem 0.5rem;"><span>Upload kml/kmz</span></button>
+                    <button id="kmlSelectBtn" class="btn cxm-small-no-btn"
+                      title="Show/Hide uploaded kml/kmz files"
+                      style="display:none;" data-toggle="modal" data-target="#modalkmlselect">
+                      <span id="eye_kml"  class="glyphicon glyphicon-eye-open"></span></button>
+            </div> <!-- kml-row -->
+
+            <div id="basemap-control" class="input-group input-group-sm custom-control-inline">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="basemapLayer">Select Map Type</label>
+                </div>
+                <select id="basemapLayer" class="custom-select custom-select-sm"
+                                           onchange="switchLayer(this.value);">
+                    <option selected value="esri topo">ESRI Topographic</option>
+                    <option value="esri imagery">ESRI Imagery</option>
+                    <option value="jawg light">Jawg Light</option>
+                    <option value="jawg dark">Jawg Dark</option>
+                    <option value="osm streets relief">OSM Streets Relief</option>
+                    <option value="otm topo">OTM Topographic</option>
+                    <option value="osm street">OSM Street</option>
+                    <option value="esri terrain">ESRI Terrain</option>
+                </select>
+            </div>
+    </div> <!-- top-control-row-2 -->
+
+<!-- model map control -->
+    <div id="mapDataBig" class="row mapData mt-2" style="border:0px solid green">
+
+        <div id="search-container" class="col-5 button-container flex-column pr-0" style="overflow:hidden;border:solid 0px red;">
+
+            <div class="input-group input-group-sm custom-control-inline" style="max-width:450px">
+               <div class="input-group-prepend">
+                     <label class="input-group-text" for="modelType">Select Model Type</label>
+               </div>
+               <select id="modelType" class="custom-select custom-select-sm"></select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalmt" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+            </div> <!-- model select -->
+
 <!-- special pull-out for elygtl -->
             <div id="zrange" class="input-group mt-1" style="display:none;"> 
                 <div class="row offset-2">
                 Z range:
-                <div class="col-4 pr-0">
+                  <div class="col-4 pr-0">
                     <input type="text"
                         id="zrangeStartTxt"
                         placeholder="Start"
                         title="zrange start"
                         onfocus="this.value=''"
                         class="form-control">
-                </div>
-                <div class="col-4 pr-0">
+                  </div>
+                  <div class="col-4 pr-0">
                     <input type="text"
                         id="zrangeStopTxt"
                         placeholder="Stop"
                         title="zrange stop"
                         onfocus="this.value=''"
                         class="form-control">
-                </div>
+                  </div>
                 </div>
             </div>
 <!-- special pull-out for elygtl, taper -->
             <div id="floors" class="input-group mt-1" style="display:none;"> 
                 <div class="row offset-2">
                 Floors:
-                <div class="col-3 pr-0">
+                  <div class="col-3 pr-0">
                     <input type="text"
                         id="vsFloorTxt"
                         placeholder="vsFloor"
                         title="vs floor value"
                         onfocus="this.value=''"
                         class="form-control">
-                </div>
-                <div class="col-3 pr-0">
+                  </div>
+                  <div class="col-3 pr-0">
                     <input type="text"
                         id="vpFloorTxt"
                         placeholder="vsFloor"
                         title="vp floor value"
                         onfocus="this.value=''"
                         class="form-control">
-                </div>
-                <div class="col-3 pr-0">
+                  </div>
+                  <div class="col-3 pr-0">
                     <input type="text"
                         id="densityFloorTxt"
                         placeholder="densityFloor"
                         title="density floor value"
                         onfocus="this.value=''"
                         class="form-control">
-                </div>
+                  </div>
                 </div>
             </div>
-            <div class="input-group filters mb-3 mt-1">
+
+            <div class="input-group input-group-sm custom-control-inline" style="max-width:450px">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="zModeType" >Select Z Mode</label>
+                    <label class="input-group-text" for="modelType">Select Z Model</label>
                 </div>
-                <select id="zModeType" class="custom-select">
+                <select id="zModeType" class="custom-select custom-select-sm">
                     <option value="d">Depth</option>
                     <option value="e">Elevation</option>
                 </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzm" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
-            </div>
-            <div class="input-group filters">
-                <select id="search-type" class="custom-select">
+            </div> <!-- z select -->
+
+            <div class="input-group input-group-sm filters">
+                <select id="search-type" class="custom-select custom-select-sm">
                     <option value="startClick">Select</option>
                     <option value="pointClick">0D Point</option>
                     <option disabled>-- Advanced --</option>
@@ -253,30 +312,18 @@ TODO: need a new id
                     <option value="areaClick">2D Horizontal Slice</option>
                 </select>
                 <div class="input-group-append">
-                    <button onclick="refreshAll();" class="btn btn-dark pl-4 pr-4" type="button">Reset</button>
+                    <button onclick="refreshAll();" class="btn btn-dark pl-4 pr-4" type="button">RESET</button>
                 </div>
-            </div>
-            <div class="row"> <!-- pull-out -->
-                <div class="col input-group">
-                    <ul id="sidebar" class="navigation pl-2 pb-2 pr-1" style="background:whitesmoke;display:none">
+            </div> <!-- query option -->
 
-                        <li id='start' class='navigationLi' style="display:none">
+<!-- selection pull-out -->
+	    <div id="sidebar-pull-out" class="row"> 
+                <div class="col input-group">
+                    <ul id="sidebar" class="navigation col-12 pl-2 pb-2 pr-1" style="background:yellow;display:none">
+                        <li id='sidebar-start' class='navigationLi' style="display:none">
                             <div id='startMenu' class='menu'>
                                 <div class="row mt-2 pl-5">
-                                    <div class="col-12 mt-2" style="font-size:14px" >
-                                       <h5><span class="glyphicon glyphicon-chevron-down"></span> Pick a CVM model</h5>
-                                       <h5><span class="glyphicon glyphicon-chevron-down"></span> Select either Depth or Elevation mode</h5>
-                                       <h5><span class="glyphicon glyphicon-chevron-down"></span> Select an option</h5>
-                                       <div class="col-10">
-                                       <ul>
-                                          <li style="list-style-type:disc">Query for material properties with<br>0D Point option</lib> 
-                                          <li style="list-style-type:disc">Plot depth or elevation profile with<br>1D Vertical Profile option</li> 
-                                          <li style="list-style-type:disc">Plot cross section for vs, vp, density or poisson data type with<br>2D Vertical Cross Section option</li>
-                                          <li style="list-style-type:disc">Plot horizontal slice of vs, vp, density, poisson or vs30 etree with<br>2D Horizontal Slice option </li>
-                                       </ul>
-                                       </div>
-                                       <br>
-                                       <h5> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</h5>
+                                    <div class="col-12 mt-2" style="font-size:0px" >
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +332,7 @@ TODO: need a new id
                             <div id='pointMenu' class='menu'>
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                       <p>Pick a point on the map, or enter latitude, longitude and Z value below or upload a file with LatLngs and matching Z values.</p>
+                                       <p>Pick a point on the map, or enter latitude, longitude and Z value below or upload a file with LatLngs and matching Z values</p>
                                     </div>
                                 </div>
                                 <div class="row d-flex">
@@ -343,7 +390,7 @@ TODO: need a new id
                             <div id='profileMenu' class='menu'>
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <p>Pick a profile point on the map or enter latitude and longitude below.</p>
+                                        <p>Pick a profile point on the map or enter latitude and longitude below</p>
                                     </div>
                                 </div>
                                 <div class="row d-flex">
@@ -411,7 +458,7 @@ TODO: need a new id
                             <div id='lineMenu' class='menu'>
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <p>Draw a line on the map or enter latitudes and longitudes below.</p>
+                                        <p>Draw a line on the map or enter latitudes and longitudes below</p>
                                     </div>
                                 </div>
                                 <div class="row d-flex ">
@@ -434,12 +481,6 @@ TODO: need a new id
                                                id="lineZStartTxt" 
                                                placeholder="Z start" 
                                                title="lineZStartTxt"
-                                               onfocus="this.value=''" 
-                                               class="form-control mt-1">
-                                        <input type="text"
-                                               id="lineZTxt" 
-                                               placeholder="Z ends" 
-                                               title="lineZTxt"
                                                onfocus="this.value=''" 
                                                class="form-control mt-1">
                                         <select title="Datatype" id="lineDataTypeTxt" class="my-custom-select custom-select mt-1">
@@ -465,6 +506,12 @@ TODO: need a new id
                                                onfocus="this.value=''"
                                                onchange="reset_line_presets()"
                                                class="form-control mt-1">
+                                               <input type="text"
+                                               id="lineZTxt"
+                                               placeholder="Z ends"
+                                               title="lineZTxt"
+                                               onfocus="this.value=''"
+                                               class="form-control mt-1">
                                         <input type="text"
                                                id="lineUIDTxt" 
                                                placeholder="UID" 
@@ -488,7 +535,7 @@ TODO: need a new id
                             <div id='areaMenu' class='menu'>
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <p>Draw a rectangle on the map or enter latitudes and longitudes below.</p>
+                                        <p>Draw a rectangle on the map or enter latitudes and longitudes below</p>
                                     </div>
                                 </div>
                                 <div class="row d-flex ">
@@ -559,57 +606,48 @@ TODO: need a new id
                         </li>
                     </ul> 
                 </div>
-            </div> <!-- pull-out -->
-          </div>
-        </div> <!-- control-container -->
-        <div id="map-container" class="col-7" style="border:1px solid green">
+            </div> <!-- sidebar-pull-out -->
 
-
-
-            <div class="col-8 d-flex mb-1" style="margin-left:35%; border:1px solid red;">
-
-<!-- KML/KMZ overlay -->
-            <div id="kml-row" class="col-2 custom-control-inline mb-1">
-                    <input id="fileKML" type='file' multiple onchange='uploadKMLFile(this.files)' style='display:none;'></input>
-                    <button id="kmlBtn" class="btn"
-                      onclick='javascript:document.getElementById("fileKML").click();'
-                      title="Upload your own kml/kmz file to be displayed on the map interface. We currently support points, lines, paths, polygons, and image overlays (kmz only)."
-                      style="color:#395057;background-color:#f2f2f2;border:1px solid #ced4da;border-radius:0.2rem;padding:0.15rem 0.5rem;"><span>Upload kml/kmz</span></button>
-                    <button id="kmlSelectBtn" class="btn cxm-small-no-btn"
-                      title="Show/Hide uploaded kml/kmz files"
-                      style="display:none;" data-toggle="modal" data-target="#modalkmlselect">
-                      <span id="eye_kml"  class="glyphicon glyphicon-eye-open"></span></button>
-            </div> <!-- kml-row -->
-
-
-                <div class="input-group input-group-sm" id="map-controls">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="mapLayer">Select Map Type</label>
-                    </div>
-                    <select id="mapLayer" class="custom-select custom-select-sm"
-                                           onchange="switchLayer(this.value);">
-                        <option selected value="esri topo">ESRI Topographic</option>
-                        <option value="esri imagery">ESRI Imagery</option>
-                        <option value="jawg light">Jawg Light</option>
-                        <option value="jawg dark">Jawg Dark</option>
-                        <option value="osm streets relief">OSM Streets Relief</option>
-                        <option value="otm topo">OTM Topographic</option>
-                        <option value="osm street">OSM Street</option>
-                        <option value="esri terrain">ESRI Terrain</option>
-                    </select>
+<!-- info pull-out -->
+	    <div id="cvm-info" class="row"> 
+                <div class="col input-group">
+                    <ul id="info-sidebar" class="navigation pl-2 pb-2 pr-1" style="background:whitesmoke;display:">
+                        <li id='info-start' class='navigationLi' style="display:">
+                            <div id='startMenu' class='menu'>
+                                <div class="row mt-1 pl-2">
+                                    <div class="col-12 mt-2" style="font-size:14px" >
+                                       <h6><b>Pick a CVM model</b></h6>
+                                       <h6><b>Select either Depth or Elevation mode</b></h6>
+                                       <h6><b>Select an option</b></h6>
+				       <ul class="mb-1" id="info-list">
+                                          <li style="list-style-type:disc">Query for material properties with <b>0D&nbsp;Point</b> option</li> 
+                                          <li style="list-style-type:disc">Plot depth or elevation profile with <b>1D&nbsp;Vertical&nbsp;Profile</b> option</li> 
+                                          <li style="list-style-type:disc">Plot cross section for vs, vp, density or poisson data type with <b>2D&nbsp;Vertical&nbsp;Cross&nbsp;Section</b> option</li>
+                                          <li style="list-style-type:disc">Plot horizontal slice of vs, vp, density, poisson or vs30 etree with <b>2D&nbsp;Horizontal&nbsp;Slice</b> option </li>
+                                       </ul>
+                                       <h6> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li id='info-select' class='navigationLi' style="display:none">
+                        </li>
+                    </ul> 
                 </div>
-            </div>
-            <div class="row mapData">
-                <div class="col-12 pr-0 pl-2 pt-0"> 
-                    <div class="row w-100 mb-1" id='CVM_plot'
-                         style="position:relative;border:solid 1px #ced4da; height:576px;">
-                    </div>
-                </div>
-            </div>
-        </div> <!-- map-container -->
-        <div class="col-12 mt-0">
-        <div id="result-container" class="row d-flex flex-column">
+            </div> <!-- info-pull-out -->
 
+        </div> <!-- search-container -->
+
+<!-- leaflet 2D map -->
+        <div id="map-container" class="col-7 pl-2" style="border:0px solid green">
+            <div class="w-100 mb-1" id='CVM_plot'
+                style="position:relative;border:solid 1px #ced4da; height:576px;">
+            </div>
+
+         </div> <!-- map-container -->
+    </div> <!-- mapDataBig -->
+
+    <div id="result-container" class="row d-flex flex-column">
            <div class="col-12 flex-row" align="end">
                <button class="btn cvm-top-small-btn" title="download all the material property in the table" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
                <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalParameters" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button></td>
@@ -622,7 +660,7 @@ TODO: need a new id
                         </tr>
                     </table>
                 </div>
-            </div> <!-- mp-table -->
+	    </div> 
 
             <div class="col-12 flex-row" align="end">
                 <button class="btn cvm-top-small-btn dropdown-toggle" data-toggle="dropdown"></button>
@@ -642,12 +680,11 @@ TODO: need a new id
                     </table>
                </div>
             </div>
-
             <div id="phpResponseTxt"></div>
-        </div> <!-- result-container -->
-        </div> <!-- wrap result -->
-    </div> <!-- content-container -->
-</div> <!-- container main -->
+     </div> <!-- result-container -->
+
+  </div> <!-- cvmMain -->
+</div> <!-- container -->
 
 <!--Modal: (modalkmlselect) -->
 <div class="modal" id="modalkmlselect" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

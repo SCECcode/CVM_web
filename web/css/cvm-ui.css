@@ -1,4 +1,36 @@
 /* required styles */
+
+#info-list li {
+   margin-inline-start:-10px;
+}
+
+#info-sidebar {
+  margin-bottom: 0rem;
+}
+
+#cvm-info {
+  position: absolute;
+  bottom: 2px;
+}
+
+#basemap-control {
+     max-width:269px;
+}
+
+#model-options label {
+    font-weight: normal;
+}
+
+#mapLayer {
+    border-bottom: 1;
+}
+
+#model-options {
+    border-bottom: 0; */
+    padding:2px;
+}
+
+
 .cvm-table table th {
   background: whitesmoke;
 }
