@@ -10,11 +10,12 @@ jQuery(document).ready(function() {
   frameHeight=window.innerHeight;
   frameWidth=window.innerWidth;
 
+  if( screen.width <= 480 ) {
+    window.console.log("OH NO.. I am on Mini.."+screen.width);
+    //location.href = '/mobile.html';
+  }
+
   viewermap=setup_viewer();
-  setup_model();
-  setup_fileFormat();
-  setup_parameter();
-  setup_ZMode();
 
   $(".popup").hide();
 
@@ -130,7 +131,14 @@ jQuery(document).ready(function() {
   });
 
 
-}) // end of MAIN
+// MAIN SETUP
+  CVM.setup_model();
+
+  CVM.setupCVMInterface();
+
+  $.event.trigger({ type: "page-ready", "message": "completed", });
+
+}); // end of MAIN
 
 
 

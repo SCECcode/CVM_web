@@ -79,17 +79,18 @@ $header = getHeader("Viewer");
 
     <!-- cvm js -->
     <script type="text/javascript" src="js/debug.js"></script>
-    <script type="text/javascript" src="js/cvm_leaflet.js"></script>
+    <script type="text/javascript" src="js/cvm.js"></script>
     <script type="text/javascript" src="js/cvm_layer.js"></script>
-    <script type="text/javascript" src="js/cvm_region.js"></script>
-    <!-- ??? -->
-    <script type="text/javascript" src="js/cvm_region_util.js"></script>
     <script type="text/javascript" src="js/cvm_util.js"></script>
     <script type="text/javascript" src="js/cvm_ui.js"></script>
     <script type="text/javascript" src="js/cvm_main.js"></script>
     <script type="text/javascript" src="js/cvm_query.js"></script>
     <script type="text/javascript" src="js/cvm_sidebar.js"></script>
     <script type="text/javascript" src="js/cvm_state.js"></script>
+    <script type="text/javascript" src="js/cvm_leaflet.js"></script>
+    <script type="text/javascript" src="js/cvm_region.js"></script>
+    <script type="text/javascript" src="js/cvm_region_util.js"></script>
+
     <script type="text/javascript" src="js/cxm_misc_util.js"></script>
     <script type="text/javascript" src="js/gfm_region.js"></script>
     <script type="text/javascript" src="js/cxm_kml.js?v=1"></script>
@@ -194,6 +195,7 @@ TODO: need a new id
                              id="cvm-model-ctm" value="1" />CTM
                     </label>
                 </div>
+
             </div>
 
 <!-- KML/KMZ overlay -->
@@ -600,7 +602,7 @@ TODO: need a new id
             </div> <!-- sidebar-pull-out -->
 
 <!-- info pull-out -->
-	    <div id="cvm-info" class="row"> 
+	    <div id="cvm-info" class="row" style="display:none"> 
                 <div class="col input-group">
                     <ul id="info-sidebar" class="navigation pl-2 pb-2 pr-1" style="background:whitesmoke;display:">
                         <li id='info' class='navigationLi' style="display:">

@@ -156,6 +156,7 @@ function setup_viewer()
   L.control.scale({metric: 'false', imperial:'false', position: 'bottomleft'}).addTo(mymap);
 
   function onMapMouseOver(e) {
+window.console.log("onMapMouseOver...");
     if( in_drawing_point() ) {
       drawPoint();
       return;

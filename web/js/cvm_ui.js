@@ -23,112 +23,14 @@ var hold_mptable=1;
 // [ {"uid":uid, "blob":blob } ]
 var cvm_metaplottb_list=[];
 
-// tracking the layer that contains CFM6.1 faults
-var cvm_cfm_layer;
-var show_cfm=false;
-// tracking the layer that contains CRM regions
-var cvm_crm_layer;
-var show_crm=false;
-// tracking the layer that contains CTM regions
-var cvm_ctm_layer;
-var show_ctm=false;
-// tracking the layer that contains CRM latlon points 
-var cvm_crm_point_layer;
-var show_crm_point=false;
-
-
 /******************************************/
-
-function setup_model() {
-    getInstallModelList();
-}
-
 function setup_modeltype() {
    var html=document.getElementById('modelTable-container').innerHTML=makeModelTable();
    makeModelSelection();
    make_all_model_layer();
 }
 
-function setup_parameter() {
-   document.getElementById('parametersTable-container').innerHTML=makeParametersTable();
-}
-
-function setup_fileFormat() {
-   document.getElementById('fileFormatTable-container').innerHTML=makeFileFormatTable();
-}
-
-function setup_ZMode() {
-   document.getElementById('ZModeTable-container').innerHTML=makeZModeTable();
-}
-
-function setup_CFM() {
-   cvm_cfm_layer=readLocalAndProcessActiveCFMGeo();
-}
-
-function toggleShowCFM() {
-   show_cfm=!show_cfm;
-   if(show_cfm) {
-     viewermap.addLayer(cvm_cfm_layer);
-     $('#cvm_cfm_btn').removeClass('glyphicon-ok-sign');
-     $('#cvm_cfm_btn').addClass('glyphicon-remove-sign');
-     } else {
-       viewermap.removeLayer(cvm_cfm_layer); 
-       $('#cvm_cfm_btn').addClass('glyphicon-ok-sign');
-       $('#cvm_cfm_btn').removeClass('glyphicon-remove-sign');
-   }
-} 
-
-function setup_CRM() {
-   cvm_crm_layer=readLocalAndProcessActiveCRMGeo();
-}
-
-function toggleShowCRM() {
-   show_crm=!show_crm;
-   if(show_crm) {
-     viewermap.addLayer(cvm_crm_layer);
-     $('#cvm_crm_btn').removeClass('glyphicon-ok-sign');
-     $('#cvm_crm_btn').addClass('glyphicon-remove-sign');
-     } else {
-       viewermap.removeLayer(cvm_crm_layer); 
-       $('#cvm_crm_btn').addClass('glyphicon-ok-sign');
-       $('#cvm_crm_btn').removeClass('glyphicon-remove-sign');
-   }
-} 
-
-function setup_CTM() {
-   cvm_ctm_layer=readLocalAndProcessActiveCTMGeo();
-}
-
-function toggleShowCTM() {
-   show_ctm=!show_ctm;
-   if(show_ctm) {
-     viewermap.addLayer(cvm_ctm_layer);
-     $('#cvm_ctm_btn').removeClass('glyphicon-ok-sign');
-     $('#cvm_ctm_btn').addClass('glyphicon-remove-sign');
-     } else {
-       viewermap.removeLayer(cvm_ctm_layer);
-       $('#cvm_ctm_btn').addClass('glyphicon-ok-sign');
-       $('#cvm_ctm_btn').removeClass('glyphicon-remove-sign');
-   }
-}
-
-function setup_CRMPoints() {
-   cvm_crm_point_layer=readLocalAndProcessActiveLatlon();
-}
-
-function toggleShowCRMPoints() {
-   show_crm_point=!show_crm_point;
-   if(show_crm_point) {
-     viewermap.addLayer(cvm_crm_point_layer);
-     $('#cvm_crm_point_btn').removeClass('glyphicon-ok-sign');
-     $('#cvm_crm_point_btn').addClass('glyphicon-remove-sign');
-     } else {
-       viewermap.removeLayer(cvm_crm_point_layer); 
-       $('#cvm_crm_point_btn').addClass('glyphicon-ok-sign');
-       $('#cvm_crm_point_btn').removeClass('glyphicon-remove-sign');
-   }
-} 
-
+/******************************************/
 function processByLatlonForPoint() {
     document.getElementById('spinIconForProperty').style.display = "block";    
     getMaterialPropertyByLatlon();

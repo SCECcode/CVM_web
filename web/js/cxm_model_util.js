@@ -21,6 +21,7 @@ var CXM = new function () {
   const CFM_URL="data/CFM6.1_geoJson.txt";
   const CTM_URL="data/CTM_geoJson.txt";
   const CRM_URL="data/CRM_geoJson.txt";
+  // CRMPoints
   const CRM_POLYGON_URL="data/CRM_polygons_points_with_corrected_Rift_names_Mar112019.csv";
 
   let cxm_cfm_layer=null;
@@ -28,7 +29,7 @@ var CXM = new function () {
   let cxm_crm_layer=null;
   let cxm_crm_polygon_layer=null;
 
-
+// CFM
 this.showCFMFaults = function (viewermap) {
   if(cxm_cfm_layer == null) {
     cxm_cfm_layer=_readLocalAndProcessActiveCFMGeo();
@@ -43,7 +44,7 @@ this.hideCFMFaults = function (viewermap) {
   viewermap.removeLayer(cxm_cfm_layer);
 }
 
-// actually using CRM geo
+// GFM, actually using CRM geo
 this.showGFMRegions = function (viewermap) {
   if(cxm_crm_layer == null) {
     cxm_crm_layer=_readLocalAndProcessActiveCRMGeo();
@@ -58,6 +59,7 @@ this.hideGFMRegions = function (viewermap) {
   viewermap.removeLayer(cxm_crm_layer);
 }
 
+// CTM
 this.showCTMRegions = function (viewermap) {
   if(cxm_ctm_layer == null) {
     cxm_ctm_layer=_readLocalAndProcessActiveCTMGeo();
@@ -70,6 +72,21 @@ this.hideCTMRegions = function (viewermap) {
     cxm_ctm_layer=_readLocalAndProcessActiveCTMGeo();
   }
   viewermap.removeLayer(cxm_ctm_layer);
+}
+
+// CRM polygons -- identical to CTM
+this.showCRMPolygons = function (viewermap) {
+  if(cxm_crm_polygons_layer == null) {
+    cxm_crm_polygons_layer=_readLocalAndProcessActiveCRMPolygons();
+  }
+  viewermap.addLayer(cxm_crm_polygons_layer);
+}
+
+this.hideCRMPolygons = function (viewermap) {
+  if(cxm_crm_polygons_layer == null) {
+    cxm_crm_polygons_layer=_readLocalAndProcessActiveCRMPolygons();
+  }
+  viewermap.removeLayer(cxm_crm_polygons_layer);
 }
 
 
@@ -397,7 +414,7 @@ function readAndProcessActiveLatlon(urls) {
   reader.readAsText(urls[0]);
 }
 
-function _readLocalAndProcessActiveLatlon() {
+function _readLocalAndProcessActiveCRMPolygons() {
   let url=CRM_POLYGON_URL;
   var blob=ckExist(url);
   var ffline = blob.split('\n');
