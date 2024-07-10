@@ -156,7 +156,6 @@ function setup_viewer()
   L.control.scale({metric: 'false', imperial:'false', position: 'bottomleft'}).addTo(mymap);
 
   function onMapMouseOver(e) {
-window.console.log("onMapMouseOver...");
     if( in_drawing_point() ) {
       drawPoint();
       return;
@@ -196,9 +195,6 @@ window.console.log("onMapMouseOver...");
   mymap.on('mouseover', onMapMouseOver);
   mymap.on('mouseout', onMapMouseOut);
 
-// ??? not sure
-  L.marker([-120,32], {icon: myIcon}).addTo(mymap);
-
 // ==> point drawing control <==
   pointDrawer = new L.Draw.Marker(mymap, point_options);
 // ==> profile drawing control <==
@@ -207,6 +203,43 @@ window.console.log("onMapMouseOver...");
   lineDrawer = new L.Draw.Polyline(mymap, line_options);
 // ==> area/rectangle drawing control <==
   rectangleDrawer = new L.Draw.Rectangle(mymap, rectangle_options);
+
+  mymap.on(L.Draw.Event.CREATED, function (e) {
+    var type = e.layerType,
+        layer = e.layer;
+
+    if (type === 'rectangle') {  // tracks retangles
+        // get the boundary of the rectangle
+        var latlngs=layer.getLatLngs();
+        // first one is always the south-west,
+        // third one is always the north-east
+        var loclist=latlngs[0];
+        var sw=loclist[0];
+        var ne=loclist[2];
+        if(sw != undefined && ne != undefined) {
+          add_bounding_area_layer(layer,sw['lat'],sw['lng'],ne['lat'],ne['lng']);
+	  CVM.processByLatlonForArea(1);
+        }
+    } else if (type === 'marker') {  // can be a point or a profile
+        var sw=layer.getLatLng();
+        if( in_drawing_profile() ) {
+          add_bounding_profile_layer(layer,sw['lat'],sw['lng']);
+	  CVM.processByLatlonForProfile(1);
+          } else {
+            add_bounding_point_layer(layer,sw['lat'],sw['lng']);
+            CVM.processByLatlonForPoint(1)
+        }
+    } else if (type === 'polyline') {  // tracks lines
+        var latlngs=layer.getLatLngs();
+        var sw=latlngs[0];
+        var ne=latlngs[1];
+        if(sw != undefined && ne != undefined) {
+          add_bounding_line_layer(layer,sw['lat'],sw['lng'],ne['lat'],ne['lng']);
+          CVM.processByLatlonForLine(1)
+        }
+    }
+  });
+
 // enable the expand view key
   $("#CVM_plot").prepend($("#expand-view-key-container").html());
 

@@ -153,7 +153,7 @@ TODO: need a new id
 
 <!-- intro -->
     <div id="top-intro" class="row">
-        <p>The <a href="https://www.scec.org/research/ucvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
+        <p>The <a href="https://www.scec.org/research/cvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
     </div>
 
 <!-- leaflet control -->
@@ -216,7 +216,7 @@ TODO: need a new id
                     <label class="input-group-text" for="basemapLayer">Select Map Type</label>
                 </div>
                 <select id="basemapLayer" class="custom-select custom-select-sm"
-                                           onchange="switchLayer(this.value);">
+                                           onchange="switchBaseLayer(this.value);">
                     <option selected value="esri topo">ESRI Topographic</option>
                     <option value="esri imagery">ESRI Imagery</option>
                     <option value="jawg light">Jawg Light</option>
@@ -362,7 +362,7 @@ TODO: need a new id
                                     </div>
                                     <div class="col-0 pr-0">
                                         <button id="pointBtn" type="button" title="query with latlon"
-                                                class="btn btn-default cvm-small-btn " onclick="processByLatlonForPoint()">
+                                                class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForPoint(0)">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
@@ -431,7 +431,7 @@ TODO: need a new id
                                     </div>
                                     <div class="col-0 pr-0">
                                         <button id="profileBtn" type="button" title="query with latlon"
-                                                class="btn btn-default cvm-small-btn " onclick="processByLatlonForProfile()">
+                                                class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForProfile(0)">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
@@ -514,7 +514,7 @@ TODO: need a new id
                                     </div>
                                     <div class="col-0 pr-0">
                                         <button id="areaBtn" type="button" title="query with latlon"
-                                                class="btn btn-default cvm-small-btn " onclick="processByLatlonForLine()">
+                                                class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForLine(0)">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
@@ -586,7 +586,7 @@ TODO: need a new id
                                     </div>
                                     <div class="col-0 pr-0">
                                         <button id="areaBtn" type="button" title="query with latlon"
-                                                class="btn btn-default cvm-small-btn " onclick="processByLatlonForArea()">
+                                                class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForArea(0)">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
@@ -602,7 +602,7 @@ TODO: need a new id
             </div> <!-- sidebar-pull-out -->
 
 <!-- info pull-out -->
-	    <div id="cvm-info" class="row" style="display:none"> 
+	    <div id="cvm-info" class="row" style="display:"> 
                 <div class="col input-group">
                     <ul id="info-sidebar" class="navigation pl-2 pb-2 pr-1" style="background:whitesmoke;display:">
                         <li id='info' class='navigationLi' style="display:">

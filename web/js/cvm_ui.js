@@ -30,27 +30,6 @@ function setup_modeltype() {
    make_all_model_layer();
 }
 
-/******************************************/
-function processByLatlonForPoint() {
-    document.getElementById('spinIconForProperty').style.display = "block";    
-    getMaterialPropertyByLatlon();
-}
-
-function processByLatlonForProfile() {
-    document.getElementById('spinIconForProfile').style.display = "block";    
-    plotVerticalProfile();
-}
-
-function processByLatlonForLine() {
-    document.getElementById('spinIconForLine').style.display = "block";    
-    plotCrossSection();
-}
-
-function processByLatlonForArea() {
-    document.getElementById('spinIconForArea').style.display = "block";    
-    plotHorizontalSlice();
-}
-
 // it is filelist
 // forPoint==1 is for latlon
 // forPoint==0 is for depth/elevation profile
