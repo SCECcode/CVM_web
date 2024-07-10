@@ -21,21 +21,6 @@ function removeFromList(alist, uid) {
     return undefined;
 }
 
-//http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
-//    var rnd= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
-function getRnd(stub) {
-//https://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript
-    let timestamp = $.now();
-// timestamp is 13 digits, chop to tail end to 8 digits 
-    let tt=timestamp % 100000000;
-    if(stub == "" || stub == undefined) { 
-      return tt;
-      } else {	     
-        return stub+"_"+tt;
-    }
-}
-
 // [[lon1,lat1,z1],...,[lonn,latn,zn]]
 // make sure it is unique
 function makeLatlngs(darray) {
@@ -123,25 +108,6 @@ function processSearchResult(rlist,uid=0) {
     return (str);
 }
 
-
-// should be a very small file and used for testing and so can ignore
-// >>Synchronous XMLHttpRequest on the main thread is deprecated
-// >>because of its detrimental effects to the end user's experience.
-function ckExist(url) {
-  var http = new XMLHttpRequest();
-  http.onreadystatechange = function () {
-    if (this.readyState == 4) {
- // okay
-    }
-  }
-  http.open("GET", url, false);
-  http.send();
-  if(http.status !== 404) {
-    return http.responseText;
-    } else {
-      return null;
-  }
-}
 
 function makeVProfileMetaFname(uid) {
   var s=uid+"_v_meta.json";
