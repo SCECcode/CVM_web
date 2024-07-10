@@ -376,19 +376,7 @@ function downloadMPTable() {
     var mplist=get_all_materialproperty();
     window.console.log(">>mp downloading..cnt is",mplist.length);
     var csvblob=getCSVFromJSON(mplist);
-    saveAsCSVBlobFile(csvblob, uid);
-}
-
-function saveAsCSVBlobFile(data, timestamp)
-{
-//http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
-//   var rnd= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    var fname="CVM_"+timestamp+".csv";
-    var blob = new Blob([data], {
-        type: "text/plain;charset=utf-8"
-    });
-    //FileSaver.js
-    saveAs(blob, fname);
+    saveAsCSVBlobFile("CVM_",csvblob, uid);
 }
 
 // make link to result/  directory
@@ -401,32 +389,6 @@ function linkDownload(str)
        return html;
     }
     return html;
-}
-
-
-function saveAsBlobFile(data, timestamp)
-{
-//http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
-//   var rnd= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    var fname="CVM_"+timestamp+".json";
-    var blob = new Blob([data], {
-        type: "text/plain;charset=utf-8"
-    });
-    //FileSaver.js
-    saveAs(blob, fname);
-}
-
-function saveAsURLFile(gid,url) {
-  var dname=url.substring(url.lastIndexOf('/')+1);
-  var dload = document.createElement('a');
-  dload.href = url;
-  dload.download = dname;
-  dload.type="application/octet-stream";
-  dload.style.display='none';
-  document.body.appendChild(dload);
-  dload.click();
-  document.body.removeChild(dload);
-  delete dload;
 }
 
 function processMPTable(v)

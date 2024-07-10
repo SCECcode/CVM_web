@@ -100,34 +100,34 @@ jQuery(document).ready(function() {
       processMetaPlotResultTable(v);
   });
 
-  // setup the iframe for profile pageh
+  // setup the iframe for profile page
   $("#plotProfileBtn").click(function(e) {
       plotly_profile_run();
   });
 
-    $("#cvm-model-cfm").on('click', function () {
-        if ($(this).prop('checked')) {
-            CXM.showCFMFaults(viewermap);
-        } else {
-            CXM.hideCFMFaults(viewermap);
-        }
-    });
-    
-    $("#cvm-model-gfm").change(function() {
-      if ($("#cgm-model-gfm").prop('checked')) { 
-          CXM.showGFMRegions(viewermap);
-          } else {
-              CXM.hideGFMRegions(viewermap);
-      } 
-    });     
-
-    $("#cvm-model-ctm").change(function() {
-      if ($("#cgm-model-ctm").prop('checked')) {
-          CXM.showGFMRegions(viewermap);
-          } else {
-              CXM.hideGFMRegions(viewermap);
+  $("#cvm-model-cfm").on('click', function () {
+      if ($(this).prop('checked')) {
+          CXM.showCFMFaults(viewermap);
+      } else {
+          CXM.hideCFMFaults(viewermap);
       }
-    });
+  });
+    
+  $("#cvm-model-gfm").change(function() {
+    if ($("#cvm-model-gfm").prop('checked')) { 
+        CXM.showGFMRegions(viewermap);
+        } else {
+            CXM.hideGFMRegions(viewermap);
+    } 
+  });     
+
+  $("#cvm-model-ctm").change(function() {
+    if ($("#cvm-model-ctm").prop('checked')) {
+        CXM.showCTMRegions(viewermap);
+        } else {
+            CXM.hideCTMRegions(viewermap);
+    }
+  });
 
 
 }) // end of MAIN

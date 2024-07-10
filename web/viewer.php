@@ -90,9 +90,7 @@ $header = getHeader("Viewer");
     <script type="text/javascript" src="js/cvm_query.js"></script>
     <script type="text/javascript" src="js/cvm_sidebar.js"></script>
     <script type="text/javascript" src="js/cvm_state.js"></script>
-<!--
     <script type="text/javascript" src="js/cxm_misc_util.js"></script>
--->
     <script type="text/javascript" src="js/gfm_region.js"></script>
     <script type="text/javascript" src="js/cxm_kml.js?v=1"></script>
     <script type="text/javascript" src="js/cxm_model_util.js?v=1"></script>

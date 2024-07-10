@@ -58,6 +58,21 @@ this.hideGFMRegions = function (viewermap) {
   viewermap.removeLayer(cxm_crm_layer);
 }
 
+this.showCTMRegions = function (viewermap) {
+  if(cxm_ctm_layer == null) {
+    cxm_ctm_layer=_readLocalAndProcessActiveCTMGeo();
+  }
+  viewermap.addLayer(cxm_ctm_layer);
+}
+
+this.hideCTMRegions = function (viewermap) {
+  if(cxm_ctm_layer == null) {
+    cxm_ctm_layer=_readLocalAndProcessActiveCTMGeo();
+  }
+  viewermap.removeLayer(cxm_ctm_layer);
+}
+
+
 /******************************************************************/
 // for leaflet trace that has metadataRow
 // CFM trace= { features: [ { "id":gid,
