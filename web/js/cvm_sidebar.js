@@ -4,7 +4,6 @@
 
 **/
 
-var start_sidebar=false;
 var point_sidebar=false;
 var profile_sidebar=false;
 var line_sidebar=false;
@@ -23,7 +22,6 @@ function dismiss_sidebar() {
   if(profile_sidebar) profileClick();
   if(line_sidebar) lineClick();
   if(area_sidebar) areaClick();
-  if(start_sidebar) startClick();
 
 //  var sidebarptr=$('#sidebar');
 //  sidebarptr.css("display","none");
@@ -36,47 +34,13 @@ function refresh_sidebar() {
   reset_line_latlons();
   reset_area_latlons();
 
-  startClick();
+// return to blank point state
 
   //var sidebarptr=$('#sidebar');
   //sidebarptr.css("display","none");
 }
 
 /***********************************************************/
-// start sidebar js
-// slide out
-function startClick() {
-  if(!start_sidebar) { dismiss_sidebar(); }
-
-  start_sidebar = !start_sidebar;
-  if(start_sidebar) {
-    sidebar_start_slideOut();
-    } else {
-      sidebar_start_slideIn();
-  }
-}
-
-//dismiss all popup and suppress the popup on map
-function sidebar_start_slideOut() {
-  var panelptr=$('#start');
-  var sidebarptr=$('#sidebar');
-  panelptr.css("display","");
-  sidebarptr.css("display","");
-  sidebarptr.css("background","whitesmoke");
-  panelptr.removeClass('fade-out').addClass('fade-in');
-}
-
-// enable the popup on map
-function sidebar_start_slideIn() {
-  var panelptr=$('#start');
-  panelptr.removeClass('fade-in').addClass('fade-out');
-  panelptr.css("display","none");
-}
-
-
-/***********************************************************/
-
-
 /***********************************************************/
 
 // area sidebar js

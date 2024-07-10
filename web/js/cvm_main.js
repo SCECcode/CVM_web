@@ -16,12 +16,6 @@ jQuery(document).ready(function() {
   setup_parameter();
   setup_ZMode();
 
-  setup_CFM();
-  setup_CRM();
-  setup_CTM();
-
-//  setup_CRMPoints();
-
   $(".popup").hide();
 
   $(".openpop").click(function(e) {

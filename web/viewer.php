@@ -90,7 +90,9 @@ $header = getHeader("Viewer");
     <script type="text/javascript" src="js/cvm_query.js"></script>
     <script type="text/javascript" src="js/cvm_sidebar.js"></script>
     <script type="text/javascript" src="js/cvm_state.js"></script>
+<!--
     <script type="text/javascript" src="js/cxm_misc_util.js"></script>
+-->
     <script type="text/javascript" src="js/gfm_region.js"></script>
     <script type="text/javascript" src="js/cxm_kml.js?v=1"></script>
     <script type="text/javascript" src="js/cxm_model_util.js?v=1"></script>
@@ -304,8 +306,7 @@ TODO: need a new id
 
             <div class="input-group input-group-sm filters">
                 <select id="search-type" class="custom-select custom-select-sm">
-                    <option value="startClick">Select</option>
-                    <option value="pointClick">0D Point</option>
+                    <option value="pointClick" selected">0D Point</option>
                     <option disabled>-- Advanced --</option>
                     <option value="profileClick">1D Vertical Profile</option>
                     <option value="lineClick">2D Vertical Cross Section</option>
@@ -320,14 +321,6 @@ TODO: need a new id
 	    <div id="sidebar-pull-out" class="row"> 
                 <div class="col input-group">
                     <ul id="sidebar" class="navigation col-12 pl-2 pb-2 pr-1" style="background:yellow;display:none">
-                        <li id='sidebar-start' class='navigationLi' style="display:none">
-                            <div id='startMenu' class='menu'>
-                                <div class="row mt-2 pl-5">
-                                    <div class="col-12 mt-2" style="font-size:0px" >
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
                         <li id='point' class='navigationLi' style="display:none">
                             <div id='pointMenu' class='menu'>
                                 <div class="row mt-2">
@@ -447,7 +440,7 @@ TODO: need a new id
                                 <div class="mt-2">
                                      <input class="form-control" id='inprofilefileBtn' type='file' onchange='selectLocalFiles(this.files,0)' style='display:none;'></input>
                                      <button id="profilefileSelectBtn" class="btn cvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("inprofilefileBtn").click();'>
-                                     <span class="glyphicon glyphicon-file"></span> Select file to use</button>
+                                     <span class="glyphicon glyphicon-file"></span>Select file to use</button>
 <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalprofilefile" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
 <!---XXX----->
@@ -612,8 +605,8 @@ TODO: need a new id
 	    <div id="cvm-info" class="row"> 
                 <div class="col input-group">
                     <ul id="info-sidebar" class="navigation pl-2 pb-2 pr-1" style="background:whitesmoke;display:">
-                        <li id='info-start' class='navigationLi' style="display:">
-                            <div id='startMenu' class='menu'>
+                        <li id='info' class='navigationLi' style="display:">
+                            <div id='infoMenu' class='menu'>
                                 <div class="row mt-1 pl-2">
                                     <div class="col-12 mt-2" style="font-size:14px" >
                                        <h6><b>Pick a CVM model</b></h6>
