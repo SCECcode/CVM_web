@@ -38,7 +38,7 @@ $header = getHeader("Viewer");
 
     <script type='text/javascript' src='js/vendor/FileSaver.js'></script>
     <script type='text/javascript' src='js/vendor/jszip.js'></script>
-
+    <script type='text/javascript' src='js/vendor/togeojson.js'></script>
     <script type='text/javascript' src='js/vendor/leaflet-kmz-src.js'></script>
     <script type='text/javascript' src='js/vendor/leaflet.markercluster-src.js'></script>
 
