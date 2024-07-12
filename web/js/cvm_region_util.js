@@ -72,31 +72,32 @@ function makeModelSelection()
    option.value= "disabled";
    sel.add(option);
 
-if(isModelInstalled("sfcvm") && isModelInstalled("cca")
-   && isModelInstalled("1d")) {
-option = document.createElement("option");
-option.text = "SFCVM,CCA,elygtl:taper,BBP1D";
-option.label = "SFCVM,CCA,elygtl:taper,BBP1D";
-option.value= "sfcvm,cca,elygtl:taper,bbp1d";
-sel.add(option);
-}
+   if(isModelInstalled("sfcvm") && isModelInstalled("cca")
+      && isModelInstalled("1d")) {
+   option = document.createElement("option");
+   option.text = "SFCVM,CCA,elygtl:taper,BBP1D";
+   option.label = "SFCVM,CCA,elygtl:taper,BBP1D";
+   option.value= "sfcvm,cca,elygtl:taper,bbp1d";
+   sel.add(option);
+   }
  
-if(isModelInstalled("sfcvm") && isModelInstalled("cca")
-   && isModelInstalled("1d")) {
-option = document.createElement("option");
-option.text = "SFCVM,CCA,BBP1D";
-option.label = "SFCVM,CCA,BBP1D";
-option.value= "sfcvm,cca,bbp1d";
-sel.add(option);
-}
-if(isModelInstalled("cvms5") && isModelInstalled("cencal")
-   && isModelInstalled("cca")) {
-option = document.createElement("option");
-option.text = "CCA,cencal,CVM-S4.26,elygtl:ely";
-option.label = "CCA,cencal,CVM-S4.26,elygtl:ely";
-option.value= "cca,cencal,cvms5,elygtl:ely";
-sel.add(option);
-}
+   if(isModelInstalled("sfcvm") && isModelInstalled("cca")
+      && isModelInstalled("1d")) {
+   option = document.createElement("option");
+   option.text = "SFCVM,CCA,BBP1D";
+   option.label = "SFCVM,CCA,BBP1D";
+   option.value= "sfcvm,cca,bbp1d";
+   sel.add(option);
+   }
+
+   if(isModelInstalled("cvms5") && isModelInstalled("cencal")
+      && isModelInstalled("cca")) {
+   option = document.createElement("option");
+   option.text = "CCA,cencal,CVM-S4.26,elygtl:ely";
+   option.label = "CCA,cencal,CVM-S4.26,elygtl:ely";
+   option.value= "cca,cencal,cvms5,elygtl:ely";
+   sel.add(option);
+   }
 
 
    if(isModelInstalled("1d")) {
@@ -116,17 +117,15 @@ sel.add(option);
      sel.add(option);
    }
 
-   if(
-isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn"),
-isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn"),
-isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn"),
-isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn"),
-isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")
-) {
-     option = document.createElement("option");
-     option.text = "CVM-H All Basins, CVM-S4.26.M01";
-     option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,cvmsi";
-     sel.add(option);
+   if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn"),
+      isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn"),
+      isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn"),
+      isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn"),
+      isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")) {
+        option = document.createElement("option");
+        option.text = "CVM-H All Basins, CVM-S4.26.M01";
+        option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,cvmsi";
+        sel.add(option);
    }
 
    if(isModelInstalled("sfcvm") && isModelInstalled("cca")) {
@@ -229,31 +228,27 @@ isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")
      sel.add(option);
    }
 
-   if(
-isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn") &&
-isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn") &&
-isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn") &&
-isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn") &&
-isModelInstalled("cvmhstbn")
-) {
-     option = document.createElement("option");
-     option.text = "CVM-H All Basins";
-     option.label = "CVM-H All Basins";
-     option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn";
-     sel.add(option);
+   if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn") &&
+      isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn") &&
+      isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn") &&
+      isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn") &&
+      isModelInstalled("cvmhstbn")) {
+        option = document.createElement("option");
+        option.text = "CVM-H All Basins";
+        option.label = "CVM-H All Basins";
+        option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn";
+        sel.add(option);
    }
 
-   if(
-isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn"),
-isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn"),
-isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn"),
-isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn"),
-isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")
-) {
-     option = document.createElement("option");
-     option.text = "CVM-H All Basins, CVM-S4.26.M01";
-     option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,cvmsi";
-     sel.add(option);
+   if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn"),
+      isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn"),
+      isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn"),
+      isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn"),
+      isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")) {
+        option = document.createElement("option");
+        option.text = "CVM-H All Basins, CVM-S4.26.M01";
+        option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,cvmsi";
+        sel.add(option);
    }
 
    if(isModelInstalled("cvmhlabn") && isModelInstalled("1d")) {
@@ -272,66 +267,64 @@ isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")
      sel.add(option);
    }
 
-   if(
-isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn") &&
-isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn") &&
-isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn") &&
-isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn") &&
-isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")
-) {
-     option = document.createElement("option");
-     option.text = "CVM-H All Basins, CVM-S4.26.M01";
-     option.label = "CVM-H All Basins, CVM-S4.26.M01";
-     option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,cvmsi";
-     sel.add(option);
+   if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn") &&
+      isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn") &&
+      isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn") &&
+      isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn") &&
+      isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")) {
+        option = document.createElement("option");
+        option.text = "CVM-H All Basins, CVM-S4.26.M01";
+        option.label = "CVM-H All Basins, CVM-S4.26.M01";
+        option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,cvmsi";
+        sel.add(option);
    }
 
-   if( isModelInstalled("cvmhsmbn") && isModelInstalled("cvms5") ) {
-     option = document.createElement("option");
-     option.text = "CVM-H Santa Maria, CVM-S4.26";
-     option.label = "CVM-H Santa Maria, CVM-S4.26";
-     option.value= "cvmhsmbn,cvms5";
-     sel.add(option);
+   if(isModelInstalled("cvmhsmbn") && isModelInstalled("cvms5") ) {
+      option = document.createElement("option");
+      option.text = "CVM-H Santa Maria, CVM-S4.26";
+      option.label = "CVM-H Santa Maria, CVM-S4.26";
+      option.value= "cvmhsmbn,cvms5";
+      sel.add(option);
    }
 
    if(isModelInstalled("cvms5") && isModelInstalled("cvmh")) {
-     option = document.createElement("option");
-     option.text = "CVM-S4.26,CVM-H v15.1.1";
-     option.label = "CVM-S4.26,CVM-H v15.1.1";
-     option.value= "cvms5,cvmh"; 
-     sel.add(option);
+      option = document.createElement("option");
+      option.text = "CVM-S4.26,CVM-H v15.1.1";
+      option.label = "CVM-S4.26,CVM-H v15.1.1";
+      option.value= "cvms5,cvmh"; 
+      sel.add(option);
    }
 
    if(isModelInstalled("cvms5") && isModelInstalled("1d")) {
-     option = document.createElement("option");
-     option.text = "CVM-S4.26,1D";
-     option.label = "CVM-S4.26,1D";
-     option.value= "cvms5,1d"; 
-     sel.add(option);
+      option = document.createElement("option");
+      option.text = "CVM-S4.26,1D";
+      option.label = "CVM-S4.26,1D";
+      option.value= "cvms5,1d"; 
+      sel.add(option);
    }
 
    if(isModelInstalled("albacore") && isModelInstalled("1d")) {
-     option = document.createElement("option");
-     option.text = "ALBACORE,1D";
-     option.label = "ALBACORE,1D";
-     option.value= "albacore,1d"; 
-     sel.add(option);
+      option = document.createElement("option");
+      option.text = "ALBACORE,1D";
+      option.label = "ALBACORE,1D";
+      option.value= "albacore,1d"; 
+      sel.add(option);
    }
 
    if(isModelInstalled("ivlsu") && isModelInstalled("1d")) {
-     option = document.createElement("option");
-     option.text = "SSIP Imperial Valley,1D";
-     option.label = "SSIP Imperial Valley,1D";
-     option.value= "ivlsu,1d"; 
-     sel.add(option);
+      option = document.createElement("option");
+      option.text = "SSIP Imperial Valley,1D";
+      option.label = "SSIP Imperial Valley,1D";
+      option.value= "ivlsu,1d"; 
+      sel.add(option);
    }
 
    if(isModelInstalled("cvlsu") && isModelInstalled("1d")) {
-     option = document.createElement("option");
-     option.text = "SSIP Coachella Valley,1D";
-     option.label = "SSIP Coachella Valley,1D";
-     option.value= "cvlsu,1d"; 
-     sel.add(option);
+      option = document.createElement("option");
+      option.text = "SSIP Coachella Valley,1D";
+      option.label = "SSIP Coachella Valley,1D";
+      option.value= "cvlsu,1d"; 
+      sel.add(option);
    }
 
 // put in the default region on the map

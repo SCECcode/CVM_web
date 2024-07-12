@@ -318,9 +318,9 @@ TODO: need a new id
             </div> <!-- query option -->
 
 <!-- selection -->
-	    <div id="select" class="row"> 
+	    <div id="option" class="row mt-3"> 
                 <div class="col input-group">
-                    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="display:none">
+		    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="background:whitesmoke;">
                         <li id='point' class='navigationLi' style="display:none">
                             <div id='pointMenu' class='menu'>
                                 <div class="row mt-2">
@@ -603,9 +603,9 @@ TODO: need a new id
             <div id="cvm-description" class="col-12 pr-0" style="display:;font-size:14px; background-color:rgb(245,245,245);" >
                <br>
                <p><b>You Selected:</b></p>
-               <p id="cvm-model-description"></p>
-               <p id="cvm-metric-description"></p>
-               <p>For more model details and metrics, see  <a href="https://doi.org/10.5281/zenodo.8270631">CVM archive</a></p>
+               <p id="cvm-model-description">model list: ...</p>
+               <p id="cvm-modifier-description">model modifier: ...</p>
+               <p>For more model details and modifiers, see  <a href="https://doi.org/10.5281/zenodo.8270631">CVM archive</a></p>
              </div>
         </div> <!-- search-container -->
 

@@ -394,7 +394,7 @@ function refreshAll() {
   refreshResultTable();
   remove_all_layers();
   refresh_map();
-  refresh_sidebar();
+  refresh_select();
 }
 
 // https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
