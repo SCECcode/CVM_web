@@ -22,7 +22,6 @@ $header = getHeader("Viewer");
 
     <link rel="stylesheet" href="css/cvm-ui.css">
     <link rel="stylesheet" href="css/scec-ui.css">
-    <link rel="stylesheet" href="css/sidebar.css">
 
     <script type="text/javascript" src="js/vendor/leaflet.js"></script>
     <script type='text/javascript' src='js/vendor/leaflet.awesome-markers.js'></script>
@@ -85,7 +84,7 @@ $header = getHeader("Viewer");
     <script type="text/javascript" src="js/cvm_ui.js"></script>
     <script type="text/javascript" src="js/cvm_main.js"></script>
     <script type="text/javascript" src="js/cvm_query.js"></script>
-    <script type="text/javascript" src="js/cvm_sidebar.js"></script>
+    <script type="text/javascript" src="js/cvm_select.js"></script>
     <script type="text/javascript" src="js/cvm_state.js"></script>
     <script type="text/javascript" src="js/cvm_leaflet.js"></script>
     <script type="text/javascript" src="js/cvm_region.js"></script>
@@ -139,7 +138,7 @@ TODO: need a new id
 
 <!-- hidden btn to do profile comparison -->
     <div>
-        <button id="plotProfileBtn" onclick="" class="btn cvm-small-btn" data-toggle="modal" data-target="#modalProfile" style="display:none" onclick="$('#sidebar').hide();"></button>
+        <button id="plotProfileBtn" onclick="" class="btn cvm-small-btn" data-toggle="modal" data-target="#modalProfile" style="display:none"></button>
     </div>
 
 <!-- spinners -->
@@ -152,7 +151,7 @@ TODO: need a new id
     </div> <!-- spinDialog -->
 
 <!-- intro -->
-    <div id="top-intro" class="row">
+    <div id="top-intro">
         <p>The <a href="https://www.scec.org/research/cvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
     </div>
 
@@ -238,7 +237,8 @@ TODO: need a new id
                <div class="input-group-prepend">
                      <label class="input-group-text" for="modelType">Select Model Type</label>
                </div>
-               <select id="modelType" class="custom-select custom-select-sm"></select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalmt" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+	       <select id="modelType" class="custom-select custom-select-sm"></select>&nbsp;
+<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalusage"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div> <!-- model select -->
 
 <!-- special pull-out for elygtl -->
@@ -301,7 +301,7 @@ TODO: need a new id
                 <select id="zModeType" class="custom-select custom-select-sm">
                     <option value="d">Depth</option>
                     <option value="e">Elevation</option>
-                </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzm" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+                </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzm"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div> <!-- z select -->
 
             <div class="input-group input-group-sm filters">
@@ -317,10 +317,10 @@ TODO: need a new id
                 </div>
             </div> <!-- query option -->
 
-<!-- selection pull-out -->
-	    <div id="sidebar-pull-out" class="row"> 
+<!-- selection -->
+	    <div id="select" class="row"> 
                 <div class="col input-group">
-                    <ul id="sidebar" class="navigation col-12 pl-2 pb-2 pr-1" style="background:yellow;display:none">
+                    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="display:none">
                         <li id='point' class='navigationLi' style="display:none">
                             <div id='pointMenu' class='menu'>
                                 <div class="row mt-2">
@@ -374,7 +374,7 @@ TODO: need a new id
                                      <input class="form-control" id='infileBtn' type='file' onchange='selectLocalFiles(this.files,1)' style='display:none;'></input>
                                      <button id="fileSelectBtn" class="btn cvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("infileBtn").click();'>
                                      <span class="glyphicon glyphicon-file"></span> Select file to use</button>
-<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalfile" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalfile"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
                             </div>
                         </li>
@@ -441,7 +441,7 @@ TODO: need a new id
                                      <input class="form-control" id='inprofilefileBtn' type='file' onchange='selectLocalFiles(this.files,0)' style='display:none;'></input>
                                      <button id="profilefileSelectBtn" class="btn cvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("inprofilefileBtn").click();'>
                                      <span class="glyphicon glyphicon-file"></span>Select file to use</button>
-<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalprofilefile" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button>
+<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalprofilefile"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
 <!---XXX----->
                             </div>
@@ -476,6 +476,12 @@ TODO: need a new id
                                                title="lineZStartTxt"
                                                onfocus="this.value=''" 
                                                class="form-control mt-1">
+                                        <input type="text"
+                                               id="lineZTxt"
+                                               placeholder="Z ends"
+                                               title="lineZTxt"
+                                               onfocus="this.value=''"
+                                               class="form-control mt-1">
                                         <select title="Datatype" id="lineDataTypeTxt" class="my-custom-select custom-select mt-1">
                                                <option value="">DataType</option>
                                                <option value="vs">vs</option>
@@ -498,12 +504,6 @@ TODO: need a new id
                                                placeholder='2nd Longitude'
                                                onfocus="this.value=''"
                                                onchange="reset_line_presets()"
-                                               class="form-control mt-1">
-                                               <input type="text"
-                                               id="lineZTxt"
-                                               placeholder="Z ends"
-                                               title="lineZTxt"
-                                               onfocus="this.value=''"
                                                class="form-control mt-1">
                                         <input type="text"
                                                id="lineUIDTxt" 
@@ -599,36 +599,14 @@ TODO: need a new id
                         </li>
                     </ul> 
                 </div>
-            </div> <!-- sidebar-pull-out -->
-
-<!-- info pull-out -->
-	    <div id="cvm-info" class="row" style="display:"> 
-                <div class="col input-group">
-                    <ul id="info-sidebar" class="navigation pl-2 pb-2 pr-1" style="background:whitesmoke;display:">
-                        <li id='info' class='navigationLi' style="display:">
-                            <div id='infoMenu' class='menu'>
-                                <div class="row mt-1 pl-2">
-                                    <div class="col-12 mt-2" style="font-size:14px" >
-                                       <h6><b>Pick a CVM model</b></h6>
-                                       <h6><b>Select either Depth or Elevation mode</b></h6>
-                                       <h6><b>Select an option</b></h6>
-				       <ul class="mb-1" id="info-list">
-                                          <li style="list-style-type:disc">Query for material properties with <b>0D&nbsp;Point</b> option</li> 
-                                          <li style="list-style-type:disc">Plot depth or elevation profile with <b>1D&nbsp;Vertical&nbsp;Profile</b> option</li> 
-                                          <li style="list-style-type:disc">Plot cross section for vs, vp, density or poisson data type with <b>2D&nbsp;Vertical&nbsp;Cross&nbsp;Section</b> option</li>
-                                          <li style="list-style-type:disc">Plot horizontal slice of vs, vp, density, poisson or vs30 etree with <b>2D&nbsp;Horizontal&nbsp;Slice</b> option </li>
-                                       </ul>
-                                       <h6> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li id='info-select' class='navigationLi' style="display:none">
-                        </li>
-                    </ul> 
-                </div>
-            </div> <!-- info-pull-out -->
-
+            </div>
+            <div id="cvm-description" class="col-12 pr-0" style="display:;font-size:14px; background-color:rgb(245,245,245);" >
+               <br>
+               <p><b>You Selected:</b></p>
+               <p id="cvm-model-description"></p>
+               <p id="cvm-metric-description"></p>
+               <p>For more model details and metrics, see  <a href="https://doi.org/10.5281/zenodo.8270631">CVM archive</a></p>
+             </div>
         </div> <!-- search-container -->
 
 <!-- leaflet 2D map -->
@@ -643,7 +621,7 @@ TODO: need a new id
     <div id="result-container" class="row d-flex flex-column">
            <div class="col-12 flex-row" align="end">
                <button class="btn cvm-top-small-btn" title="download all the material property in the table" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
-               <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalParameters" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button></td>
+               <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalparameters"><span class="glyphicon glyphicon-info-sign"></span></button></td>
             </div>
             <div class="col-12 mb-0" id="mp-table">
                 <div id="materialPropertyTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
@@ -662,7 +640,7 @@ TODO: need a new id
                    <li id='mprCollapseLi' data-id='c' hidden>Collapse</li>
                    <li data-id='p'>plot Depth Profile</li>
                 </ul>
-                <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalff" onclick="$('#sidebar').hide();"><span class="glyphicon glyphicon-info-sign"></span></button></td>
+                <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalff"><span class="glyphicon glyphicon-info-sign"></span></button></td>
             </div>
             <div class="col-12  mt-0 mb-4" id="result-table">
                <div id="metadataPlotTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
@@ -680,7 +658,7 @@ TODO: need a new id
 </div> <!-- container -->
 
 <!--Modal: (modalkmlselect) -->
-<div class="modal" id="modalkmlselect" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="modalkmlselect" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-small" id="modalkmlselectDialog" role="document">
 
     <!--Content-->
@@ -700,24 +678,24 @@ TODO: need a new id
 </div> <!--Modal: modalkmlselect-->
 
 <!--Modal: Parameters Table -->
-<div class="modal" id="modalParameters" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalParametersDialog" role="document">
+<div class="modal" id="modalparameters" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalparametersDialog" role="document">
 
     <!--Content-->
-    <div class="modal-content" id="modalParametersContent">
+    <div class="modal-content" id="modalparametersContent">
       <!--Body-->
-      <div class="modal-body" id="modalParametersBody">
+      <div class="modal-body" id="modalparametersBody">
         <div class="row col-md-12 ml-auto" style="overflow:hidden;">
           <div class="col-12" id="parametersTable-container"></div>
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal" onclick="$('#sidebar').show();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
   </div>
-</div> <!--Modal: Name-->
+</div> <!--Modal: modalparameters-->
 
 <!--Modal: FileFormat -->
 <div class="modal" id="modalff" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -732,12 +710,56 @@ TODO: need a new id
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal" onclick=$('#sidebar').show();>&times;</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
   </div>
-</div> <!--Modal: Name-->
+</div> <!--Modal: modalff-->
+
+<!--Modal: usage -->
+<div class="modal" id="modalusage" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalffDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalusageContent">
+      <!--Body-->
+      <div class="modal-body" id="modalusageBody">
+	    <div id="cvm-info" class="row col-md-12 ml-auto" style="overflow:hidden;"> 
+                <div class="col input-group">
+                    <ul id="cvm-info" class="navigation pl-2 pb-2 pr-1">
+                        <li id='info' class='navigationLi'>
+                            <div id='infoMenu' class='menu'>
+                                <div class="row mt-1 pl-2">
+                                    <div class="col-12 mt-2" style="font-size:14px" >
+                                       <h5><b>Pick a CVM model</b></h5>
+                                       <h5><b>Select either Depth or Elevation mode</b></h5>
+                                       <h5><b>Select an option</b></h5>
+				       <ul class="mb-1" id="info-list">
+                                          <li style="list-style-type:disc">Query for material properties with <b>0D&nbsp;Point</b> option</li> 
+                                          <li style="list-style-type:disc">Plot depth or elevation profile with <b>1D&nbsp;Vertical&nbsp;Profile</b> option</li> 
+                                          <li style="list-style-type:disc">Plot cross section for vs, vp, density or poisson data type with <b>2D&nbsp;Vertical&nbsp;Cross&nbsp;Section</b> option</li>
+                                          <li style="list-style-type:disc">Plot horizontal slice of vs, vp, density, poisson or vs30 etree with <b>2D&nbsp;Horizontal&nbsp;Slice</b> option </li>
+                                       </ul>
+                                       <br>
+                                       <p> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li id='info-select' class='navigationLi' style="display:none">
+                        </li>
+                    </ul> 
+                </div>
+	    </div> 
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: usage-->
 
 <!--Modal: ModelType -->
 <div class="modal" id="modalmt" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -752,7 +774,7 @@ TODO: need a new id
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal" onclick="$('#sidebar').show();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -772,7 +794,7 @@ TODO: need a new id
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal" onclick="$('#sidebar').show();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal"">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -800,7 +822,7 @@ lon2 lat2 z2      or     lon2,lat2,z2
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal" onclick="$('#sidebar').show();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -832,7 +854,7 @@ a label that is being used as datafile prefix separated by a comma or a space </
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal" onclick="$('#sidebar').show();">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -856,7 +878,7 @@ a label that is being used as datafile prefix separated by a comma or a space </
       </div>
 
       <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-outline-primary btn-md" data-dismiss="modal" onclick="$('#sidebar').show();">Close</button>
+        <button type="button" class="btn btn-outline-primary btn-md" data-dismiss="modal">Close</button>
       </div> 
 <!--
       <div class="modal-footer justify-content-center">

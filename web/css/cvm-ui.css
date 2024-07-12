@@ -4,11 +4,7 @@
    margin-inline-start:-10px;
 }
 
-#info-sidebar {
-  margin-bottom: 0rem;
-}
-
-#cvm-info {
+#cvm-description {
   position: absolute;
   bottom: 2px;
 }

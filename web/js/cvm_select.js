@@ -1,34 +1,34 @@
 /**
 
-  cvm_sidebar.js
+  cvm_select.js
 
 **/
 
-var point_sidebar=false;
-var profile_sidebar=false;
-var line_sidebar=false;
-var area_sidebar=false;
+var point_select=false;
+var profile_select=false;
+var line_select=false;
+var area_select=false;
 
 var drawing_point=false;
 var drawing_profile=false;
 var drawing_line=false;
 var drawing_area=false;
 
-// initiate a click on the sidebar buttons
-// to dismiss the sidebar
-function dismiss_sidebar() {
+// initiate a click on the select buttons
+// to dismiss the select
+function dismiss_select() {
   clear_popup(); 
-  if(point_sidebar) pointClick();
-  if(profile_sidebar) profileClick();
-  if(line_sidebar) lineClick();
-  if(area_sidebar) areaClick();
+  if(point_select) pointClick();
+  if(profile_select) profileClick();
+  if(line_select) lineClick();
+  if(area_select) areaClick();
 
-//  var sidebarptr=$('#sidebar');
-//  sidebarptr.css("display","none");
+//  var selectptr=$('#select');
+//  selectptr.css("display","none");
 }
 
-function refresh_sidebar() {
-  dismiss_sidebar();
+function refresh_select() {
+  dismiss_select();
   reset_point_latlons();
   reset_profile_latlons();
   reset_line_latlons();
@@ -36,26 +36,26 @@ function refresh_sidebar() {
 
 // return to blank point state
 
-  //var sidebarptr=$('#sidebar');
-  //sidebarptr.css("display","none");
+  //var selectptr=$('#select');
+  //selectptr.css("display","none");
 }
 
 /***********************************************************/
 /***********************************************************/
 
-// area sidebar js
+// area select js
 // slide out
 function areaClick() {
-  if(!area_sidebar) { dismiss_sidebar(); }
+  if(!area_select) { dismiss_select(); }
 
-  area_sidebar = !area_sidebar;
-  if(area_sidebar) {
-    sidebar_area_slideOut();
+  area_select = !area_select;
+  if(area_select) {
+    select_area_slideOut();
     $('#areaBtn').addClass('pick');
     markAreaLatlon();
     } else {
       // enable the popup on map
-      sidebar_area_slideIn();
+      select_area_slideIn();
       $('#areaBtn').removeClass('pick');
   }
 }
@@ -80,7 +80,7 @@ function set_area_latlons_preset() {
 
 function set_area_latlons(uid, firstlat,firstlon,secondlat,secondlon) {
    // need to capture the lat lon and draw a area
-   if(area_sidebar && drawing_area) {
+   if(area_select && drawing_area) {
        $( "#areaFirstLatTxt" ).val(round2Four(firstlat));
        $( "#areaFirstLonTxt" ).val(round2Four(firstlon));
        $( "#areaSecondLatTxt" ).val(round2Four(secondlat));
@@ -109,7 +109,7 @@ function reset_area_UID() {
 }
 
 function in_drawing_area() { 
-   if(drawing_area && area_sidebar) {
+   if(drawing_area && area_select) {
      return 1;
    } 
    return 0;
@@ -151,16 +151,16 @@ function chk_and_add_bounding_area() {
 }
 
 //dismiss all popup and suppress the popup on map
-function sidebar_area_slideOut() {
+function select_area_slideOut() {
   if (jQuery('#area').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
   }
   var panelptr=$('#area');
-  var sidebarptr=$('#sidebar');
+  var selectptr=$('#select');
   panelptr.css("display","");
-  sidebarptr.css("display","");
-  sidebarptr.css("background","whitesmoke");
+  selectptr.css("display","");
+  selectptr.css("background","whitesmoke");
   panelptr.removeClass('fade-out').addClass('fade-in');
 }
 
@@ -186,7 +186,7 @@ function reset_markAreaLatlon() {
 
 
 // enable the popup on map
-function sidebar_area_slideIn() {
+function select_area_slideIn() {
   if (jQuery('#area').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -200,20 +200,20 @@ function sidebar_area_slideIn() {
 
 /***********************************************************/
 
-// point sidebar js
+// point select js
 // slide out
 function pointClick() {
-  if(!point_sidebar) { dismiss_sidebar(); }
+  if(!point_select) { dismiss_select(); }
 
-  point_sidebar = !point_sidebar;
-  if(point_sidebar) {
-    sidebar_point_slideOut();
+  point_select = !point_select;
+  if(point_select) {
+    select_point_slideOut();
     $('#pointBtn').addClass('pick');
     set_point_latlons_special();
     markPointLatlon();
     } else {
       // enable the popup on map
-      sidebar_point_slideIn();
+      select_point_slideIn();
       reset_point_latlons();
       $('#pointBtn').removeClass('pick');
   }
@@ -247,7 +247,7 @@ function set_point_latlons_special()
  
 function set_point_latlons(uid,lat,lon) {
    // need to capture the lat lon and draw a point
-   if(point_sidebar && drawing_point) {
+   if(point_select && drawing_point) {
        $( "#pointFirstLatTxt" ).val(round2Four(lat));
        $( "#pointFirstLonTxt" ).val(round2Four(lon));
        $( "#pointUIDTxt" ).val(uid);
@@ -270,7 +270,7 @@ function reset_point_UID() {
 }
 
 function in_drawing_point() {
-   if(point_sidebar && drawing_point) {
+   if(point_select && drawing_point) {
      return 1;
    }
    return 0;
@@ -294,16 +294,16 @@ function chk_and_add_point() {
   }
 }
 //dismiss all popup and suppress the popup on map
-function sidebar_point_slideOut() {
+function select_point_slideOut() {
   if (jQuery('#point').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
   }
   var panelptr=$('#point');
-  var sidebarptr=$('#sidebar');
+  var selectptr=$('#select');
   panelptr.css("display","");
-  sidebarptr.css("display","");
-  sidebarptr.css("background","whitesmoke");
+  selectptr.css("display","");
+  selectptr.css("background","whitesmoke");
   panelptr.removeClass('fade-out').addClass('fade-in');
 }
 
@@ -327,7 +327,7 @@ function reset_markPointLatlon() {
 
 
 // enable the popup on map
-function sidebar_point_slideIn() {
+function select_point_slideIn() {
   if (jQuery('#point').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -341,19 +341,19 @@ function sidebar_point_slideIn() {
 
 /***********************************************************/
 
-// line sidebar js
+// line select js
 // slide out
 function lineClick() {
-  if(!line_sidebar) { dismiss_sidebar(); }
+  if(!line_select) { dismiss_select(); }
 
-  line_sidebar = !line_sidebar;
-  if(line_sidebar) {
-    sidebar_line_slideOut();
+  line_select = !line_select;
+  if(line_select) {
+    select_line_slideOut();
     $('#lineBtn').addClass('pick');
     markLineLatlon();
     } else {
       // enable the popup on map
-      sidebar_line_slideIn();
+      select_line_slideIn();
       $('#lineBtn').removeClass('pick');
   }
 }
@@ -371,7 +371,7 @@ function set_line_latlons_preset() {
 
 function set_line_latlons(uid,firstlat,firstlon,secondlat,secondlon) {
    // need to capture the lat lon and draw a line
-   if(line_sidebar && drawing_line) {
+   if(line_select && drawing_line) {
        $( "#lineFirstLatTxt" ).val(round2Four(firstlat));
        $( "#lineFirstLonTxt" ).val(round2Four(firstlon));
        $( "#lineSecondLatTxt" ).val(round2Four(secondlat));
@@ -401,7 +401,7 @@ function reset_line_UID(){
 }
 
 function in_drawing_line() {
-   if(line_sidebar && drawing_line) {
+   if(line_select && drawing_line) {
      return 1;
    }
    return 0;
@@ -443,16 +443,16 @@ function chk_and_add_bounding_line() {
 }
 
 //dismiss all popup and suppress the popup on map
-function sidebar_line_slideOut() {
+function select_line_slideOut() {
   if (jQuery('#line').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
   }
   var panelptr=$('#line');
-  var sidebarptr=$('#sidebar');
+  var selectptr=$('#select');
   panelptr.css("display","");
-  sidebarptr.css("display","");
-  sidebarptr.css("background","whitesmoke");
+  selectptr.css("display","");
+  selectptr.css("background","whitesmoke");
   panelptr.removeClass('fade-out').addClass('fade-in');
 }
 
@@ -476,7 +476,7 @@ function reset_markLineLatlon() {
 
 
 // enable the popup on map
-function sidebar_line_slideIn() {
+function select_line_slideIn() {
   if (jQuery('#line').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -490,19 +490,19 @@ function sidebar_line_slideIn() {
 
 /***********************************************************/
 
-// profile sidebar js
+// profile select js
 // slide out
 function profileClick() {
-  if(!profile_sidebar) { dismiss_sidebar(); }
+  if(!profile_select) { dismiss_select(); }
 
-  profile_sidebar = !profile_sidebar;
-  if(profile_sidebar) {
-    sidebar_profile_slideOut();
+  profile_select = !profile_select;
+  if(profile_select) {
+    select_profile_slideOut();
     $('#profileBtn').addClass('pick');
     markProfileLatlon();
     } else {
       // enable the popup on map
-      sidebar_profile_slideIn();
+      select_profile_slideIn();
       $('#profileBtn').removeClass('pick');
   }
 }
@@ -523,7 +523,7 @@ function set_profile_latlons_preset()
 
 function set_profile_latlons(uid,lat,lon) {
    // need to capture the lat lon and draw a profile
-   if(profile_sidebar && drawing_profile) {
+   if(profile_select && drawing_profile) {
        $( "#profileFirstLatTxt" ).val(round2Four(lat));
        $( "#profileFirstLonTxt" ).val(round2Four(lon));
        $( "#profileUIDTxt" ).val(uid);
@@ -549,7 +549,7 @@ function reset_profile_UID() {
 }
 
 function in_drawing_profile() {
-   if(profile_sidebar && drawing_profile) {
+   if(profile_select && drawing_profile) {
      return 1;
    }
    return 0;
@@ -573,16 +573,16 @@ function chk_and_add_profile() {
   }
 }
 //dismiss all popup and suppress the popup on map
-function sidebar_profile_slideOut() {
+function select_profile_slideOut() {
   if (jQuery('#profile').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
   }
   var panelptr=$('#profile');
-  var sidebarptr=$('#sidebar');
+  var selectptr=$('#select');
   panelptr.css("display","");
-  sidebarptr.css("display","");
-  sidebarptr.css("background","whitesmoke");
+  selectptr.css("display","");
+  selectptr.css("background","whitesmoke");
   panelptr.removeClass('fade-out').addClass('fade-in');
 }
 
@@ -606,7 +606,7 @@ function reset_markProfileLatlon() {
 
 
 // enable the popup on map
-function sidebar_profile_slideIn() {
+function select_profile_slideIn() {
   if (jQuery('#profile').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -620,16 +620,16 @@ function sidebar_profile_slideIn() {
 /****************************************************************/
 function reset_presets()
 {
-  if(point_sidebar) {
+  if(point_select) {
     set_point_latlons_preset();
   }
-  if(profile_sidebar) {
+  if(profile_select) {
     set_profile_latlons_preset();
   }
-  if(line_sidebar) {
+  if(line_select) {
     set_line_latlons_preset();
   }
-  if(area_sidebar) {
+  if(area_select) {
     set_area_latlons_preset();
   }
 }
