@@ -296,7 +296,7 @@ TODO: need a new id
 
             <div class="input-group input-group-sm custom-control-inline" style="max-width:450px">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="modelType">Select Z Model</label>
+                    <label class="input-group-text" for="modelType">Select Z Mode</label>
                 </div>
                 <select id="zModeType" class="custom-select custom-select-sm">
                     <option value="d">Depth</option>
@@ -313,7 +313,7 @@ TODO: need a new id
                     <option value="areaClick">2D Horizontal Slice</option>
                 </select>
                 <div class="input-group-append">
-                    <button onclick="refreshAll();" class="btn btn-dark pl-4 pr-4" type="button">RESET</button>
+                    <button id="toReset" class="btn btn-dark pl-4 pr-4">RESET</button>
                 </div>
             </div> <!-- query option -->
 
@@ -422,6 +422,13 @@ TODO: need a new id
                                                title="Z start"
                                                onfocus="this.value=''" 
                                                class="form-control mt-1">
+                                        <select title="profileDatatype" id="profileDataTypeTxt" class="my-custom-select custom-select mt-1">
+                                               <option value="vs">vs</option>
+                                               <option value="vp">vp</option>
+                                               <option value="density">density</option>
+                                               <option value="vs,vp,density">vs,vp,density</option>
+                                        </select>
+
                                         <input type="text"
                                                id="profileUIDTxt" 
                                                placeholder="UID" 
@@ -604,8 +611,7 @@ TODO: need a new id
                <br>
                <p><b>You Selected:</b></p>
                <p id="cvm-model-description">model list: ...</p>
-               <p id="cvm-modifier-description">model modifier: ...</p>
-               <p>For more model details and modifiers, see  <a href="https://doi.org/10.5281/zenodo.8270631">CVM archive</a></p>
+               <p>For more model details, see  <a href="https://doi.org/10.5281/zenodo.8270631">CVM archive</a></p>
              </div>
         </div> <!-- search-container -->
 

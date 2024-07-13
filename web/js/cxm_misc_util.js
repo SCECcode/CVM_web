@@ -5,6 +5,19 @@ contains utilities used by cxm based functions
 
 **/
 
+// https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
+function round2Four(val) {
+  var ep;
+  if (Number.EPSILON === undefined) {
+    ep= Math.pow(2, -52);
+    } else {
+      ep=Number.EPSILON;
+  }
+
+  var ret=Math.round( ( val + Number.EPSILON ) * 10000 ) / 10000;
+  return ret;
+}
+
 //"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]
 function sameLatlngs(first, second) {
    let lat1_f=first[0].lat; let lon1_f=first[0].lon;

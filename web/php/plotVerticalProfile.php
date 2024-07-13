@@ -12,6 +12,7 @@ $lon = ($_GET['lon']);
 $z = ($_GET['z']);
 $zstart = ($_GET['zstart']);
 $zstep = ($_GET['zstep']);
+$datatype = ($_GET['datatype']);
 $zmode = ($_GET['zmode']);
 $model = ($_GET['model']);
 $comment = "'".($_GET['comment'])."'";
@@ -38,7 +39,7 @@ if ($comment != 'none') {
   $lstr = " -C ".$comment.$lstr;
 }
 
-$qstub=" -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc." -d vs,vp,density -c ".$model." -o ".$file;
+$qstub=" -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc." -d ".$datatype." -c ".$model." -o ".$file;
 
 if ($zmode == 'e') {
   $query= $envstr." plot_elevation_profile.py ".$qstub.$lstr;

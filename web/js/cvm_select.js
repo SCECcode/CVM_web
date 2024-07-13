@@ -22,22 +22,16 @@ function dismiss_select() {
   if(profile_select) profileClick();
   if(line_select) lineClick();
   if(area_select) areaClick();
-
-//  var selectptr=$('#select');
-//  selectptr.css("display","none");
 }
 
 function refresh_select() {
-  dismiss_select();
   reset_point_latlons();
   reset_profile_latlons();
   reset_line_latlons();
   reset_area_latlons();
-
-// return to blank point state
-
-  //var selectptr=$('#select');
-  //selectptr.css("display","none");
+  dismiss_select();
+  // return to blank point state
+  pointClick();
 }
 
 /***********************************************************/
@@ -50,12 +44,12 @@ function areaClick() {
 
   area_select = !area_select;
   if(area_select) {
-    select_area_slideOut();
+    select_area_option();
     $('#areaBtn').addClass('pick');
     markAreaLatlon();
     } else {
       // enable the popup on map
-      select_area_slideIn();
+      unselect_area_option();
       $('#areaBtn').removeClass('pick');
   }
 }
@@ -151,7 +145,7 @@ function chk_and_add_bounding_area() {
 }
 
 //dismiss all popup and suppress the popup on map
-function select_area_slideOut() {
+function select_area_option() {
   if (jQuery('#area').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -186,7 +180,7 @@ function reset_markAreaLatlon() {
 
 
 // enable the popup on map
-function select_area_slideIn() {
+function unselect_area_option() {
   if (jQuery('#area').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -207,13 +201,13 @@ function pointClick() {
 
   point_select = !point_select;
   if(point_select) {
-    select_point_slideOut();
+    select_point_option();
     $('#pointBtn').addClass('pick');
     set_point_latlons_special();
     markPointLatlon();
     } else {
       // enable the popup on map
-      select_point_slideIn();
+      unselect_point_option();
       reset_point_latlons();
       $('#pointBtn').removeClass('pick');
   }
@@ -294,7 +288,7 @@ function chk_and_add_point() {
   }
 }
 //dismiss all popup and suppress the popup on map
-function select_point_slideOut() {
+function select_point_option() {
   if (jQuery('#point').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -327,7 +321,7 @@ function reset_markPointLatlon() {
 
 
 // enable the popup on map
-function select_point_slideIn() {
+function unselect_point_option() {
   if (jQuery('#point').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -348,12 +342,12 @@ function lineClick() {
 
   line_select = !line_select;
   if(line_select) {
-    select_line_slideOut();
+    select_line_option();
     $('#lineBtn').addClass('pick');
     markLineLatlon();
     } else {
       // enable the popup on map
-      select_line_slideIn();
+      unselect_line_option();
       $('#lineBtn').removeClass('pick');
   }
 }
@@ -443,7 +437,7 @@ function chk_and_add_bounding_line() {
 }
 
 //dismiss all popup and suppress the popup on map
-function select_line_slideOut() {
+function select_line_option() {
   if (jQuery('#line').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -476,7 +470,7 @@ function reset_markLineLatlon() {
 
 
 // enable the popup on map
-function select_line_slideIn() {
+function unselect_line_option() {
   if (jQuery('#line').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -497,12 +491,12 @@ function profileClick() {
 
   profile_select = !profile_select;
   if(profile_select) {
-    select_profile_slideOut();
+    select_profile_option();
     $('#profileBtn').addClass('pick');
     markProfileLatlon();
     } else {
       // enable the popup on map
-      select_profile_slideIn();
+      unselect_profile_option();
       $('#profileBtn').removeClass('pick');
   }
 }
@@ -514,10 +508,12 @@ function set_profile_latlons_preset()
        $( "#profileZEndTxt" ).val(30000);
        $( "#profileZStartTxt" ).val(0);
        $( "#profileZStepTxt" ).val(100);
+       $( "#profileDataTypeTxt" ).val('vs');
        } else {
            $( "#profileZEndTxt" ).val(-25000);
            $( "#profileZStartTxt" ).val(500);
            $( "#profileZStepTxt" ).val(-100);
+           $( "#profileDataTypeTxt" ).val('vs');
    }
 }
 
@@ -536,6 +532,7 @@ function reset_profile_latlons() {
    $( "#profileFirstLatTxt" ).val('');
    $( "#profileFirstLonTxt" ).val('');
    $( "#profileZEndTxt" ).val('');
+   $( "#profileDataTypeTxt" ).val('vs');
    $( "#profileZStartTxt" ).val('');
    $( "#profileZStepTxt" ).val('');
    reset_profile_UID();
@@ -573,7 +570,7 @@ function chk_and_add_profile() {
   }
 }
 //dismiss all popup and suppress the popup on map
-function select_profile_slideOut() {
+function select_profile_option() {
   if (jQuery('#profile').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;
@@ -606,7 +603,7 @@ function reset_markProfileLatlon() {
 
 
 // enable the popup on map
-function select_profile_slideIn() {
+function unselect_profile_option() {
   if (jQuery('#profile').hasClass('menuDisabled')) {
     // if this menu is disabled, don't slide
     return;

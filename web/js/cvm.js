@@ -26,6 +26,25 @@ var CVM = new function () {
 	  //
    };
 
+   this.resetAll = function() {
+
+     //document.getElementById("search-type").value = "freezeClick";
+     document.getElementById("phpResponseTxt").innerHTML = "";
+
+     refreshMPTable();
+     refreshResultTable();
+     remove_all_layers();
+
+     refresh_zmode();
+     refresh_model_type();
+     refresh_select(); // option
+
+     // back to inital stte
+     $("#modelType").trigger("change");
+     reset_presets();
+
+   };
+
 /******************************************/
     this.processByLatlonForPoint = function(fromMap) {
       document.getElementById('spinIconForProperty').style.display = "block";

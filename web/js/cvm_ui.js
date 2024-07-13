@@ -366,6 +366,12 @@ function collapse_mpr_table()
    }
 }
 
+function refresh_zmode() {
+    $("#zModeType").val('d');
+    set_floors_presets();
+    set_zrange_presets();
+}
+
 function set_zrange_presets()
 {
    var t= document.getElementById("zModeType").value;

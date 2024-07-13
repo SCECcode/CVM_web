@@ -21,6 +21,19 @@ function removeFromList(alist, uid) {
     return undefined;
 }
 
+function checkInList(alist, uid) {
+    var cnt=alist.length;
+    var item;
+    for(var i=0;i<cnt;i++) {
+       item=alist[i];
+       if(item['uid']==uid) { // found the item to remove
+           var index = alist.indexOf(item);
+	   return(index);
+       }
+    }
+    return undefined;
+}
+
 // [[lon1,lat1,z1],...,[lonn,latn,zn]]
 // make sure it is unique
 function makeLatlngs(darray) {
@@ -379,34 +392,4 @@ function refreshMPTable() {
 function refreshResultTable() {
     var table=document.getElementById("metadataPlotTable");
     table.innerHTML="<tbody><tr id=\"placeholder-row\"><td colspan=\"12\">Result, Plot and Metadata will appear here. </td></tr></tbody>";
-}
-
-function refreshAll() {
-  reset_markAreaLatlon();
-  reset_markPointLatlon();
-  reset_markLineLatlon();
-  reset_markProfileLatlon();
-
-  document.getElementById("search-type").value = "freezeClick";
-  document.getElementById("phpResponseTxt").innerHTML = "";
-
-  refreshMPTable();
-  refreshResultTable();
-  remove_all_layers();
-  refresh_map();
-  refresh_select();
-}
-
-// https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
-
-function round2Four(val) {
-  var ep;
-  if (Number.EPSILON === undefined) {
-    ep= Math.pow(2, -52);
-    } else {
-      ep=Number.EPSILON;
-  }
-
-  var ret=Math.round( ( val + Number.EPSILON ) * 10000 ) / 10000;
-  return ret;
 }

@@ -151,6 +151,15 @@ function load_selected_model(modelstr) {
    switchMapFocus();
 }
 
+function refresh_model_type() {
+   var sel=document.getElementById('modelType');
+   var opt=sel[0]
+   var model=opt.value;
+// force a change on the modelType
+   $( "#modelType" ).val(model);
+}
+
+
 function insert_materialproperty(uid, mp) {
    cvm_mp_list.push( { "uid":uid, "mp":mp });
 }
@@ -254,19 +263,21 @@ function load_a_layergroup(uid,type,group,highlight) {
    var t=find_layer_from_list(uid);
    if(t) {
      window.console.log("already plotted this layer ",uid);
-     return;
+     return 0;
    }
    cvm_layer_list.push({"uid":uid, "type":type, "group": group,"highlight":highlight});
+   return 1;
 }
 
 function add_a_layer(uid,layer) {
    var t=find_layer_from_list(uid);
    if(!t) {
      window.console.log("should have a related layer group already ",uid);
-     return;
+     return 0;
    }
    var group=t["group"];
    group.addLayer(layer); 
+   return 1;
 }
 
 /* LayerGroup */
@@ -367,8 +378,9 @@ function toggle_a_layergroup(uid) {
 function add_bounding_area(uid, a,b,c,d) {
   var group=addAreaLayerGroup(a,b,c,d);
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]};
-  cvm_area_list.push(tmp);
-  load_a_layergroup(uid, AREA_ENUM, group, EYE_NORMAL);
+  if(load_a_layergroup(uid, AREA_ENUM, group, EYE_NORMAL)) {
+    cvm_area_list.push(tmp);
+  }
 }
 
 function remove_bounding_area_layer(uid) {
@@ -383,11 +395,12 @@ function add_bounding_area_layer(layer,a,b,c,d) {
   var uid=getRnd("CVM");
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]};
   set_area_latlons(uid,a,b,c,d);
-  cvm_area_list.push(tmp);
   var group=L.layerGroup([layer]);
-  viewermap.addLayer(group);
 
-  load_a_layergroup(uid,AREA_ENUM,group, EYE_NORMAL);
+  if(load_a_layergroup(uid,AREA_ENUM,group, EYE_NORMAL)) {
+    cvm_area_list.push(tmp);
+    viewermap.addLayer(group);
+  }
   dirty_layer_uid=uid;
 }
 /*** special handle for a file of points ***/
@@ -401,7 +414,9 @@ function add_bounding_file_points(uid, darray) {
    var group=addPointsLayerGroup(latlngs);
    var tmp={"uid":uid, "latlngs":latlngs};
    cvm_file_points_list.push(tmp);
-   load_a_layergroup(uid, POINT_ENUM, group, EYE_HIGHLIGHT);
+   if( load_a_layergroup(uid, POINT_ENUM, group, EYE_HIGHLIGHT)) {
+     cvm_file_points_list.push(tmp);
+   }
 }
 
 function add_bounding_point(uid,a,b) {
@@ -410,8 +425,9 @@ function add_bounding_point(uid,a,b) {
   }
   var group=addPointLayerGroup(a,b);
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
-  cvm_point_list.push(tmp);
-  load_a_layergroup(uid,POINT_ENUM,group, EYE_NORMAL);
+  if( load_a_layergroup(uid,POINT_ENUM,group, EYE_NORMAL)) {
+    cvm_point_list.push(tmp);;
+  }
 }
 
 function add_bounding_point_layer(layer,a,b) {
@@ -421,11 +437,12 @@ function add_bounding_point_layer(layer,a,b) {
   var uid=getRnd("CVM");
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
   set_point_latlons(uid,a,b);
-  cvm_point_list.push(tmp);
   var group=L.layerGroup([layer]);
-  viewermap.addLayer(group);
 
-  load_a_layergroup(uid,POINT_ENUM,group, EYE_NORMAL);
+  if( load_a_layergroup(uid,POINT_ENUM,group, EYE_NORMAL)) {
+    cvm_point_list.push(tmp);
+    viewermap.addLayer(group);
+  }
   dirty_layer_uid=uid;
 }
 
@@ -433,27 +450,33 @@ function remove_bounding_point_layer(uid) {
   remove_a_layer(uid);
 }
 
+// can come from map or from manual input through the 'plotting' part
 function add_bounding_profile(uid,a,b) {
-  window.console.log("adding_bounding_profile");
+  // uid is already in the list, no need to add to the list 
+  if(dirty_layer_uid) {
+    remove_a_layer(dirty_layer_uid);
+  }
   var group=addProfileLayerGroup(a,b);
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
-  cvm_profile_list.push(tmp);
-  load_a_layergroup(uid,PROFILE_ENUM,group,EYE_NORMAL);
+  if(load_a_layergroup(uid,PROFILE_ENUM,group,EYE_NORMAL)) {
+    cvm_profile_list.push(tmp);
+  }
 }
 
+// came from the map
 function add_bounding_profile_layer(layer,a,b) {
-  window.console.log("adding_bounding_profile_layer");
   if(dirty_layer_uid) {
     remove_a_layer(dirty_layer_uid);
   }
   var uid=getRnd("CVM");
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
   set_profile_latlons(uid,a,b);
-  cvm_profile_list.push(tmp);
   var group=L.layerGroup([layer]);
-  viewermap.addLayer(group);
 
-  load_a_layergroup(uid,PROFILE_ENUM,group,EYE_NORMAL);
+  if(load_a_layergroup(uid,PROFILE_ENUM,group,EYE_NORMAL)) {
+    cvm_profile_list.push(tmp);
+    viewermap.addLayer(group);
+  }
   dirty_layer_uid=uid;
 }
 
@@ -466,8 +489,9 @@ function remove_bounding_profile_layer(uid) {
 function add_bounding_line(uid,a,b,c,d) {
   var group =addLineLayerGroup(a,b,c,d);
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]};
-  cvm_line_list.push(tmp);
-  load_a_layergroup(uid,LINE_ENUM,group);
+  if(load_a_layergroup(uid,LINE_ENUM,group,EYE_NORMAL)) {
+    cvm_line_list.push(tmp);
+  }
 }
 
 function remove_bounding_line_layer(uid) {
@@ -481,10 +505,11 @@ function add_bounding_line_layer(layer,a,b,c,d) {
   var uid=getRnd("CVM");
   var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]};
   set_line_latlons(uid,a,b,c,d);
-  cvm_line_list.push(tmp);
   var group=L.layerGroup([layer]);
-  viewermap.addLayer(group);
 
-  load_a_layergroup(uid,LINE_ENUM,group,EYE_NORMAL);
+  if(load_a_layergroup(uid,LINE_ENUM,group,EYE_NORMAL)) {
+    cvm_line_list.push(tmp);
+    viewermap.addLayer(group);
+  }
   dirty_layer_uid=uid;
 }

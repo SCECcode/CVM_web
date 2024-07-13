@@ -130,6 +130,12 @@ jQuery(document).ready(function() {
     }
   });
 
+  $("#toReset").on('click', function () {
+window.console.log("Calling toReset..");
+        CVM.resetAll();
+  });
+
+
 
 // MAIN SETUP
   CVM.setup_model();
