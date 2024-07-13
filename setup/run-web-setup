@@ -44,7 +44,8 @@ ls $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 ## setup plotting  
 mkdir -p $PLOTTING_TOP_DIR
 
-## setup web permission
+## setup web result permission
+mkdir $CVM_WEB_TOP_DIR/result
 chmod og+rw $CVM_WEB_TOP_DIR/result
 
 cd $PLOTTING_TOP_DIR
