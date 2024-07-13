@@ -31,13 +31,13 @@ jQuery(document).ready(function() {
     $(".links").fadeIn("slow");
   });
 
-  $("#search-type").change(function () {
+  $("#searchType").change(function () {
     var funcToRun = $(this).val();
     if (funcToRun != "") {
       window[funcToRun]();
     }
   });
-  $("#search-type").trigger("change");
+  $("#searchType").trigger("change");
 
   $("#modelType").change(function () {
       var model = $(this).val();

@@ -28,7 +28,6 @@ var CVM = new function () {
 
    this.resetAll = function() {
 
-     //document.getElementById("search-type").value = "freezeClick";
      document.getElementById("phpResponseTxt").innerHTML = "";
 
      refreshMPTable();

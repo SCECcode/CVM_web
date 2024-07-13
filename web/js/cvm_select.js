@@ -2,6 +2,8 @@
 
   cvm_select.js
 
+  -> option select
+
 **/
 
 var point_select=false;
@@ -25,13 +27,14 @@ function dismiss_select() {
 }
 
 function refresh_select() {
+  dismiss_select();
   reset_point_latlons();
   reset_profile_latlons();
   reset_line_latlons();
   reset_area_latlons();
-  dismiss_select();
-  // return to blank point state
-  pointClick();
+  // return to initial point state
+  $("#searchType").val('pointClick');
+  $("#searchType").trigger("change");
 }
 
 /***********************************************************/

@@ -305,7 +305,7 @@ TODO: need a new id
             </div> <!-- z select -->
 
             <div class="input-group input-group-sm filters">
-                <select id="search-type" class="custom-select custom-select-sm">
+                <select id="searchType" class="custom-select custom-select-sm">
                     <option value="pointClick" selected">0D Point</option>
                     <option disabled>-- Advanced --</option>
                     <option value="profileClick">1D Vertical Profile</option>
