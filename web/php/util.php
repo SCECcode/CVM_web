@@ -15,12 +15,12 @@ function makeEnvString() {
 function checkResult($query,$result,$uid) {
   $qname="../result/query_".$uid;
   $pos=strpos($result,"ERROR:");
-  $fp= fopen($qname,"w+") or die("Unable to open file!");
+  $fp= fopen($qname,"w+") or die("Unable to open query command file!");
   fwrite($fp,$query); fwrite($fp,"\n");
   fwrite($fp,$result); fwrite($fp,"\n");
   fclose($fp);
   if( $pos != FALSE ) { // found ERROR
-     $fp= fopen($qname,"w+") or die("Unable to open file!");
+     $fp= fopen($qname,"w+") or die("Unable to open query command file!");
      fwrite($fp,$query); fwrite($fp,"\n");
      fwrite($fp,$result); fwrite($fp,"\n");
      fclose($fp);
@@ -32,7 +32,7 @@ function checkResult($query,$result,$uid) {
 function makeCSVDepthProfile($uid) {
   $csvname="../result/".$uid."_v_data.csv";
 
-  $cfp= fopen($csvname,"w+") or die("Unable to open file!");
+  $cfp= fopen($csvname,"w+") or die("Unable to open cvs data file!");
 
   $metaname="../result/".$uid."_v_meta.json";
   $mpname="../result/".$uid."_v_matprops.json";
@@ -77,7 +77,7 @@ function makeCSVDepthProfile($uid) {
 function makeCSVElevationProfile($uid) {
   $csvname="../result/".$uid."_v_data.csv";
 
-  $cfp= fopen($csvname,"w+") or die("Unable to open file!");
+  $cfp= fopen($csvname,"w+") or die("Unable to open cvs data file!");
 
   $metaname="../result/".$uid."_v_meta.json";
   $mpname="../result/".$uid."_v_matprops.json";
