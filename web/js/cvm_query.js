@@ -100,7 +100,7 @@ function _getMaterialPropertyByLatlonChunk(uid,datastr, dataarray, current_chunk
     var xmlhttp;
     // extract content of a file
     var zmodestr=document.getElementById("zModeType").value;
-    var modelstr=document.getElementById("modelType").value;
+    var modelstr=document.getElementById("selectModelType").value;
     var zrangestr=_getZrange(modelstr);
     var floorstr=_getFloors(modelstr);
 
@@ -150,7 +150,7 @@ function getMaterialPropertyByLatlon() {
     var lonstr=document.getElementById("pointFirstLonTxt").value;
     var zstr=document.getElementById("pointZTxt").value;
     var zmodestr=document.getElementById("zModeType").value;
-    var modelstr=document.getElementById("modelType").value;
+    var modelstr=document.getElementById("selectModelType").value;
     var zrangestr=_getZrange(modelstr);
     var floorstr=_getFloors(modelstr);
     var uid=document.getElementById("pointUIDTxt").value;
@@ -199,7 +199,7 @@ function plotCrossSection() {
     var zstartstr=document.getElementById("lineZStartTxt").value;
     var datatypestr=document.getElementById("lineDataTypeTxt").value;
     var zmodestr=document.getElementById("zModeType").value;
-    var modelstr=document.getElementById("modelType").value;
+    var modelstr=document.getElementById("selectModelType").value;
     var zrangestr=_getZrange(modelstr);
     var floorstr=_getFloors(modelstr);
 
@@ -269,10 +269,10 @@ function plotVerticalProfileByList(dataarray,idx,total) {
     var uid=item[6]; // could change to json blob            
 
     var zmodestr=document.getElementById("zModeType").value;
-    var modelstr=document.getElementById("modelType").value;
+    var modelstr=document.getElementById("selectModelType").value;
     var zrangestr=_getZrange(modelstr);
     var floorstr=_getFloors(modelstr);
-    var elt=document.getElementById("modelType");
+    var elt=document.getElementById("selectModelType");
     var commentstr = elt.options[elt.selectedIndex].innerHTML;
 
     var xmlhttp;
@@ -344,7 +344,7 @@ function plotHorizontalSlice() {
     var zstr=document.getElementById("areaZTxt").value;
     var datatypestr=document.getElementById("areaDataTypeTxt").value;
     var zmodestr=document.getElementById("zModeType").value;
-    var modelstr=document.getElementById("modelType").value;
+    var modelstr=document.getElementById("selectModelType").value;
     var zrangestr=_getZrange(modelstr);
     var floorstr=_getFloors(modelstr);
     var uid=document.getElementById("areaUIDTxt").value;
@@ -408,7 +408,7 @@ function plotZ10Slice() {
     var xmlhttp;
     var firstlatstr=document.getElementById("areaFirstLatTxt").value;
     var firstlonstr=document.getElementById("areaFirstLonTxt").value;
-    var modelstr=document.getElementById("modelType").value;
+    var modelstr=document.getElementById("selectModelType").value;
     var uid=document.getElementById("areaUIDTxt").value;
     var secondlatstr=document.getElementById("areaSecondLatTxt").value;
     var secondlonstr=document.getElementById("areaSecondLonTxt").value;
@@ -461,7 +461,7 @@ function plotZ25Slice() {
     var xmlhttp;
     var firstlatstr=document.getElementById("areaFirstLatTxt").value;
     var firstlonstr=document.getElementById("areaFirstLonTxt").value;
-    var modelstr=document.getElementById("modelType").value;
+    var modelstr=document.getElementById("selectModelType").value;
     var uid=document.getElementById("areaUIDTxt").value;
     var secondlatstr=document.getElementById("areaSecondLatTxt").value;
     var secondlonstr=document.getElementById("areaSecondLonTxt").value;

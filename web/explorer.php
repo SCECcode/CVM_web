@@ -1,23 +1,23 @@
 <?php
 require_once("php/navigation.php");
-$header = getHeader("Viewer");
+$header = getHeader("Explorer");
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SCEC Community Velocity Model Viewer (ANOTHER prototype)</title>
+    <title>SCEC Community Velocity Model Explorer (ANOTHER prototype)</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/vendor/font-awesome.min.css">
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/vendor/leaflet.awesome-markers.css">
     <link rel="stylesheet" href="css/vendor/leaflet.css">
-
-    <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/vendor/jquery-ui.css">
-
     <link rel="stylesheet" href="css/vendor/glyphicons.css">
+    <link rel="stylesheet" href="css/vendor/all.css">
+
     <link rel="stylesheet" href="css/vendor/animation.css">
 
     <link rel="stylesheet" href="css/cvm-ui.css">
@@ -89,6 +89,7 @@ $header = getHeader("Viewer");
     <script type="text/javascript" src="js/cvm_leaflet.js"></script>
     <script type="text/javascript" src="js/cvm_region.js"></script>
     <script type="text/javascript" src="js/cvm_region_util.js"></script>
+    <script type="text/javascript" src="js/cvm_expand.js"></script>
 
     <script type="text/javascript" src="js/cxm_misc_util.js"></script>
     <script type="text/javascript" src="js/gfm_region.js"></script>
@@ -152,7 +153,7 @@ TODO: need a new id
 
 <!-- intro -->
     <div id="top-intro">
-        <p>The <a href="https://www.scec.org/research/cvm">SCEC Community Velocity Model (CVM) Viewer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
+        <p>The <a href="https://www.scec.org/research/cvm">SCEC Community Velocity Model (CVM) Explorer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
     </div>
 
 <!-- leaflet control -->
@@ -162,8 +163,8 @@ TODO: need a new id
         </div>
     </div>
 
-<!-- top-control-row-2 -->
-    <div id="top-control-row-2" class="row justify-content-end" style="border:0px solid blue">
+<!-- top-control -->
+    <div id="top-control" class="row justify-content-end mb-2" style="border:0px solid blue">
             <div id='model-options' class="form-check-inline">
                 <div class="form-check form-check-inline">
                      <label class='form-check-label ml-1 mini-option'
@@ -226,18 +227,18 @@ TODO: need a new id
                     <option value="esri terrain">ESRI Terrain</option>
                 </select>
             </div>
-    </div> <!-- top-control-row-2 -->
+    </div> <!-- top-control -->
 
 <!-- model map control -->
-    <div id="mapDataBig" class="row mapData mt-2" style="border:0px solid green">
+    <div id="mapDataBig" class="row mapData">
 
         <div id="search-container" class="col-5 button-container flex-column pr-0" style="overflow:hidden;border:solid 0px red;">
 
             <div class="input-group input-group-sm custom-control-inline" style="max-width:450px">
                <div class="input-group-prepend">
-                     <label class="input-group-text" for="modelType">Select Model Type</label>
+                     <label class="input-group-text" for="selectModelType">Select Model Type</label>
                </div>
-	       <select id="modelType" class="custom-select custom-select-sm"></select>&nbsp;
+	       <select id="selectModelType" class="custom-select custom-select-sm"></select>&nbsp;
 <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalusage"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div> <!-- model select -->
 
@@ -616,7 +617,7 @@ TODO: need a new id
         </div> <!-- search-container -->
 
 <!-- leaflet 2D map -->
-        <div id="map-container" class="col-7 pl-2" style="border:0px solid green">
+        <div id="map-container" class="col-7 pl-2">
             <div class="w-100 mb-1" id='CVM_plot'
                 style="position:relative;border:solid 1px #ced4da; height:576px;">
             </div>
@@ -624,7 +625,7 @@ TODO: need a new id
          </div> <!-- map-container -->
     </div> <!-- mapDataBig -->
 
-    <div id="result-container" class="row d-flex flex-column">
+    <div id="result-container" class="row" style="display:;">
            <div class="col-12 flex-row" align="end">
                <button class="btn cvm-top-small-btn" title="download all the material property in the table" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
                <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalparameters"><span class="glyphicon glyphicon-info-sign"></span></button></td>
@@ -648,7 +649,7 @@ TODO: need a new id
                 </ul>
                 <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalff"><span class="glyphicon glyphicon-info-sign"></span></button></td>
             </div>
-            <div class="col-12  mt-0 mb-4" id="result-table">
+            <div class="col-12  mt-0 mb-4" id="result-table" style="display:">
                <div id="metadataPlotTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
                     <table id="metadataPlotTable">
                         <tr id="placeholder-row">
@@ -662,6 +663,13 @@ TODO: need a new id
 
   </div> <!-- cvmMain -->
 </div> <!-- container -->
+
+<div id="expand-view-key-container" style="display:none;">
+  <div id="expand-view-key" class="row" style="opacity:0.8; height:1.4rem;">
+    <button id="bigMapBtn" class="cxm-small-btn" title="Expand into a larger map" style="color:black;background-color:rgb(255,255,255);padding: 0rem 0.3rem 0rem 0.3rem" onclick="toggleBigMap()"><span class="fas fa-expand"></span>
+    </button>
+  </div>
+</div>
 
 <!--Modal: (modalkmlselect) -->
 <div class="modal" id="modalkmlselect" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -823,7 +831,7 @@ TODO: need a new id
 lon1 lat1 z1             lon1,lat1,z1
 lon2 lat2 z2      or     lon2,lat2,z2
 </pre>
-<h5> Z value should match the Z mode selection from the main viewer, maximum display points is 200</h5>
+<h5> Z value should match the Z mode selection from the main explorer, maximum display points is 200</h5>
           </div>
         </div>
       </div>
@@ -854,7 +862,7 @@ a label that is being used as datafile prefix separated by a comma or a space </
     or
    lon lat start end step label
 </pre>
-<h5> Z Step value should match the Z mode selection from the main viewer</h5>
+<h5> Z Step value should match the Z mode selection from the main explorer</h5>
 
           </div>
         </div>

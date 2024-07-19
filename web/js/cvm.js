@@ -39,10 +39,14 @@ var CVM = new function () {
      refresh_select(); // option
 
      // back to inital stte
-     $("#modelType").trigger("change");
+     $("#selectModelType").trigger("change");
      reset_presets();
 
    };
+
+    this.refreshModelDescription = function (descript){
+      $("#cvm-model-description").html(descript);
+    }
 
 /******************************************/
     this.processByLatlonForPoint = function(fromMap) {

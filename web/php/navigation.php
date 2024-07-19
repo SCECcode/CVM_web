@@ -4,7 +4,7 @@
 $host_site_actual_path = "/";
 if (isset($_SERVER['HTTP_X_FORWARDED_SERVER'])) {
 	// check that we're behind a proxy
-	$host_site_actual_path = "/research/cvm-viewer/";
+	$host_site_actual_path = "/research/cvm-explorer/";
 }
 
 
@@ -16,9 +16,9 @@ function getHeader($this_page) {
 
 	$all_pages = [
 /*
-		$host_site_actual_path => "Viewer",
+		$host_site_actual_path => "Explorer",
 */
-		"viewer.php" => "Viewer",
+		"explorer.php" => "Explorer",
 		"guide.php" => "User Guide",
 		"disclaimer.php" => "Disclaimer",
 		"contact.php" => "Contact"
@@ -37,11 +37,11 @@ function getHeader($this_page) {
 _END;
 	}
 	$header = <<<_END
-<div class="banner-container">
+<div id="banner-container" class="banner-container">
     <div class="container top">
         <nav class="navbar navbar-expand-lg navbar-dark  scec-header">
             <a class="navbar-brand" href="$host_site_actual_path"><img class="scec-logo" src="img/sceclogo_transparent.png">
-                &nbsp;Community Velocity Model Viewer (prototype)</a>
+                &nbsp;Community Velocity Model Explorer (prototype)</a>
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

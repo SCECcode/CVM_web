@@ -19,7 +19,7 @@ $header = getHeader("Disclaimer");
     <script type='text/javascript' src='js/vendor/jquery.min.js'></script>
     <script type='text/javascript' src='js/vendor/bootstrap.min.js'></script>
     <script type='text/javascript' src='js/vendor/jquery-ui.js'></script>
-    <title>SCEC Community Models Viewer: Disclaimer</title>
+    <title>SCEC Community Velocity Model Explorer: Disclaimer</title>
 </head>
 <body>
 <?php echo $header; ?>
@@ -28,7 +28,7 @@ $header = getHeader("Disclaimer");
 
     <h1>Disclaimer</h1>
     <div>
-		<p> The SCEC Community Models (CM) Viewer Tool is provided “as is” and without warranties of any kind.  While <a href="https://www.scec.org">SCEC</a> and the development team have made every effort to provide data from reliable sources or methodologies, SCEC and the development team do not make any representations or warranties as to the accuracy, completeness, reliability, currency, or quality of any data provided herein.  This website provides access to an initial prototype of the SCEC Unified Community Velocity Model (UCVM) and the information may be incomplete or contain errors, and we do not recommend use of this website for scientific research until further evaluation of the site has been completed. By using this tool, you accept to release SCEC and the development team of any and all liability.</p>
+		<p> The SCEC Community Velocity Model (CVM) Explorer Tool is provided “as is” and without warranties of any kind.  While <a href="https://www.scec.org">SCEC</a> and the development team have made every effort to provide data from reliable sources or methodologies, SCEC and the development team do not make any representations or warranties as to the accuracy, completeness, reliability, currency, or quality of any data provided herein.  This website provides access to an initial prototype of the SCEC Unified Community Velocity Model (UCVM) and the information may be incomplete or contain errors, and we do not recommend use of this website for scientific research until further evaluation of the site has been completed. By using this tool, you accept to release SCEC and the development team of any and all liability.</p>
 
 		<p>More information about the UCVM can be found at: <a href="https://www.scec.org/research/ucvm">https://www.scec.org/research/ucvm</a>.</p>
 	</div>

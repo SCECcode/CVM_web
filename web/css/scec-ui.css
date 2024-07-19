@@ -1,5 +1,26 @@
 /* required styles */
 
+.cxm-small-btn {
+          background: transparent;
+          color: #011638;
+          border: none;
+          display: inline-block;
+          padding: 0rem 0.2rem 0rem 0.3rem;
+          }
+
+.cxm-small-btn:hover, .cxm-small-btn:active, .cxm-small-btn:focus, .cxm-small-btn:checked {
+          color: #DC3545;
+          outline:0 !important;
+          border: none;
+          box-shadow: none;
+          display: inline-block;
+          }
+
+.cxm-small-btn:disabled {
+          color: white;
+          }
+
+
 .full_modal-dialog {
   width: 98%;
   height: 92%;

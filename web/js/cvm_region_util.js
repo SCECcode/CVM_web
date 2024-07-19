@@ -56,7 +56,7 @@ function makeModelSelection()
      // check the model directory to make sure it exists before adding 
      // the option
      if(isModelInstalled(pname)) {
-        var sel=document.getElementById('modelType');
+        var sel=document.getElementById('selectModelType');
         option = document.createElement("option");
         option.text = mname;
         option.label = mname;
@@ -65,7 +65,7 @@ function makeModelSelection()
      }
    } 
    // special case
-   var sel=document.getElementById('modelType');
+   var sel=document.getElementById('selectModelType');
    option = document.createElement("option");
    option.text = "-- Advanced --";
    option.setAttribute("disabled", true);
@@ -73,13 +73,15 @@ function makeModelSelection()
    sel.add(option);
 
    if(isModelInstalled("sfcvm") && isModelInstalled("cca")
-      && isModelInstalled("1d")) {
+	    && isModelInstalled("cvmsi")) {
    option = document.createElement("option");
-   option.text = "SFCVM,CCA,elygtl:taper,BBP1D";
-   option.label = "SFCVM,CCA,elygtl:taper,BBP1D";
-   option.value= "sfcvm,cca,elygtl:taper,bbp1d";
+   option.text = "SFCVM,CCA,CVM-S4.26.M01,SF1D";
+   option.label = "SFCVM,CCA,CVM-S4.26.M01,SF1D";
+   option.value= "sfcvm,cca,cvmsi,sf1d";
    sel.add(option);
    }
+
+/***
  
    if(isModelInstalled("sfcvm") && isModelInstalled("cca")
       && isModelInstalled("1d")) {
@@ -151,6 +153,7 @@ function makeModelSelection()
      option.value= "sfcvm,cca,1d";
      sel.add(option);
    }
+***/
 
 // nc1d is with 1d
    if(isModelInstalled("sfcvm") && isModelInstalled("cca") && isModelInstalled("1d")) {
@@ -170,6 +173,7 @@ function makeModelSelection()
      option.value= "sfcvm,cca,bbp1d";
      sel.add(option);
    }
+
 
 
    if(isModelInstalled("sfcvm")) {

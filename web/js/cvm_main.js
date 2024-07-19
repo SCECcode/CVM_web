@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
   });
   $("#searchType").trigger("change");
 
-  $("#modelType").change(function () {
+  $("#selectModelType").change(function () {
       var model = $(this).val();
       remove_all_models();
       load_selected_model(model);

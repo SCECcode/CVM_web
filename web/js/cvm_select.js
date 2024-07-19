@@ -227,7 +227,7 @@ function set_point_latlons_special()
 {
     reset_point_latlons();
 /*  special preset case for ivslu/cvlsu because they are sparse */
-    var model=document.getElementById("modelType").value;
+    var model=document.getElementById("selectModelType").value;
     if(model == "ivlsu") {
         $( "#pointFirstLatTxt" ).val(32.686);
         $( "#pointFirstLonTxt" ).val(-116.05);

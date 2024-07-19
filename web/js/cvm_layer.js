@@ -132,7 +132,7 @@ function make_all_model_layer() {
    }
 
    { // initialize with the default model
-     var sel=document.getElementById('modelType');
+     var sel=document.getElementById('selectModelType');
      var opt=sel[0]
      var model=opt.value;
      load_selected_model(model);
@@ -152,11 +152,11 @@ function load_selected_model(modelstr) {
 }
 
 function refresh_model_type() {
-   var sel=document.getElementById('modelType');
+   var sel=document.getElementById('selectModelType');
    var opt=sel[0]
    var model=opt.value;
-// force a change on the modelType
-   $( "#modelType" ).val(model);
+// force a change on the selectModelType
+   $( "#selectModelType" ).val(model);
 }
 
 
