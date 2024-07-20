@@ -168,11 +168,11 @@ TODO: need a new id
             <div id='model-options' class="form-check-inline">
                 <div class="form-check form-check-inline">
                      <label class='form-check-label ml-1 mini-option'
-                             title='Show Community Fault Model v6.1 on map'
+                             title='Show Community Fault Model v7.0 on map'
                              for="cvm-model-cfm">
                      <input class='form-check-inline mr-1'
                              type="checkbox"
-                             id="cvm-model-cfm" value="1" />CFM6.1
+                             id="cvm-model-cfm" value="1" />CFM7.0
                      </label>
                 </div>
 
