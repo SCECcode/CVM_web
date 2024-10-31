@@ -1,4 +1,16 @@
 /* required styles */
+#opacitySlider {
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(153, 00, 00));
+}
+
+#opacitySlider-handle {
+   width: 2em;
+   height: 1.6em;
+   top: 50%;
+   margin-top: -0.8em;
+   text-align: center;
+   line-height: 1.6em;
+}
 
 .cxm-small-btn {
           background: transparent;

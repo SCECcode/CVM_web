@@ -13,6 +13,9 @@
 }
 
 #cvm-description {
+  font-size: 14px;
+  max-width: 450px;
+  background-color: #E4EBF1;
   position: absolute;
   bottom: 2px;
 }

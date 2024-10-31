@@ -9,8 +9,8 @@ initdb /home/postgres/cvm_db
 # Start PostgreSQL server
 pg_ctl -D /home/postgres/cvm_db -l /home/postgres/logfile start
 
-#/app/schema/load_db_setup
-#/app/schema/load_cvm_db_up
+/app/schema/load_db_setup
+/app/schema/load_cvm_db_up
 
 
 

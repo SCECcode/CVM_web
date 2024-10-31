@@ -11,21 +11,22 @@
 rm -rf ../data
 mkdir ../data
 
-for file in $CSMPATH/*csv ; do
+for file in $CVMPATH/*csv ; do
     [ -e "$file" ] || continue
     echo "process-csv.sh: " $file
 
     filename=${file##*/}
 ## remove _ and -
     nfilename=`echo $filename | sed "s/-//g" | sed "s/_//g"`
-    CSMTB=${nfilename%.csv}
-    sfilename=$CSMTB".csv_header"
+    CVMTB=${nfilename%.csv}
+    sfilename=$CVMTB".csv_header"
 
-## remove #-lines
+## remove original #-lines
 ## put in the csv header row 
+## csv_vs_header, works for : z2.5(vs), z1.0(vs) and regular vs
 
-    cp ./csv_header ../data/$nfilename
-    awk 'NR > 48' $file | sed "s/NaN//g" >> ../data/$nfilename
-    awk 'NR <= 48' $file | cat >> ../data/$sfilename
+    cp ./csv_vs_header ../data/$nfilename
+    awk '!/^#/' $file | sed "s/NaN//g" >> ../data/$nfilename
+    awk '/^#/' $file | cat >> ../data/$sfilename
 
 done

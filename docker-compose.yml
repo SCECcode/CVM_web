@@ -18,6 +18,5 @@ services:
       context: ./
     restart: always
     ports:
-      - 8096:8081
-      - 8097:80
-
+      - 8100:8081
+      - 8101:80

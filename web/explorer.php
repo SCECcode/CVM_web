@@ -21,7 +21,7 @@ $header = getHeader("Explorer");
     <link rel="stylesheet" href="css/vendor/animation.css">
 
     <link rel="stylesheet" href="css/cvm-ui.css">
-    <link rel="stylesheet" href="css/scec-ui.css">
+    <link rel="stylesheet" href="css/cxm-ui.css">
 
     <script type="text/javascript" src="js/vendor/leaflet.js"></script>
     <script type='text/javascript' src='js/vendor/leaflet.awesome-markers.js'></script>
@@ -232,9 +232,30 @@ TODO: need a new id
 <!-- model map control -->
     <div id="mapDataBig" class="row mapData">
 
+
+<!-- metric spec parking --> 
+<!--
+        <div id="metricData" class="col-5 button-container flex-column pr-0" style="overflow:hidden;border:solid 0px red;">         
+        <div class="row" style="border:solid 0px blue">
+             <div class="col-9">
+               <form id="cvm-search-type">
+                 <label><input type="radio" id="searchTypeModel" name="searchtype" onclick="CVM.showSearch('model')"><span>Explore Models</span></label>
+                 <label><input type="radio" id="searchTypeData" name="searchtype" onclick="CVM.showSearch('latlon')"><span>Select Region</span></label>
+               </form>
+             </div>
+
+             <div id="csm-reset-btn" class="col-2">
+               <div class="row justify-content-end">
+               <button id="toReset" type="button" class="btn btn-dark" >Reset</button>
+               </div>
+             </div>
+        </div>
+
+-->
+
         <div id="search-container" class="col-5 button-container flex-column pr-0" style="overflow:hidden;border:solid 0px red;">
 
-            <div class="input-group input-group-sm custom-control-inline" style="max-width:450px">
+            <div class="input-group input-group-sm custom-control-inline" style="max-width:450px;border:solid 0px green;">
                <div class="input-group-prepend">
                      <label class="input-group-text" for="selectModelType">Select Model Type</label>
                </div>
@@ -305,9 +326,9 @@ TODO: need a new id
                 </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzm"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div> <!-- z select -->
 
-            <div class="input-group input-group-sm filters">
+            <div class="input-group input-group-sm filters" style="max-width:450px">
                 <select id="searchType" class="custom-select custom-select-sm">
-                    <option value="pointClick" selected">0D Point</option>
+                    <option value="pointClick" selected>0D Point</option>
                     <option disabled>-- Advanced --</option>
                     <option value="profileClick">1D Vertical Profile</option>
                     <option value="lineClick">2D Vertical Cross Section</option>
@@ -319,9 +340,9 @@ TODO: need a new id
             </div> <!-- query option -->
 
 <!-- selection -->
-	    <div id="option" class="row mt-3"> 
+	    <div id="option" class="row mt-3" style="max-width:480px"> 
                 <div class="col input-group">
-		    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="background:whitesmoke;">
+		    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="background:#E4EBF1;">
                         <li id='point' class='navigationLi' style="display:none">
                             <div id='pointMenu' class='menu'>
                                 <div class="row mt-2">
@@ -608,12 +629,30 @@ TODO: need a new id
                     </ul> 
                 </div>
             </div>
-            <div id="cvm-description" class="col-12 pr-0" style="display:;font-size:14px; background-color:rgb(245,245,245);" >
+
+<!-- opacity slider
+            <div class="input-group input-group-sm custom-control-inline mt-2" style="max-width:450px">
+               <div class="input-group-prepend">
+                     <label class="input-group-text">Change Opacity</label>
+               </div>
+               <div class="row" style="min-width:300px;margin:5px 0px 0px 20px; border:solid 0px green;">
+                   0%
+                     <div class="col-8" id="opacitySlider" style="margin:5px 15px 5px 15px;border:1px solid rgb(206,212,218)">
+                        <div id="opacitySlider-handle" class="ui-slider-handle"></div>
+                     </div>
+                   100%
+               </div>
+            </div>
+-->
+
+<!-- description page -->
+            <div id="cvm-description" class="col-12 pr-0" style="display:;" >
                <br>
                <p><b>You Selected:</b></p>
                <p id="cvm-model-description">model list: ...</p>
                <p>For more model details, see  <a href="https://doi.org/10.5281/zenodo.8270631">CVM archive</a></p>
-             </div>
+            </div>
+
         </div> <!-- search-container -->
 
 <!-- leaflet 2D map -->

@@ -12,8 +12,8 @@ $header = getHeader("User Guide");
     <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/vendor/jquery-ui.css">
     <link rel="stylesheet" href="css/vendor/glyphicons.css">
-    <link rel="stylesheet" href="css/scec-ui.css">
-    <link rel="stylesheet" href="css/ucvm-ui.css">
+    <link rel="stylesheet" href="css/cxm-ui.css">
+    <link rel="stylesheet" href="css/cvm-ui.css">
     <link rel="stylesheet" href="css/sidebar.css">
 
     <script type='text/javascript' src='js/vendor/popper.min.js'></script>

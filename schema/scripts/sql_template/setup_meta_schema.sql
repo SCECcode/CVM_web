@@ -1,4 +1,4 @@
-CREATE TABLE CSM_meta (
+CREATE TABLE CVM_meta (
    gid           serial PRIMARY KEY,
    model_name    VARCHAR(30) UNIQUE NOT NULL,
    table_name    VARCHAR(30) UNIQUE NOT NULL,

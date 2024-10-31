@@ -1,11 +1,16 @@
 #!/bin/bash
 # setup_cvm_web.sh
 
-export CVM_WEB_TOP_DIR=/app/web
 
+export CVM_WEB_TOP_DIR=/app/web
 export PLOTTING_TOP_DIR=/usr/local/share/plotting
 export ANACONDA3_TOP_DIR=/usr/local/share/anaconda3
 export UCVM_TOP_DIR=/usr/local/share/ucvm
+
+#export CVM_WEB_TOP_DIR=/home/mei/CVM_web/setup
+#export PLOTTING_TOP_DIR=/usr/local/share/plotting
+#export ANACONDA3_TOP_DIR=/usr/local/share/anaconda3
+#export UCVM_TOP_DIR=$CVM_WEB_TOP_DIR/ucvm
 
 export UCVM_SRC_PATH=$UCVM_TOP_DIR/src
 export UCVM_INSTALL_PATH=$UCVM_TOP_DIR/install

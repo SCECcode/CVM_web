@@ -51,10 +51,13 @@ chmod og+rw $CVM_WEB_TOP_DIR/result
 cd $PLOTTING_TOP_DIR
 git clone https://github.com/meihuisu/ucvm_plotly_web.git plotly_profile
 
+git clone https://github.com/SCECcode/ucvm_metadata_utilities metadata_utilities
+
 git clone https://github.com/SCECcode/ucvm_plotting.git -b withAnaconda3
 cd ucvm_plotting
 $ANACONDA3_TOP_DIR/bin/pip install dist/ucvm_plotting-0.0.5.tar.gz
 
 if [ -f $UCVM_INSTALL_PATH/conf/ucvm_env.sh ]; then
   source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
+  source $PLOTTING_TOP_DIR/metadata_utilities/setup.sh
 fi    
