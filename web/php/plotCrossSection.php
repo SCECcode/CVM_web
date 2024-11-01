@@ -33,6 +33,8 @@ $secondlon = ($_GET['secondlon']);
 $envstr=makeEnvString();
 
 $file="../result/".$uid."_c.png";
+$metafile="../result/".$uid."_c_meta.json";
+$binfile="../result/".$uid."_c_data.bin";
 
 $hhval= ((float)$secondlat - (float)$firstlat)*110.57;
 $hhhval= ((float)$secondlon - (float)$firstlon)*111.32;
@@ -59,6 +61,9 @@ if ($zmode == 'e') {
 }
 
 #print($query);
+
+$cvsquery = " ucvm_cross_section2csv.py ".$binfile." ".$metafile;
+$cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 

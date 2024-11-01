@@ -51,6 +51,8 @@ if ($sval == 0) {
 }
 
 $file="../result/".$uid."_h.png";
+$metafile="../result/".$uid."_h_meta.json";
+$binfile="../result/".$uid."_h_data.bin";
 
 if($datatype != 'vs30') {
   $zval=(int) $z;
@@ -76,8 +78,12 @@ if($datatype != 'vs30') {
     $query= $envstr." plot_vs30_etree_map.py".$qstub.$lstr;
 }
 
-$result = exec(escapeshellcmd($query), $retval, $status);
+$cvsquery = " ucvm_horizontal_slice2csv.py ".$binfile." ".$metafile;
+$cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
+#print($cvsquery);
+
+$result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query,$result,$uid);
 
 $resultarray = new \stdClass();
