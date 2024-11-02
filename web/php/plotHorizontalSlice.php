@@ -78,13 +78,13 @@ if($datatype != 'vs30') {
     $query= $envstr." plot_vs30_etree_map.py".$qstub.$lstr;
 }
 
-$cvsquery = " ucvm_horizontal_slice2csv.py ".$binfile." ".$metafile;
-$cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
-
 #print($cvsquery);
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query,$result,$uid);
+
+$cvsquery = $envstr." ucvm_horizontal_slice2csv.py ".$binfile." ".$metafile;
+$cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
@@ -92,6 +92,7 @@ $resultarray->plot= $uid."_h.png";
 $resultarray->query= $query;
 $resultarray->meta= $uid."_h_meta.json";
 $resultarray->data= $uid."_h_data.bin";
+$resultarray->csv= $uid."_h_data.csv";
 
 if ( $status == 0 && file_exists($file)) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');

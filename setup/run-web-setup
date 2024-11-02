@@ -54,7 +54,7 @@ git clone https://github.com/meihuisu/ucvm_plotly_web.git plotly_profile
 cd $PLOTTING_TOP_DIR
 git clone https://github.com/SCECcode/ucvm_metadata_utilities metadata_utilities
 cd metadata_utilities
-source setup.sh
+source ./setup.sh
 
 cd $PLOTTING_TOP_DIR
 git clone https://github.com/SCECcode/ucvm_plotting.git -b withAnaconda3

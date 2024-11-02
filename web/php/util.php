@@ -6,7 +6,10 @@ function makeEnvString() {
    $plottingLoc= getenv('PLOTTING_TOP_DIR');
    $pycvmLoc= $conda3Loc."/lib/python3.11/site-packages";
    $projstr= $installLoc."/lib/proj/share/proj";
-   $pathstr= $conda3Loc."/bin:".$conda3Loc."/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
+   $metadataLoc= $plottingLoc."/metadata_utilities";
+
+   $pathstr= $metadataLoc."/bin:".$conda3Loc."/bin:".$conda3Loc."/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
+
    $pythonstr=$plottingLoc."/ucvm_plotting";
    $envstr="PROJ_LIB=".$projstr." PATH=".$pathstr." PYTHONPATH=".$pythonstr;
    return $envstr;

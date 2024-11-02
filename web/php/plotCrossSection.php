@@ -62,13 +62,11 @@ if ($zmode == 'e') {
 
 #print($query);
 
-$cvsquery = " ucvm_cross_section2csv.py ".$binfile." ".$metafile;
-$cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
-
 $result = exec(escapeshellcmd($query), $retval, $status);
-
-
 $rc=checkResult($query, $result, $uid);
+
+$cvsquery = $envstr." ucvm_cross_section2csv.py ".$binfile." ".$metafile;
+$cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
@@ -76,6 +74,7 @@ $resultarray->plot= $uid."_c.png";
 $resultarray->query= $query;
 $resultarray->meta= $uid."_c_meta.json";
 $resultarray->data= $uid."_c_data.bin";
+$resultarray->csv= $uid."_c_data.csv";
 
 
 if ( $status == 0 && file_exists($file)) {
