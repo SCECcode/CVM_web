@@ -23,7 +23,7 @@ $uid = ($_GET['uid']);
 $InstallLoc= getenv('UCVM_INSTALL_PATH');
 
 $file="../result/".$uid."_v.png";
-$matpropfile="../result/".$uid."_v_matprop.json";
+$matpropsfile="../result/".$uid."_v_matprops.json";
 $metafile="../result/".$uid."_v_meta.json";
 
 $envstr=makeEnvString();
@@ -56,6 +56,8 @@ $rc=checkResult($query, $result, $uid);
 
 $cvsquery = $envstr." ucvm_vertical_profile2csv.py ".$matpropsfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
+#print($cvsquery);
+#$cvsrc=checkResult($cvsquery, $cvsresult, $uid);
 
 #if ($zmode == 'e') {
 #  $rc=makeCSVElevationProfile($uid);
@@ -69,7 +71,7 @@ $resultarray->plot= $uid."_v.png";
 $resultarray->query= $query;
 $resultarray->meta= $uid."_v_meta.json";
 $resultarray->dataset= $uid."_v_matprops.json";
-$resultarray->csv= $uid."_v_data.csv";
+$resultarray->csv= $uid."_v_matprops.csv";
 
 if ( $status == 0 && file_exists($file)) {
 

@@ -85,6 +85,7 @@ $rc=checkResult($query,$result,$uid);
 
 $cvsquery = $envstr." ucvm_horizontal_slice2csv.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
+$cvsrc=checkResult($cvsquery, $cvsresult, $uid);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;

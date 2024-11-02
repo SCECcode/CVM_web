@@ -64,9 +64,12 @@ if ($zmode == 'e') {
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query, $result, $uid);
+print($query);
 
 $cvsquery = $envstr." ucvm_cross_section2csv.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
+print($cvsquery);
+#$cvsrc=checkResult($cvsquery, $cvsresult, $uid);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
