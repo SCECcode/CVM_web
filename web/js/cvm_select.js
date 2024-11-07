@@ -83,7 +83,7 @@ function set_area_latlons(uid, firstlat,firstlon,secondlat,secondlon) {
        $( "#areaSecondLatTxt" ).val(round2Four(secondlat));
        $( "#areaSecondLonTxt" ).val(round2Four(secondlon));
        set_area_latlons_preset();
-       $( "#areaDataTypeTxt" ).val("vs"); 
+// ?? leave it as it is,       $( "#areaDataTypeTxt" ).val("vs"); 
        $( "#areaUIDTxt" ).val(uid);
    }
 }
