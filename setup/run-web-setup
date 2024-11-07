@@ -32,10 +32,11 @@ yum copr enable genericmappingtools/gmt
 yum install -y gmt
 yum update -y gmt
 yum install -y gshhg-gmt-nc4 gshhg-gmt-nc4-full gshhg-gmt-nc4-high
-yum install -y ghostscript evince
+yum install -y ghostscript
 #extra
 #yum localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-`rpm -E %rhel`.noarch.rpm
 #yum install -y GraphicsMagick1.3 ffmpeg gdal
+#yum install -y evince
 
 
 ### 24.5.0, old one is 4.7.10
