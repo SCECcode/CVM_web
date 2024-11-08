@@ -58,6 +58,7 @@ function areaClick() {
 }
 
 function set_area_latlons_preset() {
+window.console.log("XXX  set_area_latlons_preset");
    var t= document.getElementById("zModeType").value;
    var tt= document.getElementById("areaDataTypeTxt").value;
    var areazptr=$('#areaZTxt');
@@ -77,18 +78,23 @@ function set_area_latlons_preset() {
 
 function set_area_latlons(uid, firstlat,firstlon,secondlat,secondlon) {
    // need to capture the lat lon and draw a area
+window.console.log("XXX  set_area_latlons");
+   var tt= document.getElementById("areaDataTypeTxt").value;
    if(area_select && drawing_area) {
        $( "#areaFirstLatTxt" ).val(round2Four(firstlat));
        $( "#areaFirstLonTxt" ).val(round2Four(firstlon));
        $( "#areaSecondLatTxt" ).val(round2Four(secondlat));
        $( "#areaSecondLonTxt" ).val(round2Four(secondlon));
        set_area_latlons_preset();
-// ?? leave it as it is,       $( "#areaDataTypeTxt" ).val("vs"); 
+       if(tt == "") {
+	 $( "#areaDataTypeTxt" ).val("vs"); 
+       }
        $( "#areaUIDTxt" ).val(uid);
    }
 }
 
 function reset_area_latlons() {
+window.console.log("XXX  reset_area_latlons");
    $( "#areaFirstLatTxt" ).val('');
    $( "#areaFirstLonTxt" ).val('');
    $( "#areaSecondLatTxt" ).val('');

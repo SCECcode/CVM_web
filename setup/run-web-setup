@@ -24,6 +24,8 @@ yum install -y perl-Module-Load.noarch perl-ExtUtils-MakeMaker.noarch perl-ExtUt
 ## install #latest GMT on RHEL/CentOS 7 & 8 ,
 #https://github.com/GenericMappingTools/gmt/wiki/Install-latest-GMT-on-RHEL-CentOS
 #https://www.baeldung.com/linux/powertools-repo-enable
+
+sudo amazon-linux-extras install epel -y
 yum install -y epel-release
 yum install -y yum-utils
 yum-config-manager --enable powertools

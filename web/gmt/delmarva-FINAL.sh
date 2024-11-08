@@ -76,7 +76,7 @@ END
 #-------------------------------------------------------------------------------------------------------------------------------
 
 #Display the map
-evince $plotFile &
+#evince $plotFile &
 
 gmt psconvert $plotFile -Tf
 gmt psconvert $plotFile -TG
