@@ -34,11 +34,8 @@ rm -rf  Anaconda3-2024.02-1-Linux-x86_64.sh
 
 source $ANACONDA3_TOP_DIR/bin/activate
 conda init
-
-conda config --add channels defaults
 conda config --add channels conda-forge
-
-conda install conda-forge::gmt -y
+conda install conda-forge/label/dev::gmt -y
 
 export PATH=$ANACONDA3_TOP_DIR/bin:$PATH
 
