@@ -34,14 +34,20 @@ rm -rf  Anaconda3-2024.02-1-Linux-x86_64.sh
 
 source $ANACONDA3_TOP_DIR/bin/activate
 conda init
-conda config --add channels conda-forge
-conda install conda-forge/label/dev::gmt -y
 
 export PATH=$ANACONDA3_TOP_DIR/bin:$PATH
 
+conda config --add channels conda-forge
+
+conda install conda-forge::matplotlib -y
+conda install conda-forge::basemap -y
+conda install conda-forge::basemap-data-hires -y
 ## python basemap, basemap-data-hires, matplotlib
-$ANACONDA3_TOP_DIR/bin/python -m pip install matplotlib basemap basemap-data-hires
+#$ANACONDA3_TOP_DIR/bin/python -m pip install matplotlib basemap basemap-data-hires
 #$ANACONDA3_TOP_DIR/bin/conda list basemap
+ 
+## load gmt
+conda install conda-forge/label/dev::gmt -y
 
 ## build UCVM 
 ./setup/run-build-ucvm

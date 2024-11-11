@@ -13,16 +13,21 @@
 #use warnings; no warnings "uninitialized";
 #get begin time and local time to print to file headers
 $beginTime=time();
+#loads Tools.pm included in this directory
+use FindBin;
+use lib $FindBin::Bin;
+use Tools qw(getLonTick getLatTick getCBarTick);
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- USER-SPECIFIED PARAMETERS -------------------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Should I open the .eps file when finished? 0=no, 1=gv, 2=evince, 3=illustrator
-$openEPS=0;
+$openEPS=2;
 
 #grab the csv filename from the command line args
 $csvFile=$ARGV[0];
 #make the plot file the same name as the csv file, but ending in .eps.
 $plotFile=substr($csvFile,0,-4).".eps";
+$meanFile=substr($csvFile,0,-4).".mean";
 
 #How should I plot vels on the map? 
 # 0=don't plot, 1=colored vels, 2=colored vels shaded by DEM
@@ -33,7 +38,7 @@ $cpt="seis";
 #Note: The vlocity increment is now figured out later based on the vel range
 #$inc=0.1;
 #What tension value should I use with surface?
-$t=0.10;
+$t=0.1;
 #Should I force the color range? 1=yes 0=no
 $forceRange=0;
 #What T value should I use for the color range? (only used if $forceRange==1).
@@ -55,11 +60,6 @@ $blindFaultLine="1p,white";
 #should I label each fault trace? 1=yes 0=no
 $labelFaults=0;
 
-#x-axis and y-axis labeling info
-$xAxis="a";
-$yAxis="a";
-$cAxis="a";
-
 #Should I plot the source data points? 1=yes 0=no
 $plotPts=0;
 
@@ -67,13 +67,14 @@ $plotPts=0;
 $makePDF=1;
 $makePNG=1;
 
-
-#-----------------------------------------------------------------------------------------------------------------------------#
-#------- CHECK FOR CORRECT USAGE, CALCULATE DATA RANGES, AND READ CSV HEADER -------------------------------------------------#
-#-----------------------------------------------------------------------------------------------------------------------------#
+#check for correct usage and make sure the csv file exists
 if(@ARGV!=1)       {print "\n    Usage: ./plotCVM-horzSlice.pl file.csv\n\n"; exit}
 unless(-e $csvFile){print "\n    Error: $csvFile not found\n\n"; exit}
 
+
+#-----------------------------------------------------------------------------------------------------------------------------#
+#------- READ CSV HEADER AND GRAB USEFUL INFO --------------------------------------------------------------------------------#
+#-----------------------------------------------------------------------------------------------------------------------------#
 print "-----------------------------------------------------------------------------\n";
 print "Reading $csvFile\n";
 print "-----------------------------------------------------------------------------\n";
@@ -82,7 +83,7 @@ open(CSV,$csvFile);
 while(<CSV>){
 	chomp;
 	#if this is the last line of the header, kill the loop
-	if($_ eq "# lon,lat,vs"){last;}
+	if($_=~ "# lon,lat,"){last;}
 	#remove the #  so I can split by colon. Also, remove the space after the colon
 	$_=~s/# //;
 	$_=~s/: /:/;
@@ -110,27 +111,119 @@ $numPts=$tmp[3];
 #get the lon/lat range
 $R=`gmt info $csvFile -I-`;
 chomp($R);
+#use Tools.pm to set the axis labeling and tickmarks
+$xAxis=getLonTick($R);
+$yAxis=getLatTick($R);
+#parse out the min/max xy values
+$tmp=$R;
+$tmp=~s/-R//;
+@tmp=split("/",$tmp);
+$minX=$tmp[0]; $maxX=$tmp[1];
+$minY=$tmp[2]; $maxY=$tmp[3];
+$xRange=$maxX-$minX;
+$yRange=$maxY-$minY;
+#figure out which range is larger
+if($xRange>$yRange){$maxRange=$xRange}
+else               {$maxRange=$yRange}
+#now set a reasonable resolution to interpolate the data given this range
+if   ($maxRange<=0.0005){$round=0.00001}
+elsif($maxRange<=0.001){$round=0.00002}
+elsif($maxRange<=0.05){$round=0.001}
+elsif($maxRange<=0.1){$round=0.002}
+elsif($maxRange<=0.5){$round=0.01}
+elsif($maxRange<=1.0){$round=0.02}
+elsif($maxRange<=1.5){$round=0.03}
+elsif($maxRange<=2.0){$round=0.04}
+elsif($maxRange<=2.5){$round=0.05}
+elsif($maxRange<=3.0){$round=0.06}
+elsif($maxRange<=3.5){$round=0.07}
+elsif($maxRange<=4.0){$round=0.08}
+elsif($maxRange<=4.5){$round=0.09}
+elsif($maxRange<=5.0){$round=0.10}
+elsif($maxRange<=5.5){$round=0.11}
+elsif($maxRange<=6.0){$round=0.12}
+elsif($maxRange<=6.5){$round=0.13}
+elsif($maxRange<=7.0){$round=0.14}
+elsif($maxRange<=7.5){$round=0.15}
+elsif($maxRange<=8.0){$round=0.16}
+elsif($maxRange<=8.5){$round=0.17}
+elsif($maxRange<=9.0){$round=0.18}
+elsif($maxRange<=9.5){$round=0.19}
+elsif($maxRange<=10.0){$round=0.20}
+elsif($maxRange<=10.5){$round=0.21}
+elsif($maxRange<=11.0){$round=0.22}
+elsif($maxRange<=11.5){$round=0.23}
+elsif($maxRange<=12.0){$round=0.24}
+elsif($maxRange<=12.5){$round=0.25}
+elsif($maxRange<=13.0){$round=0.26}
+elsif($maxRange<=13.5){$round=0.27}
+elsif($maxRange<=14.0){$round=0.28}
+elsif($maxRange<=14.5){$round=0.29}
+elsif($maxRange<=15.0){$round=0.30}
+elsif($maxRange<=15.5){$round=0.31}
+else                  {$round=0.50}
+#make the interpolated resolution 10x this rounding, so it always works out to be an integer multiple of the range
+$res=$round/10;
+
+#round of the range to avoid surface grid increment errors
+$Rext=`gmt info $csvFile -I$round`;
+chomp($Rext);
+#round of the range even farther, just for testing
+#$Rext2=`gmt info $csvFile -I0.5`;
+#chomp($Rext2);
 
 #print useful metadata to stdout
-print "Title:         $title\n";
-print "Model:         $model\n";
-print "Data Type:     $dataType\n";
-print "Depth (m):     $depth\n";
-print "Spacing (deg): $spacing\n";
-print "Num Points:    $numPts\n";
-print "Data Range:    $R\n";
+print "Title             : $title\n";
+print "Model             : $model\n";
+print "Data Type         : $dataType\n";
+print "Depth (m)         : $depth\n";
+print "Spacing (deg)     : $spacing\n";
+print "Num Points        : $numPts\n";
+print "Data Range        : $R\n";
+print "XY-Range          : $xRange/$yRange\n";
+print "Range Round       : $round\n";
+print "Extended Range    : $Rext\n";
+print "Interpolation Res : $res\n";
+print "-----------------------------------------------------------------------------\n";
 
-#set the interpolation resolution to be 10x the input data resolution. This makes the plots look less blocky
-$res=$spacing/10;
+
+#-----------------------------------------------------------------------------------------------------------------------------#
+#------- INTERPOLATE THE VELS AND MAKE A COLORMAP ----------------------------------------------------------------------------#
+#-----------------------------------------------------------------------------------------------------------------------------#
+if($plotVels>0){
+	print "Interpolating data using GMT's surface\n";
+	#system "gmt surface $meanFile $R -Gz.grd -I$res -T$t -M$spacing -rg";
+	system "gmt surface $csvFile $Rext -Gz.grd -I$res -T$t -M7c -rg";
+}
+
+#resample the dem intensity file, if necessary
+if($plotVels==2){
+	print "Resampling DEM to $res to match vel data\n";
+	system "gmt grdsample $int $R -Gz.int -I$res -rg";
+}
+
+if($forceRange==0){
+	$T=`gmt grdinfo z.grd -T/2`;
+	chomp($T);
+	#print "Z Range: $T\n";
+	#get the axis labeling and tickmark string using Tools.pm
+	$cAxis=getCBarTick($T);
+	#print "$cAxis\n";
+	#get the min/max vels
+	$tmp=$T;
+	$tmp=~s/-T//;
+	@z=split("/",$tmp);
+	$zRange=$z[1]-$z[0];
+	print "  MinZ=$z[0];  MaxZ=$z[1]\n";
+}
+
+print "Making color palette file\n";
+system "gmt makecpt -C$cpt $T -D --COLOR_NAN=white > z.cpt";
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- SETUP GMT VARIABLES -------------------------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
-print "-----------------------------------------------------------------------------\n";
-print "Plotting Data with GMT\n";
-print "-----------------------------------------------------------------------------\n";
-
 #set the map dimensions
 $width="7.5i"; #for the map
 #split the data range, so I can grab the min/max values
@@ -141,20 +234,19 @@ $tmp=`echo $range[1] $range[3] | gmt mapproject $R -JM$width`;
 chomp($tmp);
 @tmp=split(" ",$tmp);
 #grab the height in cm and convert to inches. Add on 1.85in for the title above and colorbar below.
-$height=$tmp[1]/2.54+1.85;
-printf ("Plot will be %s x %.1fi\n",$width,$height);
+$height=$tmp[1]/2.54+1.70;
 
 #set paper size
 system "gmt set PS_MEDIA=8.5ix${height}i";
 system "gmt set MAP_FRAME_TYPE=plain";
 #degrees with negative longitudes
-#system "gmt set FORMAT_GEO_MAP=-D.x";
+system "gmt set FORMAT_GEO_MAP=-D.x";
 #Controls font size for axis numbering and titles, respectively
 system "gmt set FONT_ANNOT_PRIMARY=10p";
 system "gmt set FONT_LABEL=10p";
 #Controls plot title and offset
 system "gmt set FONT_TITLE=14p";
-system "gmt set MAP_TITLE_OFFSET=0.0i";
+system "gmt set MAP_TITLE_OFFSET=-0.08i";
 #Set other map text parameters
 #system "gmt set MAP_ANNOT_OFFSET_PRIMARY 5p";
 #system "gmt set MAP_LABEL_OFFSET 8p";
@@ -172,63 +264,34 @@ $waterBlue="170/197/231"; #a slighly grayer version of the Google Maps color. Lo
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
-#------- INTERPOLATE THE VELS AND MAKE A COLORMAP ----------------------------------------------------------------------------#
+#------- PLOT THE HORIZONTAL SLICE WITH GMT ----------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
-if($plotVels>0){
-	print "Interpolating vels to $res using GMT's surface\n";
-	system "gmt surface $csvFile $R -Gz.grd -I$res -T$t -M10c -rg";
-	#system "gmt greenspline $csvFile $R -Gz.grd -I$res -Sc -C -Z1 -V";
-}
+print "-----------------------------------------------------------------------------\n";
+print "Plotting Data with GMT\n";
+print "-----------------------------------------------------------------------------\n";
+printf ("Plot will be %s x %.1fi\n",$width,$height);
 
-#resample the dem intensity file, if necessary
-if($plotVels==2){
-	print "Resampling DEM to $res to match vel data\n";
-	system "gmt grdsample $int $R -Gz.int -I$res -rg";
-}
-
-if($forceRange==0){
-	$T=`gmt grdinfo z.grd -T/2`;
-	chomp($T);
-	#print "Z Range: $T\n";
-	#get the min/max vels
-	$tmp=$T;
-	$tmp=~s/-T//;
-	@z=split("/",$tmp);
-	$zRange=$z[1]-$z[0];
-	print "MinZ=$z[0];  MaxZ=$z[1]\n";
-}
-
-print "Making color palette file\n";
-system "gmt makecpt -C$cpt $T -D --COLOR_NAN=white > z.cpt";
-
-
-#-----------------------------------------------------------------------------------------------------------------------------#
-#------- PLOT VELOCITIES WITH GMT --------------------------------------------------------------------------------------------#
-#-----------------------------------------------------------------------------------------------------------------------------#
 #plot the coastline and color the water
-#no vels image
+#no colored data
 if($plotVels==0){
 	system "gmt pscoast -X0.75i -Y1.35i $R -JM$width -W0.5p -S$waterBlue -Gwhite -Df -P -K > $plotFile";
 }
-#just vels
+#plot the colored data
 elsif($plotVels==1){
 	print "Plotting z.grd with grdimage\n";
 	system "gmt pscoast -X0.75i -Y1.30i $R -JM$width -N1/1.0p -N2/0.5p -Df -Gwhite -S$waterBlue -A20 -P -K > $plotFile";
 	system "gmt grdimage z.grd -R -JM -Cz.cpt -Q -O -K >> $plotFile";
 	system "gmt pscoast -R -JM -N1/1.0p -N2/0.5p -W0.5p -Df -A20 -O -K >> $plotFile";
 }
-#vels with DEM shading
+#plot with DEM shading (only looks good at high resolution)
 elsif($plotVels==2){
 	print "Plotting z.grd with grdimage\n";
 	system "gmt grdimage z.grd -X0.5i -Y1.45i $R -JM$width -Cz.cpt -Iz.int -P -K > $plotFile";
 	system "gmt pscoast -R -JM -N1/1.0p -N2/0.5p -W0.5p -Df -O -K >> $plotFile";
 }
 
-#plot the source data points
-if($plotPts==1){
-	system "gmt psxy $csvFile -R -JM -Sc2.0p -G$blue -O -K >> $plotFile";
-	#system "gmt psxy $velFile  -R -JM -Sc1.0p -Gblack -O -K >> $plotFile";
-}#end if
+#plot the source data points, if specified
+if($plotPts==1){system "gmt psxy $csvFile -R -JM -Sc2.0p -Gblack -O -K >> $plotFile"}
 
 #plot fault traces, if specified
 if($plotFaults==1){
@@ -248,28 +311,10 @@ if($plotFaults==1){
 	}#end else
 }#end if
 
-#plot a legend, so I can know what I am looking at
-#system "gmt pslegend -R -JM -Dx0.1i/0.1i+w2.5i/1.05i+jBL -F+ggray90+p0.5p,black+r -O -K <<-END>> $plotFile
-#G 0.05i
-#H 10p,Helvetica-Bold Raw Earthquake Catalog Info
-#G 0.1i
-#S 0.1i c 5.0p $red   - 0.2i Hauksson-Waldhauser Locations
-#G 0.2i
-#M -120 37 200k+u+f
-#END";
-
-#plot a black triangle in the upper right of plot to hide where data is out of range
-#system "gmt psxy -R -JM -Gblack -O -K <<END>> $plotFile
-#-118.0 42.7
-#-113.8 37.8
-#-113.8 42.7
-#END";
-
 #plot a colorbar below the plot
 system "gmt psscale -R -JM -Cz.cpt -B$cAxis+l\"$zTitle\" -Dx0/-0.65i+w7.5i/0.25i+jBL+h -O -K >> $plotFile";
 
-#plot the basemap axes
-#system "gmt psbasemap -R -JM -Bx$xAxis -By$yAxis -BWeSn+t\"Model: $model | Depth: $depth (m) | n=$count\" -Lx0.35i/0.35i+jBL+w200k+u+f -O >> $plotFile";
+#plot the basemap axes. Use this to plot a map scale -Lx0.35i/0.35i+jBL+w200k+u+f
 system "gmt psbasemap -R -JM -Bx$xAxis -By$yAxis -BWeSn+t\"Model: $model | Depth: $depth (m) | n=$numPts\" -O >> $plotFile";
 
 
@@ -286,14 +331,12 @@ system "rm z.grd z.cpt";
 
 #convert to pdf/png
 if($makePDF==1){
-	print "Converting to pdf...";
+	print "Converting to pdf\n";
 	system "gmt psconvert $plotFile -Tf";
-	print "Finished!\n";
 }#end if
 if($makePNG==1){
-	print "Converting to png...";
+	print "Converting to png\n";
 	system "gmt psconvert $plotFile -TG -E400";
-	print "Finished!\n";
 }#end if
 
 
@@ -309,6 +352,3 @@ else               {printf("Script took %.2f seconds\n",$totTime)}
 #print a final message
 print "Finished!\n\n";
 exit;
-
-
-

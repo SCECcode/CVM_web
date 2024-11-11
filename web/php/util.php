@@ -4,26 +4,16 @@ function makeEnvString() {
    $installLoc= getenv('UCVM_INSTALL_PATH');
    $conda3Loc= getenv('ANACONDA3_TOP_DIR');
    $plottingLoc= getenv('PLOTTING_TOP_DIR');
-//   $ldlibPath= getenv('LD_LIBRARY_PATH');
-//   $dyldlibPath= getenv('DYLD_LIBRARY_PATH');
 
    $pycvmLoc= $conda3Loc."/lib/python3.11/site-packages";
    $projstr= $installLoc."/lib/proj/share/proj";
    $metadataLoc= $plottingLoc."/metadata_utilities";
 
-   if file_exists("/usr/lib64") {
-     $ldpathstr= "/usr/lib64:".$ldlibPath;
-     $dyldpathstr= "/usr/lib64:".$dyldlibPath;
-     } else {
-       $ldpathstr= $ldlibPath;
-       $dyldpathstr= $dyldlibPath;
-   }
-
    $pathstr= $metadataLoc."/bin:".$conda3Loc."/bin:".$conda3Loc."/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
 
    $pythonstr=$plottingLoc."/ucvm_plotting";
    $envstr="PROJ_LIB=".$projstr." PATH=".$pathstr." PYTHONPATH=".$pythonstr;
-//   $envstr="PROJ_LIB=".$projstr." PATH=".$pathstr." PYTHONPATH=".$pythonstr." LD_LIBRARY_PATH=".$ldpathstr." DYLD_LIBRARY_PATH=".$dyldpathstr;
+//   print($envstr);
    return $envstr;
 }
 
