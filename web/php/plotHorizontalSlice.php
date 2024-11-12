@@ -89,7 +89,7 @@ $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
-$gmtquery = $envstr." ".$gmtpl." ".$csvfile;
+$gmtquery = $gmtpl." ".$csvfile;
 $gmtresult = exec(escapeshellcmd($gmtquery), $gmtretval, $gmtstatus);
 print($gmtquery);
 #print($gmtresult);
