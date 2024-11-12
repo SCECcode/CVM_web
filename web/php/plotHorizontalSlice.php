@@ -53,6 +53,9 @@ if ($sval == 0) {
 $file="../result/".$uid."_h.png";
 $metafile="../result/".$uid."_h_meta.json";
 $binfile="../result/".$uid."_h_data.bin";
+$csvfile="../result/".$uid."_h_data.csv";
+$pngfile="../result/".$uid."_h_data.png";
+$gmtpl="../gmt/plotCVM-horzSlice.pl";
 
 if($datatype != 'vs30') {
   $zval=(int) $z;
@@ -80,13 +83,16 @@ if($datatype != 'vs30') {
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query,$result,$uid);
-
 #print($result);
 
 $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
-
 #print($cvsquery);
+
+$gmtquery = $envstr." ".$gmtpl." ".$csvfile;
+$gmtresult = exec(escapeshellcmd($gmtquery), $gmtretval, $gmtstatus);
+print($gmtquery);
+#print($gmtresult);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
@@ -95,6 +101,7 @@ $resultarray->query= $query;
 $resultarray->meta= $uid."_h_meta.json";
 $resultarray->data= $uid."_h_data.bin";
 $resultarray->csv= $uid."_h_data.csv";
+$resultarray->gmtplot= $uid."_h_data.png";
 
 if ( $status == 0 && file_exists($file)) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');

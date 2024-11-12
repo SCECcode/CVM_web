@@ -3,8 +3,6 @@
 
 source setup/setup_cvm_web.sh
 
-
-
 rm -rf  Anaconda3-2024.02-1-Linux-x86_64.sh 
 
 yum install -y tar mkdir sudo which git wget gawk
@@ -52,9 +50,9 @@ conda config --add channels conda-forge
 #   conda install conda-forge::gmt -y
 #   conda env export > cvm_explorer_conda_env.yml
 
-#conda env create -f ./setup/cvm_explorer_conda_env.yml
-#conda activate cvm_explorer_conda_env
-#echo "conda activate cvm_explorer_conda_env" >> ~/.bashrc
+conda env create -f ./setup/cvm_explorer_conda_env.yml
+conda activate cvm_explorer_conda_env
+echo "conda activate cvm_explorer_conda_env" >> ~/.bashrc
 
 ## build UCVM 
 ./setup/run-build-ucvm

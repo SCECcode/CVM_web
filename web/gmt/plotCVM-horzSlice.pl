@@ -13,15 +13,18 @@
 #use warnings; no warnings "uninitialized";
 #get begin time and local time to print to file headers
 $beginTime=time();
+
 #loads Tools.pm included in this directory
-use FindBin;
-use lib $FindBin::Bin;
+#use FindBin;
+#use lib $FindBin::Bin;
+use lib "/app/web/gmt/perl";
 use Tools qw(getLonTick getLatTick getCBarTick);
+
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- USER-SPECIFIED PARAMETERS -------------------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Should I open the .eps file when finished? 0=no, 1=gv, 2=evince, 3=illustrator
-$openEPS=2;
+$openEPS=0;
 
 #grab the csv filename from the command line args
 $csvFile=$ARGV[0];
