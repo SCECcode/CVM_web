@@ -32,8 +32,6 @@ $secondlon = ($_GET['secondlon']);
 
 $envstr=makeEnvString();
 
-print($envstr);
-
 $lval= round(($secondlat - $firstlat), 3);
 $llval=round(($secondlon - $firstlon), 3);
 
