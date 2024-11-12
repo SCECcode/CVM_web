@@ -35,21 +35,20 @@ rm -rf  Anaconda3-2024.02-1-Linux-x86_64.sh
 source $ANACONDA3_TOP_DIR/bin/activate
 conda init
 
+## python basemap, basemap-data-hires, matplotlib
+$ANACONDA3_TOP_DIR/bin/python -m pip install matplotlib basemap basemap-data-hires
+
 export PATH=$ANACONDA3_TOP_DIR/bin:$PATH
 
 conda config --add channels conda-forge
 
 # load gmt,matplotlib
-#conda install conda-forge::gmt -y
-#conda install conda-forge::matplotlib=3.8.4 -y
-#conda install conda-forge::basemap -y
-#conda install conda-forge::basemap-data-hires -y
-#conda install conda-forge::gshhg-gmt -y
+conda install conda-forge::gmt -y
 
 # use environment
-conda env create -f ./setup/cvm_explorer_conda_env.yml
-conda activate cvm_explorer_conda_env
-echo "conda activate cvm_explorer_conda_env" >> ~/.bashrc
+#conda env create -f ./setup/cvm_explorer_conda_env.yml
+#conda activate cvm_explorer_conda_env
+#echo "conda activate cvm_explorer_conda_env" >> ~/.bashrc
 
 ## build UCVM 
 ./setup/run-build-ucvm
