@@ -48,7 +48,7 @@ conda config --add channels conda-forge
 #conda install conda-forge::pillow=11.0.0
 
 # use environment
-conda env create -f cvm_explorer_conda_env.yml
+conda env create -f ./setup/cvm_explorer_conda_env.yml
 conda activate cvm_explorer_conda_env
 
 ## build UCVM 
