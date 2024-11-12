@@ -1,0 +1,6 @@
+name: cvm_explorer_conda_env
+channels:
+  - pypi
+  - conda-forge
+  - defaults
+prefix: /usr/local/share/anaconda3/envs/cvm_explorer_conda_env

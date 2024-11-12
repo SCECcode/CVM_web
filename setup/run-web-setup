@@ -44,18 +44,18 @@ conda config --add channels conda-forge
 #conda install conda-forge::matplotlib=3.8.4 -y
 #conda install conda-forge::basemap -y
 #conda install conda-forge::basemap-data-hires -y
-
-#conda install conda-forge::pillow=11.0.0
+#conda install conda-forge::gshhg-gmt -y
 
 # use environment
 conda env create -f ./setup/cvm_explorer_conda_env.yml
 conda activate cvm_explorer_conda_env
-echo "conda activate cvm_explorer_conda_env" > ~/.bashrc
+echo "conda activate cvm_explorer_conda_env" >> ~/.bashrc
 
 ## build UCVM 
 ./setup/run-build-ucvm
 # make sure the ucvm's datafile are readable by web user
 ls $UCVM_INSTALL_PATH/conf/ucvm_env.sh
+echo "source $UCVM_INSTALL_PATH/conf/ucvm_env.sh" >> ~/.bashrc
 
 ## setup plotting  
 mkdir -p $PLOTTING_TOP_DIR

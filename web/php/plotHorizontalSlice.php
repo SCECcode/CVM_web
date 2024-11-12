@@ -15,8 +15,6 @@
 */
 include ("util.php");
 
-print("HERE.");
-
 $firstlat = ($_GET['firstlat']);
 $firstlon = ($_GET['firstlon']);
 $z = ($_GET['z']);
@@ -33,6 +31,8 @@ $secondlat = ($_GET['secondlat']);
 $secondlon = ($_GET['secondlon']);
 
 $envstr=makeEnvString();
+
+print($envstr);
 
 $lval= round(($secondlat - $firstlat), 3);
 $llval=round(($secondlon - $firstlon), 3);
@@ -70,7 +70,7 @@ if($datatype != 'vs30') {
   $qstub=" -d ".$datatype." -c ".$model." -s ".$sval." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc;
 
   if( $zmode == 'd') {
-    $query= $ehttp://moho.scec.org/cvm-explorer/php/plotVerticalProfile.php?lat=38.5141&lon=-122.816&z=30000&zmode=d&model=sfcvm&comment=San%20Francisco%20Bay%20Velocity%20Model&zrange=none&floors=none&zstart=0&zstep=100&datatype=vs&uid=CVM_1731252204914nvstr." plot_horizontal_slice.py ".$qstub.$lstr;
+    $query= $envstr." plot_horizontal_slice.py ".$qstub.$lstr;
     } else {
       $query= $envstr." plot_elevation_horizontal_slice.py ".$qstub.$lstr;
   }
@@ -80,12 +80,10 @@ if($datatype != 'vs30') {
     $query= $envstr." plot_vs30_etree_map.py".$qstub.$lstr;
 }
 
-print($query);
-
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query,$result,$uid);
 
-print($result);
+#print($result);
 
 $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
