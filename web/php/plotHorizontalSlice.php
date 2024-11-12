@@ -55,7 +55,7 @@ $metafile="../result/".$uid."_h_meta.json";
 $binfile="../result/".$uid."_h_data.bin";
 $csvfile="../result/".$uid."_h_data.csv";
 $pngfile="../result/".$uid."_h_data.png";
-$gmtpl="../gmt/plotCVM-horzSlice.pl";
+$gmtpl="../perl/plotCVM-horzSlice.pl";
 
 if($datatype != 'vs30') {
   $zval=(int) $z;
@@ -91,7 +91,7 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
 $gmtquery = $gmtpl." ".$csvfile;
 $gmtresult = exec(escapeshellcmd($gmtquery), $gmtretval, $gmtstatus);
-print($gmtquery);
+#print($gmtquery);
 #print($gmtresult);
 
 $resultarray = new \stdClass();
