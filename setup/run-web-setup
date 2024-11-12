@@ -42,10 +42,16 @@ export PATH=$ANACONDA3_TOP_DIR/bin:$PATH
 
 conda config --add channels conda-forge
 
-# load gmt,matplotlib
-conda install conda-forge::gmt -y
+# load gmt
+#conda install conda-forge::gmt -y
 
 # use environment
+# preprocess
+#   conda create --name cvm_explorer_conda_env
+#   conda activate cvm_explorer_conda_env
+#   conda install conda-forge::gmt -y
+#   conda env export > cvm_explorer_conda_env.yml
+
 #conda env create -f ./setup/cvm_explorer_conda_env.yml
 #conda activate cvm_explorer_conda_env
 #echo "conda activate cvm_explorer_conda_env" >> ~/.bashrc
