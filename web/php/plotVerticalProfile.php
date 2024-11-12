@@ -28,6 +28,8 @@ $metafile="../result/".$uid."_v_meta.json";
 
 $envstr=makeEnvString();
 
+//print($envstr);
+
 $lstr = " -v ".$zstep." -b ".$zstart." -s ".$lat.",".$lon." -e ".$z;
 
 if ($zrange != 'none') {
@@ -53,13 +55,11 @@ if ($zmode == 'e') {
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query, $result, $uid);
-
-//print($result);
+//#print($result);
 
 $cvsquery = $envstr." ucvm_vertical_profile2csv.py ".$matpropsfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
-#print($cvsquery);
-#$cvsrc=checkResult($cvsquery, $cvsresult, $uid);
+//#print($cvsquery);
 
 #if ($zmode == 'e') {
 #  $rc=makeCSVElevationProfile($uid);

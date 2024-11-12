@@ -39,15 +39,17 @@ export PATH=$ANACONDA3_TOP_DIR/bin:$PATH
 
 conda config --add channels conda-forge
 
-conda install conda-forge::matplotlib -y
-conda install conda-forge::basemap -y
-conda install conda-forge::basemap-data-hires -y
-## python basemap, basemap-data-hires, matplotlib
-#$ANACONDA3_TOP_DIR/bin/python -m pip install matplotlib basemap basemap-data-hires
-#$ANACONDA3_TOP_DIR/bin/conda list basemap
- 
-## load gmt
-conda install conda-forge/label/dev::gmt -y
+# load gmt,matplotlib
+#conda install conda-forge::gmt -y
+#conda install conda-forge::matplotlib=3.8.4 -y
+#conda install conda-forge::basemap -y
+#conda install conda-forge::basemap-data-hires -y
+
+#conda install conda-forge::pillow=11.0.0
+
+# use environment
+conda env create -f cvm_explorer_conda_env.yml
+conda activate cvm_explorer_conda_env
 
 ## build UCVM 
 ./setup/run-build-ucvm

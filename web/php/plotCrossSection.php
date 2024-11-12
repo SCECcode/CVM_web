@@ -32,6 +32,8 @@ $secondlon = ($_GET['secondlon']);
 
 $envstr=makeEnvString();
 
+//print($envstr);
+
 $file="../result/".$uid."_c.png";
 $metafile="../result/".$uid."_c_meta.json";
 $binfile="../result/".$uid."_c_data.bin";
@@ -59,12 +61,11 @@ if ($zmode == 'e') {
     } else {
         $query= $envstr." plot_cross_section.py".$qstub.$lstr;
 }
-
-#print($query);
+//print($query);
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query, $result, $uid);
-#print($query);
+//print($result);
 
 $cvsquery = $envstr." ucvm_cross_section2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);

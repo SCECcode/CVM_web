@@ -15,6 +15,8 @@
 */
 include ("util.php");
 
+print("HERE.");
+
 $firstlat = ($_GET['firstlat']);
 $firstlon = ($_GET['firstlon']);
 $z = ($_GET['z']);
@@ -78,14 +80,18 @@ if($datatype != 'vs30') {
     $query= $envstr." plot_vs30_etree_map.py".$qstub.$lstr;
 }
 
-#print($cvsquery);
+print($query);
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query,$result,$uid);
 
+print($result);
+
 $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 $cvsrc=checkResult($cvsquery, $cvsresult, $uid);
+
+#print($cvsquery);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;

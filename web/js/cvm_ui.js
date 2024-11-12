@@ -63,6 +63,8 @@ function clearSearchResult() {
 function makeDownloadLinks(str) {
     var html="";
 
+
+window.console.log("downloadlinks>>",str);
     // just one
     if( typeof str === 'string') { 
        // if the file ends with png 
