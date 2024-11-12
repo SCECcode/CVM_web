@@ -50,6 +50,7 @@ conda config --add channels conda-forge
 # use environment
 conda env create -f ./setup/cvm_explorer_conda_env.yml
 conda activate cvm_explorer_conda_env
+echo "conda activate cvm_explorer_conda_env" > ~/.bashrc
 
 ## build UCVM 
 ./setup/run-build-ucvm
