@@ -4,12 +4,14 @@ function makeEnvString() {
    $installLoc= getenv('UCVM_INSTALL_PATH');
    $conda3Loc= getenv('ANACONDA3_TOP_DIR');
    $plottingLoc= getenv('PLOTTING_TOP_DIR');
-
+   $syspathstr= getenv('PATH');
    $pycvmLoc= $conda3Loc."/lib/python3.11/site-packages";
    $projstr= $installLoc."/lib/proj/share/proj";
    $metadataLoc= $plottingLoc."/metadata_utilities";
 
-   $pathstr= $metadataLoc."/bin:".$conda3Loc."/bin:".$conda3Loc."/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
+   $condaenvLoc=$conda3Loc."/envs/cvm_explorer_conda_env";
+
+   $pathstr= $metadataLoc."/bin:".$conda3Loc."/bin:".$conda3Loc."/condabin:".$condaenvLoc."/bin:".$syspathstr;
 
    $pythonstr=$plottingLoc."/ucvm_plotting";
    $envstr="PROJ_LIB=".$projstr." PATH=".$pathstr." PYTHONPATH=".$pythonstr;
