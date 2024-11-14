@@ -71,7 +71,8 @@ if($datatype != 'vs30') {
   $qstub=" -d ".$datatype." -c ".$model." -s ".$sval." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc;
 
   if( $zmode == 'd') {
-    $query= $envstr." plot_horizontal_slice.py -S ".$qstub.$lstr;
+    $query= $envstr." plot_horizontal_slice.py ".$qstub.$lstr;
+#    $query= $envstr." plot_horizontal_slice.py -S ".$qstub.$lstr;
     } else {
       $query= $envstr." plot_elevation_horizontal_slice.py ".$qstub.$lstr;
   }
@@ -89,27 +90,20 @@ $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
-#$gmtpl="/app/web/perl/delmarva-FINAL.sh";
-#$gmtpl="/app/web/perl/hello.pl";
-
-#$gmtcommand = $gmtpl." ".$csvfile;
+#$gmtcommand = $envstr." ../perl/delmarva-FINAL.sh";
+#$gmtcommand = $envstr." ../perl/hello.pl";
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
-
-print($gmtcommand);
-print("<br>");
-
+#print($gmtcommand);
+#print("<br>");
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-#$gmtretval = system($gmtcommand,$gmtrc);
-
-print("gmtresult:"); print($gmtresult); print("<br>");
-print("gmtstatus:"); print($gmtstatus); print("<br>");
-print("gmtretval:"); 
-print("<pre>");
-print_r($gmtretval);
-foreach ($gmtretval as $term) print($term);
-print("</pre>");
-print("<br>");
+#print("gmtresult:"); print($gmtresult); print("<br>");
+#print("gmtstatus:"); print($gmtstatus); print("<br>");
+#print("gmtretval:"); 
+#print("<pre>");
+#print_r($gmtretval);
+#print("</pre>");
+#print("<br>");
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
@@ -120,7 +114,7 @@ $resultarray->data= $uid."_h_data.bin";
 $resultarray->csv= $uid."_h_data.csv";
 $resultarray->gmtplot= $uid."_h_data.png";
 
-if ( $status == 0 && file_exists($file)) {
+if ( $gmtstatus == 0 && file_exists($pngfile)) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');
     echo "<div data-side=\"horizontalSlice".$uid."\" data-params=\"";
     echo $resultstring;
