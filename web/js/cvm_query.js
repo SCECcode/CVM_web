@@ -18,8 +18,8 @@ function cleanResultDirectory() {
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("phpResponseTxt").innerHTML = this.responseText;
-            cnt=processSearchResult("cleanResultDirectory");
-            window.console.log("cleaned out ",cnt);
+            let cnt=processSearchResult("cleanResultDirectory");
+            window.console.log("cleaned out files >",cnt['count']);
        }
     }
     xmlhttp.open("GET","php/cleanResultDirectory.php", true);
