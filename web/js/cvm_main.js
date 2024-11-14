@@ -139,8 +139,10 @@ window.console.log("Calling toReset..");
 
 // MAIN SETUP
   CVM.setup_model();
-
   CVM.setupCVMInterface();
+  cleanResultDirectory();
+  // 11:00pm
+  setDailyCleanResult(23, 0);
 
   $.event.trigger({ type: "page-ready", "message": "completed", });
 

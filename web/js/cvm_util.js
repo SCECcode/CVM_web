@@ -3,6 +3,33 @@
 
 ***/
 
+function setDailyCleanResult(targetHour, targetMinute) {
+    const now = new Date();
+
+    // Set target time (next occurrence of target hour and minute)
+    const targetTime = new Date(now);
+    targetTime.setHours(targetHour);
+    targetTime.setMinutes(targetMinute);
+    targetTime.setSeconds(0);
+    targetTime.setMilliseconds(0);
+
+    // If the target time is in the past, set it for the next day
+    if (targetTime <= now) {
+        targetTime.setDate(now.getDate() + 1);  // Move to the next day
+    }
+
+    // Calculate the time difference in milliseconds
+    const timeUntilTarget = targetTime - now;
+
+    // Set a timeout to execute a function once every 24 hours
+    setTimeout(function() {
+        // After running, set up another timeout for the next day (same time)
+        setDailyCleanResult(targetHour, targetMinute);
+    }, timeUntilTarget);
+}
+
+
+
 // remove an item from a list base on its matching 'uid'
 function removeFromList(alist, uid) {
     var cnt=alist.length;
@@ -111,6 +138,10 @@ function processSearchResult(rlist,uid=0) {
 
     if (rlist == 'getInstallModelList') {
         dstr = '[data-side=\"'+"installModelList"+'\"]';
+        str = $(dstr).data('params');
+    }
+    if (rlist == 'cleanResultDirectory') {
+        dstr = '[data-side=\"'+"cleanResultDirectory"+'\"]';
         str = $(dstr).data('params');
     }
 

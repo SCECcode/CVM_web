@@ -109,7 +109,9 @@ $gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
-$resultarray->plot= $uid."_h.png";
+if (file_exists($pngfile)) {
+  $resultarray->plot= $uid."_h.png";
+}
 $resultarray->query= $query;
 $resultarray->meta= $uid."_h_meta.json";
 $resultarray->data= $uid."_h_data.bin";
