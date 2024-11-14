@@ -94,6 +94,8 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
+$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
+
 #print($gmtcommand);
 #print("<br>");
 #print($gmtcommand);
