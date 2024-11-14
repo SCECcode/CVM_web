@@ -53,8 +53,11 @@ if ($sval == 0) {
 $file="../result/".$uid."_h.png";
 $metafile="../result/".$uid."_h_meta.json";
 $binfile="../result/".$uid."_h_data.bin";
+
 $csvfile="../result/".$uid."_h_data.csv";
 $pngfile="../result/".$uid."_h_data.png";
+$pdffile="../result/".$uid."_h_data.pdf";
+
 $gmtpl="../perl/plotCVM-horzSlice.pl";
 
 if($datatype != 'vs30') {
@@ -90,12 +93,11 @@ $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
-#$gmtcommand = $envstr." ../perl/delmarva-FINAL.sh";
-#$gmtcommand = $envstr." ../perl/hello.pl";
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
 #print($gmtcommand);
 #print("<br>");
-$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
+#print($gmtcommand);
+#print("<br>");$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print("gmtresult:"); print($gmtresult); print("<br>");
 #print("gmtstatus:"); print($gmtstatus); print("<br>");
@@ -112,7 +114,8 @@ $resultarray->query= $query;
 $resultarray->meta= $uid."_h_meta.json";
 $resultarray->data= $uid."_h_data.bin";
 $resultarray->csv= $uid."_h_data.csv";
-$resultarray->gmtplot= $uid."_h_data.png";
+$resultarray->gmtpng= $uid."_h_data.png";
+$resultarray->gmtpdf= $uid."_h_data.pdf";
 
 if ( $gmtstatus == 0 && file_exists($pngfile)) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');

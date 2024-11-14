@@ -23,8 +23,11 @@ $uid = ($_GET['uid']);
 $InstallLoc= getenv('UCVM_INSTALL_PATH');
 
 $file="../result/".$uid."_v.png";
-$matpropsfile="../result/".$uid."_v_matprops.json";
 $metafile="../result/".$uid."_v_meta.json";
+$matpropsfile="../result/".$uid."_v_matprops.json";
+$csvfile="../result/".$uid."_v_matprops.csv";
+$pngfile="../result/".$uid."_v_matprops.png";
+$pdffile="../result/".$uid."_v_matprops.pdf";
 
 $envstr=makeEnvString();
 

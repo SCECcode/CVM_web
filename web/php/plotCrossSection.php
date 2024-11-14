@@ -37,6 +37,11 @@ $envstr=makeEnvString();
 $file="../result/".$uid."_c.png";
 $metafile="../result/".$uid."_c_meta.json";
 $binfile="../result/".$uid."_c_data.bin";
+$csvfile="../result/".$uid."_c_data.csv";
+$pngfile="../result/".$uid."_c_data.png";
+$pdffile="../result/".$uid."_c_data.pdf";
+
+$gmtpl="../perl/plotCVM-vertSection.pl";
 
 $hhval= ((float)$secondlat - (float)$firstlat)*110.57;
 $hhhval= ((float)$secondlon - (float)$firstlon)*111.32;
@@ -72,6 +77,19 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 #$cvsrc=checkResult($cvsquery, $cvsresult, $uid);
 
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
+$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
+
+#print($gmtcommand);
+#print("<br>");
+#print("gmtresult:"); print($gmtresult); print("<br>");
+#print("gmtstatus:"); print($gmtstatus); print("<br>");
+#print("gmtretval:"); 
+#print("<pre>");
+#print_r($gmtretval);
+#print("</pre>");
+#print("<br>");
+
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
 $resultarray->plot= $uid."_c.png";
@@ -79,9 +97,10 @@ $resultarray->query= $query;
 $resultarray->meta= $uid."_c_meta.json";
 $resultarray->data= $uid."_c_data.bin";
 $resultarray->csv= $uid."_c_data.csv";
+$resultarray->gmtpng= $uid."_c_data.png";
+$resultarray->gmtpdf= $uid."_c_data.pdf";
 
-
-if ( $status == 0 && file_exists($file)) {
+if ( $gmtstatus == 0 && file_exists($pngfile)) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');
     echo "<div data-side=\"crossSection".$uid."\" data-params=\"";
     echo $resultstring;
