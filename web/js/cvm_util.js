@@ -6,17 +6,9 @@
 function setDailyCleanResult(targetHour, targetMinute) {
     const now = new Date();
 
-    // Set target time (next occurrence of target hour and minute)
+    // Set target time a day after now
     const targetTime = new Date(now);
-    targetTime.setHours(targetHour);
-    targetTime.setMinutes(targetMinute);
-    targetTime.setSeconds(0);
-    targetTime.setMilliseconds(0);
-
-    // If the target time is in the past, set it for the next day
-    if (targetTime <= now) {
-        targetTime.setDate(now.getDate() + 1);  // Move to the next day
-    }
+    targetTime.setDate(now.getDate() + 1);  
 
     // Calculate the time difference in milliseconds
     const timeUntilTarget = targetTime - now;
