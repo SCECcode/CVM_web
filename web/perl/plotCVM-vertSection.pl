@@ -37,7 +37,7 @@ $openEPS=2;
 #How much should I pad the lon/lat map range by (deg)? This is so the cross section doesn't go all the way to the map edge
 $pad=0.50;
 #Should I plot the source data points? 1=yes 0=no
-$plotPts=1;
+$plotPts=0;
 
 #grab the csv filename from the command line args
 $csvFile=$ARGV[0];
