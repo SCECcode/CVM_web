@@ -29,6 +29,8 @@ $csvfile="../result/".$uid."_v_matprops.csv";
 $pngfile="../result/".$uid."_v_matprops.png";
 $pdffile="../result/".$uid."_v_matprops.pdf";
 
+$gmtpl="../perl/plotCVM-1Dvert.pl";
+
 $envstr=makeEnvString();
 
 //print($envstr);
@@ -69,6 +71,13 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #  } else {
 #    $rc=makeCSVDepthProfile($uid);
 #}
+$mode=4;
+if ($datatype == 'vp') $mode=1;
+if ($datatype == 'vs') $mode=2;
+if ($datatype == 'density') $mode=3;
+
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$mode;
+$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
@@ -77,8 +86,11 @@ $resultarray->query= $query;
 $resultarray->meta= $uid."_v_meta.json";
 $resultarray->dataset= $uid."_v_matprops.json";
 $resultarray->csv= $uid."_v_matprops.csv";
+$resultarray->gmtpng= $uid."_v_matprops.png";
+$resultarray->gmtpdf= $uid."_v_matprops.pdf";
 
-if ( $status == 0 && file_exists($file)) {
+
+if ( $gmtstatus == 0 && file_exists($pngfile)) {
 
 $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');
 echo "<div data-side=\"verticalProfile".$uid."\" data-params=\""; 

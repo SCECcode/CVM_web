@@ -11,8 +11,6 @@ $ResultLoc=("../result/");
 $Files = glob($ResultLoc."*");
 $count=0;
 
-print("here");
-
 // 24 hours in seconds
 $maxAge = 24 * 60 * 60; 
 
