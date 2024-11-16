@@ -33,8 +33,6 @@ $gmtpl="../perl/plotCVM-1Dvert.pl";
 
 $envstr=makeEnvString();
 
-//print($envstr);
-
 $lstr = " -v ".$zstep." -b ".$zstart." -s ".$lat.",".$lon." -e ".$z;
 
 if ($zrange != 'none') {
@@ -78,6 +76,17 @@ if ($datatype == 'density') $mode=3;
 
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$mode;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
+
+#print($gmtcommand);
+#print("<br>");
+#print("gmtresult:"); print($gmtresult); print("<br>");
+#print("gmtstatus:"); print($gmtstatus); print("<br>");
+#print("gmtretval:"); 
+#print("<pre>");
+#print_r($gmtretval);
+#print("</pre>");
+#print("<br>");
+
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;

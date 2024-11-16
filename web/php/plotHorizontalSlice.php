@@ -96,18 +96,17 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-#print($gmtcommand);
-#print("<br>");
-#print($gmtcommand);
-#print("<br>");$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
-
-#print("gmtresult:"); print($gmtresult); print("<br>");
-#print("gmtstatus:"); print($gmtstatus); print("<br>");
-#print("gmtretval:"); 
-#print("<pre>");
-#print_r($gmtretval);
-#print("</pre>");
-#print("<br>");
+print($gmtcommand);
+print("<br>");
+print($gmtcommand);
+print("<br>");$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
+print("gmtresult:"); print($gmtresult); print("<br>");
+print("gmtstatus:"); print($gmtstatus); print("<br>");
+print("gmtretval:"); 
+print("<pre>");
+print_r($gmtretval);
+print("</pre>");
+print("<br>");
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
