@@ -2,7 +2,6 @@
 # run-build-ucvm
 
 source setup/setup_cvm_web.sh
-#source ./setup_cvm_web.sh
 
 mkdir -p $UCVM_TOP_DIR
 mkdir -p $UCVM_INSTALL_PATH

@@ -16,6 +16,8 @@ services:
     build:
       dockerfile: Dockerfile-web
       context: ./
+    volumes:
+        - ./cvm_volume:/usr/local/share/cvm_volume
     restart: always
     ports:
       - 8100:8081

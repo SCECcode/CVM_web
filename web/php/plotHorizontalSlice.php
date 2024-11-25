@@ -74,8 +74,8 @@ if($datatype != 'vs30') {
   $qstub=" -d ".$datatype." -c ".$model." -s ".$sval." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc;
 
   if( $zmode == 'd') {
-    $query= $envstr." plot_horizontal_slice.py ".$qstub.$lstr;
-#    $query= $envstr." plot_horizontal_slice.py -S ".$qstub.$lstr;
+#    $query= $envstr." plot_horizontal_slice.py ".$qstub.$lstr;
+    $query= $envstr." plot_horizontal_slice.py -S ".$qstub.$lstr;
     } else {
       $query= $envstr." plot_elevation_horizontal_slice.py ".$qstub.$lstr;
   }
@@ -96,21 +96,22 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-print($gmtcommand);
-print("<br>");
-print($gmtcommand);
-print("<br>");$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
-print("gmtresult:"); print($gmtresult); print("<br>");
-print("gmtstatus:"); print($gmtstatus); print("<br>");
-print("gmtretval:"); 
-print("<pre>");
-print_r($gmtretval);
-print("</pre>");
-print("<br>");
+#print($gmtcommand);
+#print("<br>");
+#print($gmtcommand);
+#print("<br>");$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
+
+#print("gmtresult:"); print($gmtresult); print("<br>");
+#print("gmtstatus:"); print($gmtstatus); print("<br>");
+#print("gmtretval:"); 
+#print("<pre>");
+#print_r($gmtretval);
+#print("</pre>");
+#print("<br>");
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
-if (file_exists($pngfile)) {
+if (file_exists($file)) {
   $resultarray->plot= $uid."_h.png";
 }
 $resultarray->query= $query;

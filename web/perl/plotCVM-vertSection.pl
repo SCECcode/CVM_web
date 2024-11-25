@@ -32,7 +32,7 @@ use File::Basename;
 #------- USER-SPECIFIED PARAMETERS -------------------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Should I open the .eps file when finished? 0=no, 1=gv, 2=evince, 3=illustrator
-$openEPS=2;
+$openEPS=0;
 
 #How much should I pad the lon/lat map range by (deg)? This is so the cross section doesn't go all the way to the map edge
 $pad=0.50;
@@ -135,7 +135,7 @@ while(<CSV>){
 		elsif($data[0] eq "Lon1")           {$begLon      =$data[1]}
 		elsif($data[0] eq "Lat2")           {$endLat      =$data[1]}
 		elsif($data[0] eq "Lon2")           {$endLon      =$data[1]}
-	}#end if
+	}#end elsif
 }#end while
 
 #set the colorbar title based on what parameter is in the csvFile header

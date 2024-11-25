@@ -64,7 +64,7 @@ $qstub=" -s ".$zstart." -h ".$hval." -d ".$datatype." -c ".$model." -a sd -o ".$
 if ($zmode == 'e') {
     $query= $envstr." plot_elevation_cross_section.py".$qstub.$lstr;
     } else {
-        $query= $envstr." plot_cross_section.py".$qstub.$lstr;
+        $query= $envstr." plot_cross_section.py -S ".$qstub.$lstr;
 }
 //print($query);
 
@@ -74,11 +74,13 @@ $rc=checkResult($query, $result, $uid);
 
 $cvsquery = $envstr." ucvm_cross_section2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
-#print($cvsquery);
+//print($cvsquery);
 #$cvsrc=checkResult($cvsquery, $cvsresult, $uid);
 
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
+
+//print($gmtcommand);
 
 #print($gmtcommand);
 #print("<br>");
@@ -92,7 +94,9 @@ $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
+if (file_exists($file)) {
 $resultarray->plot= $uid."_c.png";
+}
 $resultarray->query= $query;
 $resultarray->meta= $uid."_c_meta.json";
 $resultarray->data= $uid."_c_data.bin";

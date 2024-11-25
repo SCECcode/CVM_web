@@ -1,5 +1,6 @@
 # Tools.pm
 # Written 2015-10-11 by Scott T. Marshall
+# Updated 2024-11-24 Added getMapScale for automatic map scale generation in GMT6.
 #------------------------------------------------------------------------------------------------------------------------------#
 # This is a perl module for doing some generically-useful data analysis stuff.
 # These subroutines can be called by other perl scripts.
@@ -8,7 +9,7 @@ package Tools;
 #Export each subroutine for use in other perl scripts
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(getDecYr getGMTdecYr getXtick getYtick getXtickGrid getYtickGrid getLonTick getLatTick getCBarTick);
+@EXPORT_OK = qw(getDecYr getGMTdecYr getXtick getYtick getXtickGrid getYtickGrid getLonTick getLatTick getCBarTick getMapScale);
 #make perl be picky about local variables and other stuff.
 use strict;
 
@@ -65,8 +66,7 @@ sub getDecYr {
 		#if($isLeapYr==1){
 			#print "$yr: $isLeapYr\n";
 		#}
-		
-		
+				
 		#set the lengths of months
 		$jan=31; $mar=31; $apr=30; $may=31; $jun=30; $jul=31; $aug=31; $sep=30; $oct=31; $nov=30; $dec=31;
 		if($isLeapYr==1){
@@ -688,6 +688,89 @@ sub getCBarTick {
 	return($cTick);
 	
 }#end sub getCBarTick()
+
+
+
+#------------------------------------------------------------------------------------------------------------------------------#
+#------- SUBROUTINE FOR AUTOMATED MAP SCALE GENERATION IN GMT6 ----------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------------------------------------#
+# This subroutine takes a GMT -RminLon/maxLon/minLat/maxLat string and figures out a reasonable map scale length for a GMT map.
+# A GMT-style -L string is returned that plots the map scale at the bottom left corner of the plot.
+#------------------------------------------------------------------------------------------------------------------------------#
+sub getMapScale {
+	#check to be sure the input string is in the correct format.
+	if(substr($_[0],0,2) ne "-R"){
+		print "\n\nError in getMapScale. User must pass a GMT-style -R string\n";
+		print "Received: @_\n";
+		exit;
+	}#end if
+	
+	#split the user inputted -R value into min/max lon/lat values
+	my @R=split("/",$_[0]);
+	my $lonMin=$R[0];
+	my $lonMax=$R[1];
+	my $latMin=$R[2];
+	my $latMax=$R[3];
+	#calculate the latitude of the middle of the map
+	my $latMid=($latMin+$latMax)/2;
+	#remove the -R
+	$lonMin=~s/-R//;
+		
+	#figure out the width (in km) of the map region centered on the user specified point 
+	my $txt=`gmt mapproject -G$lonMin/$latMid+uk <<-END
+	$lonMax $latMid
+	END`;
+	chomp($txt);
+	my @txt=split(" ",$txt);
+	my $dist=$txt[2];
+	#divide by 4 because a map scale should probably not take up more than 1/4 of the plot width
+	my $distScale=$dist/4;
+	my $mapScale;
+	
+	#figure out what distance scale to apply
+	if($distScale<0.2){
+		print "\n\n  Error: getMapScale was not designed for maps this small\n";
+		print "  Your map is only $dist km wide!\n\n";
+		exit;
+	}#end if
+	elsif($distScale<0.3) {$mapScale=0.25}
+	elsif($distScale<0.5) {$mapScale=0.5}
+	elsif($distScale<1)   {$mapScale=1}
+	elsif($distScale<4)   {$mapScale=2}
+	elsif($distScale<7)   {$mapScale=5}
+	elsif($distScale<13)  {$mapScale=10}
+	elsif($distScale<17)  {$mapScale=15}
+	elsif($distScale<23)  {$mapScale=20}
+	elsif($distScale<27)  {$mapScale=25}
+	elsif($distScale<50)  {$mapScale=40}
+	elsif($distScale<100) {$mapScale=50}
+	elsif($distScale<150) {$mapScale=100}
+	elsif($distScale<250) {$mapScale=200}
+	elsif($distScale<500) {$mapScale=400}
+	elsif($distScale<750) {$mapScale=500}
+	elsif($distScale<1000){$mapScale=750}
+	elsif($distScale<1300){$mapScale=1000}
+	elsif($distScale<1750){$mapScale=1500}
+	elsif($distScale<2000){$mapScale=2000}
+	else {
+		print "\n\n  Error: getMapScale was not designed for maps this large\n";
+		print "  Your map is $dist km wide!\n\n";
+		exit;
+	}#end else
+	
+	
+	#printf ("Map is %.2f km wide\n",$dist);
+	#printf ("1/4 is %.2f km\n",$distScale);
+	#print "Scale will be $mapScale km\n";
+	#printf ("%.2f --> %.2f km\n",$distScale,$mapScale);
+	
+	#make the GMT6 -L string for placing at the bottom left of the plot
+	#this should work nicely for plots that are on 8.5in wide paper
+	my $mapScaleString="-Lx0.3i/0.3i+jBL+w${mapScale}k+c+f+u";
+	#return the string to the user
+	return($mapScaleString);
+
+}#end sub getMapScale()
 
 
 
