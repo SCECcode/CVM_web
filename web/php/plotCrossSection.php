@@ -70,19 +70,16 @@ if ($zmode == 'e') {
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query, $result, $uid);
-//print($result);
 
 $cvsquery = $envstr." ucvm_cross_section2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
-//print($cvsquery);
-#$cvsrc=checkResult($cvsquery, $cvsresult, $uid);
 
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
+
+#Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities pad forceRange zMin zMax
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-//print($gmtcommand);
-
-#print($gmtcommand);
+print($gmtcommand);
 #print("<br>");
 #print("gmtresult:"); print($gmtresult); print("<br>");
 #print("gmtstatus:"); print($gmtstatus); print("<br>");
@@ -93,6 +90,7 @@ $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 #print("<br>");
 
 $resultarray = new \stdClass();
+$resultarray->qtype= "cross";
 $resultarray->uid= $uid;
 if (file_exists($file)) {
 $resultarray->plot= $uid."_c.png";

@@ -136,6 +136,22 @@ window.console.log("Calling toReset..");
   });
 
 
+  $('#modalplotoption').on('show.bs.modal', function (event) {
+    // button that triggered the modal
+        var btn = $(event.relatedTarget); 
+        var val = btn.data('val'); 
+        MODAL_REPLOT_TYPE = btn.data('qtype'); 
+        MODAL_REPLOT_SRC = "/cvm-explorer/result/"+val;
+
+    // Set the modal content dynamically
+        var modal = $(this);
+	modal.find('.modal-body #modal-val').text('Plot: ' + MODAL_REPLOT_SRC );
+	modal.find('.modal-body #modal-qtype').text('Qtype: ' + MODAL_REPLOT_TYPE);
+
+	$('#plotOptionIfram').attr('src',MODAL_REPLOT_SRC);
+	$('#plotOptionIfram').attr('height','800px');
+  });
+
 
 // MAIN SETUP
   CVM.setup_model();

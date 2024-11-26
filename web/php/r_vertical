@@ -1,1 +1,2 @@
+
 PROJ_LIB=/usr/local/share/ucvm/install/lib/proj/share/proj PATH=/usr/local/share/plotting/metadata_utilities/bin:/usr/local/share/anaconda3/bin:/usr/local/share/anaconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin PYTHONPATH=/usr/local/share/plotting/ucvm_plotting plot_depth_profile.py  -n /usr/local/share/ucvm/install/conf/ucvm.conf -i /usr/local/share/ucvm/install -d vs -c sfcvm -o CVM_1731440849095_v.png -C 'San Francisco Bay Velocity Model' -v 100 -b 0 -s 38.5992,-122.6296 -e 30000

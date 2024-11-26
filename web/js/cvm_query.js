@@ -6,9 +6,11 @@
 // if there are too many file points, do not generate the mp layer
 // limit it to 200 maximum
 var MAX_FILEPOINTS=200;
+var MODAL_REPLOT_SRC="";
+var MODAL_REPLOT_TYPE="";
 
 function cleanResultDirectory() {
-	    if (window.XMLHttpRequest) {
+    if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp = new XMLHttpRequest();
     } else {
@@ -255,7 +257,7 @@ function plotCrossSection() {
 
             var str=processSearchResult("plotCrossSection",uid);
 
-	    if (str != undefined) { 
+         if (str != undefined) { 
                 var zstr=getZModeNameWithType(zmodestr);
                 var mstr=getModelNameWithType(modelstr);
                 var note="Vertical "+zstr+" Cross Section("+datatypestr+") with "+mstr;
@@ -420,6 +422,53 @@ function plotHorizontalSlice() {
         }
     }
     xmlhttp.open("GET","php/plotHorizontalSlice.php?firstlat="+flat1+"&firstlon="+flon1+"&secondlat="+flat2+"&secondlon="+flon2+"&z="+zstr+"&zmode="+zmodestr+"&model="+modelstr+"&zrange="+zrangestr+"&floors="+floorstr+"&datatype="+datatypestr+"&uid="+uid,true);
+    xmlhttp.send();
+}
+
+function replotHorizontalSlice() {
+    let cfm=$('#plotoption-cfm').prop('checked');
+    let ca=$('#plotoption-ca').prop('checked');
+    let range=$('#plotoption-range').prop('checked');
+
+    // replace src .pdf with .csv and grab just filename
+    let file=MODAL_REPLOT_SRC.replace("pdf","csv");
+    let token=file.split('/');
+    let fname=token[token.length - 1];
+
+     
+    let oncfm=0;
+    if(cfm) oncfm=1;
+    let onca=0;
+    if(ca) onca=1;
+    let onrange=0;
+    if(range) onrange=1;
+    let onmin=document.getElementById("minScaleTxt").value;
+    let onmax=document.getElementById("maxScaleTxt").value;
+
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("phpResponseTxt").innerHTML = this.responseText;
+            let responseText = this.responseText;
+window.console.log("done with replot horizontal slice");
+
+/* refresh the plot on the plotoption iframe */
+$('#plotOptionIfram').attr('src',MODAL_REPLOT_SRC);
+
+            document.getElementById('spinIconForArea').style.display = "none";
+        }
+    }
+    var dumdum="php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname;
+    window.console.log(dumdum);
+
+    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname,true);
     xmlhttp.send();
 }
 

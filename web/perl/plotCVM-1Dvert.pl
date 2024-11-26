@@ -12,12 +12,9 @@
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam
-#      plotParam must equal 1-4
-#         1=plot Vp
-#         2=plot Vs
-#         3=plot density
-#         4=plot all
+#   Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities pad forceRange zMin zMax
+#     plotParam must equal 1-4  1=plot Vp; 2=plot Vs; 3=plot density; 4=plot all;
+#     Note: zMin and zMax only need to be specified if forceRange=1.
 # 
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Use warnings, but skip warnings about uninitialized variables, since this happens every time you read in a blank line.
@@ -29,7 +26,7 @@ use FindBin;
 use lib $FindBin::Bin;
 #for moho
 use lib "/app/web/perl";
-use Tools qw(getLonTick getLatTick getXtick getYtick);
+use Tools qw(getLonTick getLatTick getXtickGrid getYtickGrid getMapScale);
 #for parsing a filename from a path
 use File::Basename;
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -38,12 +35,21 @@ use File::Basename;
 #Should I open the .eps file when finished? 0=no, 1=gv, 2=evince, 3=illustrator
 $openEPS=0;
 
-#How much should I pad the lon/lat map range by (deg)?
-$pad=0.50;
+#check for correct usage and make sure the csv file exists
+if   (@ARGV==8){($csvFile,$plotPar,$plotFaults,$plotCities,$pad,$forceRange,$zMin,$zMax)=@ARGV}
+elsif(@ARGV==6){
+	($csvFile,$plotPar,$plotFaults,$plotCities,$pad,$forceRange)=@ARGV;
+	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
+}
+#print usage for incorrect inputs
+else {
+	print "\n  Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities pad forceRange zMin zMax\n";
+	print "    plotParam must equal 1-4  1=plot Vp; 2=plot Vs; 3=plot density; 4=plot all\n";
+	print "    Note: zMin and zMax only need to be specified if forceRange=1\n\n";
+	exit;
+}
+unless(-e $csvFile){print "\n  Error: $csvFile not found\n\n"; exit}
 
-#grab the csv filename and plot parameter from the command line args
-$csvFile=$ARGV[0];
-$plotPar=$ARGV[1];
 #parse the path portion of the csv filename so I can create this directory for writing GMT tmp files to
 $gmtDir=substr($csvFile,0,-4);
 unless(-d $gmtDir){system "mkdir $gmtDir"}
@@ -57,48 +63,34 @@ if(substr($dir,-1) eq "/"){$dir=substr($dir,0,-1)}
 #print "Dir: $dir\n";
 
 #make the various files the same name as the csv file, but ending with different extensions
+$gmtFile="$dir/$file.gmt";
 $plotFile="$dir/$file.eps";
 
 #tell GMT to write config/history files to $dir
 $ENV{GMT_TMPDIR}="$gmtDir";
-#$ENV{GMT_USERDIR}="$dir";
-#$ENV{GMT_USER_CONFIG}="$confFile";
-#$ENV{GMT_HISTORY_FILE}="$histFile";
-#print "$ENV{GMT_USER_CONFIG}\n";
-#print "$ENV{GMT_HISTORY_FILE}\n";
 
 #What is the path to the DEM and intensity file? Only used if plotting the DEM on the map
 $dem="/home/marshallst/DEM/CA/CA-1arc.grd";
 $int="/home/marshallst/DEM/CA/CA-1arc.int";
 
 #should I plot the fault traces? 1=yes 0=no
-$plotFaults=0;
-$plotBlindFaults=0;
+#$plotFaults=0;
 #what is the path to the file with the fault trace data?
-$faultFile     ="/home/marshallst/CFM/7.0/obj/preferred/traces/gmt/CFM7.0_traces.lonLat";
-$blindFaultFile="/home/marshallst/CFM/7.0/obj/preferred/traces/gmt/CFM7.0_blind.lonLat";
+$faultFile     ="/app/web/perl/CFM7.0_traces.lonLat";
+$blindFaultFile="/app/web/perl/CFM7.0_blind.lonLat";
 #what line width should I use for the faults?
-$faultLine="1p,white";
-$faultLine2="1p,black";
-$blindFaultLine="1p,white";
+$faultLine=     "0.5p,black";
+$blindFaultLine="0.5p,black,2.0p_0.75p";
 #should I label each fault trace? 1=yes 0=no
 $labelFaults=0;
 
-#Should I make pdf and png versions of the EQ plots?
+#should I plot cities? 1=yes 0=no
+#$plotCities=1;
+$cityFile="/app/web/perl/CA_Cities.txt";
+
+#Should I make pdf and png versions of the plots?
 $makePDF=1;
 $makePNG=1;
-
-#check for correct usage and make sure the csv file exists
-if(@ARGV!=2)       {
-	print "\n    Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam\n";
-	print "          plot Param must equal 1-4\n";
-	print "              1=plot Vp\n";
-	print "              2=plot Vs\n";
-	print "              3=plot density\n";
-	print "              4=plot all\n\n";
-	exit;
-}
-unless(-e $csvFile){print "\n    Error: $csvFile not found\n\n"; exit}
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -109,12 +101,13 @@ print "Reading $csvFile\n";
 print "-----------------------------------------------------------------------------\n";
 #open csv file for reading and read it line by line
 open(CSV,$csvFile);
+#write a new file that is the same as the csv file, but with units converted.
+open(GMT,">$gmtFile");
+$count=0;
 while(<CSV>){
 	chomp;
-	#kill the loop when the end of the header is reached
-	if($_ =~ "# Depth(m),Vp(m),Vs(m),Density"){last}
 	#grab useful portions of the header
-	elsif($_ =~ "# "){
+	if($_ =~ "# "){
 		#remove the "# " so I can split by colon. Also, remove the space after the colon
 		$_=~s/# //;
 		$_=~s/: /:/;
@@ -124,24 +117,51 @@ while(<CSV>){
 		elsif($data[0] eq "CVM(abbr)")      {$model       =$data[1]}
 		elsif($data[0] eq "Lat")            {$lat         =$data[1]}
 		elsif($data[0] eq "Lon")            {$lon         =$data[1]}
-		elsif($data[0] eq "Start_depth(m)") {$startDepth  =$data[1]}
-		elsif($data[0] eq "End_depth(m)")   {$endDepth    =$data[1]}
-		elsif($data[0] eq "Vert_spacing(m)"){$vertSpacing =$data[1]}
+		elsif($data[0] eq "Start_depth(m)") {$startDepth  =$data[1]/1000}
+		elsif($data[0] eq "End_depth(m)")   {$endDepth    =$data[1]/1000}
+		elsif($data[0] eq "Vert_spacing(m)"){$vertSpacing =$data[1]/1000}
 		#elsif($data[0] eq "Total_pts")      {$numPts      =$data[1]}
 		elsif($data[0] eq "Comment")        {$comment     =$data[1]}
-	}#end elsif
+	}#end if
+	#deal with data lines
+	else {
+		@data=split(",",$_);
+		if(@data!=4){
+			print "Error: Four columns of data should have been found. I found the line below\n";
+			print "$_\n";
+			exit;
+		}#end if
+		#write a simple header if this is the first data line
+		if($count==0){
+			print GMT "#depth(km),Vp(km/s),Vs(km/s),Density(g/cm^3)\n";
+		}#end if
+		
+		#convert the parameters to more useful units
+		$data[0]/=1000; #depth m-->km
+		$data[1]/=1000; #Vp m/s-->km/s
+		$data[2]/=1000; #Vs m/s-->km/s
+		$data[3]/=1000; #density kg/m^3-->g/cm^3
+				
+		#print the line to the new GMT file (still a csv file, format-wise)
+		print GMT "$data[0],$data[1],$data[2],$data[3]\n";
+		
+		#increment the line counter
+		$count++;
+	}#end else
 }#end while
+close(CSV);
+close(GMT);
 
-#get the XY range of the data file...this depends on what is requested to be plotted
+#get the XY range of the data file...this depends on what is requested to be plotted 
 #if plotting Vp, Vs, Density, or all
-if($plotPar==1)   {$Rxy=`gmt info $csvFile -I- -i1,0`; chomp($Rxy)}
-elsif($plotPar==2){$Rxy=`gmt info $csvFile -I- -i2,0`; chomp($Rxy)}
-elsif($plotPar==3){$Rxy=`gmt info $csvFile -I- -i3,0`; chomp($Rxy)}
+if   ($plotPar==1){$Rxy=`gmt info $gmtFile -I- -i1,0`; chomp($Rxy)}
+elsif($plotPar==2){$Rxy=`gmt info $gmtFile -I- -i2,0`; chomp($Rxy)}
+elsif($plotPar==3){$Rxy=`gmt info $gmtFile -I- -i3,0`; chomp($Rxy)}
 elsif($plotPar==4){
 	#get the ranges of each column and split them into arrays
-	$R1=`gmt info $csvFile -I- -i1,0`;
-	$R2=`gmt info $csvFile -I- -i2,0`;
-	$R3=`gmt info $csvFile -I- -i3,0`;
+	$R1=`gmt info $gmtFile -I- -i1,0`;
+	$R2=`gmt info $gmtFile -I- -i2,0`;
+	$R3=`gmt info $gmtFile -I- -i3,0`;
 	chomp($R1,$R2,$R3);
 	$R1=~ s/-R//;
 	$R2=~ s/-R//;
@@ -155,37 +175,44 @@ elsif($plotPar==4){
 	$Rxy="-R$list[0]/$list[-1]/$R1[2]/$R1[3]";
 }
 else {print "\n\n  Error: plotPar must be 1-4. You entered $plotPar\n\n"; exit}
-print "$Rxy\n";
-#because the curves are often vertical, they can plot at the right axis. This can be fixed by adding some padding to the xy range.
+#print $Rxy before the padding, just for testing
+#print "$Rxy\n";
+#because the curves are often vertical, they can plot at the right or left axes. This can be fixed by adding some padding to xMin/xMax
 @R=split("/",$Rxy);
 $R[0]=~s/-R//;
-#add 2% padding
-#if($R[0]!=0){$R[0]*=0.97} #probably not needed for the min x-values
-$R[1]*=1.02;
+#add some padding based on the X-Range
+$xRange=$R[1]-$R[0];
+#no need to pad xMin if it is zero. Negative values are not possible.
+if($R[0]!=0){$R[0]-=$xRange*0.03} #This is not needed for Vp Vs, but is useful for Density, so I will leave it in.
+$R[1]+=$xRange*0.03;
 $Rxy="-R$R[0]/$R[1]/$R[2]/$R[3]";
-print "$Rxy\n";
-
+#print $Rxy after padding, just for testing
+#print "$Rxy\n";
+#if specified, apply the user inputted zMin zMax (which are actually xvalues on the plot)
+if($forceRange==1){$Rxy="-R$zMin/$zMax/$R[2]/$R[3]"}
 
 #get the XY axis labeling string using Tools.pm
-$xAxis=getXtick($Rxy);
-$yAxis=getYtick($Rxy);
+$xAxis=getXtickGrid($Rxy);
+$yAxis=getYtickGrid($Rxy);
+print "$xAxis | $yAxis\n";
 
-#add on the pad to get a lon/lat range for the location map
-$minLon=$lon-$pad; $maxLon=$lon+$pad;
-$minLat=$lat-$pad; $maxLat=$lat+$pad;
+#add on the pad to get a lon/lat range for the location map. by Default, I add 0.1 to pad to the location. Otherwise we would not have a map!
+$minLon=$lon-0.1-$pad; $maxLon=$lon+0.1+$pad;
+$minLat=$lat-0.1-$pad; $maxLat=$lat+0.1+$pad;
 $R="-R$minLon/$maxLon/$minLat/$maxLat";
 #get the map axis labeling string using Tools.pm
 $lonAxis=getLonTick($R);
 $latAxis=getLatTick($R);
+$mapScale=getMapScale($R);
 
 #print useful metadata to stdout
 print "Title               : $title\n";
 print "Model               : $model\n";
 #print "Data Type           : $dataType\n";
 print "Lon/Lat Location    : $lon/$lat\n";
-print "StartDepth (m)      : $startDepth\n";
-print "EndDepth (m)        : $endDepth\n";
-print "VertSpacing (m)     : $vertSpacing\n";
+print "StartDepth (km)     : $startDepth\n";
+print "EndDepth (km)       : $endDepth\n";
+print "VertSpacing (km)    : $vertSpacing\n";
 #print "Num Points          : $numPts\n";
 print "Map Range           : $R\n";
 print "1D Profile Range    : $Rxy\n";
@@ -206,9 +233,10 @@ chomp($tmp);
 #grab the height in cm and convert to inches. Add on 0.95in for the title above
 $height=$tmp[1]/2.54+1.20;
 $plotHeight=$tmp[1]/2.54;
+$legendHeight=$plotHeight-0.05;
 
 #set paper size
-system "gmt set PS_MEDIA=17ix${height}i";
+system "gmt set PS_MEDIA=13.5ix${height}i";
 system "gmt set MAP_FRAME_TYPE=plain";
 #degrees with negative longitudes
 system "gmt set FORMAT_GEO_MAP=-D.x";
@@ -218,6 +246,8 @@ system "gmt set FONT_LABEL=10p";
 #Controls plot title and offset
 system "gmt set FONT_TITLE=14p";
 system "gmt set MAP_TITLE_OFFSET=0.0i";
+#Make the grids dashed and gray
+system "gmt set MAP_GRID_PEN=0.5p,gray50,0.5_2.5p";
 #Set other map text parameters
 #system "gmt set MAP_ANNOT_OFFSET_PRIMARY 5p";
 #system "gmt set MAP_LABEL_OFFSET 8p";
@@ -245,35 +275,41 @@ printf ("Location Map will be %s x %.1fi\n",$width,$height);
 #plot the coastline and color the water
 system "gmt pscoast -X0.75i -Y0.65i $R -JM$width -W0.5p -S$waterBlue -Gwhite -Df -P -K > $plotFile";
 
-#plot the source data points
-system "gmt psxy -R -JM -Sa20p -W0.5p -Ggold -O -K <<-END>> $plotFile
-$lon $lat
-END";
-#label the endpoints
-system "gmt pstext -R -JM -D0p/25p -F+a0+jCM+f18p,Helvetica -O -K <<-END>> $plotFile
-$lon $lat 1D Profile Location
-END";
-
 #plot fault traces, if specified
 if($plotFaults==1){
 	if($labelFaults==1){
 		print "Plotting and labeling fault traces\n";
-		#plot all non-blind faults with solid lines
+		#plot all non-blind faults with solid lines, blind with dashed lines
 		system "gmt psxy $faultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$faultLine -m -O -K >> $plotFile";
-		#plot all blind faults with dashed lines, if specified
-		if($plotBlindFaults==1){system "gmt psxy $blindFaultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$blindFaultLine -m -O -K >> $plotFile"}
+		system "gmt psxy $blindFaultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$blindFaultLine -m -O -K >> $plotFile";
 	}#end if
 	else {
 		print "Plotting fault traces\n";
-		#plot all non-blind faults with solid lines
+		#plot all non-blind faults with solid lines, blind with dashed lines
 		system "gmt psxy $faultFile -R -JM -W$faultLine -m -O -K >> $plotFile";
-		#plot all blind faults with dashed lines, if specified
-		if($plotBlindFaults==1){system "gmt psxy $blindFaultFile -R -JM -W$blindFaultLine -m -O -K >> $plotFile"}
+		system "gmt psxy $blindFaultFile -R -JM -W$blindFaultLine -m -O -K >> $plotFile";
 	}#end else
 }#end if
 
+#plot cities, if specified
+if($plotCities==1){
+	print "Plotting city locations\n";
+	system "gmt psxy $cityFile -R -JM -Sc5p -Ggold -W0.5p -O -K >> $plotFile";
+	system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold,white,-=1p,white -O -K >> $plotFile";
+	system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold           -O -K >> $plotFile";
+}
+
+#plot the source data points
+system "gmt psxy -R -JM -Sa15p -W0.5p -Ggold -O -K <<-END>> $plotFile
+$lon $lat
+END";
+#label the endpoints
+#system "gmt pstext -R -JM -D0p/17p -F+a0+jCM+f14p,Helvetica -O -K <<-END>> $plotFile
+#$lon $lat 1D Profile Location
+#END";
+
 #plot the basemap axes. For a map scale, add -Lx0.3i/0.3i+jBL+w50k+c+f+u 
-system "gmt psbasemap -R -JM -Bx$lonAxis -By$latAxis -BWeSn+t\"Model: $model | 1D Vertical Profile Location\" -O -K >> $plotFile";
+system "gmt psbasemap -R -JM -Bx$lonAxis -By$latAxis -BWeSn+t\"Model: $model | 1D Vertical Profile Location\" $mapScale -O -K >> $plotFile";
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -282,38 +318,34 @@ system "gmt psbasemap -R -JM -Bx$lonAxis -By$latAxis -BWeSn+t\"Model: $model | 1
 #plot the 1D profile data
 #plot Vp
 if($plotPar==1){
-	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -B+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
-	system "gmt psxy $csvFile -R -JX -W1p,$blue -i1,0 -O -K >> $plotFile";
-	system "gmt psbasemap -R -JX -Bxa+l\"Vp (m/s)\" -Bya+l\"Depth (m)\" -BWeSn -O >> $plotFile";
+	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Vp (km/s)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
+	system "gmt psxy $gmtFile -R -JX -W1.5p,$blue -i1,0 -O >> $plotFile";
 }
 #plot Vs
 elsif($plotPar==2){
-	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -B+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
-	system "gmt psxy $csvFile -R -JX -W1p,$red -i2,0 -O -K >> $plotFile";
-	system "gmt psbasemap -R -JX -Bxa+l\"Vs (m/s)\" -Bya+l\"Depth (m)\" -BWeSn -O >> $plotFile";
+	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Vs (km/s)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
+	system "gmt psxy $gmtFile -R -JX -W1.5p,$red -i2,0 -O >> $plotFile";
 }
 #plot density
 elsif($plotPar==3){
-	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -B+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
-	system "gmt psxy $csvFile -R -JX -W1p,$green -i3,0 -O -K >> $plotFile";
-	system "gmt psbasemap -R -JX -Bxa+l\"Density (kg/m\@+3\@+)\" -Bya+l\"Depth (m)\" -BWeSn -O >> $plotFile";
+	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Density (g/cm\@+3\@+)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
+	system "gmt psxy $gmtFile -R -JX -W1.5p,$green -i3,0 -O >> $plotFile";
 }
 #plot All
 if($plotPar==4){
-	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -B+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
-	system "gmt psxy $csvFile -R -JX -W1p,$blue -i1,0 -O -K >> $plotFile";
-	system "gmt psxy $csvFile -R -JX -W1p,$red -i2,0 -O -K >> $plotFile";
-	system "gmt psxy $csvFile -R -JX -W1p,$green -i3,0 -O -K >> $plotFile";
-	system "gmt psbasemap -R -JX -Bxa+l\"Parameter Value (see legend for units)\" -Bya+l\"Depth (m)\" -BWeSn -O -K >> $plotFile";
+	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Parameter Value (see legend for units)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
+	system "gmt psxy $gmtFile -R -JX -W1.5p,$blue -i1,0 -O -K >> $plotFile";
+	system "gmt psxy $gmtFile -R -JX -W1.5p,$red -i2,0 -O -K >> $plotFile";
+	system "gmt psxy $gmtFile -R -JX -W1.5p,$green -i3,0 -O -K >> $plotFile";
 	
 	#plot a legend with the curves labeled
-	system "gmt pslegend -R -JX -Dx0.1i/0.1i+w1.3i/0.75i+jBL -F+gwhite+p0.5p,black+r4p -O <<-END>> $plotFile
+	system "gmt pslegend -R -JX -Dx3.95i/${legendHeight}i+w1.3i/0.75i+jTR -F+gwhite+p0.5p,black+r4p -O <<-END>> $plotFile
 	G 0.05i
-	S 7p - 10p - 1p,$blue  17p Vp (m/s)
+	S 7p - 10p - 1.5p,$blue  17p Vp (km/s)
 	G 0.05i
-	S 7p - 10p - 1p,$red   17p Vs (m/s)
+	S 7p - 10p - 1.5p,$red   17p Vs (km/s)
 	G 0.05i
-	S 7p - 10p - 1p,$green 17p Density (kg/m\@+3\@+)
+	S 7p - 10p - 1.5p,$green 17p Density (g/cm\@+3\@+)
 	END";
 }
 

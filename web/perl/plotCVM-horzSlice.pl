@@ -11,8 +11,8 @@
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities forceZrange zMin zMax
-#     Note: zMin and zMax only need to be specified if forceZrange=1.
+#   Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities forceRange zMin zMax
+#     Note: zMin and zMax only need to be specified if forceRange=1.
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Use warnings, but skip warnings about uninitialized variables, since this happens every time you read in a blank line.
 #use warnings; no warnings "uninitialized";
@@ -31,7 +31,7 @@ use File::Basename;
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Should I open the .eps file when finished? 0=no, 1=gv, 2=evince, 3=illustrator
 $openEPS=0;
-#Should I plot the source data points? 1=yes 0=no
+#Should I plot the source data points for debugging? 1=yes 0=no
 $plotPts=0;
 
 #grab the command line arguments
@@ -43,8 +43,8 @@ elsif(@ARGV==4){
 }
 #print usage for incorrect inputs
 else {
-	print "\n  Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities forceZrange zMin zMax\n";
-	print "    Note: zMin and zMax only need to be specified if forceZrange=1\n\n";
+	print "\n  Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities forceRange zMin zMax\n";
+	print "    Note: zMin and zMax only need to be specified if forceRange=1\n\n";
 	exit;
 }
 #check for files
@@ -55,7 +55,7 @@ $gmtDir=substr($csvFile,0,-4);
 unless(-d $gmtDir){system "mkdir $gmtDir"}
 #split $csvFile into a filename and path so I can use $file to make new filenames and $dir for where they should go
 ($file,$dir)=fileparse($csvFile,".csv");
-#remove the trailing slash
+#remove the trailing slash, if present
 if(substr($dir,-1) eq "/"){$dir=substr($dir,0,-1)}
 #$file=basename($csvFile,".csv");
 #print "GMTDIR: $gmtDir\n";
@@ -89,7 +89,7 @@ $int="/home/marshallst/DEM/CA/CA-1arc.int";
 $faultFile     ="/app/web/perl/CFM7.0_traces.lonLat";
 $blindFaultFile="/app/web/perl/CFM7.0_blind.lonLat";
 #what line width should I use for the faults?
-$faultLine="0.5p,black";
+$faultLine=     "0.5p,black";
 $blindFaultLine="0.5p,black,2.0p_0.75p";
 #should I label each fault trace? 1=yes 0=no
 $labelFaults=0;
@@ -98,7 +98,7 @@ $labelFaults=0;
 #$plotCities=1;
 $cityFile="/app/web/perl/CA_Cities.txt";
 
-#Should I make pdf and png versions of the EQ plots?
+#Should I make pdf and png versions of the plots?
 $makePDF=1;
 $makePNG=1;
 
@@ -116,8 +116,8 @@ open(GMT,">$gmtFile");
 $count=0;
 while(<CSV>){
 	chomp;
-	#deal with header lines
-	if($_=~"# "){
+	#grab useful portions of the header
+	if($_ =~ "# "){
 		#remove the #  so I can split by colon. Also, remove the space after the colon
 		$_=~s/# //;
 		$_=~s/: /:/;
@@ -270,7 +270,10 @@ if($forceRange==0){
 	}
 }
 #if the user forced the zRange, make the -T string
-else {$T="-T$zMin/$zMax"}
+else {
+	$T="-T$zMin/$zMax";
+	print "Using forced Z-Range: MinZ=$zMin;  MaxZ=$zMax\n";	
+}
 
 #get the axis labeling and tickmark string using Tools.pm
 $cAxis=getCBarTick($T);

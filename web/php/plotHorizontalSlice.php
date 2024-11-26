@@ -93,13 +93,14 @@ $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile;
+# Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities forceRange zMin zMax
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-#print($gmtcommand);
+print($gmtcommand);
 #print("<br>");
 #print($gmtcommand);
-#print("<br>");$gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
+#print("<br>");
 
 #print("gmtresult:"); print($gmtresult); print("<br>");
 #print("gmtstatus:"); print($gmtstatus); print("<br>");
@@ -111,6 +112,7 @@ $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
+$resultarray->qtype="horizontal";
 if (file_exists($file)) {
   $resultarray->plot= $uid."_h.png";
 }

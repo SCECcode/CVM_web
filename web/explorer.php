@@ -710,6 +710,79 @@ TODO: need a new id
   </div>
 </div>
 
+<!--Modal: (modalplotoption) -->
+<div class="modal" id="modalplotoption" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalplotoptionDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalplotoptionContent">
+      <div class="modal-header">
+          <div class="form-check-inline">
+            <div class="form-check form-check-inline">
+               <label class='form-check-label ml-1 mini-option'
+                      title='Show Community Fault Model v7.0 on plot'
+                      for="plotoption-cfm">
+               <input class='form-check-inline mr-1'
+                      type='checkbox'
+                      id='plotoption-cfm'
+                      onclick='replotHorizontalSlice()' />CFM7.0
+               </label>
+            </div>
+            <div class="form-check form-check-inline">
+               <label class='form-check-label ml-1 mini-option'
+                      title='Show CA Cities on plot'
+                      for="plotoption-ca">
+               <input class='form-check-inline mr-1'
+                      type="checkbox"
+		      id="plotoption-ca" 
+                      onclick='replotHorizontalSlice()' />CA cities
+               </label>
+            </div>
+            <div>
+               <input type="text"
+                      id="minScaleTxt"
+                      placeholder="min scale"
+                      title="minScale"
+                      style="width:6vw"
+                      value=0 >
+               <input type="text"
+                      id="maxScaleTxt"
+                      placeholder="max scale"
+                      title="maxScale"
+                      style="width:6vw"
+                      value=5 >
+            </div>
+            <div class="form-check form-check-inline">
+               <label class='form-check-label ml-1 mini-option'
+                      title='Set Scale Range'
+                      for="plotoption-range">
+              <input class='form-check-inline mr-1'
+                      type="checkbox"
+		      id="plotoption-range" 
+                      onclick='replotHorizontalSlice()' />Scale Range
+              </label>
+            </div>
+          </div>
+
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <p id="modal-val" style="display:none"></p>
+        <p id="modal-qtype" style="display:none"></p>
+        <div id="plotoption-iframe-container" class="col-12" style="overflow:auto;">
+          <iframe id="plotOptionIfram" src="" height="0" width="100%" style="background-color:blue;" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-outline-primary btn-md" data-dismiss="modal">Close</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalplotoption-->
+
 <!--Modal: (modalkmlselect) -->
 <div class="modal" id="modalkmlselect" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-small" id="modalkmlselectDialog" role="document">
@@ -732,7 +805,7 @@ TODO: need a new id
 
 <!--Modal: Parameters Table -->
 <div class="modal" id="modalparameters" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalparametersDialog" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-xl" id="modalparametersDialog" role="document">
 
     <!--Content-->
     <div class="modal-content" id="modalparametersContent">
