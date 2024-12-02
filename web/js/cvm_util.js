@@ -103,6 +103,10 @@ function fixLineOrdering(firstlat, firstlon, secondlat, secondlon) {
 }
 
 function processSearchResult(rlist,uid=0) {
+    if (rlist == 'replotCrossSection') {
+        dstr = '[data-side=\"'+"crossSectionReplot"+'\"]';
+        str = $(dstr).data('params');
+    }
     if (rlist == 'replotHorizontalSlice') {
         dstr = '[data-side=\"'+"horizontalSliceReplot"+'\"]';
         str = $(dstr).data('params');

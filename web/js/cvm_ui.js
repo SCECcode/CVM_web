@@ -126,7 +126,7 @@ window.console.log("downloadlinks>>",str);
               break;
           case 'gmtresult':
               window.console.log("QUERY result:",val);
-              html=html+"<div id=\""+uid+"_state_blob\" style=\"display:none\">"+val+"</div>";
+              html=html+"<div id=\""+uid+"_state_blob\" style=\"display:\">"+val+"</div>";
               break;
           default:
               window.console.log("BAD...This key is skipped:",keys[i]);
