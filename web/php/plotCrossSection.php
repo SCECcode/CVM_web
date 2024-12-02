@@ -79,14 +79,9 @@ $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 print($gmtcommand);
-print("<br>");
-print("gmtresult:"); print("<br>");
-print("gmtstatus:");  print("<br>");
-print("gmtretval:"); 
 print("<pre>");
 print_r($gmtretval);
 print("</pre>");
-print("<br>");
 
 $resultarray = new \stdClass();
 $resultarray->type= "cross";

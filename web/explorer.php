@@ -724,8 +724,8 @@ TODO: need a new id
                       for="plotoption-cfm">
                <input class='form-check-inline mr-1'
                       type='checkbox'
-                      id='plotoption-cfm_h'
-                      onclick='replotHorizontalSlice()' />CFM7.0
+                      id='plotoption-cfm'
+                      onclick='replotPlots()' />CFM7.0
                </label>
             </div>
             <div class="form-check form-check-inline">
@@ -734,33 +734,50 @@ TODO: need a new id
                       for="plotoption-ca">
                <input class='form-check-inline mr-1'
                       type="checkbox"
-		      id="plotoption-ca_h" 
-                      onclick='replotHorizontalSlice()' />CA cities
+		      id="plotoption-ca" 
+                      onclick='replotPlots()' />CA cities
                </label>
             </div>
-            <div>
-               <input type="text"
-                      id="minScaleTxt_h"
-                      placeholder="min scale"
-                      title="minScale"
-                      style="width:6vw"
+            <div id="plotoption-pad-option" class="form-check form-check-inline" style="display:">
+                   <label class='form-check-label ml-1 mini-option'
+                      title='Add padding on plot'
+                      for="plotoption-pad">
+                   <input class='form-check-inline mr-1'
+                      type="checkbox"
+		      id="plotoption-pad" 
+                      onclick='replotPlots()' />Pad
+                   </label>
+                   <input type="text"
+                      id="plotPadTxt"
+                      placeholder="plot pad"
+                      title="plotPad"
+                      style="width:2vw"
+                      onfocus="this.value=''"
                       value=NA >
-               <input type="text"
-                      id="maxScaleTxt_h"
-                      placeholder="max scale"
-                      title="maxScale"
-                      style="width:6vw"
-                      value=NA >
-              <div class="form-check form-check-inline">
-               <label class='form-check-label ml-1 mini-option'
+            </div>
+            <div class="form-check form-check-inline">
+                   <label class='form-check-label ml-1 mini-option'
                       title='Set Scale Range'
                       for="plotoption-range">
-               <input class='form-check-inline mr-1'
+                   <input class='form-check-inline mr-1'
                       type="checkbox"
-		      id="plotoption-range_h" 
-                      onclick='replotHorizontalSlice()' />Scale Range
-               </label>
-               </div>
+		      id="plotoption-range" 
+                      onclick='replotPlots()' />Scale Range
+                   </label>
+                   <input type="text"
+                      id="minScaleTxt"
+                      placeholder="min scale"
+                      title="minScale"
+                      style="width:7vw"
+                      onfocus="this.value=''"
+                      value=NA >
+                   <input type="text"
+                      id="maxScaleTxt"
+                      placeholder="max scale"
+                      title="maxScale"
+                      style="width:7vw"
+                      onfocus="this.value=''"
+                      value=NA >
             </div>
           </div>
 

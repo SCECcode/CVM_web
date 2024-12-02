@@ -141,13 +141,13 @@ window.console.log("Calling toReset..");
         var btn = $(event.relatedTarget); 
         var blob_btn=btn.data('blob');        
         var blob=document.getElementById(blob_btn).innerHTML;
-        window.console.log("HERE..");
-        updateHplotOptions(blob);
+        let type=updatePlotOptions(blob);
 
  	let json=JSON.parse(blob);
         let myfile=json['file'];
         // switch from ../reslut/pdffile to /cvm-explorer/result/pdffile 
         MODAL_REPLOT_SRC=myfile.replace("..","/cvm-explorer"); 
+        MODAL_REPLOT_TYPE=type;
 
 
     // Set the modal content dynamically

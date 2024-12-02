@@ -91,7 +91,7 @@ window.console.log("downloadlinks>>",str);
               html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;csv data file</div>";
               break;
           case 'gmtpdf':
-              if( type == "horizontal") { 
+              if( type == "horizontal" || type == "cross" ) { 
                 html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PDF plot&nbsp;&nbsp;<button id=\""+uid+"_show_btn\" class=\"btn cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalhplotoption\"><span class=\"glyphicon glyphicon-adjust\"></span></button></div>";
                 } else {
                     html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PDF plot</div>";
@@ -126,7 +126,7 @@ window.console.log("downloadlinks>>",str);
               break;
           case 'gmtresult':
               window.console.log("QUERY result:",val);
-              html=html+"<div id=\""+uid+"_state_blob\" style=\"display:\">"+val+"</div>";
+              html=html+"<div id=\""+uid+"_state_blob\" style=\"display:none\">"+val+"</div>";
               break;
           default:
               window.console.log("BAD...This key is skipped:",keys[i]);
@@ -139,44 +139,64 @@ window.console.log("downloadlinks>>",str);
     
 }
 
-function updateHplotOptions(blob) {
-    window.console.log("HERE");
+function updatePlotOptions(blob) {
     let json=JSON.parse(blob);
     let range=json['range'];
     let minv=range['min'];
     let maxv=range['max'];
-    document.getElementById("minScaleTxt_h").value=minv;
-    document.getElementById("maxScaleTxt_h").value=maxv;
+    document.getElementById("minScaleTxt").value=minv;
+    document.getElementById("maxScaleTxt").value=maxv;
 
     if(json['faults'] == 0) {
-      document.getElementById("plotoption-cfm_h").value=0;
-      document.getElementById("plotoption-cfm_h").checked=false;
+      document.getElementById("plotoption-cfm").value=0;
+      document.getElementById("plotoption-cfm").checked=false;
       } else {
-        document.getElementById("plotoption-cfm_h").value=1;
-        document.getElementById("plotoption-cfm_h").checked=true;
+        document.getElementById("plotoption-cfm").value=1;
+        document.getElementById("plotoption-cfm").checked=true;
     }
     if(json['cities'] == 0) {
-      document.getElementById("plotoption-ca_h").value=0;
-      document.getElementById("plotoption-ca_h").checked=false;
+      document.getElementById("plotoption-ca").value=0;
+      document.getElementById("plotoption-ca").checked=false;
       } else {
-        document.getElementById("plotoption-ca_h").value=1;
-        document.getElementById("plotoption-ca_h").checked=true;
+        document.getElementById("plotoption-ca").value=1;
+        document.getElementById("plotoption-ca").checked=true;
     }
     if(json['forceRange'] == 0) {
-      document.getElementById("plotoption-range_h").value=0;
-      document.getElementById("plotoption-range_h").checked=false;
+      document.getElementById("plotoption-range").value=0;
+      document.getElementById("plotoption-range").checked=false;
       } else {
-        document.getElementById("plotoption-range_h").value=1;
-        document.getElementById("plotoption-range_h").checked=true;
+        document.getElementById("plotoption-range").value=1;
+        document.getElementById("plotoption-range").checked=true;
     }
+    if('pad' in json) {
+      document.getElementById("plotoption-pad-option").style.display='block';
+      document.getElementById("plotPadTxt").value=json['pad'];
+      document.getElementById("plotoption-pad").value=json['pad'];
+      document.getElementById("plotoption-pad").checked=false;
+      } else {
+        document.getElementById("plotoption-pad").value=json['pad'];
+        document.getElementById("plotoption-pad-option").style.display='none';
+    }
+
+    let type=json['type'];
+    return type;
 }
 
+function replotPlots() {
+
+   if(MODAL_REPLOT_TYPE == "horizontal") {
+     replotHorizontalSlice();
+   }
+   if(MODAL_REPLOT_TYPE == "cross") {
+     replotCrossSection();
+   }
+}
 
 function updateMetaReplotResultTable(str){
 // extract gmtresult str
     let uid=str['uid'];
     let blob=str['gmtresult'];
-    updateHplotOptions(blob);
+    updatePlotOptions(blob);
 
     document.getElementById(uid+"_state_blob").innerHTML = blob;
 }
