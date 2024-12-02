@@ -103,6 +103,14 @@ function fixLineOrdering(firstlat, firstlon, secondlat, secondlon) {
 }
 
 function processSearchResult(rlist,uid=0) {
+    if (rlist == 'replotHorizontalSlice') {
+        dstr = '[data-side=\"'+"horizontalSliceReplot"+'\"]';
+        str = $(dstr).data('params');
+    }
+    if (rlist == 'plotHorizontalSlice') {
+        dstr = '[data-side=\"'+"horizontalSlice"+uid+'\"]';
+        str = $(dstr).data('params');
+    }
     if (rlist == 'plotHorizontalSlice') {
         dstr = '[data-side=\"'+"horizontalSlice"+uid+'\"]';
         str = $(dstr).data('params');

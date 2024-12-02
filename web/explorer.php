@@ -710,12 +710,12 @@ TODO: need a new id
   </div>
 </div>
 
-<!--Modal: (modalplotoption) -->
-<div class="modal" id="modalplotoption" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalplotoptionDialog" role="document">
+<!--Modal: (modalhplotoption) -->
+<div class="modal" id="modalhplotoption" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalhplotoptionDialog" role="document">
 
     <!--Content-->
-    <div class="modal-content" id="modalplotoptionContent">
+    <div class="modal-content" id="modalhplotoptionContent">
       <div class="modal-header">
           <div class="form-check-inline">
             <div class="form-check form-check-inline">
@@ -724,7 +724,7 @@ TODO: need a new id
                       for="plotoption-cfm">
                <input class='form-check-inline mr-1'
                       type='checkbox'
-                      id='plotoption-cfm'
+                      id='plotoption-cfm_h'
                       onclick='replotHorizontalSlice()' />CFM7.0
                </label>
             </div>
@@ -734,33 +734,33 @@ TODO: need a new id
                       for="plotoption-ca">
                <input class='form-check-inline mr-1'
                       type="checkbox"
-		      id="plotoption-ca" 
+		      id="plotoption-ca_h" 
                       onclick='replotHorizontalSlice()' />CA cities
                </label>
             </div>
             <div>
                <input type="text"
-                      id="minScaleTxt"
+                      id="minScaleTxt_h"
                       placeholder="min scale"
                       title="minScale"
                       style="width:6vw"
-                      value=0 >
+                      value=NA >
                <input type="text"
-                      id="maxScaleTxt"
+                      id="maxScaleTxt_h"
                       placeholder="max scale"
                       title="maxScale"
                       style="width:6vw"
-                      value=5 >
-            </div>
-            <div class="form-check form-check-inline">
+                      value=NA >
+              <div class="form-check form-check-inline">
                <label class='form-check-label ml-1 mini-option'
                       title='Set Scale Range'
                       for="plotoption-range">
-              <input class='form-check-inline mr-1'
+               <input class='form-check-inline mr-1'
                       type="checkbox"
-		      id="plotoption-range" 
+		      id="plotoption-range_h" 
                       onclick='replotHorizontalSlice()' />Scale Range
-              </label>
+               </label>
+               </div>
             </div>
           </div>
 
@@ -768,8 +768,6 @@ TODO: need a new id
 
       <!--Body-->
       <div class="modal-body">
-        <p id="modal-val" style="display:none"></p>
-        <p id="modal-qtype" style="display:none"></p>
         <div id="plotoption-iframe-container" class="col-12" style="overflow:auto;">
           <iframe id="plotOptionIfram" src="" height="0" width="100%" style="background-color:blue;" allowfullscreen></iframe>
         </div>
@@ -781,7 +779,7 @@ TODO: need a new id
 
     </div> <!--Content-->
   </div>
-</div> <!--Modal: modalplotoption-->
+</div> <!--Modal: modalhplotoption-->
 
 <!--Modal: (modalkmlselect) -->
 <div class="modal" id="modalkmlselect" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

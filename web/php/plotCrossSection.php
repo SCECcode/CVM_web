@@ -74,23 +74,22 @@ $rc=checkResult($query, $result, $uid);
 $cvsquery = $envstr." ucvm_cross_section2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
-
-#Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities pad forceRange zMin zMax
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 0";
+#Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad forceRange zMin zMax
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 print($gmtcommand);
-#print("<br>");
-#print("gmtresult:"); print($gmtresult); print("<br>");
-#print("gmtstatus:"); print($gmtstatus); print("<br>");
-#print("gmtretval:"); 
-#print("<pre>");
-#print_r($gmtretval);
-#print("</pre>");
-#print("<br>");
+print("<br>");
+print("gmtresult:"); print("<br>");
+print("gmtstatus:");  print("<br>");
+print("gmtretval:"); 
+print("<pre>");
+print_r($gmtretval);
+print("</pre>");
+print("<br>");
 
 $resultarray = new \stdClass();
-$resultarray->qtype= "cross";
+$resultarray->type= "cross";
 $resultarray->uid= $uid;
 if (file_exists($file)) {
 $resultarray->plot= $uid."_c.png";
@@ -101,6 +100,11 @@ $resultarray->data= $uid."_c_data.bin";
 $resultarray->csv= $uid."_c_data.csv";
 $resultarray->gmtpng= $uid."_c_data.png";
 $resultarray->gmtpdf= $uid."_c_data.pdf";
+$jj=json_decode($gmtresult);
+$jj->csv=$uid."_c_data.csv";
+$jj->uid=$uid;
+$gmtresult_n=json_encode($jj);
+$resultarray->gmtresult= $gmtresult_n;
 
 if ( $gmtstatus == 0 && file_exists($pngfile)) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');

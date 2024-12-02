@@ -136,17 +136,22 @@ window.console.log("Calling toReset..");
   });
 
 
-  $('#modalplotoption').on('show.bs.modal', function (event) {
+  $('#modalhplotoption').on('show.bs.modal', function (event) {
     // button that triggered the modal
         var btn = $(event.relatedTarget); 
-        var val = btn.data('val'); 
-        MODAL_REPLOT_TYPE = btn.data('qtype'); 
-        MODAL_REPLOT_SRC = "/cvm-explorer/result/"+val;
+        var blob_btn=btn.data('blob');        
+        var blob=document.getElementById(blob_btn).innerHTML;
+        window.console.log("HERE..");
+        updateHplotOptions(blob);
+
+ 	let json=JSON.parse(blob);
+        let myfile=json['file'];
+        // switch from ../reslut/pdffile to /cvm-explorer/result/pdffile 
+        MODAL_REPLOT_SRC=myfile.replace("..","/cvm-explorer"); 
+
 
     // Set the modal content dynamically
         var modal = $(this);
-	modal.find('.modal-body #modal-val').text('Plot: ' + MODAL_REPLOT_SRC );
-	modal.find('.modal-body #modal-qtype').text('Qtype: ' + MODAL_REPLOT_TYPE);
 
 	$('#plotOptionIfram').attr('src',MODAL_REPLOT_SRC);
 	$('#plotOptionIfram').attr('height','800px');

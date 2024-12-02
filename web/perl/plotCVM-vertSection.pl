@@ -13,7 +13,7 @@
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities pad forceRange zMin zMax
+#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad forceRange zMin zMax
 #     Note: zMin and zMax only need to be specified if forceRange=1.
 # 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -34,13 +34,13 @@ use File::Basename;
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Should I open the .eps file when finished? 0=no, 1=gv, 2=evince, 3=illustrator
 $openEPS=0;
-#Should I plot the source data points for debugging? 1=yes 0=no
-$plotPts=0;
+#Should I print useful stats about the data to STDOUT? 1=yes 0=no, but json metadata will be printed for the CVM Explorer
+$printStats=0;
 
 #check for correct usage and make sure the csv file exists
-if   (@ARGV==7){($csvFile,$plotFaults,$plotCities,$pad,$forceRange,$zMin,$zMax)=@ARGV}
-elsif(@ARGV==5){
-	($csvFile,$plotFaults,$plotCities,$pad,$forceRange)=@ARGV;
+if   (@ARGV==8){($csvFile,$plotFaults,$plotCities,$plotPts,$pad,$forceRange,$zMin,$zMax)=@ARGV}
+elsif(@ARGV==6){
+	($csvFile,$plotFaults,$plotCities,$plotPts,$pad,$forceRange)=@ARGV;
 	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
 }
 #print usage for incorrect inputs
@@ -70,6 +70,7 @@ $distFile="$dir/$file.dist";
 $meanFile="$dir/$file.mean";
 $grdFile="$dir/$file.grd";
 $cptFile="$dir/$file.cpt";
+$pdfFile="$dir/$file.pdf";
 
 #tell GMT to write config/history files to $dir
 $ENV{GMT_TMPDIR}="$gmtDir";
@@ -112,8 +113,10 @@ $makePNG=1;
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- READ CSV HEADER AND GRAB USEFUL INFO --------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
-print "-----------------------------------------------------------------------------\n";
-print "Reading $csvFile\n";
+if($plotStats==1){
+	print "-----------------------------------------------------------------------------\n";
+	print "Reading $csvFile\n";
+}
 #open csv file for reading and read it line by line
 open(CSV,$csvFile);
 #write a new file that is the same as the csv file, but with units converted.
@@ -221,8 +224,10 @@ $lonAxis=getLonTick($R);
 $latAxis=getLatTick($R);
 $mapScale=getMapScale($R);
 
-print "Calculating along profile distances using GMT\n";
-print "-----------------------------------------------------------------------------\n";
+if($plotStats==1){
+	print "Calculating along profile distances using GMT\n";
+	print "-----------------------------------------------------------------------------\n";
+}
 #convert the locations to along track distances using GMT
 system "gmt mapproject $gmtFile -G$begLon/$begLat+uk > $distFile";
 
@@ -278,33 +283,34 @@ $yRes=$yRound/10;
 #get the extended xy range rounded to the nearest km for use with surface (to avoid grid spacing issues)
 $Rext=`gmt info $distFile -I$xRound/$yRound -i4,2`;
 chomp($Rext);
-print "Extended Cross Section Range: $Rext\n";
 
-#print useful metadata to stdout
-print "Title               : $title\n";
-print "Model               : $model\n";
-print "Data Type           : $dataType\n";
-print "StartDepth (m)      : $startDepth\n";
-print "EndDepth (m)        : $endDepth\n";
-print "VertSpacing (m)     : $vertSpacing\n";
-print "Num Points          : $numPts\n";
-print "Map Range           : $R\n";
-print "Cross Section Range : $Rxy\n";
-print "XY-Range            : $xRange/$yRange\n";
-print "Range Round         : $xRound/$yRound\n";
-print "Extended Range      : $Rext\n";
-print "Interpolation Res   : $xRes/$yRes\n";
-print "-----------------------------------------------------------------------------\n";
-
+if($plotStats==1){
+	print "Extended Cross Section Range: $Rext\n";
+	#print useful metadata to stdout
+	print "Title               : $title\n";
+	print "Model               : $model\n";
+	print "Data Type           : $dataType\n";
+	print "StartDepth (m)      : $startDepth\n";
+	print "EndDepth (m)        : $endDepth\n";
+	print "VertSpacing (m)     : $vertSpacing\n";
+	print "Num Points          : $numPts\n";
+	print "Map Range           : $R\n";
+	print "Cross Section Range : $Rxy\n";
+	print "XY-Range            : $xRange/$yRange\n";
+	print "Range Round         : $xRound/$yRound\n";
+	print "Extended Range      : $Rext\n";
+	print "Interpolation Res   : $xRes/$yRes\n";
+	print "-----------------------------------------------------------------------------\n";
+}
 
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- INTERPOLATE THE DATA AND MAKE A COLORMAP ----------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
 if($plotVels>0){
 	#Need to run blockmean first because the cross section spacing is not even because it was converted from lon/lat to distance in meters\n";
-	print "Running blockmean to prevent aliasing\n";
+	if($plotStats==1){print "Running blockmean to prevent aliasing\n"}
 	system "gmt blockmean $distFile $Rext -I$xRes/$yRes -i4,2,3 > $meanFile";
-	print "Interpolating data using GMT's surface\n";
+	if($plotStats==1){print "Interpolating data using GMT's surface\n"}
 	system "gmt surface $meanFile $Rext -G$grdFile -I$xRes/$yRes -T$t -M7c -Ll0 -rg";
 }
 #figure out the z-range
@@ -316,14 +322,17 @@ if($forceRange==0){
 	$tmp=$T;
 	$tmp=~s/-T//;
 	@z=split("/",$tmp);
-	$zRange=$z[1]-$z[0];
-	print "  Z-Range=$zRange;  MinZ=$z[0];  MaxZ=$z[1]\n";
-	#if minZ=maxZ, set the min and max one unit apart
-	if($z[0]==$z[1]){
-		$z[0]-=1;
-		$z[1]+=1;
+	#save to same variables as the command line args, so I can print the json string at the end no matter whether forceRange is used or not
+	$zMin=$z[0];
+	$zMax=$z[1];
+	$zRange=$zMax-$zMin;
+	if($printStats==1){print "  Z-Range=$zRange;  MinZ=$zMin;  MaxZ=$zMax\n"}
+	#if zMin=zMax, set the min and max one unit apart
+	if($zMin==$zMax){
+		$zMin-=1;
+		$zMax+=1;
 		#remake the -T parameter with the new range
-		$T="-T$z[0]/$z[1]";
+		$T="-T$zMin/$zMax";
 	}
 }
 #if the user forced the zRange, make the -T string
@@ -335,7 +344,7 @@ else {
 #get the colorbar axis labeling string from Tools.pm
 $cAxis=getCBarTick($T);
 
-print "Making color palette file\n";
+if($printStats==1){print "Making color palette file\n"}
 system "gmt makecpt -C$cpt $T -D --COLOR_NAN=white > $cptFile";
 
 
@@ -384,13 +393,15 @@ $waterBlue="170/197/231"; #a slighly grayer version of the Google Maps color. Lo
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- PLOT THE LOCATION MAP WITH GMT --------------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
-print "-----------------------------------------------------------------------------\n";
-print "Plotting Data with GMT\n";
-print "-----------------------------------------------------------------------------\n";
-printf ("Location Map will be %s x %.1fi\n",$width,$height);
+if($printStats==1){
+	print "-----------------------------------------------------------------------------\n";
+	print "Plotting Data with GMT\n";
+	print "-----------------------------------------------------------------------------\n";
+	printf ("Location Map will be %s x %.1fi\n",$width,$height);
+}
 
 if($plotDEM==1){
-	print "Plotting DEM\n";
+	if($printStats==1){print "Plotting DEM\n"}
 	system "gmt grdimage $dem -X0.75i -Y0.65i $R -JM$width -I$int -C$demCPT -P -K > $plotFile";
 	#plot the coastline and color the water
 	system "gmt pscoast -R -JM -W0.5p -S$waterBlue -Df -Na/0.5p-O -K >> $plotFile";
@@ -402,13 +413,13 @@ else {
 #plot fault traces, if specified
 if($plotFaults==1){
 	if($labelFaults==1){
-		print "Plotting and labeling fault traces\n";
+		if($printStats==1){print "Plotting and labeling fault traces\n"}
 		#plot all non-blind faults with solid lines, blind with dashed lines
 		system "gmt psxy $faultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$faultLine -m -O -K >> $plotFile";
 		system "gmt psxy $blindFaultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$blindFaultLine -m -O -K >> $plotFile";
 	}#end if
 	else {
-		print "Plotting fault traces\n";
+		if($printStats==1){print "Plotting fault traces\n"}
 		#plot all non-blind faults with solid lines, blind with dashed lines
 		system "gmt psxy $faultFile -R -JM -W$faultLine -m -O -K >> $plotFile";
 		system "gmt psxy $blindFaultFile -R -JM -W$blindFaultLine -m -O -K >> $plotFile";
@@ -417,7 +428,7 @@ if($plotFaults==1){
 
 #plot cities, if specified
 if($plotCities==1){
-	print "Plotting city locations\n";
+	if($printStats==1){print "Plotting city locations\n"}
 	system "gmt psxy $cityFile -R -JM -Sc5p -Ggold -W0.5p -O -K >> $plotFile";
 	system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold,white,-=1p,white -O -K >> $plotFile";
 	system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold           -O -K >> $plotFile";
@@ -474,32 +485,37 @@ elsif($openEPS==3){system "illustrator $plotFile &"}
 
 #convert to pdf/png
 if($makePDF==1){
-	print "Converting to pdf...";
+	if($printStats==1){print "Converting to pdf..."}
 	system "gmt psconvert $plotFile -Tf";
-	print "Finished!\n";
+	if($printStats==1){print "Finished!\n"}
 }#end if
 if($makePNG==1){
-	print "Converting to png...";
+	if($printStats==1){print "Converting to png..."}
 	system "gmt psconvert $plotFile -TG -E400";
-	print "Finished!\n";
+	if($printStats==1){print "Finished!\n"}
 }#end if
 
 #remove unneeded files
-print "Removing unneeded files\n";
+if($printStats==1){print "Removing unneeded files\n"}
 system "rm -r $gmtDir $distFile $meanFile $grdFile $cptFile";
-
 
 #print the time spent on running this script using the difference in time from the beginning to end of this script.
 $endTime=time();
 $totTime=$endTime-$beginTime;
-print "-----------------------------------------------------------------------------\n";
-#print in seconds/mins/hours depending on how much time has passed
-if($totTime>=3600) {printf("Script took %.2f hours\n",$totTime/3600)}
-elsif($totTime>=60){printf("Script took %.2f minutes\n",$totTime/60)}
-else               {printf("Script took %.2f seconds\n",$totTime)}
-
-#print a final message
-print "Finished!\n\n";
+if($printStats==1){
+	print "-----------------------------------------------------------------------------\n";
+	#print in seconds/mins/hours depending on how much time has passed
+	if($totTime>=3600) {printf("Script took %.2f hours\n",$totTime/3600)}
+	elsif($totTime>=60){printf("Script took %.2f minutes\n",$totTime/60)}
+	else               {printf("Script took %.2f seconds\n",$totTime)}
+	
+	#print a final message
+	print "Finished!\n\n";
+}
+#print a json string to tell the CVM Explorer the status of each plot parameter
+if($printStats==0){
+	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }";
+}
 exit;
 
 

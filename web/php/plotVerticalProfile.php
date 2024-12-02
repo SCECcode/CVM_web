@@ -74,7 +74,7 @@ if ($datatype == 'vp') $mode=1;
 if ($datatype == 'vs') $mode=2;
 if ($datatype == 'density') $mode=3;
 
-#Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities pad forceRange zMin zMax
+#Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities plotPts pad forceRange zMin zMax
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$mode." 0 0 0 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
@@ -91,7 +91,7 @@ print($gmtcommand);
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
-$resultarray->qtype= "vertical";
+$resultarray->type= "vertical";
 if (file_exists($file)) {
 $resultarray->plot= $uid."_v.png";
 }

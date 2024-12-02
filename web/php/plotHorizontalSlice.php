@@ -93,14 +93,11 @@ $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
-# Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities forceRange zMin zMax
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0";
+# Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts forceRange zMin zMax
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 print($gmtcommand);
-#print("<br>");
-#print($gmtcommand);
-#print("<br>");
 
 #print("gmtresult:"); print($gmtresult); print("<br>");
 #print("gmtstatus:"); print($gmtstatus); print("<br>");
@@ -110,9 +107,10 @@ print($gmtcommand);
 #print("</pre>");
 #print("<br>");
 
+
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
-$resultarray->qtype="horizontal";
+$resultarray->type="horizontal";
 if (file_exists($file)) {
   $resultarray->plot= $uid."_h.png";
 }
@@ -122,6 +120,11 @@ $resultarray->data= $uid."_h_data.bin";
 $resultarray->csv= $uid."_h_data.csv";
 $resultarray->gmtpng= $uid."_h_data.png";
 $resultarray->gmtpdf= $uid."_h_data.pdf";
+$jj=json_decode($gmtresult);
+$jj->csv=$uid."_h_data.csv";
+$jj->uid=$uid;
+$gmtresult_n=json_encode($jj);
+$resultarray->gmtresult= $gmtresult_n;
 
 if ( $gmtstatus == 0 && file_exists($pngfile)) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');

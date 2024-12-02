@@ -12,7 +12,7 @@
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities pad forceRange zMin zMax
+#   Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities plotPts pad forceRange zMin zMax
 #     plotParam must equal 1-4  1=plot Vp; 2=plot Vs; 3=plot density; 4=plot all;
 #     Note: zMin and zMax only need to be specified if forceRange=1.
 # 
@@ -34,16 +34,18 @@ use File::Basename;
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Should I open the .eps file when finished? 0=no, 1=gv, 2=evince, 3=illustrator
 $openEPS=0;
+#Should I print useful stats about the data to STDOUT? 1=yes 0=no, but json metadata will be printed for the CVM Explorer
+$printStats=0;
 
 #check for correct usage and make sure the csv file exists
-if   (@ARGV==8){($csvFile,$plotPar,$plotFaults,$plotCities,$pad,$forceRange,$zMin,$zMax)=@ARGV}
-elsif(@ARGV==6){
-	($csvFile,$plotPar,$plotFaults,$plotCities,$pad,$forceRange)=@ARGV;
+if   (@ARGV==9){($csvFile,$plotPar,$plotFaults,$plotCities,$plotPts,$pad,$forceRange,$zMin,$zMax)=@ARGV}
+elsif(@ARGV==7){
+	($csvFile,$plotPar,$plotFaults,$plotCities,$plotPts,$pad,$forceRange)=@ARGV;
 	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
 }
 #print usage for incorrect inputs
 else {
-	print "\n  Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities pad forceRange zMin zMax\n";
+	print "\n  Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities plotPts pad forceRange zMin zMax\n";
 	print "    plotParam must equal 1-4  1=plot Vp; 2=plot Vs; 3=plot density; 4=plot all\n";
 	print "    Note: zMin and zMax only need to be specified if forceRange=1\n\n";
 	exit;
@@ -63,8 +65,9 @@ if(substr($dir,-1) eq "/"){$dir=substr($dir,0,-1)}
 #print "Dir: $dir\n";
 
 #make the various files the same name as the csv file, but ending with different extensions
-$gmtFile="$dir/$file.gmt";
+$gmtFile ="$dir/$file.gmt";
 $plotFile="$dir/$file.eps";
+$pdfFile ="$dir/$file.pdf";
 
 #tell GMT to write config/history files to $dir
 $ENV{GMT_TMPDIR}="$gmtDir";
@@ -96,9 +99,11 @@ $makePNG=1;
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- READ CSV HEADER AND GRAB USEFUL INFO --------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
-print "-----------------------------------------------------------------------------\n";
-print "Reading $csvFile\n";
-print "-----------------------------------------------------------------------------\n";
+if($printStats==1){
+	print "-----------------------------------------------------------------------------\n";
+	print "Reading $csvFile\n";
+	print "-----------------------------------------------------------------------------\n";
+}
 #open csv file for reading and read it line by line
 open(CSV,$csvFile);
 #write a new file that is the same as the csv file, but with units converted.
@@ -180,12 +185,15 @@ else {print "\n\n  Error: plotPar must be 1-4. You entered $plotPar\n\n"; exit}
 #because the curves are often vertical, they can plot at the right or left axes. This can be fixed by adding some padding to xMin/xMax
 @R=split("/",$Rxy);
 $R[0]=~s/-R//;
+#save to same variables as the command line args, so I can print the json string at the end no matter whether forceRange is used or not
+$zMin=$R[0];
+$zMax=$R[1];
 #add some padding based on the X-Range
-$xRange=$R[1]-$R[0];
+$xRange=$zMax-$zMin;
 #no need to pad xMin if it is zero. Negative values are not possible.
-if($R[0]!=0){$R[0]-=$xRange*0.03} #This is not needed for Vp Vs, but is useful for Density, so I will leave it in.
-$R[1]+=$xRange*0.03;
-$Rxy="-R$R[0]/$R[1]/$R[2]/$R[3]";
+if($zMin!=0){$zMin-=$xRange*0.03} #This is not needed for Vp Vs, but is useful for Density, so I will leave it in.
+$zMax+=$xRange*0.03;
+$Rxy="-R$zMin/$zMax/$R[2]/$R[3]";
 #print $Rxy after padding, just for testing
 #print "$Rxy\n";
 #if specified, apply the user inputted zMin zMax (which are actually xvalues on the plot)
@@ -194,7 +202,6 @@ if($forceRange==1){$Rxy="-R$zMin/$zMax/$R[2]/$R[3]"}
 #get the XY axis labeling string using Tools.pm
 $xAxis=getXtickGrid($Rxy);
 $yAxis=getYtickGrid($Rxy);
-print "$xAxis | $yAxis\n";
 
 #add on the pad to get a lon/lat range for the location map. by Default, I add 0.1 to pad to the location. Otherwise we would not have a map!
 $minLon=$lon-0.1-$pad; $maxLon=$lon+0.1+$pad;
@@ -205,17 +212,20 @@ $lonAxis=getLonTick($R);
 $latAxis=getLatTick($R);
 $mapScale=getMapScale($R);
 
-#print useful metadata to stdout
-print "Title               : $title\n";
-print "Model               : $model\n";
-#print "Data Type           : $dataType\n";
-print "Lon/Lat Location    : $lon/$lat\n";
-print "StartDepth (km)     : $startDepth\n";
-print "EndDepth (km)       : $endDepth\n";
-print "VertSpacing (km)    : $vertSpacing\n";
-#print "Num Points          : $numPts\n";
-print "Map Range           : $R\n";
-print "1D Profile Range    : $Rxy\n";
+if($printStats==1){
+	print "$xAxis | $yAxis\n";
+	#print useful metadata to stdout
+	print "Title               : $title\n";
+	print "Model               : $model\n";
+	#print "Data Type           : $dataType\n";
+	print "Lon/Lat Location    : $lon/$lat\n";
+	print "StartDepth (km)     : $startDepth\n";
+	print "EndDepth (km)       : $endDepth\n";
+	print "VertSpacing (km)    : $vertSpacing\n";
+	#print "Num Points          : $numPts\n";
+	print "Map Range           : $R\n";
+	print "1D Profile Range    : $Rxy\n";
+}
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -267,10 +277,12 @@ $waterBlue="170/197/231"; #a slighly grayer version of the Google Maps color. Lo
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- PLOT THE LOCATION MAP WITH GMT --------------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
-print "-----------------------------------------------------------------------------\n";
-print "Plotting Data with GMT\n";
-print "-----------------------------------------------------------------------------\n";
-printf ("Location Map will be %s x %.1fi\n",$width,$height);
+if($printStats==1){
+	print "-----------------------------------------------------------------------------\n";
+	print "Plotting Data with GMT\n";
+	print "-----------------------------------------------------------------------------\n";
+	printf ("Location Map will be %s x %.1fi\n",$width,$height);
+}
 
 #plot the coastline and color the water
 system "gmt pscoast -X0.75i -Y0.65i $R -JM$width -W0.5p -S$waterBlue -Gwhite -Df -P -K > $plotFile";
@@ -278,13 +290,13 @@ system "gmt pscoast -X0.75i -Y0.65i $R -JM$width -W0.5p -S$waterBlue -Gwhite -Df
 #plot fault traces, if specified
 if($plotFaults==1){
 	if($labelFaults==1){
-		print "Plotting and labeling fault traces\n";
+		if($printStats==1){print "Plotting and labeling fault traces\n"}
 		#plot all non-blind faults with solid lines, blind with dashed lines
 		system "gmt psxy $faultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$faultLine -m -O -K >> $plotFile";
 		system "gmt psxy $blindFaultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$blindFaultLine -m -O -K >> $plotFile";
 	}#end if
 	else {
-		print "Plotting fault traces\n";
+		if($printStats==1){print "Plotting fault traces\n"}
 		#plot all non-blind faults with solid lines, blind with dashed lines
 		system "gmt psxy $faultFile -R -JM -W$faultLine -m -O -K >> $plotFile";
 		system "gmt psxy $blindFaultFile -R -JM -W$blindFaultLine -m -O -K >> $plotFile";
@@ -293,7 +305,7 @@ if($plotFaults==1){
 
 #plot cities, if specified
 if($plotCities==1){
-	print "Plotting city locations\n";
+	if($printStats==1){print "Plotting city locations\n"}
 	system "gmt psxy $cityFile -R -JM -Sc5p -Ggold -W0.5p -O -K >> $plotFile";
 	system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold,white,-=1p,white -O -K >> $plotFile";
 	system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold           -O -K >> $plotFile";
@@ -334,18 +346,22 @@ elsif($plotPar==3){
 #plot All
 if($plotPar==4){
 	system "gmt psbasemap -X8.5i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Parameter Value (see legend for units)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model\" -O -K --MAP_TITLE_OFFSET=0.233i >> $plotFile";
-	system "gmt psxy $gmtFile -R -JX -W1.5p,$blue -i1,0 -O -K >> $plotFile";
-	system "gmt psxy $gmtFile -R -JX -W1.5p,$red -i2,0 -O -K >> $plotFile";
-	system "gmt psxy $gmtFile -R -JX -W1.5p,$green -i3,0 -O -K >> $plotFile";
-	
+	system "gmt psxy $gmtFile -R -JX -W2.0p,$blue  -i1,0 -O -K >> $plotFile";
+	system "gmt psxy $gmtFile -R -JX -W2.0p,$red   -i2,0 -O -K >> $plotFile";
+	system "gmt psxy $gmtFile -R -JX -W2.0p,$green -i3,0 -O -K >> $plotFile";
+	if($plotPts==1){
+		system "gmt psxy $gmtFile -R -JX -Sc1.0p -Gblack -i1,0 -O -K >> $plotFile";
+		system "gmt psxy $gmtFile -R -JX -Sc1.0p -Gblack -i2,0 -O -K >> $plotFile";
+		system "gmt psxy $gmtFile -R -JX -Sc1.0p -Gblack -i3,0 -O -K >> $plotFile";
+	}
 	#plot a legend with the curves labeled
 	system "gmt pslegend -R -JX -Dx3.95i/${legendHeight}i+w1.3i/0.75i+jTR -F+gwhite+p0.5p,black+r4p -O <<-END>> $plotFile
 	G 0.05i
-	S 7p - 10p - 1.5p,$blue  17p Vp (km/s)
+	S 7p - 10p - 2.0p,$blue  17p Vp (km/s)
 	G 0.05i
-	S 7p - 10p - 1.5p,$red   17p Vs (km/s)
+	S 7p - 10p - 2.0p,$red   17p Vs (km/s)
 	G 0.05i
-	S 7p - 10p - 1.5p,$green 17p Density (g/cm\@+3\@+)
+	S 7p - 10p - 2.0p,$green 17p Density (g/cm\@+3\@+)
 	END";
 }
 
@@ -360,32 +376,37 @@ elsif($openEPS==3){system "illustrator $plotFile &"}
 
 #convert to pdf/png
 if($makePDF==1){
-	print "Converting to pdf...";
+	if($printStats==1){print "Converting to pdf..."}
 	system "gmt psconvert $plotFile -Tf";
-	print "Finished!\n";
+	if($printStats==1){print "Finished!\n"}
 }#end if
 if($makePNG==1){
-	print "Converting to png...";
+	if($printStats==1){print "Converting to png..."}
 	system "gmt psconvert $plotFile -TG -E400";
-	print "Finished!\n";
+	if($printStats==1){print "Finished!\n"}
 }#end if
 
 #remove unneeded files
-print "Removing unneeded files\n";
+if($printStats==1){print "Removing unneeded files\n"}
 system "rm -r $gmtDir";
-
 
 #print the time spent on running this script using the difference in time from the beginning to end of this script.
 $endTime=time();
 $totTime=$endTime-$beginTime;
-print "-----------------------------------------------------------------------------\n";
-#print in seconds/mins/hours depending on how much time has passed
-if($totTime>=3600) {printf("Script took %.2f hours\n",$totTime/3600)}
-elsif($totTime>=60){printf("Script took %.2f minutes\n",$totTime/60)}
-else               {printf("Script took %.2f seconds\n",$totTime)}
-
-#print a final message
-print "Finished!\n\n";
+if($printStats==1){
+	print "-----------------------------------------------------------------------------\n";
+	#print in seconds/mins/hours depending on how much time has passed
+	if($totTime>=3600) {printf("Script took %.2f hours\n",$totTime/3600)}
+	elsif($totTime>=60){printf("Script took %.2f minutes\n",$totTime/60)}
+	else               {printf("Script took %.2f seconds\n",$totTime)}
+	
+	#print a final message
+	print "Finished!\n\n";
+}
+#print a json string to tell the CVM Explorer the status of each plot parameter
+if($printStats==0){
+	print "{ type: \"profile\", file: \"$pdfFile\", plotPar: $plotPar, faults: $plotFaults, cities: $plotCities, points: $plotPts, pad: $pad, forceRange: $forceRange, range: { min: $zMin max: $zMax } }\n";
+}
 exit;
 
 

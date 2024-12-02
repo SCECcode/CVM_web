@@ -7,7 +7,6 @@
 // limit it to 200 maximum
 var MAX_FILEPOINTS=200;
 var MODAL_REPLOT_SRC="";
-var MODAL_REPLOT_TYPE="";
 
 function cleanResultDirectory() {
     if (window.XMLHttpRequest) {
@@ -426,24 +425,27 @@ function plotHorizontalSlice() {
 }
 
 function replotHorizontalSlice() {
-    let cfm=$('#plotoption-cfm').prop('checked');
-    let ca=$('#plotoption-ca').prop('checked');
-    let range=$('#plotoption-range').prop('checked');
+    document.getElementById('spinIconForArea').style.display = "block";
+    let cfm=$('#plotoption-cfm_h').prop('checked');
+    let ca=$('#plotoption-ca_h').prop('checked');
+    let range=$('#plotoption-range_h').prop('checked');
 
     // replace src .pdf with .csv and grab just filename
     let file=MODAL_REPLOT_SRC.replace("pdf","csv");
     let token=file.split('/');
     let fname=token[token.length - 1];
+    // fname is CVM_id_h_data.pdf
+    let ttoken=fname.split('_');
+    let uid="CVM_"+ttoken[1];
 
-     
     let oncfm=0;
     if(cfm) oncfm=1;
     let onca=0;
     if(ca) onca=1;
     let onrange=0;
     if(range) onrange=1;
-    let onmin=document.getElementById("minScaleTxt").value;
-    let onmax=document.getElementById("maxScaleTxt").value;
+    let onmin=document.getElementById("minScaleTxt_h").value;
+    let onmax=document.getElementById("maxScaleTxt_h").value;
 
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -457,18 +459,20 @@ function replotHorizontalSlice() {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("phpResponseTxt").innerHTML = this.responseText;
             let responseText = this.responseText;
-window.console.log("done with replot horizontal slice");
+            var str=processSearchResult("replotHorizontalSlice");
+// needs to retrieve gmtresult blob, and update uid_state_blob 
+            updateMetaReplotResultTable(str);
 
 /* refresh the plot on the plotoption iframe */
-$('#plotOptionIfram').attr('src',MODAL_REPLOT_SRC);
+             var srcloc=MODAL_REPLOT_SRC+"?"+new Date().getTime();
+ window.console.log("srcloc",srcloc);
+             $('#plotOptionIfram').attr('src',srcloc);
 
             document.getElementById('spinIconForArea').style.display = "none";
         }
     }
-    var dumdum="php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname;
-    window.console.log(dumdum);
 
-    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname,true);
+    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 
