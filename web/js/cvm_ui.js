@@ -91,11 +91,8 @@ window.console.log("downloadlinks>>",str);
               html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;csv data file</div>";
               break;
           case 'gmtpdf':
-              if( type == "horizontal" || type == "cross" ) { 
-                html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PDF plot&nbsp;&nbsp;<button id=\""+uid+"_show_btn\" class=\"btn cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalhplotoption\"><span class=\"glyphicon glyphicon-adjust\"></span></button></div>";
-                } else {
-                    html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PDF plot</div>";
-              }
+              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PDF plot&nbsp;&nbsp;<button id=\""+uid+"_show_btn\" class=\"btn cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalplotoption\"><span class=\"glyphicon glyphicon-adjust\"></span></button></div>";
+//                html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PDF plot</div>";
               break;
           case 'gmtpng':
 //              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"pngbox\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PNG plot</div>";
@@ -126,7 +123,7 @@ window.console.log("downloadlinks>>",str);
               break;
           case 'gmtresult':
               window.console.log("QUERY result:",val);
-              html=html+"<div id=\""+uid+"_state_blob\" style=\"display:\">"+val+"</div>";
+              html=html+"<div id=\""+uid+"_state_blob\" style=\"display:none\">"+val+"</div>";
               break;
           default:
               window.console.log("BAD...This key is skipped:",keys[i]);
@@ -140,6 +137,7 @@ window.console.log("downloadlinks>>",str);
 }
 
 function updatePlotOptions(blob) {
+
     let json=JSON.parse(blob);
     let range=json['range'];
     let minv=range['min'];
@@ -178,6 +176,17 @@ function updatePlotOptions(blob) {
         document.getElementById("plotoption-pad-option").style.display='none';
     }
 
+    if('plotPar' in json) {
+      document.getElementById("plotoption-par-option").style.display='block';
+      document.getElementById("plotParTxt").value=json['plotPar'];
+      document.getElementById("plotoption-par").value=json['plotPar'];
+      document.getElementById("plotoption-par").checked=false;
+      } else {
+        document.getElementById("plotoption-par").value=json['plotPar'];
+        document.getElementById("plotoption-par-option").style.display='none';
+    }
+
+
     let type=json['type'];
     return type;
 }
@@ -189,6 +198,9 @@ function replotPlots() {
    }
    if(MODAL_REPLOT_TYPE == "cross") {
      replotCrossSection();
+   }
+   if(MODAL_REPLOT_TYPE == "profile") {
+     replotVerticalProfile();
    }
 }
 

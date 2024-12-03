@@ -710,12 +710,12 @@ TODO: need a new id
   </div>
 </div>
 
-<!--Modal: (modalhplotoption) -->
-<div class="modal" id="modalhplotoption" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalhplotoptionDialog" role="document">
+<!--Modal: (modalplotoption) -->
+<div class="modal" id="modalplotoption" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalplotoptionDialog" role="document">
 
     <!--Content-->
-    <div class="modal-content" id="modalhplotoptionContent">
+    <div class="modal-content" id="modalplotoptionContent">
       <div class="modal-header">
           <div class="form-check-inline">
             <div class="form-check form-check-inline">
@@ -737,6 +737,23 @@ TODO: need a new id
 		      id="plotoption-ca" 
                       onclick='replotPlots()' />CA cities
                </label>
+            </div>
+            <div id="plotoption-par-option" class="form-check form-check-inline" style="display:">
+                   <label class='form-check-label ml-1 mini-option'
+                      title='select parameter on plot'
+                      for="plotoption-par">
+                   <input class='form-check-inline mr-1'
+                      type="checkbox"
+		      id="plotoption-par" 
+                      onclick='replotPlots()' />Pad
+                   </label>
+                   <input type="text"
+                      id="plotParTxt"
+                      placeholder="plot par"
+                      title="plotPar"
+                      style="width:2vw"
+                      onfocus="this.value=''"
+                      value=NA >
             </div>
             <div id="plotoption-pad-option" class="form-check form-check-inline" style="display:">
                    <label class='form-check-label ml-1 mini-option'
@@ -796,7 +813,7 @@ TODO: need a new id
 
     </div> <!--Content-->
   </div>
-</div> <!--Modal: modalhplotoption-->
+</div> <!--Modal: modalplotoption-->
 
 <!--Modal: (modalkmlselect) -->
 <div class="modal" id="modalkmlselect" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -412,6 +412,63 @@ function plotVerticalProfile() {
     plotVerticalProfileByList(dataarray,0,1);
 }
 
+function replotVerticlProfile() {
+    document.getElementById('spinIconForArea').style.display = "block";
+    let cfm=$('#plotoption-cfm').prop('checked');
+    let ca=$('#plotoption-ca').prop('checked');
+    let range=$('#plotoption-range').prop('checked');
+    let pad=$('#plotoption-pad').prop('checked');
+    let par=$('#plotoption-par').prop('checked');
+
+    // replace src .pdf with .csv and grab just filename
+    let file=MODAL_REPLOT_SRC.replace("pdf","csv");
+    let token=file.split('/');
+    let fname=token[token.length - 1];
+    // fname is CVM_id_X_data.pdf
+    let ttoken=fname.split('_');
+    let uid="CVM_"+ttoken[1];
+
+    let oncfm=0;
+    if(cfm) oncfm=1;
+    let onca=0;
+    if(ca) onca=1;
+    let onrange=0;
+    if(range) onrange=1;
+
+    let onmin=document.getElementById("minScaleTxt").value;
+    let onmax=document.getElementById("maxScaleTxt").value;
+    let onpad=document.getElementById("plotPadTxt").value;
+    let onpar=document.getElementById("plotParTxt").value;
+
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("phpResponseTxt").innerHTML = this.responseText;
+            let responseText = this.responseText;
+            var str=processSearchResult("replotVerticalProfile");
+// needs to retrieve gmtresult blob, and update uid_state_blob 
+            updateMetaReplotResultTable(str);
+
+/* refresh the plot on the plotoption iframe */
+             var srcloc=MODAL_REPLOT_SRC+"?"+new Date().getTime();
+ window.console.log("srcloc",srcloc);
+             $('#plotOptionIfram').attr('src',srcloc);
+
+            document.getElementById('spinIconForArea').style.display = "none";
+        }
+    }
+
+    xmlhttp.open("GET","php/replotVerticalProfile.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&onpar="+onpar+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.send();
+}
+
 function plotHorizontalSlice() {
     var xmlhttp;
     var firstlatstr=document.getElementById("areaFirstLatTxt").value;

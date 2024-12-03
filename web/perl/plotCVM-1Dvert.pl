@@ -405,7 +405,7 @@ if($printStats==1){
 }
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{ type: \"profile\", file: \"$pdfFile\", plotPar: $plotPar, faults: $plotFaults, cities: $plotCities, points: $plotPts, pad: $pad, forceRange: $forceRange, range: { min: $zMin max: $zMax } }\n";
+	print "{\"type\": \"profile\", \"file\": \"$pdfFile\", \"plotPar\": $plotPar, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }";
 }
 exit;
 

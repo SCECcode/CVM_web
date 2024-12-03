@@ -338,7 +338,7 @@ if($forceRange==0){
 #if the user forced the zRange, make the -T string
 else {
 	$T="-T$zMin/$zMax";
-	print "Using forced Z-Range: MinZ=$zMin;  MaxZ=$zMax\n";
+	#	print "Using forced Z-Range: MinZ=$zMin;  MaxZ=$zMax\n";
 }
 
 #get the colorbar axis labeling string from Tools.pm

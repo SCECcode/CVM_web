@@ -136,7 +136,7 @@ window.console.log("Calling toReset..");
   });
 
 
-  $('#modalhplotoption').on('show.bs.modal', function (event) {
+  $('#modalplotoption').on('show.bs.modal', function (event) {
     // button that triggered the modal
         var btn = $(event.relatedTarget); 
         var blob_btn=btn.data('blob');        

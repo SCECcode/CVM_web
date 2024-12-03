@@ -75,16 +75,16 @@ if ($datatype == 'vs') $mode=2;
 if ($datatype == 'density') $mode=3;
 
 #Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities plotPts pad forceRange zMin zMax
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$mode." 0 0 0 0";
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$mode." 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-print($gmtcommand);
+#print($gmtcommand);
 #print("<br>");
 #print("gmtresult:"); print($gmtresult); print("<br>");
 #print("gmtstatus:"); print($gmtstatus); print("<br>");
 #print("gmtretval:"); 
 #print("<pre>");
-#print_r($gmtretval);
+print_r($gmtretval);
 #print("</pre>");
 #print("<br>");
 
@@ -101,10 +101,13 @@ $resultarray->dataset= $uid."_v_matprops.json";
 $resultarray->csv= $uid."_v_matprops.csv";
 $resultarray->gmtpng= $uid."_v_matprops.png";
 $resultarray->gmtpdf= $uid."_v_matprops.pdf";
-
+$jj=json_decode($gmtresult);
+$jj->csv=$uid."_v_matprops.csv";
+$jj->uid=$uid;
+$gmtresult_n=json_encode($jj);
+$resultarray->gmtresult= $gmtresult_n;
 
 if ( $gmtstatus == 0 && file_exists($pngfile)) {
-
 $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');
 echo "<div data-side=\"verticalProfile".$uid."\" data-params=\""; 
 echo $resultstring;

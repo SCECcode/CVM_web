@@ -31,16 +31,13 @@ if( $onrange == '1' ) {
     $gmtlstr=" ".$oncfm." ".$onca." 0 ".$onpad." 0 ";
 }
 
-print($gmtlstr);
-print("<br>");
-
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 print($gmtcommand);
-print("<pre>");
-print_r($gmtretval);
-print("</pre>");
+#print("<pre>");
+#print_r($gmtresult);
+#print("</pre>");
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
@@ -48,13 +45,7 @@ $jj=json_decode($gmtresult);
 $jj->uid=$uid;
 $jj->csv=$uid."_c_data.csv";
 $gmtresult_n=json_encode($jj);
-$resultarray->gmtresult= $gmtresult;
-$resultarray = new \stdClass();
-$resultarray->type= "cross";
-$resultarray->uid= $uid;
-if (file_exists($file)) {
-$resultarray->plot= $uid."_c.png";
-}
+$resultarray->gmtresult= $gmtresult_n;
 
 if ( $gmtstatus == 0 ) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');
