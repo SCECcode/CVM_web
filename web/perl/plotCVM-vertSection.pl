@@ -13,8 +13,16 @@
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad forceRange zMin zMax
-#     Note: zMin and zMax only need to be specified if forceRange=1.
+#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad cMap forceRange zMin zMax
+#     Parameters are described below:
+#     path/to/file.csv : The csv file must be specified with a path (relative or absolute). ./ will not work.
+#     plotFaults       : 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults
+#     plotCities       : 1=plots selected CA/NV cities. 0=don't plot cities
+#     plotPts          : 1=plots the source data points, so the user can see the resolution of the heatmap. 0=don't plot points.
+#     pad              : Supply any value in degrees. This will be added to the map spatial range in all directions.
+#     cMap             : Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.
+#     forceRange       : Use a user-specified parameter range instead of the default which uses the range of the data.
+#                        Note: zMin and zMax only need to be specified if forceRange=1.
 # 
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Use warnings, but skip warnings about uninitialized variables, since this happens every time you read in a blank line.
@@ -38,14 +46,22 @@ $openEPS=0;
 $printStats=0;
 
 #check for correct usage and make sure the csv file exists
-if   (@ARGV==8){($csvFile,$plotFaults,$plotCities,$plotPts,$pad,$forceRange,$zMin,$zMax)=@ARGV}
-elsif(@ARGV==6){
-	($csvFile,$plotFaults,$plotCities,$plotPts,$pad,$forceRange)=@ARGV;
+if   (@ARGV==9){($csvFile,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
+elsif(@ARGV==7){
+	($csvFile,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange)=@ARGV;
 	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
 }
 #print usage for incorrect inputs
 else {
-	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities pad forceRange zMin zMax\n";
+	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad cMap forceRange zMin zMax\n";
+	print "    Parameters are described below:\n";
+	print "    path/to/file.csv: The csv file must be specified with a path (relative or absolute).\n";
+	print "    plotFaults: 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults\n";
+	print "    plotCities: 1=plots selected CA/NV cities. 0=don't plot cities\n";
+	print "    plotPts: 1=plots the source data points. 0=don't plot points.\n";
+	print "    pad: Supply any value in degrees. This will be added to the map spatial range in all directions.\n";
+	print "    cMap: Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.\n";
+	print "    forceRange: 1=Use a user-specified parameter range, 0=Use the range of the data.\n";
 	print "    Note: zMin and zMax only need to be specified if forceRange=1\n\n";
 	exit;
 }
@@ -78,8 +94,6 @@ $ENV{GMT_TMPDIR}="$gmtDir";
 #How should I plot vels on the map? 
 # 0=don't plot, 1=colored vels
 $plotVels=1;
-#What color palette should I use? 
-$cpt="seis";
 #What tension value should I use with surface? 
 $t=0.1;
 
@@ -338,14 +352,27 @@ if($forceRange==0){
 #if the user forced the zRange, make the -T string
 else {
 	$T="-T$zMin/$zMax";
-	#	print "Using forced Z-Range: MinZ=$zMin;  MaxZ=$zMax\n";
+	if($printStats==1){print "Using forced Z-Range: MinZ=$zMin;  MaxZ=$zMax\n"}
 }
 
 #get the colorbar axis labeling string from Tools.pm
 $cAxis=getCBarTick($T);
 
+#set the color palette based on the user specified value
 if($printStats==1){print "Making color palette file\n"}
-system "gmt makecpt -C$cpt $T -D --COLOR_NAN=white > $cptFile";
+if($cMap==1){
+	$cpt="seis";
+	system "gmt makecpt -C$cpt $T -D --COLOR_NAN=white > $cptFile";
+}
+elsif($cMap==2){
+	$cpt="rainbow";
+	system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile";
+}
+elsif($cMap==3){
+	$cpt="plasma";
+	system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile";
+}
+else {print "\n\n  Error: cMap must be 1-3. You entered $cMap\n\n"}
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -497,7 +524,7 @@ if($makePNG==1){
 
 #remove unneeded files
 if($printStats==1){print "Removing unneeded files\n"}
-system "rm -r $gmtDir $distFile $meanFile $grdFile $cptFile";
+system "rm -r $gmtDir $gmtFile $distFile $meanFile $grdFile $cptFile";
 
 #print the time spent on running this script using the difference in time from the beginning to end of this script.
 $endTime=time();
@@ -514,9 +541,6 @@ if($printStats==1){
 }
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }";
+	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
 }
 exit;
-
-
-

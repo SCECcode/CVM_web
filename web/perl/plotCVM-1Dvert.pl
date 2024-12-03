@@ -13,8 +13,15 @@
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
 #   Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities plotPts pad forceRange zMin zMax
-#     plotParam must equal 1-4  1=plot Vp; 2=plot Vs; 3=plot density; 4=plot all;
-#     Note: zMin and zMax only need to be specified if forceRange=1.
+#     Parameters are described below:
+#     path/to/file.csv : The csv file must be specified with a path (relative or absolute). ./ will not work.
+#     plotParam        : Select what is plotted 1=Vp; 2=Vs; 3=density; 4=all;
+#     plotFaults       : 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults
+#     plotCities       : 1=plots selected CA/NV cities. 0=don't plot cities
+#     plotPts          : 1=plots the source data points, so the user can see the resolution of the heatmap. 0=don't plot points.
+#     pad              : Supply any value in degrees. This will be added to the map spatial range in all directions.
+#     forceRange       : Use a user-specified parameter range instead of the default which uses the range of the data.
+#                        Note: zMin and zMax only need to be specified if forceRange=1.
 # 
 #-----------------------------------------------------------------------------------------------------------------------------#
 #Use warnings, but skip warnings about uninitialized variables, since this happens every time you read in a blank line.
@@ -46,7 +53,13 @@ elsif(@ARGV==7){
 #print usage for incorrect inputs
 else {
 	print "\n  Usage: ./plotCVM-1Dvert.pl path/to/file.csv plotParam plotFaults plotCities plotPts pad forceRange zMin zMax\n";
+	print "    Parameters are described below:\n";
+	print "    path/to/file.csv: The csv file must be specified with a path (relative or absolute).\n";
 	print "    plotParam must equal 1-4  1=plot Vp; 2=plot Vs; 3=plot density; 4=plot all\n";
+	print "    plotFaults: 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults\n";
+	print "    plotCities: 1=plots selected CA/NV cities. 0=don't plot cities\n";
+	print "    plotPts: 1=plots the source data points. 0=don't plot points.\n";
+	print "    forceRange: 1=Use a user-specified parameter range, 0=Use the range of the data.\n";
 	print "    Note: zMin and zMax only need to be specified if forceRange=1\n\n";
 	exit;
 }
@@ -185,19 +198,21 @@ else {print "\n\n  Error: plotPar must be 1-4. You entered $plotPar\n\n"; exit}
 #because the curves are often vertical, they can plot at the right or left axes. This can be fixed by adding some padding to xMin/xMax
 @R=split("/",$Rxy);
 $R[0]=~s/-R//;
-#save to same variables as the command line args, so I can print the json string at the end no matter whether forceRange is used or not
-$zMin=$R[0];
-$zMax=$R[1];
-#add some padding based on the X-Range
-$xRange=$zMax-$zMin;
-#no need to pad xMin if it is zero. Negative values are not possible.
-if($zMin!=0){$zMin-=$xRange*0.03} #This is not needed for Vp Vs, but is useful for Density, so I will leave it in.
-$zMax+=$xRange*0.03;
-$Rxy="-R$zMin/$zMax/$R[2]/$R[3]";
-#print $Rxy after padding, just for testing
-#print "$Rxy\n";
+if($forceRange==0){
+	#save to same variables as the command line args, so I can print the json string at the end no matter whether forceRange is used or not
+	$zMin=$R[0];
+	$zMax=$R[1];
+	#add some padding based on the X-Range
+	$xRange=$zMax-$zMin;
+	#no need to pad xMin if it is zero. Negative values are not possible.
+	if($zMin!=0){$zMin-=$xRange*0.03} #This is usually not needed for Vp Vs, but is useful for Density, so I will leave it in for all params
+	$zMax+=$xRange*0.03;
+	$Rxy="-R$zMin/$zMax/$R[2]/$R[3]";
+	#print $Rxy after padding, just for testing
+	#print "$Rxy\n"
+}#end if
 #if specified, apply the user inputted zMin zMax (which are actually xvalues on the plot)
-if($forceRange==1){$Rxy="-R$zMin/$zMax/$R[2]/$R[3]"}
+else {$Rxy="-R$zMin/$zMax/$R[2]/$R[3]"}
 
 #get the XY axis labeling string using Tools.pm
 $xAxis=getXtickGrid($Rxy);
@@ -388,7 +403,7 @@ if($makePNG==1){
 
 #remove unneeded files
 if($printStats==1){print "Removing unneeded files\n"}
-system "rm -r $gmtDir";
+system "rm -r $gmtDir $gmtFile";
 
 #print the time spent on running this script using the difference in time from the beginning to end of this script.
 $endTime=time();
@@ -405,7 +420,7 @@ if($printStats==1){
 }
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{\"type\": \"profile\", \"file\": \"$pdfFile\", \"plotPar\": $plotPar, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }";
+	print "{\"type\": \"profile\", \"file\": \"$pdfFile\", \"plotPar\": $plotPar, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
 }
 exit;
 

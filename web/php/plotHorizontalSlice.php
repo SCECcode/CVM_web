@@ -93,8 +93,8 @@ $cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
-# Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts forceRange zMin zMax
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 0";
+#Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print($gmtcommand);

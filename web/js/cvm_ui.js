@@ -186,6 +186,16 @@ function updatePlotOptions(blob) {
         document.getElementById("plotoption-par-option").style.display='none';
     }
 
+    if('cMap' in json) {
+      document.getElementById("plotoption-cmap-option").style.display='block';
+      document.getElementById("cmapTxt").value=json['cMap'];
+      document.getElementById("plotoption-cmap").value=json['cMap'];
+      document.getElementById("plotoption-cmap").checked=false;
+      } else {
+        document.getElementById("plotoption-cmap").value=json['cMap'];
+        document.getElementById("plotoption-cmap-option").style.display='none';
+    }
+
 
     let type=json['type'];
     return type;

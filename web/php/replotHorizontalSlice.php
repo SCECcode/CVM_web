@@ -11,6 +11,7 @@ include ("util.php");
 $oncfm = ($_GET['oncfm']);
 $onca = ($_GET['onca']);
 $onrange = ($_GET['onrange']);
+$oncmap = ($_GET['oncmap']);
 $onmin = ($_GET['onmin']);
 $onmax = ($_GET['onmax']);
 $fname = ($_GET['fname']);
@@ -22,11 +23,11 @@ $gmtpl="../perl/plotCVM-horzSlice.pl";
 
 $envstr=makeEnvString();
 
-#./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts forceRange zMin zMax
+#./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax
 if( $onrange == '1' ) {
-  $gmtlstr=" ".$oncfm." ".$onca." 0 1 ".$onmin." ".$onmax;
+  $gmtlstr=" ".$oncfm." ".$onca." 0 ".$oncmap." 1 ".$onmin." ".$onmax;
   } else {
-    $gmtlstr=" ".$oncfm." ".$onca." 0 0 ";
+    $gmtlstr=" ".$oncfm." ".$onca." 0 ".$oncmap." 0";
 }
 
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;

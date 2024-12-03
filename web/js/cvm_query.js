@@ -297,6 +297,7 @@ function replotCrossSection() {
     let onmin=document.getElementById("minScaleTxt").value;
     let onmax=document.getElementById("maxScaleTxt").value;
     let onpad=document.getElementById("plotPadTxt").value;
+    let oncmap=document.getElementById("cmapTxt").value;
 
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -323,7 +324,7 @@ function replotCrossSection() {
         }
     }
 
-    xmlhttp.open("GET","php/replotCrossSection.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotCrossSection.php?oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 
@@ -558,6 +559,7 @@ function replotHorizontalSlice() {
     if(range) onrange=1;
     let onmin=document.getElementById("minScaleTxt").value;
     let onmax=document.getElementById("maxScaleTxt").value;
+    let oncmap=document.getElementById("cmapTxt").value;
 
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -584,7 +586,7 @@ function replotHorizontalSlice() {
         }
     }
 
-    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 

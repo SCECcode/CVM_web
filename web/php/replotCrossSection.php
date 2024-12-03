@@ -14,6 +14,7 @@ $oncfm = ($_GET['oncfm']);
 $onca = ($_GET['onca']);
 $onrange = ($_GET['onrange']);
 $onpad = ($_GET['onpad']);
+$oncmap = ($_GET['oncmap']);
 $onmin = ($_GET['onmin']);
 $onmax = ($_GET['onmax']);
 $fname = ($_GET['fname']);
@@ -26,9 +27,9 @@ $envstr=makeEnvString();
 $gmtpl="../perl/plotCVM-vertSection.pl";
 
 if( $onrange == '1' ) {
-  $gmtlstr=" ".$oncfm." ".$onca." 0 ".$onpad." 1 ".$onmin." ".$onmax;
+  $gmtlstr=" ".$oncfm." ".$onca." 0 ".$onpad." ".$oncmap." 1 ".$onmin." ".$onmax;
   } else {
-    $gmtlstr=" ".$oncfm." ".$onca." 0 ".$onpad." 0 ";
+    $gmtlstr=" ".$oncfm." ".$onca." 0 ".$onpad." ".$oncmap." 0 ";
 }
 
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;

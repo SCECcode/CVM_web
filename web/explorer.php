@@ -772,6 +772,23 @@ TODO: need a new id
                       onfocus="this.value=''"
                       value=NA >
             </div>
+            <div id="plotoption-cmap-option" class="form-check form-check-inline" style="display:">
+                   <label class='form-check-label ml-1 mini-option'
+                      title='cmap for plot'
+                      for="plotoption-cmap">
+                   <input class='form-check-inline mr-1'
+                      type="checkbox"
+                      id="plotoption-cmap"
+                      onclick='replotPlots()' />cMap
+                   </label>
+                   <input type="text"
+                      id="cmapTxt"
+                      placeholder="plot cmap"
+                      title="plotCmap"
+                      style="width:2vw"
+                      onfocus="this.value=''"
+                      value=NA >
+            </div>
             <div class="form-check form-check-inline">
                    <label class='form-check-label ml-1 mini-option'
                       title='Set Scale Range'
