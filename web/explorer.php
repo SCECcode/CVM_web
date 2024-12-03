@@ -745,7 +745,7 @@ TODO: need a new id
                    <input class='form-check-inline mr-1'
                       type="checkbox"
 		      id="plotoption-par" 
-                      onclick='replotPlots()' />Pad
+                      onclick='replotPlots()' />Par
                    </label>
                    <input type="text"
                       id="plotParTxt"

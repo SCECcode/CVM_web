@@ -32,8 +32,6 @@ $secondlon = ($_GET['secondlon']);
 
 $envstr=makeEnvString();
 
-//print($envstr);
-
 $file="../result/".$uid."_c.png";
 $metafile="../result/".$uid."_c_meta.json";
 $binfile="../result/".$uid."_c_data.bin";
@@ -78,10 +76,10 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-print($gmtcommand);
-print("<pre>");
-print_r($gmtretval);
-print("</pre>");
+#print($gmtcommand);
+#print("<pre>");
+#print_r($gmtretval);
+#print("</pre>");
 
 $resultarray = new \stdClass();
 $resultarray->type= "cross";

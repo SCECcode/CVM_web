@@ -32,9 +32,7 @@ if( $onrange == '1' ) {
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-print("<br>");
-print($gmtcommand);
-print("<br>");
+#print($gmtcommand);
 
 #print("gmtresult:"); print($gmtresult); print("<br>");
 #print("gmtstatus:"); print($gmtstatus); print("<br>");

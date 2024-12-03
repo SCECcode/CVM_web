@@ -84,7 +84,7 @@ $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 #print("gmtstatus:"); print($gmtstatus); print("<br>");
 #print("gmtretval:"); 
 #print("<pre>");
-print_r($gmtretval);
+#print_r($gmtretval);
 #print("</pre>");
 #print("<br>");
 

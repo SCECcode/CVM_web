@@ -34,7 +34,7 @@ if( $onrange == '1' ) {
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-print($gmtcommand);
+#print($gmtcommand);
 #print("<pre>");
 #print_r($gmtresult);
 #print("</pre>");

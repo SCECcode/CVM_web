@@ -412,7 +412,7 @@ function plotVerticalProfile() {
     plotVerticalProfileByList(dataarray,0,1);
 }
 
-function replotVerticlProfile() {
+function replotVerticalProfile() {
     document.getElementById('spinIconForArea').style.display = "block";
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
