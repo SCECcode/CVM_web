@@ -276,8 +276,6 @@ function replotCrossSection() {
     document.getElementById('spinIconForArea').style.display = "block";
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
-    let range=$('#plotoption-range').prop('checked');
-    let pad=$('#plotoption-pad').prop('checked');
 
     // replace src .pdf with .csv and grab just filename
     let file=MODAL_REPLOT_SRC.replace("pdf","csv");
@@ -291,8 +289,8 @@ function replotCrossSection() {
     if(cfm) oncfm=1;
     let onca=0;
     if(ca) onca=1;
-    let onrange=0;
-    if(range) onrange=1;
+
+    let onrange=1;
 
     let onmin=document.getElementById("minScaleTxt").value;
     let onmax=document.getElementById("maxScaleTxt").value;
@@ -417,9 +415,6 @@ function replotVerticalProfile() {
     document.getElementById('spinIconForArea').style.display = "block";
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
-    let range=$('#plotoption-range').prop('checked');
-    let pad=$('#plotoption-pad').prop('checked');
-    let par=$('#plotoption-par').prop('checked');
 
     // replace src .pdf with .csv and grab just filename
     let file=MODAL_REPLOT_SRC.replace("pdf","csv");
@@ -433,14 +428,17 @@ function replotVerticalProfile() {
     if(cfm) oncfm=1;
     let onca=0;
     if(ca) onca=1;
-    let onrange=0;
-    if(range) onrange=1;
+
+    let onrange=1; // always use scale range
 
     let onmin=document.getElementById("minScaleTxt").value;
     let onmax=document.getElementById("maxScaleTxt").value;
     let onpad=document.getElementById("plotPadTxt").value;
     let onpar=document.getElementById("plotParTxt").value;
 
+window.console.log(onrange);
+window.console.log(onmin);
+window.console.log(onmax);
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp = new XMLHttpRequest();
@@ -541,7 +539,6 @@ function replotHorizontalSlice() {
     document.getElementById('spinIconForArea').style.display = "block";
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
-    let range=$('#plotoption-range').prop('checked');
 
     // replace src .pdf with .csv and grab just filename
     let file=MODAL_REPLOT_SRC.replace("pdf","csv");
@@ -555,8 +552,9 @@ function replotHorizontalSlice() {
     if(cfm) oncfm=1;
     let onca=0;
     if(ca) onca=1;
-    let onrange=0;
-    if(range) onrange=1;
+
+    let onrange=1;
+
     let onmin=document.getElementById("minScaleTxt").value;
     let onmax=document.getElementById("maxScaleTxt").value;
     let oncmap=document.getElementById("cmapTxt").value;

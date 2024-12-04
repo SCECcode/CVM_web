@@ -3,6 +3,15 @@
 
 ***/
 
+// footer is about 58px
+function setIframHeight(id) {
+  let top = document.documentElement.clientHeight;
+  var f_h=58;
+  var height=top -(f_h*2);
+  document.getElementById(id).height = height;
+  return height;
+}
+
 function setDailyCleanResult(targetHour, targetMinute) {
     const now = new Date();
 

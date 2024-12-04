@@ -91,8 +91,7 @@ window.console.log("downloadlinks>>",str);
               html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;csv data file</div>";
               break;
           case 'gmtpdf':
-              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PDF plot&nbsp;&nbsp;<button id=\""+uid+"_show_btn\" class=\"btn cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalplotoption\"><span class=\"glyphicon glyphicon-adjust\"></span></button></div>";
-//                html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PDF plot</div>";
+              html=html+"<div style=\"margin-left:-5px\"><button id=\""+uid+"_show_btn\" class=\"btn btn-sm cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalplotoption\"><span class=\"glyphicon glyphicon-picture\"></span></button>PDF plot</div>";
               break;
           case 'gmtpng':
 //              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"pngbox\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PNG plot</div>";
@@ -159,43 +158,27 @@ function updatePlotOptions(blob) {
         document.getElementById("plotoption-ca").value=1;
         document.getElementById("plotoption-ca").checked=true;
     }
-    if(json['forceRange'] == 0) {
-      document.getElementById("plotoption-range").value=0;
-      document.getElementById("plotoption-range").checked=false;
-      } else {
-        document.getElementById("plotoption-range").value=1;
-        document.getElementById("plotoption-range").checked=true;
-    }
+
     if('pad' in json) {
       document.getElementById("plotoption-pad-option").style.display='block';
       document.getElementById("plotPadTxt").value=json['pad'];
-      document.getElementById("plotoption-pad").value=json['pad'];
-      document.getElementById("plotoption-pad").checked=false;
       } else {
-        document.getElementById("plotoption-pad").value=json['pad'];
         document.getElementById("plotoption-pad-option").style.display='none';
     }
 
     if('plotPar' in json) {
       document.getElementById("plotoption-par-option").style.display='block';
       document.getElementById("plotParTxt").value=json['plotPar'];
-      document.getElementById("plotoption-par").value=json['plotPar'];
-      document.getElementById("plotoption-par").checked=false;
       } else {
-        document.getElementById("plotoption-par").value=json['plotPar'];
         document.getElementById("plotoption-par-option").style.display='none';
     }
 
     if('cMap' in json) {
       document.getElementById("plotoption-cmap-option").style.display='block';
       document.getElementById("cmapTxt").value=json['cMap'];
-      document.getElementById("plotoption-cmap").value=json['cMap'];
-      document.getElementById("plotoption-cmap").checked=false;
       } else {
-        document.getElementById("plotoption-cmap").value=json['cMap'];
         document.getElementById("plotoption-cmap-option").style.display='none';
     }
-
 
     let type=json['type'];
     return type;
@@ -531,3 +514,29 @@ function getCSVFromJSON(jblob) {
 //http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
     return csvblob;
 }
+
+// move current popup modal to a new tab
+function movePlotview() {
+  var yourDOCTYPE = "<!DOCTYPE html>"; // your doctype declaration
+  var copyPreview = window.open('about:blank', 'CVM plots', "resizable=yes,scrollbars=yes,status=yes");
+  var newCopy = copyPreview.document;
+  newCopy.open();
+  // remove copy and new tab buttons
+  document.getElementById("plotoption-header").style.display="none";
+  document.getElementById("plotoption-footer").style.display="none";
+  var newInner=document.documentElement.innerHTML;
+  newCopy.write(yourDOCTYPE+"<html>"+ newInner+ "</html>");
+  newCopy.close();
+  document.getElementById("viewPlotClosebtn").click();
+}
+
+function savePDFPlotview() {
+  let file=MODAL_REPLOT_SRC;
+  saveAsURLFile(file);
+}
+
+function savePNGPlotview() {
+  let file=MODAL_REPLOT_SRC.replace("pdf","png");
+  saveAsURLFile(file);
+}
+

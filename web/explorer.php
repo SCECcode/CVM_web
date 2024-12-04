@@ -712,120 +712,110 @@ TODO: need a new id
 
 <!--Modal: (modalplotoption) -->
 <div class="modal" id="modalplotoption" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--
   <div class="modal-dialog modal-dialog-centered modal-lg" id="modalplotoptionDialog" role="document">
+-->
+  <div class="modal-dialog modal-full" id="modalplotoptionDialog" role="document">
 
     <!--Content-->
     <div class="modal-content" id="modalplotoptionContent">
-      <div class="modal-header">
-          <div class="form-check-inline">
-            <div class="form-check form-check-inline">
-               <label class='form-check-label ml-1 mini-option'
-                      title='Show Community Fault Model v7.0 on plot'
-                      for="plotoption-cfm">
-               <input class='form-check-inline mr-1'
-                      type='checkbox'
-                      id='plotoption-cfm'
-                      onclick='replotPlots()' />CFM7.0
-               </label>
-            </div>
-            <div class="form-check form-check-inline">
-               <label class='form-check-label ml-1 mini-option'
-                      title='Show CA Cities on plot'
-                      for="plotoption-ca">
-               <input class='form-check-inline mr-1'
-                      type="checkbox"
-		      id="plotoption-ca" 
-                      onclick='replotPlots()' />CA cities
-               </label>
-            </div>
-            <div id="plotoption-par-option" class="form-check form-check-inline" style="display:">
-                   <label class='form-check-label ml-1 mini-option'
-                      title='select parameter on plot'
-                      for="plotoption-par">
-                   <input class='form-check-inline mr-1'
-                      type="checkbox"
-		      id="plotoption-par" 
-                      onclick='replotPlots()' />Par
+
+      <div id="plotoption-header" class="modal-header" style="display:">
+	  <div class="col-12 mt-4">
+
+             <div>
+                 <button id="replotNow" onclick="replotPlots()" class="btn btn-dark">REPLOT</button>
+             </div>
+
+              <div class="form-check form-check-inline mt-4">
+                     <label class='form-check-label mini-option'
+                            title='Show Community Fault Model v7.0 on map'
+			    for="plotoption-cfm">
+                     <input class='form-check-inline mr-2'
+                            type="checkbox"
+                            id="plotoption-cfm" value="0" />CFM7.0
+                     </label>
+              </div>
+
+              <div class="form-check form-check-inline mt-2">
+                     <label class='form-check-label mini-option'
+                            title='Show CA Cities on map'
+			    for="plotoption-ca">
+                     <input class='form-check-inline mr-2'
+                            type="checkbox"
+			    id="plotoption-ca" value="0" />CA Cities
+                     </label>
+               </div>
+
+               <div id="plotoption-par-option" class="form-check form-check-inline mt-2" style="display:">
+                   <label class="input-group-text" for="plotParTxt">Select Parameter</label>
+                   <select id="plotParTxt" class="my-custom-select custom-select">
+                      <option value="1">Vp</option>
+                      <option value="2">Vs</option>
+                      <option value="3">Density</option>
+                      <option value="4">All</option>
+                    </select>
+                </div>
+
+                <div id="plotoption-pad-option" class="form-check form-check-inline mt-2" style="display:">
+                   <label class="input-group-text" for="plotPadTxt">Select Map Padding</label>
+                   <select id="plotPadTxt" class="my-custom-select custom-select">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                </div>
+
+                <div id="plotoption-cmap-option" class="form-check form-check-inline mt-2" style="display:">
+                   <label class="input-group-text" for="cmapTxt">Select Colormap</label>
+                   <select id="cmapTxt" class="my-custom-select custom-select">
+                      <option value="1">Seis</option>
+                      <option value="2">Rainbow</option>
+                      <option value="3">Plasma</option>
+                    </select>
+                </div>
+
+                <div class="form-check form-check-inline mt-4">
+                   <label title='scale maximum'
+                          style="margin-right:4px"
+                          for="maxScaleTxt">maximum
                    </label>
-                   <input type="text"
-                      id="plotParTxt"
-                      placeholder="plot par"
-                      title="plotPar"
-                      style="width:2vw"
-                      onfocus="this.value=''"
-                      value=NA >
-            </div>
-            <div id="plotoption-pad-option" class="form-check form-check-inline" style="display:">
-                   <label class='form-check-label ml-1 mini-option'
-                      title='Add padding on plot'
-                      for="plotoption-pad">
-                   <input class='form-check-inline mr-1'
-                      type="checkbox"
-		      id="plotoption-pad" 
-                      onclick='replotPlots()' />Pad
-                   </label>
-                   <input type="text"
-                      id="plotPadTxt"
-                      placeholder="plot pad"
-                      title="plotPad"
-                      style="width:2vw"
-                      onfocus="this.value=''"
-                      value=NA >
-            </div>
-            <div id="plotoption-cmap-option" class="form-check form-check-inline" style="display:">
-                   <label class='form-check-label ml-1 mini-option'
-                      title='cmap for plot'
-                      for="plotoption-cmap">
-                   <input class='form-check-inline mr-1'
-                      type="checkbox"
-                      id="plotoption-cmap"
-                      onclick='replotPlots()' />cMap
-                   </label>
-                   <input type="text"
-                      id="cmapTxt"
-                      placeholder="plot cmap"
-                      title="plotCmap"
-                      style="width:2vw"
-                      onfocus="this.value=''"
-                      value=NA >
-            </div>
-            <div class="form-check form-check-inline">
-                   <label class='form-check-label ml-1 mini-option'
-                      title='Set Scale Range'
-                      for="plotoption-range">
-                   <input class='form-check-inline mr-1'
-                      type="checkbox"
-		      id="plotoption-range" 
-                      onclick='replotPlots()' />Scale Range
-                   </label>
-                   <input type="text"
-                      id="minScaleTxt"
-                      placeholder="min scale"
-                      title="minScale"
-                      style="width:7vw"
-                      onfocus="this.value=''"
-                      value=NA >
                    <input type="text"
                       id="maxScaleTxt"
                       placeholder="max scale"
                       title="maxScale"
-                      style="width:7vw"
-                      onfocus="this.value=''"
-                      value=NA >
-            </div>
-          </div>
+                      style="width:6vw"
+                      onfocus="this.value=''">
+                 </div>
 
+                 <div class="form-check form-check-inline mt-2">
+		    <label title='scale minimum'
+                           style="margin-right:4px"
+			   for="minScaleTxt">minimum
+                    </label>
+
+                    <input type="text"
+                       id="minScaleTxt"
+                       placeholder="min scale"
+                       title="minScale"
+                       style="width:6vw"
+                       onfocus="this.value=''">
+                  </div>
+          </div>
       </div>
 
       <!--Body-->
       <div class="modal-body">
         <div id="plotoption-iframe-container" class="col-12" style="overflow:auto;">
-          <iframe id="plotOptionIfram" src="" height="0" width="100%" style="background-color:blue;" allowfullscreen></iframe>
+          <iframe id="plotOptionIfram" src="" height="0" width="100%" allowfullscreen></iframe>
         </div>
       </div>
 
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-outline-primary btn-md" data-dismiss="modal">Close</button>
+      <div id="plotoption-footer" class="modal-footer justify-content-center" style="display:">
+        <button id="viewPlotClosebtn" class="btn btn-outline-primary btn-sm" data-dismiss="modal">Close</button>
+        <button id="viewPlotMovebtn" class="btn btn-outline-primary btn-sm" onclick="movePlotview()">New Window</button>
+        <button id="viewPlotSavePNGbtn" class="btn btn-outline-primary btn-sm" onclick="savePNGPlotview()">Save PNG</button>
+        <button id="viewPlotSavePDFbtn" class="btn btn-outline-primary btn-sm" onclick="savePDFPlotview()">Save PDF</button>
       </div>
 
     </div> <!--Content-->

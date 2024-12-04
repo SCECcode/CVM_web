@@ -136,6 +136,8 @@ window.console.log("Calling toReset..");
   });
 
 
+
+/***** plotoption popup modal *****/
   $('#modalplotoption').on('show.bs.modal', function (event) {
     // button that triggered the modal
         var btn = $(event.relatedTarget); 
@@ -149,12 +151,15 @@ window.console.log("Calling toReset..");
         MODAL_REPLOT_SRC=myfile.replace("..","/cvm-explorer"); 
         MODAL_REPLOT_TYPE=type;
 
-
     // Set the modal content dynamically
         var modal = $(this);
 
 	$('#plotOptionIfram').attr('src',MODAL_REPLOT_SRC);
-	$('#plotOptionIfram').attr('height','800px');
+	let h=setIframHeight("plotOptionIfram");
+
+        document.getElementById("plotoption-header").style.display="";
+        document.getElementById("plotoption-footer").style.display="";
+
   });
 
 
