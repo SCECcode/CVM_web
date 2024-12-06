@@ -10,7 +10,9 @@
        plot_cross_section.py
       or
        plot_elevation_cross_section.py
- */
+*/
+
+$start_time = microtime(true);
 
 include ("util.php");
 
@@ -41,8 +43,8 @@ $pdffile="../result/".$uid."_c_data.pdf";
 
 $gmtpl="../perl/plotCVM-vertSection.pl";
 
-$lstr = " -b ".$firstlat.",".$firstlon." -u ".$secondlat.",".$secondlon;
 
+$lstr = " -b ".$firstlat.",".$firstlon." -u ".$secondlat.",".$secondlon;
 if ($zrange != 'none') {
 	$lstr= ' -z '.$zrange.$lstr;
 }
@@ -68,14 +70,18 @@ $rc=checkResult($query, $result, $uid);
 $cvsquery = $envstr." ucvm_cross_section2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
-#Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad cMap forceRange zMin zMax
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 1 1 0";
+#Usage: ./plotCVM-vertSection.pl path/to/file.csv plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 1 0 0 0 1 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print($gmtcommand);
 #print("<pre>");
 #print_r($gmtretval);
 #print("</pre>");
+
+$end_time = microtime(true);
+$elapsed_time = $end_time - $start_time;
+#print("Elapsed time: ".round($elapsed_time, 2)." sec\n");
 
 $resultarray = new \stdClass();
 $resultarray->type= "cross";
@@ -89,6 +95,7 @@ $resultarray->data= $uid."_c_data.bin";
 $resultarray->csv= $uid."_c_data.csv";
 $resultarray->gmtpng= $uid."_c_data.png";
 $resultarray->gmtpdf= $uid."_c_data.pdf";
+$resultarray->elapsed=round($elapsed_time, 2);
 $jj=json_decode($gmtresult);
 $jj->csv=$uid."_c_data.csv";
 $jj->uid=$uid;

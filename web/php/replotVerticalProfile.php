@@ -10,6 +10,7 @@
 
 include ("util.php");
 
+$onmap = ($_GET['onmap']);
 $oncfm = ($_GET['oncfm']);
 $onca = ($_GET['onca']);
 $onrange = ($_GET['onrange']);
@@ -27,9 +28,9 @@ $envstr=makeEnvString();
 $gmtpl="../perl/plotCVM-1Dvert.pl";
 
 if( $onrange == '1' ) {
-  $gmtlstr=" ".$onpar." ".$oncfm." ".$onca." 0 ".$onpad." 1 ".$onmin." ".$onmax;
+  $gmtlstr=" ".$onpar." ".$onmap." ".$oncfm." ".$onca." 0 ".$onpad." 1 ".$onmin." ".$onmax;
   } else {
-    $gmtlstr=" ".$onpar." ".$oncfm." ".$onca." 0 ".$onpad." 0 ";
+    $gmtlstr=" ".$onpar." ".$onmap." ".$oncfm." ".$onca." 0 ".$onpad." 0 ";
 }
 
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;

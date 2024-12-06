@@ -91,7 +91,7 @@ window.console.log("downloadlinks>>",str);
               html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;csv data file</div>";
               break;
           case 'gmtpdf':
-              html=html+"<div style=\"margin-left:-5px\"><button id=\""+uid+"_show_btn\" class=\"btn btn-sm cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalplotoption\"><span class=\"glyphicon glyphicon-picture\"></span></button>PDF plot</div>";
+              html=html+"<div style=\"margin-left:-6px\"><button id=\""+uid+"_show_btn\" class=\"btn btn-sm cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalplotoption\"><span class=\"glyphicon glyphicon-picture\"></span></button>PDF plot</div>";
               break;
           case 'gmtpng':
 //              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"pngbox\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PNG plot</div>";
@@ -100,7 +100,7 @@ window.console.log("downloadlinks>>",str);
               html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"pngbox\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PNG plot</div>";
               break;
           case 'meta':
-//              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;plot metadata file</div>";
+              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;plot metadata file</div>";
               break;
           case 'data':
 //              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;plot data file</div>";
@@ -124,8 +124,12 @@ window.console.log("downloadlinks>>",str);
               window.console.log("QUERY result:",val);
               html=html+"<div id=\""+uid+"_state_blob\" style=\"display:none\">"+val+"</div>";
               break;
+          case 'elapsed':
+              window.console.log("elapsed time(sec):",val);
+              html=html+"<div style=\"display:\">elapsed time: "+val+"(sec)</div>";
+              break;
           default:
-              window.console.log("BAD...This key is skipped:",keys[i]);
+              window.console.log("This key is skipped:",keys[i]);
               break;
        }
     }
@@ -157,6 +161,23 @@ function updatePlotOptions(blob) {
       } else {
         document.getElementById("plotoption-ca").value=1;
         document.getElementById("plotoption-ca").checked=true;
+    }
+
+    if('plotMap' in json) {
+      document.getElementById("plotoption-map-option").style.display='block';
+      if(json['plotMap'] == 1) {
+        document.getElementById("plotoption-map").value=1;
+        document.getElementById("plotoption-map").checked=true;
+        document.getElementById("plotoption-ca-option").style.display='block';
+        document.getElementById("plotoption-cfm-option").style.display='block';
+        } else {
+          document.getElementById("plotoption-map").value=0;
+          document.getElementById("plotoption-map").checked=false;
+          document.getElementById("plotoption-ca-option").style.display='none';
+          document.getElementById("plotoption-cfm-option").style.display='none';
+      }
+      } else {
+        document.getElementById("plotoption-map-option").style.display='none';
     }
 
     if('pad' in json) {

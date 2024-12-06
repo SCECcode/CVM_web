@@ -16,6 +16,7 @@
 #   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad cMap forceRange zMin zMax
 #     Parameters are described below:
 #     path/to/file.csv : The csv file must be specified with a path (relative or absolute). ./ will not work.
+#     plotMap          : 1=plots a simple location map showing the profile section. 0=don't plot a map. Just plot the vertical profile data.
 #     plotFaults       : 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults
 #     plotCities       : 1=plots selected CA/NV cities. 0=don't plot cities
 #     plotPts          : 1=plots the source data points, so the user can see the resolution of the heatmap. 0=don't plot points.
@@ -46,9 +47,9 @@ $openEPS=0;
 $printStats=0;
 
 #check for correct usage and make sure the csv file exists
-if   (@ARGV==9){($csvFile,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
-elsif(@ARGV==7){
-	($csvFile,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange)=@ARGV;
+if   (@ARGV==10){($csvFile,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
+elsif(@ARGV==8){
+	($csvFile,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange)=@ARGV;
 	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
 }
 #print usage for incorrect inputs
@@ -56,6 +57,7 @@ else {
 	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad cMap forceRange zMin zMax\n";
 	print "    Parameters are described below:\n";
 	print "    path/to/file.csv: The csv file must be specified with a path (relative or absolute).\n";
+	print "    plotMap: 1=plots a simple location map 0=don't plot a map. Just plot the vertical profile data.\n";
 	print "    plotFaults: 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults\n";
 	print "    plotCities: 1=plots selected CA/NV cities. 0=don't plot cities\n";
 	print "    plotPts: 1=plots the source data points. 0=don't plot points.\n";
@@ -96,6 +98,12 @@ $ENV{GMT_TMPDIR}="$gmtDir";
 $plotVels=1;
 #What tension value should I use with surface? 
 $t=0.1;
+#What should the dimensions of the data plot be (in inches)?
+$width=7.6;
+$height=5.5;
+#set the map dimensions
+$widthMap="7.65i"; #for the map
+
 
 #Should I plot a DEM on the location map?
 $plotDEM=0;
@@ -257,7 +265,7 @@ $minY=$tmp[2]; $maxY=$tmp[3];
 $xRange=$maxX-$minX;
 $yRange=$maxY-$minY;
 #calculate the vertical exaggeration and round to one decimal (assumes the XY plot is 7.0i/5.0i) 
-$vertEx=sprintf("%.1f",$xRange/$yRange*(5/7));
+$vertEx=sprintf("%.1f",$xRange/$yRange*($height/$width));
 
 #now set a reasonable amount to round of the plot range in the x-direction (in km)
 if   ($xRange<=0.01) {$xRound=0.0002}
@@ -347,8 +355,8 @@ if($forceRange==0){
 		$zMax+=1;
 		#remake the -T parameter with the new range
 		$T="-T$zMin/$zMax";
-	}
-}
+	}#end if
+}#end if($forceRange==0)
 #if the user forced the zRange, make the -T string
 else {
 	$T="-T$zMin/$zMax";
@@ -378,20 +386,19 @@ else {print "\n\n  Error: cMap must be 1-3. You entered $cMap\n\n"}
 #-----------------------------------------------------------------------------------------------------------------------------#
 #------- SETUP GMT VARIABLES -------------------------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
-#set the map dimensions
-$width="7.0i"; #for the map
 #split the data range, so I can grab the min/max values
 @range=split("/",$R);
 #print "@range\n";
 #calculate plot height using lat max and the second lon as the first lon has -R in it. All I need is the y-coordinate anyway.
-$tmp=`echo $range[1] $range[3] | gmt mapproject $R -JM$width`;
+$tmp=`echo $range[1] $range[3] | gmt mapproject $R -JM$widthMap`;
 chomp($tmp);
 @tmp=split(" ",$tmp);
 #grab the height in cm and convert to inches. Add on 0.95in for the title above
-$height=$tmp[1]/2.54+1.20;
+$heightMap=$tmp[1]/2.54+0.85;
 
 #set paper size
-system "gmt set PS_MEDIA=17ix${height}i";
+if($plotMap==1){system "gmt set PS_MEDIA=17ix${heightMap}i"}
+else           {system "gmt set PS_MEDIA=8.5ix7.4i"}
 system "gmt set MAP_FRAME_TYPE=plain";
 #degrees with negative longitudes
 system "gmt set FORMAT_GEO_MAP=-D.x";
@@ -418,74 +425,16 @@ $waterBlue="170/197/231"; #a slighly grayer version of the Google Maps color. Lo
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
-#------- PLOT THE LOCATION MAP WITH GMT --------------------------------------------------------------------------------------#
+#------- PLOT THE VERTICAL CROSS SECTION DATA WITH GMT -----------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
 if($printStats==1){
 	print "-----------------------------------------------------------------------------\n";
 	print "Plotting Data with GMT\n";
 	print "-----------------------------------------------------------------------------\n";
-	printf ("Location Map will be %s x %.1fi\n",$width,$height);
 }
 
-if($plotDEM==1){
-	if($printStats==1){print "Plotting DEM\n"}
-	system "gmt grdimage $dem -X0.75i -Y0.65i $R -JM$width -I$int -C$demCPT -P -K > $plotFile";
-	#plot the coastline and color the water
-	system "gmt pscoast -R -JM -W0.5p -S$waterBlue -Df -Na/0.5p-O -K >> $plotFile";
-}
-else {
-	#plot the coastline and color the water
-	system "gmt pscoast -X0.75i -Y0.65i $R -JM$width -W0.5p -S$waterBlue -Gwhite -Df -Na/0.5p -P -K > $plotFile";
-}
-#plot fault traces, if specified
-if($plotFaults==1){
-	if($labelFaults==1){
-		if($printStats==1){print "Plotting and labeling fault traces\n"}
-		#plot all non-blind faults with solid lines, blind with dashed lines
-		system "gmt psxy $faultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$faultLine -m -O -K >> $plotFile";
-		system "gmt psxy $blindFaultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$blindFaultLine -m -O -K >> $plotFile";
-	}#end if
-	else {
-		if($printStats==1){print "Plotting fault traces\n"}
-		#plot all non-blind faults with solid lines, blind with dashed lines
-		system "gmt psxy $faultFile -R -JM -W$faultLine -m -O -K >> $plotFile";
-		system "gmt psxy $blindFaultFile -R -JM -W$blindFaultLine -m -O -K >> $plotFile";
-	}#end else
-}#end if
-
-#plot cities, if specified
-if($plotCities==1){
-	if($printStats==1){print "Plotting city locations\n"}
-	system "gmt psxy $cityFile -R -JM -Sc5p -Ggold -W0.5p -O -K >> $plotFile";
-	system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold,white,-=1p,white -O -K >> $plotFile";
-	system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold           -O -K >> $plotFile";
-}
-
-#plot the profile end points
-#system "gmt psxy $gmtFile -R -JM -Sc5.0p -Gblack -i1,2 -O -K >> $plotFile";
-system "gmt psxy -R -JM -W4.0p,black -A -O -K <<-END>> $plotFile
-$begLon $begLat
-$endLon $endLat
-END";
-system "gmt psxy -R -JM -W2.0p,$red -A -O -K <<-END>> $plotFile
-$begLon $begLat
-$endLon $endLat
-END";
-#label the endpoints
-system "gmt pstext -R -JM -D$offset -F+a0+jCM+f18p,Helvetica-Bold -O -K <<-END>> $plotFile
-$begLon $begLat A
-$endLon $endLat A'
-END";
-
-#plot the basemap axes. For a map scale, add -Lx0.3i/0.3i+jBL+w50k+c+f+u 
-system "gmt psbasemap -R -JM -Bx$lonAxis -By$latAxis -BWeSn+t\"Model: $model | Vertical Profile Location\" $mapScale -O -K >> $plotFile";
-
-
-#-----------------------------------------------------------------------------------------------------------------------------#
-#------- PLOT THE VERTICAL CROSS SECTION DATA WITH GMT -----------------------------------------------------------------------#
-#-----------------------------------------------------------------------------------------------------------------------------#
 #plot the interpolated data
-system "gmt grdimage $grdFile -X8.5i -Y0.85i $Rxy -JX7.0i/-5.0i -C$cptFile -O -K >> $plotFile";
+system "gmt grdimage $grdFile -X0.57i -Y1.45i $Rxy -JX${width}i/-${height}i -C$cptFile -P -K > $plotFile";
 
 #plot the source data points, if specified
 if($plotPts==1){system "gmt psxy $distFile -R -JX -Sc1.5p -Gblack -i4,2 -O -K >> $plotFile"}
@@ -497,11 +446,73 @@ $maxX $minY A'
 END";
 
 #plot a colorbar below the plot
-system "gmt psscale -R -JX -C$cptFile -B$cAxis+l\"$zTitle\" -Dx0/-0.85i+w7.0i/0.25i+jBL+h -O -K >> $plotFile";
+system "gmt psscale -R -JX -C$cptFile -B$cAxis+l\"$zTitle\" -Dx0/-0.85i+w${width}i/0.25i+jBL+h -O -K >> $plotFile";
 
 #plot the axes last
-system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | n=$numPts\" -O --MAP_TITLE_OFFSET=0.15i >> $plotFile";
+if($plotMap==0){system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.15i >> $plotFile"}
+else           {system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.15i >> $plotFile"}
 
+
+#-----------------------------------------------------------------------------------------------------------------------------#
+#------- PLOT THE LOCATION MAP WITH GMT --------------------------------------------------------------------------------------#
+#-----------------------------------------------------------------------------------------------------------------------------#
+if($plotMap==1){
+	if($printStats==1 ){printf ("Location Map will be %s x %.1fi\n",$widthMap,$heightMap)}
+	#plot a DEM, if specified
+	if($plotDEM==1){
+		if($printStats==1){print "Plotting DEM\n"}
+		system "gmt grdimage $dem -X8.5i -Y-1.12i $R -JM$widthMap -I$int -C$demCPT -O -K >> $plotFile";
+		#plot the coastline and color the water
+		system "gmt pscoast -R -JM -W0.5p -S$waterBlue -Df -Na/0.5p-O -K >> $plotFile";
+	}
+	#just plot the coastline and color the water
+	else {system "gmt pscoast -X8.5i -Y-1.12i $R -JM$widthMap -W0.5p -S$waterBlue -Gwhite -Df -Na/0.5p -O -K >> $plotFile"}
+	
+	#plot fault traces, if specified
+	if($plotFaults==1){
+		if($labelFaults==1){
+			if($printStats==1){print "Plotting and labeling fault traces\n"}
+			#plot all non-blind faults with solid lines, blind with dashed lines
+			system "gmt psxy $faultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$faultLine -m -O -K >> $plotFile";
+			system "gmt psxy $blindFaultFile -R -JM -Sqn1:+Lh+n0i/0.1i+kblack+s8 -W$blindFaultLine -m -O -K >> $plotFile";
+		}#end if
+		else {
+			if($printStats==1){print "Plotting fault traces\n"}
+			#plot all non-blind faults with solid lines, blind with dashed lines
+			system "gmt psxy $faultFile -R -JM -W$faultLine -m -O -K >> $plotFile";
+			system "gmt psxy $blindFaultFile -R -JM -W$blindFaultLine -m -O -K >> $plotFile";
+		}#end else
+	}#end if
+	
+	#plot cities, if specified
+	if($plotCities==1){
+		if($printStats==1){print "Plotting city locations\n"}
+		system "gmt psxy $cityFile -R -JM -Sc5p -Ggold -W0.5p -O -K >> $plotFile";
+		system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold,white,-=1p,white -O -K >> $plotFile";
+		system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold           -O -K >> $plotFile";
+	}
+	
+	#plot the profile end points
+	#system "gmt psxy $gmtFile -R -JM -Sc5.0p -Gblack -i1,2 -O -K >> $plotFile";
+	system "gmt psxy -R -JM -W4.0p,black -A -O -K <<-END>> $plotFile
+	$begLon $begLat
+	$endLon $endLat
+	END";
+	system "gmt psxy -R -JM -W2.0p,$red -A -O -K <<-END>> $plotFile
+	$begLon $begLat
+	$endLon $endLat
+	END";
+	#label the endpoints
+	system "gmt pstext -R -JM -D$offset -F+a0+jCM+f18p,Helvetica-Bold -O -K <<-END>> $plotFile
+	$begLon $begLat A
+	$endLon $endLat A'
+	END";
+	
+	#plot the basemap axes. For a map scale, add -Lx0.3i/0.3i+jBL+w50k+c+f+u 
+	system "gmt psbasemap -R -JM -Bx$lonAxis -By$latAxis -BWeSn+t\"Model: $model | Vertical Profile Location\" $mapScale -O >> $plotFile";
+	
+}#end if (plotting location map)	
+	
 #---------------------------------------------------------------------------------------------------------------------------#
 #------- VIEW THE MAP, CONVERT TO PDF/PNG AND PRINT TOTAL CPU TIME ---------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------#
@@ -541,6 +552,6 @@ if($printStats==1){
 }
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
+	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"plotMap\": $plotMap, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
 }
 exit;

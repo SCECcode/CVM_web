@@ -719,20 +719,11 @@ TODO: need a new id
       <!--Body-->
       <div class="modal-body" id="modalwaitonBody">
         <div class="row col-md-12 ml-auto" style="overflow:hidden; font-size:10pt">
-           <div class="row">
-           <p id="modalwaitonLabel" style="text-align:center;font-size:25px"> Extracting Model Data
-                <div class="row" style="display:none" >
-
-                <input type="text" style="margin-left:50px;width:100px;" id="waiton-total" value="0">
-                <input type="text" style="width:100px;margin-right:50px;" id="waiton-expected" value="0">
-                </div>
-                <input type="text" style="text-align:center;width:60px;margin-right:50px;margin-left:20px;padding:0px" id="waiton-progress" value="0%" disabled>
-                <div class="row" id="myProgress" style="border:2px solid grey"><div id="myProgressBar"></div>
-                </div>
-           </p>
+           <div class="col-12">
+           <p id="modalwaitonLabel" style="text-align:center;font-size:25px">Extracting Model Data</p>
            </div>
            <div class="row mt-2" style="border:0px solid blue">
-	     <p id="modalwaitonLabel2" style="text-align:center;font-size:14px; margin-left:3px; margin-right:6px; border:0px solid red">Please wait as this process is complex and may take a few minutes. Many CVMs contain a large amount of data and the data must be interpolated before extracting</p>
+	     <p id="modalwaitonLabel2" style="text-align:center;font-size:14px; margin-left:3px; margin-right:6px; border:0px solid red">Please wait as this process is complex and may take a few minutes. Many CVMs contain a large amount of data and the data maybe interpolated before extracting</p>
            </div>
         </div>
       </div>
@@ -759,23 +750,33 @@ TODO: need a new id
                  <button id="replotNow" onclick="replotPlots()" class="btn btn-dark">REPLOT</button>
              </div>
 
-              <div class="form-check form-check-inline mt-4">
+              <div id="plotoption-cfm-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show Community Fault Model v7.0 on map'
 			    for="plotoption-cfm">
                      <input class='form-check-inline mr-2'
                             type="checkbox"
-                            id="plotoption-cfm" value="0" />CFM7.0
+                            id="plotoption-cfm"/>CFM7.0
                      </label>
               </div>
 
-              <div class="form-check form-check-inline mt-2">
+              <div id="plotoption-ca-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show CA Cities on map'
 			    for="plotoption-ca">
                      <input class='form-check-inline mr-2'
                             type="checkbox"
-			    id="plotoption-ca" value="0" />CA Cities
+			    id="plotoption-ca"/>CA Cities
+                     </label>
+               </div>
+
+               <div id="plotoption-map-option" class="form-check form-check-inline mt-2" style="display:">
+                     <label class='form-check-label mini-option'
+                            title='Show plot only'
+			    for="plotoption-map">
+                     <input class='form-check-inline mr-2'
+                            type="checkbox"
+			    id="plotoption-map"/>with Map
                      </label>
                </div>
 
@@ -816,7 +817,7 @@ TODO: need a new id
                       id="maxScaleTxt"
                       placeholder="max scale"
                       title="maxScale"
-                      style="width:5vw"
+                      style="width:4vw"
                       onfocus="this.value=''">
                  </div>
 
@@ -830,7 +831,7 @@ TODO: need a new id
                        id="minScaleTxt"
                        placeholder="min scale"
                        title="minScale"
-                       style="width:5vw"
+                       style="width:4vw"
                        onfocus="this.value=''">
                   </div>
           </div>

@@ -244,8 +244,6 @@ function plotCrossSection() {
     var flat2=parseFloat(secondlatstr);
     var flon2=parseFloat(secondlonstr);
 
-	// XXXX
-
     var dlon=flon2-flon1;
     var dlat=flat2-flat1;
 window.console.log("XXX dlon is ", dlon);
@@ -298,6 +296,7 @@ window.console.log("XXX dz4 is ..",dz4);
 
 function replotCrossSection() {
     document.getElementById('spinIconForArea').style.display = "block";
+    let map=$('#plotoption-map').prop('checked');
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
 
@@ -309,6 +308,8 @@ function replotCrossSection() {
     let ttoken=fname.split('_');
     let uid="CVM_"+ttoken[1];
 
+    let onmap=0;
+    if(map) onmap=1;
     let oncfm=0;
     if(cfm) oncfm=1;
     let onca=0;
@@ -346,7 +347,7 @@ function replotCrossSection() {
         }
     }
 
-    xmlhttp.open("GET","php/replotCrossSection.php?oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotCrossSection.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 
@@ -438,6 +439,7 @@ function plotVerticalProfile() {
 
 function replotVerticalProfile() {
     document.getElementById('spinIconForArea').style.display = "block";
+    let map=$('#plotoption-map').prop('checked');
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
 
@@ -449,6 +451,8 @@ function replotVerticalProfile() {
     let ttoken=fname.split('_');
     let uid="CVM_"+ttoken[1];
 
+    let onmap=0;
+    if(map) onmap=1;
     let oncfm=0;
     if(cfm) oncfm=1;
     let onca=0;
@@ -489,7 +493,7 @@ window.console.log(onmax);
         }
     }
 
-    xmlhttp.open("GET","php/replotVerticalProfile.php?oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&onpar="+onpar+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotVerticalProfile.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&onpar="+onpar+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 

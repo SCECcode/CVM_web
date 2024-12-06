@@ -13,6 +13,9 @@
     for vs30,
        plot_vs30_etree_map.py
 */
+
+$start_time = microtime(true);
+
 include ("util.php");
 
 $firstlat = ($_GET['firstlat']);
@@ -100,7 +103,11 @@ $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 #print_r($gmtretval);
 #print("</pre>");
 #print("<br>");
-
+#
+#
+$end_time = microtime(true);
+$elapsed_time = $end_time - $start_time;
+#print("Elapsed time: ".round($elapsed_time, 2)." sec\n");
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
@@ -114,6 +121,7 @@ $resultarray->data= $uid."_h_data.bin";
 $resultarray->csv= $uid."_h_data.csv";
 $resultarray->gmtpng= $uid."_h_data.png";
 $resultarray->gmtpdf= $uid."_h_data.pdf";
+$resultarray->elapsed=round($elapsed_time, 2);
 $jj=json_decode($gmtresult);
 $jj->csv=$uid."_h_data.csv";
 $jj->uid=$uid;
