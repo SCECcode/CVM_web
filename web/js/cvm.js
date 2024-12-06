@@ -167,22 +167,18 @@ this.setupPixiSegmentDebug(0,{});
 
 /******************************************/
     this.processByLatlonForPoint = function(fromMap) {
-      document.getElementById('spinIconForProperty').style.display = "block";
       getMaterialPropertyByLatlon();
     };
  
     this.processByLatlonForProfile = function(fromMap) {
-      document.getElementById('spinIconForProfile').style.display = "block";
       plotVerticalProfile();
     };
 
     this.processByLatlonForLine = function(fromMap) {
-      document.getElementById('spinIconForLine').style.display = "block";
       plotCrossSection();
     };
 
     this.processByLatlonForArea = function(fromMap) {
-      document.getElementById('spinIconForArea').style.display = "block";
       plotHorizontalSlice();
     };
 

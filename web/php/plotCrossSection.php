@@ -10,7 +10,7 @@
        plot_cross_section.py
       or
        plot_elevation_cross_section.py
-*/
+ */
 
 include ("util.php");
 
@@ -24,11 +24,11 @@ $floors = ($_GET['floors']);
 $zstart = ($_GET['zstart']);
 $datatype = ($_GET['datatype']);
 $uid = ($_GET['uid']);
-
-$InstallLoc= getenv('UCVM_INSTALL_PATH');
-
 $secondlat = ($_GET['secondlat']);
 $secondlon = ($_GET['secondlon']);
+$hval = ($_GET['spacing']);
+
+$InstallLoc= getenv('UCVM_INSTALL_PATH');
 
 $envstr=makeEnvString();
 
@@ -41,27 +41,23 @@ $pdffile="../result/".$uid."_c_data.pdf";
 
 $gmtpl="../perl/plotCVM-vertSection.pl";
 
-$hhval= ((float)$secondlat - (float)$firstlat)*110.57;
-$hhhval= ((float)$secondlon - (float)$firstlon)*111.32;
-$dval=  round(sqrt(($hhval*$hhval) + ($hhhval*$hhhval)),3);
-$hval=intval(($dval/200)*1000);
-
-
 $lstr = " -b ".$firstlat.",".$firstlon." -u ".$secondlat.",".$secondlon;
 
 if ($zrange != 'none') {
-    $lstr= ' -z '.$zrange.$lstr;
+	$lstr= ' -z '.$zrange.$lstr;
 }
 if ($floors != 'none') {
-    $lstr= ' -L '.$floors.$lstr;
+	$lstr= ' -L '.$floors.$lstr;
 }
 
+// keep vertical to be 100 layers
 $vval= intval(((float)$z-(float)$zstart)/100); 
+
 $lstr=$lstr ." -e ".$z;
 $qstub=" -s ".$zstart." -h ".$hval." -d ".$datatype." -c ".$model." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc." -v ".$vval;
 if ($zmode == 'e') {
-    $query= $envstr." plot_elevation_cross_section.py".$qstub.$lstr;
-    } else {
+	$query= $envstr." plot_elevation_cross_section.py".$qstub.$lstr;
+} else {
         $query= $envstr." plot_cross_section.py -S ".$qstub.$lstr;
 }
 //print($query);

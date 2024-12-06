@@ -18,6 +18,7 @@ include ("util.php");
 $firstlat = ($_GET['firstlat']);
 $firstlon = ($_GET['firstlon']);
 $z = ($_GET['z']);
+$sval = ($_GET['spacing']);
 $zmode = ($_GET['zmode']);
 $model = ($_GET['model']);
 $zrange = ($_GET['zrange']);
@@ -42,12 +43,6 @@ return;
 if ($llval == 0) {
 echo "ERROR: Two points can not have same Longitude";
 return;
-}
-
-$sval= round(sqrt(($lval*$lval) + ($llval*$llval))/100,3);
-
-if ($sval == 0) {
-  $sval=0.001;
 }
 
 $file="../result/".$uid."_h.png";

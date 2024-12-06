@@ -5,6 +5,45 @@ contains utilities used by cxm based functions
 
 **/
 
+// utils for progress bar  - MyProgressBar
+function updatePrograssBar(width) {
+  var element = document.getElementById("myProgressBar");
+  element.style.width = width + '%';
+//  element.innerHTML = width * 1  + '%';
+  let elm = $("#waiton-progress");
+  var n= width * 1  + '%';
+  elm.val(n);
+// window.console.log("Progress bar: update to ", n);
+}
+
+var waiton_counter_cnt;
+// setup waiton-expected and init waiton-total
+// {"total":1000}
+function startWaitonCounter(blob) {
+  let elm = $("#waiton-expected");
+  elm.val(parseInt(blob['total']));
+  elm = $("#waiton-total");
+  elm.val(0);
+  eq_counter_cnt=0;
+  $("#modalwaiton").modal({ backdrop: 'static', keyboard: false });
+}
+function doneWaitonCounter() {
+  $("#modalwaiton").modal('hide');
+}
+
+function add2WaitonCounter(v) {
+  waiton_counter_cnt++;
+  let elm = $("#waiton-total");
+  let o=parseInt(elm.val());
+  let n=o+v;
+  elm.val(n);
+  let maxelm  = $("#waiton-expected");
+  let max = parseInt(maxelm.val());
+  var width = Math.floor((n/max) * 100);
+  updatePrograssBar(width);
+}
+
+/**************************************************************/
 // https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
 function round2Four(val) {
   var ep;

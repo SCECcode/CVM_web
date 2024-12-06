@@ -331,8 +331,8 @@ TODO: need a new id
                     <option value="pointClick" selected>0D Point</option>
                     <option disabled>-- Advanced --</option>
                     <option value="profileClick">1D Vertical Profile</option>
-                    <option value="lineClick">2D Vertical Cross Section</option>
-                    <option value="areaClick">2D Horizontal Slice</option>
+                    <option id="searchType-lineClick" value="lineClick">2D Vertical Cross Section</option>
+                    <option id="searchType-areaClick" value="areaClick">2D Horizontal Slice</option>
                 </select>
                 <div class="input-group-append">
                     <button id="toReset" class="btn btn-dark pl-4 pr-4">RESET</button>
@@ -710,6 +710,38 @@ TODO: need a new id
   </div>
 </div>
 
+<!--Modal: Model (modalwaiton)-->
+<div class="modal" id="modalwaiton" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="width:45%" id="modalwaitonDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalwaitonContent">
+      <!--Body-->
+      <div class="modal-body" id="modalwaitonBody">
+        <div class="row col-md-12 ml-auto" style="overflow:hidden; font-size:10pt">
+           <div class="row">
+           <p id="modalwaitonLabel" style="text-align:center;font-size:25px"> Extracting Model Data
+                <div class="row" style="display:none" >
+
+                <input type="text" style="margin-left:50px;width:100px;" id="waiton-total" value="0">
+                <input type="text" style="width:100px;margin-right:50px;" id="waiton-expected" value="0">
+                </div>
+                <input type="text" style="text-align:center;width:60px;margin-right:50px;margin-left:20px;padding:0px" id="waiton-progress" value="0%" disabled>
+                <div class="row" id="myProgress" style="border:2px solid grey"><div id="myProgressBar"></div>
+                </div>
+           </p>
+           </div>
+           <div class="row mt-2" style="border:0px solid blue">
+	     <p id="modalwaitonLabel2" style="text-align:center;font-size:14px; margin-left:3px; margin-right:6px; border:0px solid red">Please wait as this process is complex and may take a few minutes. Many CVMs contain a large amount of data and the data must be interpolated before extracting</p>
+           </div>
+        </div>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalwaiton-->
+
+
 <!--Modal: (modalplotoption) -->
 <div class="modal" id="modalplotoption" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <!--
@@ -777,20 +809,20 @@ TODO: need a new id
 
                 <div class="form-check form-check-inline mt-4">
                    <label title='scale maximum'
-                          style="margin-right:4px"
+                          style="margin-right:8px"
                           for="maxScaleTxt">maximum
                    </label>
                    <input type="text"
                       id="maxScaleTxt"
                       placeholder="max scale"
                       title="maxScale"
-                      style="width:6vw"
+                      style="width:5vw"
                       onfocus="this.value=''">
                  </div>
 
                  <div class="form-check form-check-inline mt-2">
 		    <label title='scale minimum'
-                           style="margin-right:4px"
+                           style="margin-right:8px"
 			   for="minScaleTxt">minimum
                     </label>
 
@@ -798,7 +830,7 @@ TODO: need a new id
                        id="minScaleTxt"
                        placeholder="min scale"
                        title="minScale"
-                       style="width:6vw"
+                       style="width:5vw"
                        onfocus="this.value=''">
                   </div>
           </div>

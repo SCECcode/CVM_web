@@ -139,8 +139,8 @@ function updatePlotOptions(blob) {
 
     let json=JSON.parse(blob);
     let range=json['range'];
-    let minv=range['min'];
-    let maxv=range['max'];
+    let minv=round2Four(range['min']);
+    let maxv=round2Four(range['max']);
     document.getElementById("minScaleTxt").value=minv;
     document.getElementById("maxScaleTxt").value=maxv;
 
@@ -466,9 +466,15 @@ function set_zrange_presets()
    if( t == 'd' ) {
        $( "#zrangeStartTxt" ).val('0');
        $( "#zrangeStopTxt" ).val('350');
+// enable all search type
+       $( "#searchType-lineClick" ).attr("disabled",false);
+       $( "#searchType-areaClick" ).attr("disabled",false);
        } else {
          $( "#zrangeStartTxt" ).val('0');
          $( "#zrangeStopTxt" ).val('-350');
+// disable the crosssection and horizontal slice
+         $( "#searchType-lineClick" ).attr("disabled","disabled");
+         $( "#searchType-areaClick" ).attr("disabled","disabled");
    }
 }
 
