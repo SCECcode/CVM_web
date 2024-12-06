@@ -215,6 +215,7 @@ function replotPlots() {
    }
    if(MODAL_REPLOT_TYPE == "profile") {
      replotVerticalProfile();
+     MODAL_REPLOT_PAR=false;
    }
 }
 

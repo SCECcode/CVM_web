@@ -150,6 +150,7 @@ window.console.log("Calling toReset..");
         // switch from ../reslut/pdffile to /cvm-explorer/result/pdffile 
         MODAL_REPLOT_SRC=myfile.replace("..","/cvm-explorer"); 
         MODAL_REPLOT_TYPE=type;
+        MODAL_REPLOT_PAR=true;
 
     // Set the modal content dynamically
         var modal = $(this);
@@ -161,6 +162,12 @@ window.console.log("Calling toReset..");
         document.getElementById("plotoption-footer").style.display="";
 
   });
+// special case.. if onpar get changed, need to track..it 
+  $("#plotParTxt").change(function() {
+        MODAL_REPLOT_PAR=true;
+window.console.log("plotPar got changed.");
+  });
+
 
 
 // MAIN SETUP

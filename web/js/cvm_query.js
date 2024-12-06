@@ -8,6 +8,7 @@
 var MAX_FILEPOINTS=200;
 var MODAL_REPLOT_SRC="";
 var MODAL_REPLOT_TYPE="";
+var MODAL_REPLOT_PAR=false;
 
 function cleanResultDirectory() {
     if (window.XMLHttpRequest) {
@@ -458,16 +459,22 @@ function replotVerticalProfile() {
     let onca=0;
     if(ca) onca=1;
 
-    let onrange=1; // always use scale range
-
     let onmin=document.getElementById("minScaleTxt").value;
     let onmax=document.getElementById("maxScaleTxt").value;
     let onpad=document.getElementById("plotPadTxt").value;
+
+    let onrange=0;
+    if(MODAL_REPLOT_PAR == true) {
+        onrange=1; // always use scale range
+    }
+
     let onpar=document.getElementById("plotParTxt").value;
+
 
 window.console.log(onrange);
 window.console.log(onmin);
 window.console.log(onmax);
+
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp = new XMLHttpRequest();
