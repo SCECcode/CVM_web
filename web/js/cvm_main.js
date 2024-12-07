@@ -165,7 +165,10 @@ window.console.log("Calling toReset..");
 // special case.. if onpar get changed, need to track..it 
   $("#plotParTxt").change(function() {
         MODAL_REPLOT_PAR=true;
-window.console.log("plotPar got changed.");
+	// clear the min/max 
+        document.getElementById("minScaleTxt").value=0;
+        document.getElementById("maxScaleTxt").value=0;
+ 
   });
 
 

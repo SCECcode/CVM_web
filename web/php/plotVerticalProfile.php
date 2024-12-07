@@ -49,20 +49,19 @@ if ($comment != 'none') {
 $qstub=" -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc." -d ".$datatype." -c ".$model." -o ".$file;
 
 if ($zmode == 'e') {
-  $query= $envstr." plot_elevation_profile.py ".$qstub.$lstr;
+  $query= $envstr." plot_elevation_profile.py -S ".$qstub.$lstr;
   } else {
     $query= $envstr." plot_depth_profile.py -S ".$qstub.$lstr;
 }
 
-//print($query);
+#print($query);
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query, $result, $uid);
-//#print($result);
 
 $cvsquery = $envstr." ucvm_vertical_profile2csv.py ".$matpropsfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
-//#print($cvsquery);
+#print($cvsquery);
 
 #if ($zmode == 'e') {
 #  $rc=makeCSVElevationProfile($uid);
@@ -107,7 +106,8 @@ $jj->uid=$uid;
 $gmtresult_n=json_encode($jj);
 $resultarray->gmtresult= $gmtresult_n;
 
-if ( $gmtstatus == 0 && file_exists($pngfile)) {
+//if ( $gmtstatus == 0 && file_exists($pngfile)) {
+if (1) {
 $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');
 echo "<div data-side=\"verticalProfile".$uid."\" data-params=\""; 
 echo $resultstring;
