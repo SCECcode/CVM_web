@@ -32,6 +32,12 @@ jQuery(document).ready(function() {
   });
 
   $("#searchType").change(function () {
+    var s= document.getElementById("searchType").value;
+      if( s == 'lineClick' || s == 'areaClick' ) { 
+        $( "#zMode-elevClick" ).attr("disabled","disabled");
+        } else {
+          $( "#zMode-elevClick" ).attr("disabled",false);
+      }
     var funcToRun = $(this).val();
     if (funcToRun != "") {
       window[funcToRun]();
@@ -83,8 +89,8 @@ jQuery(document).ready(function() {
   });
 
   $("#zModeType").change(function () {
-      set_zrange_presets();
-      reset_presets();
+     set_zrange_presets();
+     reset_presets();
   });
 
   $("#areaDataTypeTxt").change(function () {

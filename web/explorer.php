@@ -336,8 +336,8 @@ TODO: need a new id
                     <label class="input-group-text" for="modelType">Select Z Mode</label>
                 </div>
                 <select id="zModeType" class="custom-select custom-select-sm">
-                    <option value="d">Depth(km)</option>
-                    <option value="e">Elevation(km)</option>
+                    <option id="zMode-depthClick" value="d">Depth(km)</option>
+                    <option id="zMode-elevClick" value="e">Elevation(km)</option>
                 </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzmode"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div> <!-- z select -->
 
@@ -354,6 +354,21 @@ TODO: need a new id
                                 </div>
                                 <div class="row d-flex">
                                     <div class="col-5 pr-0">
+                                        <input type="text" 
+                                               id="pointFirstLonTxt" 
+                                               placeholder="Longitude" 
+                                               title="lon"
+                                               onfocus="this.value=''" 
+                                               onchange="reset_point_presets()"
+                                               class="form-control">
+                                        <input type="text" 
+                                               id="pointZTxt" 
+                                               placeholder="Z" 
+                                               title="Z"
+                                               onfocus="this.value=''" 
+                                               class="form-control mt-1">
+                                    </div>
+                                    <div class="col-5 pr-0">
                                         <input type="text"
                                                id="pointFirstLatTxt"
                                                placeholder="Latitude"
@@ -361,42 +376,31 @@ TODO: need a new id
                                                onfocus="this.value=''"
                                                onchange="reset_point_presets()"
                                                class="form-control">
-                                        <input type="text" 
-                                               id="pointFirstLonTxt" 
-                                               placeholder="Longitude" 
-                                               title="lon"
-                                               onfocus="this.value=''" 
-                                               onchange="reset_point_presets()"
-                                               class="form-control mt-1">
-                                    </div>
-                                    <div class="col-5 pr-0">
-                                        <input type="text" 
-                                               id="pointZTxt" 
-                                               placeholder="Z" 
-                                               title="Z"
-                                               onfocus="this.value=''" 
-                                               class=" form-control">
                                         <input type="text"
                                                id="pointUIDTxt" 
                                                placeholder="UID" 
                                                title="Uniqued ID"
                                                onfocus="this.value=''" 
                                                class="form-control mt-1" style="display:none">
-
-                                    </div>
-                                    <div class="col-0 pr-0">
-                                        <button id="pointBtn" type="button" title="query with latlon"
-                                                class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForPoint(0)">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                        </button>
                                     </div>
                                 </div>
-                                <div class="mt-2">
+                                <div class="mt-1">
                                      <input class="form-control" id='infileBtn' type='file' onchange='selectLocalFiles(this.files,1)' style='display:none;'></input>
                                      <button id="fileSelectBtn" class="btn cvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("infileBtn").click();'>
                                      <span class="glyphicon glyphicon-file"></span> Select file to use</button>
 <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalfileinfo"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
+
+                                <div class="row d-flex">
+                                    <div class="col-5 pr-0">
+                                    </div>
+                                    <div class="col-5 pr-0">
+                                        <div class="col-12" style="padding:5px 0px 10px 0px">
+                                               <button id="pointBtn" class="btn btn-dark" onclick="CVM.processByLatlonForPoint(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+                                        </div>
+                                    <div>
+                                </div>
+
                             </div>
                         </li>
 
@@ -410,6 +414,27 @@ TODO: need a new id
                                 <div class="row d-flex">
                                     <div class="col-5 pr-0">
                                         <input type="text"
+                                               id="profileFirstLonTxt" 
+                                               placeholder="Longitude" 
+                                               title="lon"
+                                               onfocus="this.value=''" 
+                                               onchange="reset_profile_presets()"
+                                               class="form-control">
+                                        <input type="text"
+                                               id="profileZStartTxt" 
+                                               placeholder="Z Start" 
+                                               title="Z start"
+                                               onfocus="this.value=''" 
+                                               class="form-control mt-1">
+                                        <input type="text"
+                                               id="profileZStepTxt" 
+                                               placeholder="Z Step" 
+                                               title="Z start"
+                                               onfocus="this.value=''" 
+                                               class="form-control mt-1">
+                                    </div>
+                                    <div class="col-5 pr-0">
+                                        <input type="text"
                                                id="profileFirstLatTxt"
                                                placeholder="Latitude"
                                                title="lat"
@@ -417,33 +442,13 @@ TODO: need a new id
                                                onchange="reset_profile_presets()"
                                                class="form-control">
                                         <input type="text"
-                                               id="profileFirstLonTxt" 
-                                               placeholder="Longitude" 
-                                               title="lon"
-                                               onfocus="this.value=''" 
-                                               onchange="reset_profile_presets()"
-                                               class="form-control mt-1">
-                                    </div>
-                                    <div class="col-5 pr-0">
-                                        <input type="text"
-                                               id="profileZStartTxt" 
-                                               placeholder="Z start" 
-                                               title="Z start"
-                                               onfocus="this.value=''" 
-                                               class="form-control">
-                                        <input type="text"
                                                id="profileZEndTxt" 
-                                               placeholder="Z ends" 
+                                               placeholder="Z End" 
                                                title="Z ends"
                                                onfocus="this.value=''" 
                                                class="form-control mt-1">
-                                        <input type="text"
-                                               id="profileZStepTxt" 
-                                               placeholder="Z step" 
-                                               title="Z start"
-                                               onfocus="this.value=''" 
-                                               class="form-control mt-1">
                                         <select title="profileDatatype" id="profileDataTypeTxt" class="my-custom-select custom-select mt-1" style="border-radius:0.25rem">
+                                               <option value="">Data Type</option>
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
@@ -457,21 +462,23 @@ TODO: need a new id
                                                onfocus="this.value=''" 
                                                class="form-control mt-1" style="display:none">
                                     </div>
-                                    <div class="col-0 pr-0">
-                                        <button id="profileBtn" type="button" title="query with latlon"
-                                                class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForProfile(0)">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                        </button>
-                                    </div>
                                 </div>
-<!---XXX----->
-                                <div class="mt-2">
+                                <div class="mt-1">
                                      <input class="form-control" id='inprofilefileBtn' type='file' onchange='selectLocalFiles(this.files,0)' style='display:none;'></input>
                                      <button id="profilefileSelectBtn" class="btn cvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("inprofilefileBtn").click();'>
                                      <span class="glyphicon glyphicon-file"></span>Select file to use</button>
 <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalprofilefile"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
-<!---XXX----->
+                                <div class="row d-flex">
+                                    <div class="col-5 pr-0">
+                                    </div>
+                                    <div class="col-5 pr-0">
+                                        <div class="col-12" style="padding:5px 0px 10px 0px">
+                                          <button id="profileBtn" class="btn btn-dark" onclick="CVM.processByLatlonForProfiles(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+                                        </div>
+                                    <div>
+                                </div>
+
                             </div>
                         </li>
 
@@ -485,17 +492,17 @@ TODO: need a new id
                                 <div class="row d-flex ">
                                     <div class="col-5 pr-0">
                                         <input type="text"
-                                               placeholder="Latitude"
-                                               id="lineFirstLatTxt"
-                                               title="first lat"
-                                               onfocus="this.value=''"
+                                               id="lineFirstLonTxt" 
+                                               placeholder='Begin Longitude'
+                                               title="first lon"
+                                               onfocus="this.value=''" 
                                                onchange="reset_line_presets()"
                                                class="form-control">
                                         <input type="text"
-                                               id="lineFirstLonTxt" 
-                                               placeholder='Longitude'
-                                               title="first lon"
-                                               onfocus="this.value=''" 
+                                               id="lineSecondLonTxt"
+                                               title="second lon"
+                                               placeholder='End Longitude'
+                                               onfocus="this.value=''"
                                                onchange="reset_line_presets()"
                                                class="form-control mt-1">
                                         <input type="text"
@@ -504,14 +511,8 @@ TODO: need a new id
                                                title="lineZStartTxt"
                                                onfocus="this.value=''" 
                                                class="form-control mt-1">
-                                        <input type="text"
-                                               id="lineZTxt"
-                                               placeholder="Z ends"
-                                               title="lineZTxt"
-                                               onfocus="this.value=''"
-                                               class="form-control mt-1">
                                         <select title="Datatype" id="lineDataTypeTxt" class="my-custom-select custom-select mt-1" style="border-radius:0.25rem">
-                                               <option value="">DataType</option>
+                                               <option value="">Data Type</option>
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
@@ -520,18 +521,24 @@ TODO: need a new id
                                     </div>
                                     <div class="col-5 pr-0">
                                         <input type="text"
-                                               id="lineSecondLatTxt"
-                                               title="second lat"
-                                               placeholder='2nd Latitude'
+                                               placeholder="Begin Latitude"
+                                               id="lineFirstLatTxt"
+                                               title="first lat"
                                                onfocus="this.value=''"
                                                onchange="reset_line_presets()"
                                                class="form-control">
                                         <input type="text"
-                                               id="lineSecondLonTxt"
-                                               title="second lon"
-                                               placeholder='2nd Longitude'
+                                               id="lineSecondLatTxt"
+                                               title="second lat"
+                                               placeholder='End Latitude'
                                                onfocus="this.value=''"
                                                onchange="reset_line_presets()"
+                                               class="form-control mt-1">
+                                        <input type="text"
+                                               id="lineZTxt"
+                                               placeholder="Z ends"
+                                               title="lineZTxt"
+                                               onfocus="this.value=''"
                                                class="form-control mt-1">
                                         <input type="text"
                                                id="lineUIDTxt" 
@@ -540,12 +547,15 @@ TODO: need a new id
                                                onfocus="this.value=''" 
                                                class="form-control mt-1" style="display:none">
                                     </div>
-                                    <div class="col-12" style="border:1px solid green">
-                                        <button id="lineBtn" type="button" title="query with latlon"
-                                                class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForLine(0)">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                        </button>
+                                </div>
+                                <div class="row d-flex">
+                                    <div class="col-5 pr-0">
                                     </div>
+                                    <div class="col-5 pr-0">
+                                        <div class="col-12" style="padding:5px 0px 10px 0px">
+                                          <button id="lineBtn" class="btn btn-dark" onclick="CVM.processByLatlonForLine(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+                                        </div>
+                                    <div>
                                 </div>
                             </div>
                         </li>
