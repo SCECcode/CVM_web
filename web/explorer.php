@@ -391,7 +391,7 @@ TODO: need a new id
 <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalfileinfo"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
 
-                                <div class="row d-flex">
+                                <div class="row d-flex mt-1">
                                     <div class="col-5 pr-0">
                                     </div>
                                     <div class="col-5 pr-0">
@@ -469,7 +469,7 @@ TODO: need a new id
                                      <span class="glyphicon glyphicon-file"></span>Select file to use</button>
 <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalprofilefile"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
-                                <div class="row d-flex">
+                                <div class="row d-flex mt-1">
                                     <div class="col-5 pr-0">
                                     </div>
                                     <div class="col-5 pr-0">
@@ -548,7 +548,7 @@ TODO: need a new id
                                                class="form-control mt-1" style="display:none">
                                     </div>
                                 </div>
-                                <div class="row d-flex">
+                                <div class="row d-flex mt-1">
                                     <div class="col-5 pr-0">
                                     </div>
                                     <div class="col-5 pr-0">
@@ -619,11 +619,18 @@ TODO: need a new id
                                                title="Uniqued ID"
                                                onfocus="this.value=''" 
                                                class="form-control" style="display:none">
-<div class="col-12" style="padding:5px 0px 10px 0px">
-					<button id="areaBtn" class="btn btn-dark" onclick="CVM.processByLatlonForArea(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
-</div>
                                     </div>
                                 </div>
+                                <div class="row d-flex mt-1">
+                                    <div class="col-5 pr-0">
+                                    </div>
+                                    <div class="col-5 pr-0">
+                                        <div class="col-12" style="padding:5px 0px 10px 0px">
+                                               <button id="areaBtn" class="btn btn-dark" onclick="CVM.processByLatlonForArea(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+                                        </div>
+                                    <div>
+                                </div>
+
                             </div>
                         </li>
                     </ul> 
