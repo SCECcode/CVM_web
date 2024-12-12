@@ -561,12 +561,25 @@ function getCSVFromJSON(jblob) {
 // move current popup modal to a new tab
 function movePlotview() {
   var yourDOCTYPE = "<!DOCTYPE html>"; // your doctype declaration
-  var copyPreview = window.open('about:blank', 'CVM plots', "resizable=yes,scrollbars=yes,status=yes");
+  var copyPreview = window.open();
   var newCopy = copyPreview.document;
   newCopy.open();
-  // remove copy and new tab buttons
+  // remove header panel
   document.getElementById("plotoption-header").style.display="none";
-  document.getElementById("plotoption-footer").style.display="none";
+  var newInner=document.documentElement.innerHTML;
+  newCopy.write(yourDOCTYPE+"<html>"+ newInner+ "</html>");
+  newCopy.close();
+  document.getElementById("viewPlotClosebtn").click();
+}
+
+// move current popup modal to a new window
+function movePlotview2() {
+  var yourDOCTYPE = "<!DOCTYPE html>"; // your doctype declaration
+  var copyPreview = window.open('about:blank', 'CVM_plot', "resizable=yes,scrollbars=yes,status=yes");
+  var newCopy = copyPreview.document;
+  newCopy.open();
+  // remove header panel
+  document.getElementById("plotoption-header").style.display="none";
   var newInner=document.documentElement.innerHTML;
   newCopy.write(yourDOCTYPE+"<html>"+ newInner+ "</html>");
   newCopy.close();

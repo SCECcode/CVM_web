@@ -793,8 +793,10 @@ TODO: need a new id
                   </div>
 
                   <div id="plotoption-pad-option" class="form-check form-check-inline mt-2" style="display:">
-                     <label class="input-group-text" for="plotPadTxt">Select Map Padding</label>
+		     <label class="input-group-text" for="plotPadTxt">Select Map Padding<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalpadding"><span class="glyphicon glyphicon-info-sign"></span></button></label>
                      <select id="plotPadTxt" class="my-custom-select custom-select">
+                        <option value="0.1">0.1</option>
+                        <option value="0.5">0.5</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -972,6 +974,25 @@ TODO: need a new id
     </div> <!--Content-->
   </div>
 </div> <!--Modal: modalcolorrange-->
+
+<!--Modal: padding-->
+<div class="modal" id="modalpadding" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalpaddingDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalpaddingContent" style="font-size:20px">
+      <!--Body-->
+      <div class="modal-body" id="modalpaddingBody">
+<p>This sets how far (in degrees) the map should extend beyond the selected 1D profile location. Amap that is too local may not show identifiable geographic features. If so, increase the padding to make the map cover a larger geographic area.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalpadding-->
+
 
 <!--Modal: modeltype -->
 <div class="modal" id="modalmodeltype" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

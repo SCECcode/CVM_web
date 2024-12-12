@@ -324,14 +324,12 @@ if($plotPar==1){
 			system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i1,0 -O >> $plotFile";
 		}
 		#plot only line
-		else {
-			system "gmt psxy $gmtFile -R -JX -W1.5p,$blue -i1,0 -O >> $plotFile"
-		}
+		else {system "gmt psxy $gmtFile -R -JX -W1.5p,$blue -i1,0 -O >> $plotFile"}
 	}
 	#with map, so do not end the eps file here
 	else{
 		system "gmt psxy $gmtFile -R -JX -W1.5p,$blue -i1,0 -O -K >> $plotFile";
-		system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i1,0 -O -K >> $plotFile";
+		if($plotPts==1){system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i1,0 -O -K >> $plotFile"}
 	}
 }
 #plot Vs
@@ -346,14 +344,12 @@ elsif($plotPar==2){
 			system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i2,0 -O >> $plotFile";
 		}
 		#plot only line
-		else {
-			system "gmt psxy $gmtFile -R -JX -W1.5p,$red -i2,0 -O >> $plotFile"
-		}
+		else {system "gmt psxy $gmtFile -R -JX -W1.5p,$red -i2,0 -O >> $plotFile"}
 	}
 	#with map, so do not end the eps file here
 	else{
 		system "gmt psxy $gmtFile -R -JX -W1.5p,$red -i2,0 -O -K >> $plotFile";
-		system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i2,0 -O -K >> $plotFile";
+		if($plotPts==1){system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i2,0 -O -K >> $plotFile"}
 	}
 }
 #plot density
@@ -368,14 +364,12 @@ elsif($plotPar==3){
 			system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i3,0 -O >> $plotFile";
 		}
 		#plot only line
-		else {
-			system "gmt psxy $gmtFile -R -JX -W1.5p,$green -i3,0 -O >> $plotFile"
-		}
+		else {system "gmt psxy $gmtFile -R -JX -W1.5p,$green -i3,0 -O >> $plotFile"}
 	}
 	#with map, so do not end the eps file here
 	else{
 		system "gmt psxy $gmtFile -R -JX -W1.5p,$green -i3,0 -O -K >> $plotFile";
-		system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i3,0 -O -K >> $plotFile";
+		if($plotPts==1){system "gmt psxy $gmtFile -R -JX -Sc2.0p -Gwhite -W0.1p -i3,0 -O -K >> $plotFile"}
 	}
 }
 #plot All
