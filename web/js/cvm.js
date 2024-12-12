@@ -17,13 +17,6 @@ var CVM = new function () {
 // setup various info tables
 // parameter table 
      document.getElementById('parametersTable-container').innerHTML=makeParametersTable();
-// file format table
-     document.getElementById('fileFormatTable-container').innerHTML=makeFileFormatTable();
-// zmode table
-     document.getElementById('ZModeTable-container').innerHTML=makeZModeTable();
-
-//??? starting mode, first model one list, option for point, option for depth
-	  //
    };
 
 // possible layer's slices

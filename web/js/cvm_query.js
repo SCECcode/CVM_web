@@ -247,14 +247,10 @@ function plotCrossSection() {
 
     var dlon=flon2-flon1;
     var dlat=flat2-flat1;
-window.console.log("XXX dlon is ", dlon);
-window.console.log("XXX dlat is ", dlat);
 
     var z=Math.sqrt((dlon*dlon) + (dlat*dlat));
-window.console.log("XXX z is ..",z);
 
     var dz4 = (round2Four(z) * 1000.0);
-window.console.log("XXX dz4 is ..",dz4);
 
     var uid=document.getElementById("lineUIDTxt").value;
 
@@ -300,6 +296,7 @@ function replotCrossSection() {
     let map=$('#plotoption-map').prop('checked');
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
+    let point=$('#plotoption-point').prop('checked');
 
     // replace src .pdf with .csv and grab just filename
     let file=MODAL_REPLOT_SRC.replace("pdf","csv");
@@ -315,6 +312,8 @@ function replotCrossSection() {
     if(cfm) oncfm=1;
     let onca=0;
     if(ca) onca=1;
+    let onpoint=0;
+    if(point) onpoint=1;
 
     let onrange=1;
 
@@ -348,7 +347,7 @@ function replotCrossSection() {
         }
     }
 
-    xmlhttp.open("GET","php/replotCrossSection.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotCrossSection.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 
@@ -392,10 +391,14 @@ function plotVerticalProfileByList(dataarray,idx,total) {
                 var zstr=getZModeNameWithType(zmodestr);
                 var mstr=getModelNameWithType(modelstr);
                 var note="Vertical "+zstr+" Profile ("+datatypestr+") with "+mstr;
+                add_bounding_profile(uid,latstr,lonstr);
                 insertMetaPlotResultTable(note, uid,str);
+                reset_profile_UID();
+                } else { // failed to produce valid vertical profile plot, remove marker
+                    remove_bounding_profile_layer(uid);
             }
             document.getElementById('spinIconForProfile').style.display = "none";
-            reset_profile_UID();
+		
             // call next one
             plotVerticalProfileByList(dataarray,idx+1,total);
         }
@@ -443,6 +446,7 @@ function replotVerticalProfile() {
     let map=$('#plotoption-map').prop('checked');
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
+    let point=$('#plotoption-point').prop('checked');
 
     // replace src .pdf with .csv and grab just filename
     let file=MODAL_REPLOT_SRC.replace("pdf","csv");
@@ -458,6 +462,8 @@ function replotVerticalProfile() {
     if(cfm) oncfm=1;
     let onca=0;
     if(ca) onca=1;
+    let onpoint=0;
+    if(point) onpoint=1;
 
     let onmin=document.getElementById("minScaleTxt").value;
     let onmax=document.getElementById("maxScaleTxt").value;
@@ -469,9 +475,6 @@ function replotVerticalProfile() {
     }
 
     let onpar=document.getElementById("plotParTxt").value;
-window.console.log(onrange);
-window.console.log(onmin);
-window.console.log(onmax);
 
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -498,7 +501,7 @@ window.console.log(onmax);
         }
     }
 
-    xmlhttp.open("GET","php/replotVerticalProfile.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&onpar="+onpar+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotVerticalProfile.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&onrange="+onrange+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&onpar="+onpar+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 
@@ -553,9 +556,7 @@ function plotHorizontalSlice() {
       ds4=0.001; 
     }
 
-    window.console.log("XXX ds4 is...", ds4);
     var dchk= (dlat/ds4) * (dlon/ds4);
-    window.console.log("XXX dchk is...", dchk);
 
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -590,6 +591,7 @@ function replotHorizontalSlice() {
     document.getElementById('spinIconForArea').style.display = "block";
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
+    let point=$('#plotoption-point').prop('checked');
 
     // replace src .pdf with .csv and grab just filename
     let file=MODAL_REPLOT_SRC.replace("pdf","csv");
@@ -603,6 +605,8 @@ function replotHorizontalSlice() {
     if(cfm) oncfm=1;
     let onca=0;
     if(ca) onca=1;
+    let onpoint=0;
+    if(point) onpoint=1;
 
     let onrange=1;
 
@@ -623,6 +627,7 @@ function replotHorizontalSlice() {
             document.getElementById("phpResponseTxt").innerHTML = this.responseText;
             let responseText = this.responseText;
             var str=processSearchResult("replotHorizontalSlice");
+window.console.log("??? str",str);
 // needs to retrieve gmtresult blob, and update uid_state_blob 
             updateMetaReplotResultTable(str);
 
@@ -635,7 +640,7 @@ function replotHorizontalSlice() {
         }
     }
 
-    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 

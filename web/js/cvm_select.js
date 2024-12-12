@@ -92,7 +92,6 @@ function set_area_latlons(uid, firstlat,firstlon,secondlat,secondlon) {
 }
 
 function reset_area_latlons() {
-window.console.log("XXX  reset_area_latlons");
    $( "#areaFirstLatTxt" ).val('');
    $( "#areaFirstLonTxt" ).val('');
    $( "#areaSecondLatTxt" ).val('');
@@ -563,6 +562,8 @@ function in_drawing_profile() {
 // not when in the map-marking mode : drawing_profile==true
 function chk_and_add_profile() {
   
+  window.console.log( "XXX ??? never called this ???");
+
   if(drawing_profile) {
     return;
   }

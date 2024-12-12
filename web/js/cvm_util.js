@@ -6,8 +6,10 @@
 // footer is about 58px
 function setIframHeight(id) {
   let top = document.documentElement.clientHeight;
-  var f_h=58;
-  var height=top -(f_h*2);
+//  var f_h=58;
+  var f_h=40;
+  var height=top -(f_h);
+
   document.getElementById(id).height = height;
   return height;
 }
@@ -392,11 +394,14 @@ function readAndProcessLocalFileForProfile(fobj) {
     var csv = event.target.result; 
     var ffline = reader.result.split('\n');
     var cnt=ffline.length;
+    var all="vs,vp,density";
     var fdata=[];
     if(cnt == 0) { 
       window.console.log("ERROR, can not process the upload file ");
       return;
     }
+
+    window.console.log("HERE");
 
     for(i=0;i<cnt;i++) {
       var fline=ffline[i];
@@ -422,7 +427,8 @@ function readAndProcessLocalFileForProfile(fobj) {
        let item=fdata[i];
        let stub=item[5];
        let uid=getRnd(stub); // rewrite the stub
-       fdata[i][5]=uid;
+       fdata[i][5]=all;
+       fdata[i].push(uid);
     }
     plotVerticalProfileByList(fdata,0,fdata.length);
 

@@ -11,6 +11,7 @@ include ("util.php");
 $oncfm = ($_GET['oncfm']);
 $onca = ($_GET['onca']);
 $onrange = ($_GET['onrange']);
+$onpoint = ($_GET['onpoint']);
 $oncmap = ($_GET['oncmap']);
 $onmin = ($_GET['onmin']);
 $onmax = ($_GET['onmax']);
@@ -25,9 +26,9 @@ $envstr=makeEnvString();
 
 #./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax
 if( $onrange == '1' ) {
-  $gmtlstr=" ".$oncfm." ".$onca." 0 ".$oncmap." 1 ".$onmin." ".$onmax;
+  $gmtlstr=" ".$oncfm." ".$onca." ".$onpoint." ".$oncmap." 1 ".$onmin." ".$onmax;
   } else {
-    $gmtlstr=" ".$oncfm." ".$onca." 0 ".$oncmap." 0";
+    $gmtlstr=" ".$oncfm." ".$onca." ".$onpoint." ".$oncmap." 0";
 }
 
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;

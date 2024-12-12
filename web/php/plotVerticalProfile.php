@@ -106,8 +106,7 @@ $jj->uid=$uid;
 $gmtresult_n=json_encode($jj);
 $resultarray->gmtresult= $gmtresult_n;
 
-//if ( $gmtstatus == 0 && file_exists($pngfile)) {
-if (1) {
+if ( $gmtstatus == 0 && file_exists($pngfile)) {
 $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');
 echo "<div data-side=\"verticalProfile".$uid."\" data-params=\""; 
 echo $resultstring;

@@ -88,10 +88,10 @@ window.console.log("downloadlinks>>",str);
        var val=str[keys[i]]; 
        switch(keys[i]) {
           case 'csv':
-              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;csv data file</div>";
+              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;Download data(.csv format)</div>";
               break;
           case 'gmtpdf':
-              html=html+"<div style=\"margin-left:-6px\"><button id=\""+uid+"_show_btn\" class=\"btn btn-sm cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalplotoption\"><span class=\"glyphicon glyphicon-picture\"></span></button>PDF plot</div>";
+              html=html+"<div style=\"margin-left:-6px\"><button id=\""+uid+"_show_btn\" class=\"btn btn-sm cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalplotoption\"><span class=\"glyphicon glyphicon-picture\"></span></button>Plot data</div>";
               break;
           case 'gmtpng':
 //              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"pngbox\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PNG plot</div>";
@@ -100,7 +100,7 @@ window.console.log("downloadlinks>>",str);
               html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"pngbox\"><span class=\"glyphicon glyphicon-picture\"></span></a>&nbsp;&nbsp;PNG plot</div>";
               break;
           case 'meta':
-              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;plot metadata file</div>";
+//              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;plot metadata file</div>";
               break;
           case 'data':
 //              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;plot data file</div>";
@@ -126,7 +126,7 @@ window.console.log("downloadlinks>>",str);
               break;
           case 'elapsed':
               window.console.log("elapsed time(sec):",val);
-              html=html+"<div style=\"display:\">elapsed time: "+val+"(sec)</div>";
+              html=html+"<div style=\"display:\">Extraction time: "+val+" sec</div>";
               break;
           default:
               window.console.log("This key is skipped:",keys[i]);
@@ -161,6 +161,19 @@ function updatePlotOptions(blob) {
       } else {
         document.getElementById("plotoption-ca").value=1;
         document.getElementById("plotoption-ca").checked=true;
+    }
+
+    if('points' in json) {
+      document.getElementById("plotoption-point-option").style.display='block';
+      if(json['points'] == 0) {
+        document.getElementById("plotoption-point").value=0;
+        document.getElementById("plotoption-point").checked=false;
+        } else {
+          document.getElementById("plotoption-point").value=1;
+          document.getElementById("plotoption-point").checked=true;
+      }
+      } else {
+        document.getElementById("plotoption-point-option").style.display='none';
     }
 
     if('plotMap' in json) {
@@ -249,11 +262,13 @@ function makeMetaPlotResultTable(note,uid,html) {
 
 // insert at the end, row=table.insertRow(-1);
     row=table.insertRow(1);
+    let myhtml;
     if(hasLayer!=0) {
-        row.innerHTML="<td style=\"width:4px\"><button class=\"btn btn-sm cvm-small-btn\" title=\"toggle the layer\" onclick=toggle_a_layergroup(\""+uid+"\");><span value=0 id=\"cvm_layer_"+uid+"\" class=\"glyphicon glyphicon-eye-open\"></span></button></td><td style=\"width:10vw\">"+uid+"</td><td style=\"width:24vw\">"+html+"</td><td style=\"width:24vw\">"+note+"</td>";
+      myhtml="<td style=\"width:4px\"><button class=\"btn btn-sm cvm-small-btn\" title=\"toggle the layer\" onclick=toggle_a_layergroup(\""+uid+"\");><span value=0 id=\"cvm_layer_"+uid+"\" class=\"glyphicon glyphicon-eye-open\"></span></button></td><td style=\"width:10vw\">"+uid+"</td><td style=\"width:24vw\">"+html+"</td><td style=\"width:24vw\">"+note+"</td>";
       } else {
-        row.innerHTML="<td style=\"width:4px\"></td><td style=\"width:10vw\">"+uid+"</td><td style=\"width:24vw\">"+html+"</td><td style=\"width:24vw\">"+note+"</td>";
+        myhtml="<td style=\"width:4px\"></td><td style=\"width:10vw\">"+uid+"</td><td style=\"width:24vw\">"+html+"</td><td style=\"width:24vw\">"+note+"</td>";
     }
+    row.innerHTML=myhtml;
 
 }
 

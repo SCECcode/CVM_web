@@ -257,10 +257,12 @@ TODO: need a new id
 
             <div class="input-group input-group-sm custom-control-inline" style="max-width:450px;border:solid 0px green;">
                <div class="input-group-prepend">
-                     <label class="input-group-text" for="selectModelType">Select Model Type</label>
+                     <label class="input-group-text" for="selectModelType">Select CVM Model</label>
                </div>
 	       <select id="selectModelType" class="custom-select custom-select-sm"></select>&nbsp;
-<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalusage"><span class="glyphicon glyphicon-info-sign"></span></button>
+
+               <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalmodeltype"><span class="glyphicon glyphicon-info-sign"></span></button>
+
             </div> <!-- model select -->
 
 <!-- special pull-out for elygtl -->
@@ -318,29 +320,29 @@ TODO: need a new id
 
             <div class="input-group input-group-sm custom-control-inline" style="max-width:450px">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="modelType">Select Z Mode</label>
+                    <label class="input-group-text" for="searchType">Select Profile Type</label>
                 </div>
-                <select id="zModeType" class="custom-select custom-select-sm">
-                    <option value="d">Depth</option>
-                    <option value="e">Elevation</option>
-                </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzm"><span class="glyphicon glyphicon-info-sign"></span></button>
-            </div> <!-- z select -->
-
-            <div class="input-group input-group-sm filters" style="max-width:450px">
                 <select id="searchType" class="custom-select custom-select-sm">
                     <option value="pointClick" selected>0D Point</option>
                     <option disabled>-- Advanced --</option>
                     <option value="profileClick">1D Vertical Profile</option>
                     <option id="searchType-lineClick" value="lineClick">2D Vertical Cross Section</option>
                     <option id="searchType-areaClick" value="areaClick">2D Horizontal Slice</option>
-                </select>
-                <div class="input-group-append">
-                    <button id="toReset" class="btn btn-dark pl-4 pr-4">RESET</button>
-                </div>
+                </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalstype"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div> <!-- query option -->
 
+            <div class="input-group input-group-sm custom-control-inline" style="max-width:450px">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="modelType">Select Z Mode</label>
+                </div>
+                <select id="zModeType" class="custom-select custom-select-sm">
+                    <option value="d">Depth(km)</option>
+                    <option value="e">Elevation(km)</option>
+                </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzmode"><span class="glyphicon glyphicon-info-sign"></span></button>
+            </div> <!-- z select -->
+
 <!-- selection -->
-	    <div id="option" class="row mt-3" style="max-width:480px"> 
+	    <div id="option" class="row" style="max-width:480px"> 
                 <div class="col input-group">
 		    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="background:#E4EBF1;">
                         <li id='point' class='navigationLi' style="display:none">
@@ -388,15 +390,12 @@ TODO: need a new id
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </div>
-                                    <div class="col-0 pr-0">
-                                        <div id="spinIconForProperty" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
-                                    </div>
                                 </div>
                                 <div class="mt-2">
                                      <input class="form-control" id='infileBtn' type='file' onchange='selectLocalFiles(this.files,1)' style='display:none;'></input>
                                      <button id="fileSelectBtn" class="btn cvm-top-btn" style="width:85%" title="open a file to ingest" onclick='javascript:document.getElementById("infileBtn").click();'>
                                      <span class="glyphicon glyphicon-file"></span> Select file to use</button>
-<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalfile"><span class="glyphicon glyphicon-info-sign"></span></button>
+<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalfileinfo"><span class="glyphicon glyphicon-info-sign"></span></button>
                                 </div>
                             </div>
                         </li>
@@ -444,7 +443,7 @@ TODO: need a new id
                                                title="Z start"
                                                onfocus="this.value=''" 
                                                class="form-control mt-1">
-                                        <select title="profileDatatype" id="profileDataTypeTxt" class="my-custom-select custom-select mt-1">
+                                        <select title="profileDatatype" id="profileDataTypeTxt" class="my-custom-select custom-select mt-1" style="border-radius:0.25rem">
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
@@ -511,7 +510,7 @@ TODO: need a new id
                                                title="lineZTxt"
                                                onfocus="this.value=''"
                                                class="form-control mt-1">
-                                        <select title="Datatype" id="lineDataTypeTxt" class="my-custom-select custom-select mt-1">
+                                        <select title="Datatype" id="lineDataTypeTxt" class="my-custom-select custom-select mt-1" style="border-radius:0.25rem">
                                                <option value="">DataType</option>
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
@@ -541,14 +540,11 @@ TODO: need a new id
                                                onfocus="this.value=''" 
                                                class="form-control mt-1" style="display:none">
                                     </div>
-                                    <div class="col-0 pr-0">
-                                        <button id="areaBtn" type="button" title="query with latlon"
+                                    <div class="col-12" style="border:1px solid green">
+                                        <button id="lineBtn" type="button" title="query with latlon"
                                                 class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForLine(0)">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
-                                    </div>
-                                    <div class="col-1 pr-0">
-                                        <div id="spinIconForLine" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i> </div>
                                     </div>
                                 </div>
                             </div>
@@ -557,77 +553,75 @@ TODO: need a new id
                             <div id='areaMenu' class='menu'>
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <p>Draw a rectangle on the map or enter latitudes and longitudes below</p>
+                                        <p>Draw a rectangle(click and drag) on the map or enter coordinates below</p>
                                     </div>
                                 </div>
                                 <div class="row d-flex ">
                                     <div class="col-5 pr-0">
                                         <input type="text"
-                                               placeholder="Latitude"
+                                               id="areaFirstLonTxt" 
+                                               placeholder='Begin Longitude'
+                                               title="first lon"
+                                               onfocus="this.value=''" 
+                                               onchange="reset_area_presets()"
+                                               class="form-control">
+                                        <input type="text"
+                                               id="areaSecondLonTxt"
+                                               title="second lon"
+                                               placeholder='End Longitude'
+                                               onfocus="this.value=''"
+                                               onchange="reset_area_presets()"
+                                               class="form-control mt-1">
+                                        <input type="text"
+                                               id="areaZTxt"
+                                               placeholder="Depth(km)"
+                                               title="areaZTxt"
+                                               onfocus="this.value=''"
+                                               class="form-control mt-1">
+                                    </div>
+                                    <div class="col-5 pr-0">
+                                        <input type="text"
+                                               placeholder="Begin Latitude"
                                                id="areaFirstLatTxt"
                                                title="first lat"
                                                onfocus="this.value=''"
                                                onchange="reset_area_presets()"
                                                class="form-control">
                                         <input type="text"
-                                               id="areaFirstLonTxt" 
-                                               placeholder='Longitude'
-                                               title="first lon"
-                                               onfocus="this.value=''" 
+                                               id="areaSecondLatTxt"
+                                               title="second lat"
+                                               placeholder='End Latitude'
+                                               onfocus="this.value=''"
                                                onchange="reset_area_presets()"
                                                class="form-control mt-1">
-                                        <input type="text"
-                                               id="areaZTxt"
-                                               placeholder="Z"
-                                               title="areaZTxt"
-                                               onfocus="this.value=''"
-                                               class="form-control mt-1">
-                                        <select title="Datatype" id="areaDataTypeTxt" class="my-custom-select custom-select mt-1">
-                                               <option value="">DataType</option>
+                                        <select title="Datatype" id="areaDataTypeTxt" class="my-custom-select custom-select mt-1" style="border-radius:0.25rem" >
+                                               <option value="">Data Type</option>
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
                                                <option value="poisson">poisson</option>
                                                <option value="vs30">vs30 etree</option>
                                         </select>
-                                    </div>
-                                    <div class="col-5 pr-0">
-                                        <input type="text"
-                                               id="areaSecondLatTxt"
-                                               title="second lat"
-                                               placeholder='2nd Latitude'
-                                               onfocus="this.value=''"
-                                               onchange="reset_area_presets()"
-                                               class="form-control">
-                                        <input type="text"
-                                               id="areaSecondLonTxt"
-                                               title="second lon"
-                                               placeholder='2nd Longitude'
-                                               onfocus="this.value=''"
-                                               onchange="reset_area_presets()"
-                                               class="form-control mt-1">
+
                                         <input type="text"
                                                id="areaUIDTxt" 
                                                placeholder="UID" 
                                                title="Uniqued ID"
                                                onfocus="this.value=''" 
-                                               class="form-control mt-1" style="display:none">
+                                               class="form-control" style="display:none">
+<div class="col-12" style="padding:5px 0px 10px 0px">
+					<button id="areaBtn" class="btn btn-dark" onclick="CVM.processByLatlonForArea(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+</div>
                                     </div>
-                                    <div class="col-0 pr-0">
-                                        <button id="areaBtn" type="button" title="query with latlon"
-                                                class="btn btn-default cvm-small-btn " onclick="CVM.processByLatlonForArea(0)">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                        </button>
-                                    </div>
-                                    <div class="col-1 pr-0">
-                                        <div id="spinIconForArea" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
-                                    </div>
-
                                 </div>
                             </div>
                         </li>
                     </ul> 
+                    <div class="input-group-append">
+                         <button id="toReset" class="btn btn-dark">Reset All</button>
+                    </div>
                 </div>
+
             </div>
 
 <!-- opacity slider
@@ -686,7 +680,6 @@ TODO: need a new id
                    <li id='mprCollapseLi' data-id='c' hidden>Collapse</li>
                    <li data-id='p'>plot Depth Profile</li>
                 </ul>
-                <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalff"><span class="glyphicon glyphicon-info-sign"></span></button></td>
             </div>
             <div class="col-12  mt-0 mb-4" id="result-table" style="display:">
                <div id="metadataPlotTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
@@ -723,7 +716,7 @@ TODO: need a new id
            <p id="modalwaitonLabel" style="text-align:center;font-size:25px">Extracting Model Data</p>
            </div>
            <div class="row mt-2" style="border:0px solid blue">
-	     <p id="modalwaitonLabel2" style="text-align:center;font-size:14px; margin-left:3px; margin-right:6px; border:0px solid red">Please wait as this process is complex and may take a few minutes. Many CVMs contain a large amount of data and the data maybe interpolated before extracting</p>
+	     <p id="modalwaitonLabel2" style="text-align:center;font-size:14px; margin-left:3px; margin-right:6px; border:0px solid red">Please wait as this process is complex and may take a few minutes. Many CVMs contain a large amount of data and the data may be interpolated before extracting</p>
            </div>
         </div>
       </div>
@@ -735,120 +728,169 @@ TODO: need a new id
 
 <!--Modal: (modalplotoption) -->
 <div class="modal" id="modalplotoption" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<!--
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalplotoptionDialog" role="document">
--->
   <div class="modal-dialog modal-full" id="modalplotoptionDialog" role="document">
 
     <!--Content-->
     <div class="modal-content" id="modalplotoptionContent">
 
-      <div id="plotoption-header" class="modal-header" style="display:">
-	  <div class="col-12 mt-4">
-
+      <div id="plotoption-header" class="modal-header" style="text-align:left; border:0px solid blue;display:">
+	  <div class="col-12" style="border:0px solid orange;padding:10px 0px 0px 0px">
              <div>
-                 <button id="replotNow" onclick="replotPlots()" class="btn btn-dark">REPLOT</button>
+                 <button class="btn btn-dark mb-2" style="width:100%; font-size:1.25rem" >Map Options</button>
              </div>
 
-              <div id="plotoption-cfm-option" class="form-check form-check-inline mt-2" style="display:">
+<!-- Map Option -->
+             <div class="mb-5" style="border:0px solid green;margin-left:4px;">
+                <div id="plotoption-cfm-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show Community Fault Model v7.0 on map'
 			    for="plotoption-cfm">
                      <input class='form-check-inline mr-2'
                             type="checkbox"
-                            id="plotoption-cfm"/>CFM7.0
+                            id="plotoption-cfm"/>CFM7.0 faults
                      </label>
-              </div>
+                </div>
 
-              <div id="plotoption-ca-option" class="form-check form-check-inline mt-2" style="display:">
+                <div id="plotoption-ca-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class='form-check-label mini-option'
-                            title='Show CA Cities on map'
+                            title='Show Cities on map'
 			    for="plotoption-ca">
                      <input class='form-check-inline mr-2'
                             type="checkbox"
-			    id="plotoption-ca"/>CA Cities
+			    id="plotoption-ca"/>Plot Cities
                      </label>
-               </div>
-
-               <div id="plotoption-map-option" class="form-check form-check-inline mt-2" style="display:">
+                 </div>
+  
+                 <div id="plotoption-map-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show plot only'
 			    for="plotoption-map">
                      <input class='form-check-inline mr-2'
                             type="checkbox"
-			    id="plotoption-map"/>with Map
+			    id="plotoption-map"/>Plot with Map
                      </label>
-               </div>
+                 </div>
 
-               <div id="plotoption-par-option" class="form-check form-check-inline mt-2" style="display:">
-                   <label class="input-group-text" for="plotParTxt">Select Parameter</label>
-                   <select id="plotParTxt" class="my-custom-select custom-select">
-                      <option value="1">Vp</option>
-                      <option value="2">Vs</option>
-                      <option value="3">Density</option>
-                      <option value="4">All</option>
-                    </select>
-                </div>
+                 <div id="plotoption-point-option" class="form-check form-check-inline mt-1" style="display:">
+                     <label class='form-check-label mini-option'
+                            title='Show data points'
+                            for="plotoption-point">
+                     <input class='form-check-inline mr-2'
+                            type="checkbox"
+                            id="plotoption-point"/>Source Data Points
+                     </label>
+                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalpoints"><span class="glyphicon glyphicon-info-sign"></span></button>
+                 </div>
 
-                <div id="plotoption-pad-option" class="form-check form-check-inline mt-2" style="display:">
-                   <label class="input-group-text" for="plotPadTxt">Select Map Padding</label>
-                   <select id="plotPadTxt" class="my-custom-select custom-select">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                    </select>
-                </div>
+                 <div id="plotoption-par-option" class="form-check form-check-inline mt-2" style="display:">
+                     <label class="input-group-text" for="plotParTxt">Select Parameter</label>
+                     <select id="plotParTxt" class="my-custom-select custom-select">
+                        <option value="1">Vp</option>
+                        <option value="2">Vs</option>
+                        <option value="3">Density</option>
+                        <option value="4">All</option>
+                      </select>
+                  </div>
 
-                <div id="plotoption-cmap-option" class="form-check form-check-inline mt-2" style="display:">
-                   <label class="input-group-text" for="cmapTxt">Select Colormap</label>
-                   <select id="cmapTxt" class="my-custom-select custom-select">
-                      <option value="1">Seis</option>
-                      <option value="2">Rainbow</option>
-                      <option value="3">Plasma</option>
-                    </select>
-                </div>
+                  <div id="plotoption-pad-option" class="form-check form-check-inline mt-2" style="display:">
+                     <label class="input-group-text" for="plotPadTxt">Select Map Padding</label>
+                     <select id="plotPadTxt" class="my-custom-select custom-select">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                     </select>
+                  </div>
 
-                <div class="form-check form-check-inline mt-4">
-                   <label title='scale maximum'
-                          style="margin-right:8px"
-                          for="maxScaleTxt">maximum
-                   </label>
-                   <input type="text"
-                      id="maxScaleTxt"
-                      placeholder="max scale"
-                      title="maxScale"
-                      style="width:4vw"
-                      onfocus="this.value=''">
+
+                 <div id="plotoption-cmap-option" class="form-check form-check-inline mt-2" style="display:">
+                     <label class="input-group-text" for="cmapTxt">Select Colormap</label>
+                     <select id="cmapTxt" class="my-custom-select custom-select">
+                        <option value="1">Seis</option>
+                        <option value="2">Rainbow</option>
+                        <option value="3">Plasma</option>
+                      </select>
+                 </div>
+<!--
+                  <div id="plotoption-cmap2-option" class="form-check form-check-inline mt-4" style="display:">
+<div id="cmapTxt2" class="png-custom-select">
+  <div class="selected-option">Select an Option</div>
+  <div class="options-container">
+    <div class="option" data-value="1">
+      <img src="img/seis.png" alt="seis" class="option-img">Seis
+    </div>
+    <div class="option" data-value="2">
+      <img src="img/rainbow.png" alt="rainbow" class="option-img">Rainbow
+    </div>
+    <div class="option" data-value="3">
+      <img src="img/plasma.png" alt="plasma" class="option-img">Plasma
+    </div>
+  </div>
+</div>
+-->
+
+                 <div id="plotoption-range-option" class="mt-2" style="display:">
+                     <label title='range option'
+                        style="margin:0px 0px 0px 5px">Set Color Range
+		     </label>
+                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalcolorrange"><span class="glyphicon glyphicon-info-sign"></span></button>
+   
+                     <div class="form-check form-check-inline">
+                          <label title='scale maximum'
+                                 style="margin-left:5px;width:5vw;"
+                                 for="maxScaleTxt">Maximum
+                          </label>
+                          <input type="text"
+                                 id="maxScaleTxt"
+                                 placeholder="max scale"
+                                 title="maxScale"
+                                 style="width:4vw"
+                                 onfocus="this.value=''">
+                     </div>
+
+                     <div class="form-check form-check-inline mt-1">
+		           <label title='scale minimum'
+                                  style="margin-left:5px;width:5vw;"
+                                  for="minScaleTxt">Minimum
+                           </label>
+                           <input type="text"
+                                  id="minScaleTxt"
+                                  placeholder="min scale"
+                                  title="minScale"
+                                  style="width:4vw"
+                                  onfocus="this.value=''">
+                     </div>
+                 </div>
+
+		 <div style="text-align:center">
+                     <button id="replotNow" onclick="replotPlots()" class="btn btn-dark mt-3" style="width:50%;border-radius:0.25rem;font-size:1.25rem;">REPLOT</button>
                  </div>
 
                  <div class="form-check form-check-inline mt-2">
-		    <label title='scale minimum'
-                           style="margin-right:8px"
-			   for="minScaleTxt">minimum
-                    </label>
+                    <button id="viewPlotSavePNGbtn" class="cvm-btn ml-1" onclick="savePNGPlotview()">Save PNG</button>
+                    <button id="viewPlotSavePDFbtn" class="cvm-btn ml-2" onclick="savePDFPlotview()">Save PDF</button>
+                 </div>
+             </div>
 
-                    <input type="text"
-                       id="minScaleTxt"
-                       placeholder="min scale"
-                       title="minScale"
-                       style="width:4vw"
-                       onfocus="this.value=''">
-                  </div>
+<!-- Window Options -->
+             <div>
+                 <button class="btn btn-dark" style="width:100%; font-size:1.25rem" >Window Options</button>
+             </div>
+
+             <div style="border:solid 0px red; margin-left:4px;">
+                 <div class="form-check form-check-inline mt-2">
+                   <button id="viewPlotMovebtn" class="cvm-btn ml-1" onclick="movePlotview()">New Window</button>
+                   <button id="viewPlotClosebtn" class="cvm-btn ml-2" data-dismiss="modal">Close</button>
+                 </div>
+             </div>
+
           </div>
       </div>
 
       <!--Body-->
-      <div class="modal-body">
+      <div id="plotoption-body" class="modal-body">
         <div id="plotoption-iframe-container" class="col-12" style="overflow:auto;">
           <iframe id="plotOptionIfram" src="" height="0" width="100%" allowfullscreen></iframe>
         </div>
-      </div>
-
-      <div id="plotoption-footer" class="modal-footer justify-content-center" style="display:">
-        <button id="viewPlotClosebtn" class="btn btn-outline-primary btn-sm" data-dismiss="modal">Close</button>
-        <button id="viewPlotMovebtn" class="btn btn-outline-primary btn-sm" onclick="movePlotview()">New Window</button>
-        <button id="viewPlotSavePNGbtn" class="btn btn-outline-primary btn-sm" onclick="savePNGPlotview()">Save PNG</button>
-        <button id="viewPlotSavePDFbtn" class="btn btn-outline-primary btn-sm" onclick="savePDFPlotview()">Save PDF</button>
       </div>
 
     </div> <!--Content-->
@@ -895,17 +937,15 @@ TODO: need a new id
   </div>
 </div> <!--Modal: modalparameters-->
 
-<!--Modal: FileFormat -->
-<div class="modal" id="modalff" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalffDialog" role="document">
+<!--Modal: points -->
+<div class="modal" id="modalpoints" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalpointsDialog" role="document">
 
     <!--Content-->
-    <div class="modal-content" id="modalffContent">
+    <div class="modal-content" id="modalpointsContent" style="font-size:20px">
       <!--Body-->
-      <div class="modal-body" id="modalffBody">
-        <div class="row col-md-12 ml-auto" style="overflow:hidden;">
-          <div class="col-12" id="fileFormatTable-container"></div>
-        </div>
+      <div class="modal-body" id="modalpointsBody">
+<p>Plots the source data point locations, which is useful to understand the resollution of the plotted datPlots the source data point locations, which is useful to understand the resollution of the plotted data.</p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -913,43 +953,35 @@ TODO: need a new id
 
     </div> <!--Content-->
   </div>
-</div> <!--Modal: modalff-->
+</div> <!--Modal: modalpoints-->
 
-<!--Modal: usage -->
-<div class="modal" id="modalusage" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalffDialog" role="document">
+<!--Modal: colorrange-->
+<div class="modal" id="modalcolorrange" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalcolorrangeDialog" role="document">
 
     <!--Content-->
-    <div class="modal-content" id="modalusageContent">
+    <div class="modal-content" id="modalcolorrangeContent" style="font-size:20px">
       <!--Body-->
-      <div class="modal-body" id="modalusageBody">
-	    <div id="cvm-info" class="row col-md-12 ml-auto" style="overflow:hidden;"> 
-                <div class="col input-group">
-                    <ul id="cvm-info" class="navigation pl-2 pb-2 pr-1">
-                        <li id='info' class='navigationLi'>
-                            <div id='infoMenu' class='menu'>
-                                <div class="row mt-1 pl-2">
-                                    <div class="col-12 mt-2" style="font-size:14px" >
-                                       <h5><b>Pick a CVM model</b></h5>
-                                       <h5><b>Select either Depth or Elevation mode</b></h5>
-                                       <h5><b>Select an option</b></h5>
-				       <ul class="mb-1" id="info-list">
-                                          <li style="list-style-type:disc">Query for material properties with <b>0D&nbsp;Point</b> option</li> 
-                                          <li style="list-style-type:disc">Plot depth or elevation profile with <b>1D&nbsp;Vertical&nbsp;Profile</b> option</li> 
-                                          <li style="list-style-type:disc">Plot cross section for vs, vp, density or poisson data type with <b>2D&nbsp;Vertical&nbsp;Cross&nbsp;Section</b> option</li>
-                                          <li style="list-style-type:disc">Plot horizontal slice of vs, vp, density, poisson or vs30 etree with <b>2D&nbsp;Horizontal&nbsp;Slice</b> option </li>
-                                       </ul>
-                                       <br>
-                                       <p> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li id='info-select' class='navigationLi' style="display:none">
-                        </li>
-                    </ul> 
-                </div>
-	    </div> 
+      <div class="modal-body" id="modalcolorrangeBody">
+<p>The plot defaults to cover the entire range of the data; however sometimes it is useful to force a color range to compare two plots with different data ranges.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalcolorrange-->
+
+<!--Modal: modeltype -->
+<div class="modal" id="modalmodeltype" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalmodeltypeDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalmodeltypeContent" style="font-size:20px">
+      <!--Body-->
+      <div class="modal-body" id="modalmodeltypeBody">
+          <p>The CVM Explorer hosts multiple models. Select the  model you wish to query or visualize in this list. The model bound will be displayed on the map except the 1D background models. </p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -979,16 +1011,55 @@ TODO: need a new id
   </div>
 </div> <!--Modal: Name-->
 
-<!--Modal: ZMode -->
-<div class="modal" id="modalzm" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalzmDialog" role="document">
+<!--Modal: sType -->
+<div class="modal" id="modalstype" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalstypeDialog" role="document">
 
     <!--Content-->
-    <div class="modal-content" id="modalzmContent">
+    <div class="modal-content" id="modalstypeContent" style="font-size:20px">
+      
+      <div id="plotoption-header" class="modal-header" style="display:">
+         <p> Select the type of visualization and data extraction to perform.</p>
+      </div>
+
       <!--Body-->
-      <div class="modal-body" id="modalzmBody">
+      <div class="modal-body" id="modalstypeBody">
+        <h4><b>Options:</b></h4>
+	<ul class="mb-1" id="info-list">
+           <li style="list-style-type:disc">Query for material properties with <b>0D&nbsp;Point</b> option</li> 
+           <li style="list-style-type:disc">Plot depth or elevation profile with <b>1D&nbsp;Vertical&nbsp;Profile</b> option</li> 
+           <li style="list-style-type:disc">Plot cross section for vs, vp, density or poisson data type with <b>2D&nbsp;Vertical&nbsp;Cross&nbsp;Section</b> option</li>
+           <li style="list-style-type:disc">Plot horizontal slice of vs, vp, density, poisson or vs30 etree with <b>2D&nbsp;Horizontal&nbsp;Slice</b> option </li>
+        </ul>
+        <br>
+        <p> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: Name-->
+
+<!--Modal: ZMode -->
+<div class="modal" id="modalzmode" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalzmodeDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalzmodeContent" style="font-size:20px">
+      <div id="zm-header" class="modal-header" style="display:">
+         <p>Z-values can be extracted in depth for all proflies, but elevation is only supported in 1D vertical profile and 0D material property retrieval.</p> 
+      </div>
+
+      <!--Body-->
+      <div class="modal-body" id="modalzmodeBody">
         <div class="row col-md-12 ml-auto" style="overflow:hidden;">
-          <div class="col-12" id="ZModeTable-container"></div>
+          <h4><b>Zmode:</b></h4>
+          <ul class="mb-1" id="info-list">
+             <li style="list-style-type:disc">Depth: 0 at surface and positive depth value</li>
+             <li style="list-style-type:disc">Elevation: 0 at sealevel and positive value toward the air and negative value toward the center of the earth</li>
+          </ul>
         </div>
       </div>
       <div class="modal-footer justify-content-center">
@@ -1000,13 +1071,13 @@ TODO: need a new id
 </div> <!--Modal: Name-->
 
 <!--Modal: ModelType -->
-<div class="modal" id="modalfile" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalfileDialog" role="document">
+<div class="modal" id="modalfileinfo" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalfileinfoDialog" role="document">
 
     <!--Content-->
-    <div class="modal-content" id="modalfileContent">
+    <div class="modal-content" id="modalfileinfoContent">
       <!--Body-->
-      <div class="modal-body" id="modalfileBody">
+      <div class="modal-body" id="modalfileinfoBody">
         <div class="row col-md-12 ml-auto" style="overflow:hidden;">
 
           <div class="col-12" id="file-container">

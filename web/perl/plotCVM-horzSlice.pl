@@ -14,9 +14,9 @@
 #   Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax
 #     Parameters are described below:
 #     path/to/file.csv : The csv file must be specified with a path (relative or absolute). ./ will not work.
-#     plotFaults       : 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults
-#     plotCities       : 1=plots selected CA/NV cities. 0=don't plot cities
-#     plotPts          : 1=plots the source data points, so the user can see the resolution of the heatmap. 0=don't plot points.
+#     plotFaults       : 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults
+#     plotCities       : 1=Plots selected CA/NV cities. 0=Don't plot cities
+#     plotPts          : 1=Plots the source data points, so the user can see the resolution of the heatmap. 0=Don't plot points.
 #     cMap             : Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.
 #     forceRange       : Use a user-specified parameter range instead of the default which uses the range of the data.
 #                        Note: zMin and zMax only need to be specified if forceRange=1.
@@ -54,9 +54,9 @@ else {
 	print "\n  Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax\n";
 	print "    Parameters are described below:\n";
 	print "    path/to/file.csv: The csv file must be specified with a path (relative or absolute).\n";
-	print "    plotFaults: 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults\n";
-	print "    plotCities: 1=plots selected CA/NV cities. 0=don't plot cities\n";
-	print "    plotPts: 1=plots the source data points. 0=don't plot points.\n";
+	print "    plotFaults: 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults\n";
+	print "    plotCities: 1=Plots selected CA/NV cities. 0=Don't plot cities\n";
+	print "    plotPts: 1=Plots the source data points. 0=Don't plot points.\n";
 	print "    cMap: Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.\n";
 	print "    forceRange: 1=Use a user-specified parameter range, 0=Use the range of the data.\n";
 	print "    Note: zMin and zMax only need to be specified if forceRange=1\n\n";
@@ -105,7 +105,7 @@ $faultFile     ="/app/web/perl/CFM7.0_traces.lonLat";
 $blindFaultFile="/app/web/perl/CFM7.0_blind.lonLat";
 #what line width should I use for the faults?
 $faultLine=     "0.75p,black";
-$blindFaultLine="0.75p,black,2.0p_0.75p";
+$blindFaultLine="0.75p,black,3.0p_1.5p";
 #should I label each fault trace? 1=yes 0=no
 $labelFaults=0;
 
@@ -145,6 +145,10 @@ while(<CSV>){
 		elsif($data[0] eq "Data_type")      {$dataType=$data[1]}
 		elsif($data[0] eq "Depth(m)")       {$depth   =$data[1]/1000}
 		elsif($data[0] eq "Spacing(degree)"){$spacing =$data[1]}
+		elsif($data[0] eq "Lat1")           {$begLat  =$data[1]}
+		elsif($data[0] eq "Lon1")           {$begLon  =$data[1]}
+		elsif($data[0] eq "Lat2")           {$endLat  =$data[1]}
+		elsif($data[0] eq "Lon2")           {$endLon  =$data[1]}
 	}#end if
 	#deal with data lines
 	else {
@@ -214,6 +218,8 @@ $minX=$tmp[0]; $maxX=$tmp[1];
 $minY=$tmp[2]; $maxY=$tmp[3];
 $xRange=$maxX-$minX;
 $yRange=$maxY-$minY;
+#middle of the plot, to be used later with printing the title's second line
+$midX=($minX+$maxX)/2;
 #figure out which range is larger
 if($xRange>$yRange){$maxRange=$xRange}
 else               {$maxRange=$yRange}
@@ -329,7 +335,7 @@ $tmp=`echo $range[1] $range[3] | gmt mapproject $R -JM$width`;
 chomp($tmp);
 @tmp=split(" ",$tmp);
 #grab the height in cm and convert to inches. Add on 1.85in for the title above and colorbar below.
-$height=$tmp[1]/2.54+1.70;
+$height=$tmp[1]/2.54+1.90;
 
 #set paper size
 system "gmt set PS_MEDIA=8.5ix${height}i";
@@ -341,7 +347,7 @@ system "gmt set FONT_ANNOT_PRIMARY=10p";
 system "gmt set FONT_LABEL=10p";
 #Controls plot title and offset
 system "gmt set FONT_TITLE=14p";
-system "gmt set MAP_TITLE_OFFSET=-0.08i";
+system "gmt set MAP_TITLE_OFFSET=0.16i";
 #Set other map text parameters
 #system "gmt set MAP_ANNOT_OFFSET_PRIMARY 5p";
 #system "gmt set MAP_LABEL_OFFSET 8p";
@@ -418,6 +424,11 @@ if($plotCities==1){
 
 #plot a colorbar below the plot
 system "gmt psscale -R -JM -C$cptFile -B$cAxis+l\"$zTitle\" -Dx0/-0.65i+w7.5i/0.25i+jBL+h -O -K >> $plotFile";
+
+#plot the second line of the title
+system "gmt pstext -R -JM -F+a0+f14p,Helvetica+jBC -D0i/0.14i -N -O -K <<END>> $plotFile
+$midX $maxY Bounding Box Corners: ($begLon, $begLat) ($endLon, $endLat)
+END";
 
 #plot the basemap axes. Use this to plot a map scale -Lx0.35i/0.35i+jBL+w200k+u+f
 system "gmt psbasemap -R -JM -Bx$xAxis -By$yAxis -BWeSn+t\"Model: $model | Depth: $depth (km) | numPoints=$numPts\" $mapScale -O >> $plotFile";

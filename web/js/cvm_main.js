@@ -159,7 +159,6 @@ window.console.log("Calling toReset..");
 	let h=setIframHeight("plotOptionIfram");
 
         document.getElementById("plotoption-header").style.display="";
-        document.getElementById("plotoption-footer").style.display="";
 
   });
 // special case.. if onpar get changed, need to track..it 
@@ -171,6 +170,42 @@ window.console.log("Calling toReset..");
  
   });
 
+
+/************
+const selectedOption = document.querySelector('.selected-option');
+const optionsContainer = document.querySelector('.options-container');
+const options = document.querySelectorAll('.option');
+
+// Toggle the options container visibility
+selectedOption.addEventListener('click', () => {
+  optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+});
+
+// Handle option selection
+options.forEach(option => {
+  option.addEventListener('click', () => {
+    const selectedText = option.textContent.trim();
+    const selectedValue = option.getAttribute('data-value');
+    const selectedImg = option.querySelector('img').src;
+
+    // Update the selected option
+    selectedOption.innerHTML = `<img src="${selectedImg}" alt="selected option" class="option-img"> ${selectedText}`;
+
+    // Hide the options container
+    optionsContainer.style.display = 'none';
+
+    // Optionally, you can use the selected value (e.g., for form submission or other logic)
+    console.log('Selected Value:', selectedValue);
+  });
+});
+
+// Close the options container if clicked outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.png-custom-select')) {
+    optionsContainer.style.display = 'none';
+  }
+});
+***/
 
 
 // MAIN SETUP

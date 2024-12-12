@@ -31,6 +31,8 @@ var CVM_tb={
      'path name':'sfcvm',
      'model filename':'sfcvm.tar.gz',
      'description':'USGS San Francisco Bay Region 3D Velocity Model',
+     'model construction':'This is a geology-based model that..',
+     'model resolution':'This model has a non-uniform spacing..',
      'coordinates': [
           {'lon':-121.9309,'lat':35.0364},
           {'lon':-118.9787,'lat':36.7104},
@@ -389,7 +391,7 @@ var CVM_tb={
      'value':'d',
      'description':'0 at surface and positive depth value'},
     {'id':2,
-     'mode name':'Elevation',
+     'mode name':'Elevation(km)',
      'value':'e',
      'description':'0 at sealevel and positive value toward the air and negative value toward the center of the earth'}
     ],

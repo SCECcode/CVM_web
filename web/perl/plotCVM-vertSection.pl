@@ -13,13 +13,13 @@
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad cMap forceRange zMin zMax
+#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax
 #     Parameters are described below:
 #     path/to/file.csv : The csv file must be specified with a path (relative or absolute). ./ will not work.
-#     plotMap          : 1=plots a simple location map showing the profile section. 0=don't plot a map. Just plot the vertical profile data.
-#     plotFaults       : 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults
-#     plotCities       : 1=plots selected CA/NV cities. 0=don't plot cities
-#     plotPts          : 1=plots the source data points, so the user can see the resolution of the heatmap. 0=don't plot points.
+#     plotMap          : 1=Plots a simple location map showing the profile section. 0=Don't plot a map. Just plot the vertical profile data.
+#     plotFaults       : 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults
+#     plotCities       : 1=Plots selected CA/NV cities. 0=Don't plot cities
+#     plotPts          : 1=Plots the source data points, so the user can see the resolution of the heatmap. 0=Don't plot points.
 #     pad              : Supply any value in degrees. This will be added to the map spatial range in all directions.
 #     cMap             : Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.
 #     forceRange       : Use a user-specified parameter range instead of the default which uses the range of the data.
@@ -33,7 +33,7 @@ $beginTime=time();
 #loads Tools.pm included in this directory
 #use FindBin;
 #use lib $FindBin::Bin;
-#for moho
+#for Moho, put Tools.pm in /app/web/perl/
 use lib "/app/web/perl";
 use Tools qw(getLonTick getLatTick getCBarTick getXtick getYtick getMapScale);
 #for parsing a filename from a path
@@ -54,13 +54,13 @@ elsif(@ARGV==8){
 }
 #print usage for incorrect inputs
 else {
-	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotFaults plotCities plotPts pad cMap forceRange zMin zMax\n";
+	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax\n";
 	print "    Parameters are described below:\n";
 	print "    path/to/file.csv: The csv file must be specified with a path (relative or absolute).\n";
-	print "    plotMap: 1=plots a simple location map 0=don't plot a map. Just plot the vertical profile data.\n";
-	print "    plotFaults: 1=plots CFM 7.0 fault traces (blind faults dashed). 0=don't plot faults\n";
-	print "    plotCities: 1=plots selected CA/NV cities. 0=don't plot cities\n";
-	print "    plotPts: 1=plots the source data points. 0=don't plot points.\n";
+	print "    plotMap: 1=Plots a simple location map 0=Don't plot a map. Just plot the vertical profile data.\n";
+	print "    plotFaults: 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults\n";
+	print "    plotCities: 1=Plots selected CA/NV cities. 0=Don't plot cities\n";
+	print "    plotPts: 1=Plots the source data points. 0=Don't plot points.\n";
 	print "    pad: Supply any value in degrees. This will be added to the map spatial range in all directions.\n";
 	print "    cMap: Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.\n";
 	print "    forceRange: 1=Use a user-specified parameter range, 0=Use the range of the data.\n";
@@ -118,8 +118,8 @@ $demCPT="/home/marshallst/GMT/allGray.cpt";
 $faultFile     ="/app/web/perl/CFM7.0_traces.lonLat";
 $blindFaultFile="/app/web/perl/CFM7.0_blind.lonLat";
 #what line width should I use for the faults?
-$faultLine=     "0.5p,black";
-$blindFaultLine="0.5p,black,2.0p_0.75p";
+$faultLine=     "0.75p,black";
+$blindFaultLine="0.75p,black,3.0p_1.5p";
 #should I label each fault trace? 1=yes 0=no
 $labelFaults=0;
 
@@ -398,7 +398,7 @@ $heightMap=$tmp[1]/2.54+0.85;
 
 #set paper size
 if($plotMap==1){system "gmt set PS_MEDIA=17ix${heightMap}i"}
-else           {system "gmt set PS_MEDIA=8.5ix7.4i"}
+else           {system "gmt set PS_MEDIA=8.5ix7.57i"}
 system "gmt set MAP_FRAME_TYPE=plain";
 #degrees with negative longitudes
 system "gmt set FORMAT_GEO_MAP=-D.x";
@@ -439,18 +439,25 @@ system "gmt grdimage $grdFile -X0.57i -Y1.45i $Rxy -JX${width}i/-${height}i -C$c
 #plot the source data points, if specified
 if($plotPts==1){system "gmt psxy $distFile -R -JX -Sc1.5p -Gblack -i4,2 -O -K >> $plotFile"}
 
-#plot A and A' above the plot
-system "gmt pstext -R -JX -F+a0+f16p,Helvetica-Bold+jBC -D0i/0.1i -N -O -K <<END>> $plotFile
+#plot A and A' above the plot and the lon,lat locations of each
+system "gmt pstext -R -JX -F+a0+f18p,Helvetica-Bold+jBC -D0i/0.1i -N -O -K <<END>> $plotFile
 $minX $minY A
 $maxX $minY A'
 END";
+system "gmt pstext -R -JX -F+a0+f12p,Helvetica-Bold+jBL -D0.18i/0.14i -N -O -K <<END>> $plotFile
+$minX $minY ($begLon, $begLat)
+END";
+system "gmt pstext -R -JX -F+a0+f12p,Helvetica-Bold+jBR -D-0.18i/0.14i -N -O -K <<END>> $plotFile
+$maxX $minY ($endLon, $endLat)
+END";
+
 
 #plot a colorbar below the plot
 system "gmt psscale -R -JX -C$cptFile -B$cAxis+l\"$zTitle\" -Dx0/-0.85i+w${width}i/0.25i+jBL+h -O -K >> $plotFile";
 
 #plot the axes last
-if($plotMap==0){system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.15i >> $plotFile"}
-else           {system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.15i >> $plotFile"}
+if($plotMap==0){system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile"}
+else           {system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile"}
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -463,10 +470,10 @@ if($plotMap==1){
 		if($printStats==1){print "Plotting DEM\n"}
 		system "gmt grdimage $dem -X8.5i -Y-1.12i $R -JM$widthMap -I$int -C$demCPT -O -K >> $plotFile";
 		#plot the coastline and color the water
-		system "gmt pscoast -R -JM -W0.5p -S$waterBlue -Df -Na/0.5p-O -K >> $plotFile";
+		system "gmt pscoast -R -JM -W0.5p -S$waterBlue -Df -N1/1.0p -N2/0.5p -O -K >> $plotFile";
 	}
 	#just plot the coastline and color the water
-	else {system "gmt pscoast -X8.5i -Y-1.12i $R -JM$widthMap -W0.5p -S$waterBlue -Gwhite -Df -Na/0.5p -O -K >> $plotFile"}
+	else {system "gmt pscoast -X8.5i -Y-1.12i $R -JM$widthMap -W0.5p -S$waterBlue -Gwhite -Df -N1/1.0p -N2/0.5p -O -K >> $plotFile"}
 	
 	#plot fault traces, if specified
 	if($plotFaults==1){
@@ -509,7 +516,7 @@ if($plotMap==1){
 	END";
 	
 	#plot the basemap axes. For a map scale, add -Lx0.3i/0.3i+jBL+w50k+c+f+u 
-	system "gmt psbasemap -R -JM -Bx$lonAxis -By$latAxis -BWeSn+t\"Model: $model | Vertical Profile Location\" $mapScale -O >> $plotFile";
+	system "gmt psbasemap -R -JM -Bx$lonAxis -By$latAxis -BWeSn+t\"Model: $model | Vertical Profile Location ($begLon, $begLat) to ($endLon, $endLat)\" $mapScale -O >> $plotFile";
 	
 }#end if (plotting location map)	
 	

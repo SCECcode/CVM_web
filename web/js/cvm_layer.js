@@ -260,6 +260,7 @@ function remove_a_layer(uid) {
 }
 
 function load_a_layergroup(uid,type,group,highlight) {
+window.console.log("load_a_layergroup with ",uid);
    var t=find_layer_from_list(uid);
    if(t) {
      window.console.log("already plotted this layer ",uid);
