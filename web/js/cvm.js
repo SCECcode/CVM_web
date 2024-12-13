@@ -144,9 +144,9 @@ var CVM = new function () {
      refresh_select(); // option
 
 // PIXI 
-pixiResetAllOverlayOpacity();
-pixiClearAllPixiOverlay();
-this.setupPixiSegmentDebug(0,{});
+//pixiResetAllOverlayOpacity();
+//pixiClearAllPixiOverlay();
+//this.setupPixiSegmentDebug(0,{});
 
      // back to inital stte
      $("#selectModelType").trigger("change");

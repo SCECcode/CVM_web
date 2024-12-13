@@ -465,8 +465,8 @@ function replotVerticalProfile() {
     let onpoint=0;
     if(point) onpoint=1;
 
-    let onmin=document.getElementById("minScaleTxt").value;
-    let onmax=document.getElementById("maxScaleTxt").value;
+    let onmin=document.getElementById("minPlotScaleTxt").value;
+    let onmax=document.getElementById("maxPlotScaleTxt").value;
     let onpad=document.getElementById("plotPadTxt").value;
 
     let onrange=1;

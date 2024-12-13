@@ -182,8 +182,10 @@ function makeVProfileMPFname(uid) {
   return s;
 }
 
+//not used ??
 function makeVProfileCSVFname(uid) {
-  var s=uid+"_v_data.csv";
+  //var s=uid+"_v_data.csv";
+  var s=uid+"_v_matprops.csv";
   return s;
 }
 //

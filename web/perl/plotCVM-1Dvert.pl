@@ -81,7 +81,8 @@ if(substr($dir,-1) eq "/"){$dir=substr($dir,0,-1)}
 
 #make the various files the same name as the csv file, but ending with different extensions
 $gmtFile ="$dir/$file.gmt";
-$plotFile="$dir/$file.eps";
+$plotFile="$dir/$file.eps.tmp";
+$epsFile ="$dir/$file.eps";
 $pdfFile ="$dir/$file.pdf";
 
 #tell GMT to write config/history files to $dir
@@ -155,7 +156,7 @@ while(<CSV>){
 		}#end if
 		#write a simple header if this is the first data line
 		if($count==0){
-			if($z eq "depth")       {print GMT "#depth(km),Vp(km/s),Vs(km/s),Density(g/cm^3)\n"}
+			if   ($z eq "depth")    {print GMT "#depth(km),Vp(km/s),Vs(km/s),Density(g/cm^3)\n"}
 			elsif($z eq "elevation"){print GMT "#elevation(km),Vp(km/s),Vs(km/s),Density(g/cm^3)\n"}
 			
 		}#end if
@@ -238,7 +239,6 @@ if($printStats==1){
 	#print useful metadata to stdout
 	print "Title               : $title\n";
 	print "Model               : $model\n";
-	#print "Data Type           : $dataType\n";
 	print "Lon/Lat Location    : $lon/$lat\n";
 	if($z eq "depth"){
 		print "StartDepth (km)     : $startZ\n";
@@ -292,6 +292,7 @@ system "gmt set MAP_GRID_PEN=0.5p,gray50,0.5_2.5p";
 
 #set some useful colors
 $red="235/30/35";
+$ltRed="255/50/50";
 $gray="209/211/212";
 $blue="0/113/188";
 $yellow="255/255/0";
@@ -429,10 +430,10 @@ if($plotMap==1){
 		system "gmt psxy $cityFile -R -JM -Sc5p -Ggold -W0.5p -O -K >> $plotFile";
 		system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold,white,-=1p,white -O -K >> $plotFile";
 		system "gmt pstext $cityFile -R -JM -Dj3p -F+a0+jBL+f8p,Helvetica-Bold           -O -K >> $plotFile";
-	}
+	}#end if
 	
-	#plot the source data points
-	system "gmt psxy -R -JM -Sa15p -W0.5p -Ggold -O -K <<-END>> $plotFile
+	#plot the source data point
+	system "gmt psxy -R -JM -Sa15p -W0.5p -G$ltRed -O -K <<-END>> $plotFile
 	$lon $lat
 	END";
 	#label the source location
@@ -446,28 +447,50 @@ if($plotMap==1){
 
 
 #---------------------------------------------------------------------------------------------------------------------------#
+#------- WRITE A NEW EPS FILE JUST TO CHANGE THE TITLE ---------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------------------------------------#
+open(TMP,$plotFile);
+open(NEW,">$epsFile");
+while(<TMP>){
+	chomp;
+	#check and replace header lines. Otherwise print line as-is
+	if($_=~ "\%\%Title:"){
+		if   ($plotPar==1){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vp (km/s) | 1D Profile Location: ($lon, $lat)\n"}
+		elsif($plotPar==2){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vs (km/s) | 1D Profile Location: ($lon, $lat)\n"}
+		elsif($plotPar==3){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Density (g/cm^3) | 1D Profile Location: ($lon, $lat)\n"}
+		elsif($plotPar==4){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vp (km/s), Vs (km/s), and Density (g/cm^3) | 1D Profile Location: ($lon, $lat)\n"}
+	}
+	elsif($_=~ "\%\%Creator:"){print NEW "\%\%Creator: SCEC CVM Explorer\n"}
+	else {print NEW "$_\n";}
+}#end while (reading $plotFile)
+close(TMP);
+close(NEW);
+
+
+#---------------------------------------------------------------------------------------------------------------------------#
 #------- VIEW THE MAP, CONVERT TO PDF AND PRINT TOTAL CPU TIME -------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------#
 #open the eps file with a user-specified program
-if   ($openEPS==1){system "gv $plotFile -geometry +0+0 -scale=2.49 &"}
-elsif($openEPS==2){system "evince $plotFile &"} 
-elsif($openEPS==3){system "illustrator $plotFile &"}
+if   ($openEPS==1){system "gv $epsFile -geometry +0+0 -scale=2.49 &"}
+elsif($openEPS==2){system "evince $epsFile &"} 
+elsif($openEPS==3){system "illustrator $epsFile &"}
 
 #convert to pdf/png
 if($makePDF==1){
 	if($printStats==1){print "Converting to pdf..."}
-	system "gmt psconvert $plotFile -Tf";
+	system "gmt psconvert $epsFile -Tf";
 	if($printStats==1){print "Finished!\n"}
 }#end if
 if($makePNG==1){
 	if($printStats==1){print "Converting to png..."}
-	system "gmt psconvert $plotFile -TG -E400";
+	system "gmt psconvert $epsFile -TG -E400";
 	if($printStats==1){print "Finished!\n"}
 }#end if
 
 #remove unneeded files
 if($printStats==1){print "Removing unneeded files\n"}
-system "rm -r $gmtDir $gmtFile";
+system "rm -r $gmtDir $gmtFile $plotFile";
+if($openEPS==0){system "rm $epsFile"}
 
 #print the time spent on running this script using the difference in time from the beginning to end of this script.
 $endTime=time();

@@ -32,16 +32,16 @@ jQuery(document).ready(function() {
   });
 
   $("#searchType").change(function () {
-    var s= document.getElementById("searchType").value;
+      var s= document.getElementById("searchType").value;
       if( s == 'lineClick' || s == 'areaClick' ) { 
         $( "#zMode-elevClick" ).attr("disabled","disabled");
         } else {
           $( "#zMode-elevClick" ).attr("disabled",false);
       }
-    var funcToRun = $(this).val();
-    if (funcToRun != "") {
-      window[funcToRun]();
-    }
+      var funcToRun = $(this).val();
+      if (funcToRun != "") {
+        window[funcToRun]();
+      }
   });
   $("#searchType").trigger("change");
 
@@ -135,12 +135,6 @@ jQuery(document).ready(function() {
             CXM.hideCTMRegions(viewermap);
     }
   });
-
-  $("#toReset").on('click', function () {
-window.console.log("Calling toReset..");
-        CVM.resetAll();
-  });
-
 
 
 /***** plotoption popup modal *****/

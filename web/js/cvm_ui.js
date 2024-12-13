@@ -88,7 +88,7 @@ window.console.log("downloadlinks>>",str);
        var val=str[keys[i]]; 
        switch(keys[i]) {
           case 'csv':
-              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;Download data(.csv format)</div>";
+              html=html+"<div class=\"links\"><a class=\"openpop\" href=\"result/"+val+"\" target=\"downloadlink\"><span class=\"glyphicon glyphicon-download-alt\"></span></a>&nbsp;&nbsp;Download data (.csv format)</div>";
               break;
           case 'gmtpdf':
               html=html+"<div style=\"margin-left:-6px\"><button id=\""+uid+"_show_btn\" class=\"btn btn-sm cvm-small-btn\" data-blob=\""+uid+"_state_blob\" data-toggle=\"modal\" data-target=\"#modalplotoption\"><span class=\"glyphicon glyphicon-picture\"></span></button>Plot data</div>";
@@ -145,8 +145,23 @@ function updatePlotOptions(blob) {
     let range=json['range'];
     let minv=round2Four(range['min']);
     let maxv=round2Four(range['max']);
+
+    let type=json['type']; // 'profile'
+	
+//for color scale: cross/horizonal
     document.getElementById("minScaleTxt").value=minv;
     document.getElementById("maxScaleTxt").value=maxv;
+
+    if( type == 'profile') {
+//for plot scale: profile
+      document.getElementById("minPlotScaleTxt").value=minv;
+      document.getElementById("maxPlotScaleTxt").value=maxv;
+      document.getElementById("plotoption-plotrange-option").style.display='block';
+      document.getElementById("plotoption-range-option").style.display='none';
+      } else {
+        document.getElementById("plotoption-plotrange-option").style.display='none';
+        document.getElementById("plotoption-range-option").style.display='block';
+    }
 
     if(json['faults'] == 0) {
       document.getElementById("plotoption-cfm").value=0;
@@ -214,7 +229,6 @@ function updatePlotOptions(blob) {
         document.getElementById("plotoption-cmap-option").style.display='none';
     }
 
-    let type=json['type'];
     return type;
 }
 
@@ -588,6 +602,7 @@ function movePlotview2() {
 
 function savePDFPlotview() {
   let file=MODAL_REPLOT_SRC;
+  window.console.log("MODAL_REPLOT_SRC >>> ", file);
   saveAsURLFile(file);
 }
 

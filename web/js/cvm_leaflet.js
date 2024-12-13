@@ -241,9 +241,20 @@ function setup_viewer()
 // ==> area/rectangle drawing control <==
   rectangleDrawer = new L.Draw.Rectangle(mymap, rectangle_options);
 
+// https://stackoverflow.com/questions/42092095/how-to-complete-a-polyline-in-leaflet-draw-after-clicking-second-point
+  mymap.on('draw:drawvertex', function(e) {
+    if(in_drawing_line()) {
+        const layerIds = Object.keys(e.layers._layers);
+        if (layerIds.length > 1) {
+          const secondVertex = e.layers._layers[layerIds[1]]._icon;
+          requestAnimationFrame(() => secondVertex.click());
+        }
+    }
+  });
+
   mymap.on(L.Draw.Event.CREATED, function (e) {
-    var type = e.layerType,
-        layer = e.layer;
+    var type = e.layerType;
+    var layer = e.layer;
 
     if (type === 'rectangle') {  // tracks retangles
         // get the boundary of the rectangle
@@ -255,24 +266,25 @@ function setup_viewer()
         var ne=loclist[2];
         if(sw != undefined && ne != undefined) {
           add_bounding_area_layer(layer,sw['lat'],sw['lng'],ne['lat'],ne['lng']);
-	  CVM.processByLatlonForArea(1);
+//	  CVM.processByLatlonForArea(1);
         }
     } else if (type === 'marker') {  // can be a point or a profile
         var sw=layer.getLatLng();
         if( in_drawing_profile() ) {
           add_bounding_profile_layer(layer,sw['lat'],sw['lng']);
-	  CVM.processByLatlonForProfile(1);
+//	  CVM.processByLatlonForProfile(1);
           } else {
             add_bounding_point_layer(layer,sw['lat'],sw['lng']);
-            CVM.processByLatlonForPoint(1)
+//            CVM.processByLatlonForPoint(1)
         }
     } else if (type === 'polyline') {  // tracks lines
         var latlngs=layer.getLatLngs();
+window.console.log("In DRAW.Created polyline.. with ", latlngs.length);
         var sw=latlngs[0];
         var ne=latlngs[1];
         if(sw != undefined && ne != undefined) {
           add_bounding_line_layer(layer,sw['lat'],sw['lng'],ne['lat'],ne['lng']);
-          CVM.processByLatlonForLine(1)
+//          CVM.processByLatlonForLine(1)
         }
     }
   });
@@ -300,8 +312,8 @@ function skipPoint(){ pointDrawer.disable(); }
 function drawProfile(){ profileDrawer.enable(); }
 function skipProfile(){ profileDrawer.disable(); }
 
-function drawLine(){ lineDrawer.enable(); }
-function skipLine(){ lineDrawer.disable(); }
+function drawLine(){ window.console.log("LINE:enable"); lineDrawer.enable(); }
+function skipLine(){ window.console.log("LINE:disable"); lineDrawer.disable(); }
 
 // https://gis.stackexchange.com/questions/148554/disable-feature-popup-when-creating-new-simple-marker
 function unbindPopupEachFeature(layer) {

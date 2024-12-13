@@ -342,7 +342,6 @@ function unselect_point_option() {
 /***********************************************************/
 
 // line select js
-// slide out
 function lineClick() {
   if(!line_select) { dismiss_select(); }
 

@@ -63,12 +63,6 @@ echo "source $UCVM_INSTALL_PATH/conf/ucvm_env.sh" >> ~/.bashrc
 ## setup plotting  
 mkdir -p $PLOTTING_TOP_DIR
 
-## setup web result permission
-mkdir $CVM_WEB_TOP_DIR/result
-chmod -R og+rw $CVM_WEB_TOP_DIR/php
-chmod -R og+rwx $CVM_WEB_TOP_DIR/perl
-chmod -R og+rw $CVM_WEB_TOP_DIR/result
-
 cd $PLOTTING_TOP_DIR
 git clone https://github.com/meihuisu/ucvm_plotly_web.git plotly_profile
 
@@ -86,3 +80,12 @@ if [ -f $UCVM_INSTALL_PATH/conf/ucvm_env.sh ]; then
   source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
   source $PLOTTING_TOP_DIR/metadata_utilities/setup.sh
 fi    
+
+## setup web result permission
+cd $CVM_WEB_TOP_DIR
+mkdir result
+chmod -R og+rw php
+chmod -R og+rwx perl
+chmod -R og+rw  result
+ln -s $PLOTTING_TOP_DIR/plotly_profile .
+

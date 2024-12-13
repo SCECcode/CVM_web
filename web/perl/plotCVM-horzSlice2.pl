@@ -1,19 +1,20 @@
 #!/usr/bin/perl
 #plotCVM-horzSlice.pl
-#Written 2024-08-29 by Scott T. Marshall
+#Written 2024-12-12 by Scott T. Marshall
 #-----------------------------------------------------------------------------------------------------------------------------#
 # 
 # This script processes a csv file containing a horizontal slice of data located at a constant depth
-# csv Data must be in columns (lon,lat,value) 
+# csv Data must be in columns (lon,lat,Vp,Vs,Density) 
 # The data is then interpolated and plotted on a map using GMT.
 # This is used by the CVM explorer to plot CVM horizontal slices extracted by users.
 #
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax
+#   Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotParam plotFaults plotCities plotPts cMap forceRange zMin zMax
 #     Parameters are described below:
 #     path/to/file.csv : The csv file must be specified with a path (relative or absolute). ./ will not work.
+#     plotParam        : Select what is plotted 1=Vp; 2=Vs; 3=Density
 #     plotFaults       : 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults
 #     plotCities       : 1=Plots selected CA/NV cities. 0=Don't plot cities
 #     plotPts          : 1=Plots the source data points, so the user can see the resolution of the heatmap. 0=Don't plot points.
@@ -43,17 +44,18 @@ $openEPS=0;
 $printStats=0;
 
 #grab the command line arguments
-if   (@ARGV==8){($csvFile,$plotFaults,$plotCities,$plotPts,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
-elsif(@ARGV==6){
-	($csvFile,$plotFaults,$plotCities,$plotPts,$cMap,$forceRange)=@ARGV;
+if   (@ARGV==9){($csvFile,$plotParam,$plotFaults,$plotCities,$plotPts,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
+elsif(@ARGV==7){
+	($csvFile,$plotParam,$plotFaults,$plotCities,$plotPts,$cMap,$forceRange)=@ARGV;
 	#in this case, check that $forceRange is zero. If not, print an error.
 	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
 }
 #print usage for incorrect inputs
 else {
-	print "\n  Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax\n";
+	print "\n  Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotParam plotFaults plotCities plotPts cMap forceRange zMin zMax\n";
 	print "    Parameters are described below:\n";
 	print "    path/to/file.csv: The csv file must be specified with a path (relative or absolute).\n";
+	print "    plotParam: Select what is plotted 1=Vp; 2=Vs; 3=Density\n";
 	print "    plotFaults: 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults\n";
 	print "    plotCities: 1=Plots selected CA/NV cities. 0=Don't plot cities\n";
 	print "    plotPts: 1=Plots the source data points. 0=Don't plot points.\n";
@@ -143,7 +145,6 @@ while(<CSV>){
 		#grab useful portions of the header
 		if   ($data[0] eq "Title")          {$title   =$data[1]}
 		elsif($data[0] eq "CVM(abbr)")      {$model   =$data[1]}
-		elsif($data[0] eq "Data_type")      {$dataType=$data[1]}
 		elsif($data[0] eq "Depth(m)")       {$depth   =$data[1]/1000}
 		elsif($data[0] eq "Spacing(degree)"){$spacing =$data[1]}
 		elsif($data[0] eq "Lat1")           {$begLat  =$data[1]}
@@ -154,39 +155,55 @@ while(<CSV>){
 	#deal with data lines
 	else {
 		@data=split(",",$_);
-		if(@data!=3){
-			print "Error: Three columns of data should have been found. I found the line below\n";
+		if(@data!=5){
+			print "Error: Five columns of data should have been found. I found the line below\n";
 			print "$_\n";
 			exit;
 		}#end if
 		#write a simple header if this is the first data line
 		if($count==0){
-			if   ($dataType eq "vs")     {print GMT "#lon,lat,vs(km/s)\n"}
-			elsif($dataType eq "vp")     {print GMT "#lon,lat,vp(km/s)\n"}
-			elsif($dataType eq "density"){print GMT "#lon,lat,density(g/cm^3)\n"}
-			elsif($dataType eq "poisson"){print GMT "#lon,lat,poisson\n"}
+			if   ($plotParam==1){print GMT "#lon,lat,vp(km/s)\n"}
+			elsif($plotParam==2){print GMT "#lon,lat,vs(km/s)\n"}
+			elsif($plotParam==3){print GMT "#lon,lat,density(g/cm^3)\n"}
 		}#end if
 		
-		#convert the parameter to more useful units
-		if($dataType eq "vs" || $dataType eq "vp" || $dataType eq "density"){
+		#print the Vp data to $gmtFile
+		if($plotParam==1){
 			#the conversion is the same for m/s to km/s and kg/m^3 to g/cm^3. Cool!
 			$data[2]/=1000;
+			#print the line to the new GMT file (still a csv file, format-wise)
+			print GMT "$data[0],$data[1],$data[2]\n";
+			#set the colorbar and eps file titles
+			$zTitle="Vp (km/s)";
+			$epsTitle="Vp (km/s)";
 		}#end if
-		#print the line to the new GMT file (still a csv file, format-wise)
-		print GMT "$data[0],$data[1],$data[2]\n";
-		
+		#print the Vs data to $gmtFile
+		elsif($plotParam==2){
+			#the conversion is the same for m/s to km/s and kg/m^3 to g/cm^3. Cool!
+			$data[3]/=1000;
+			#print the line to the new GMT file (still a csv file, format-wise)
+			print GMT "$data[0],$data[1],$data[3]\n";
+			#set the colorbar and eps file titles
+			$zTitle="Vs (km/s)";
+			$epsTitle="Vs (km/s)";
+		}#end if
+		#print the density data to $gmtFile
+		elsif($plotParam==3){
+			#the conversion is the same for m/s to km/s and kg/m^3 to g/cm^3. Cool!
+			$data[4]/=1000;
+			#print the line to the new GMT file (still a csv file, format-wise)
+			print GMT "$data[0],$data[1],$data[4]\n";
+			#set the colorbar and eps file titles
+			$zTitle="Density (g/cm\@+3\@+)";
+			$epsTitle="Density (g/cm^3)";
+		}#end if
+				
 		#increment the line counter
 		$count++;
 	}#end else
 }#end while
 close(CSV);
 close(GMT);
-
-#set the colorbar title based on what parameter is in the csvFile header
-if   ($dataType eq "vs")     {$zTitle="Vs (km/s)"; $epsTitle="Vs (km/s)"}
-elsif($dataType eq "vp")     {$zTitle="Vp (km/s)"; $epsTitle="Vp (km/s)"}
-elsif($dataType eq "density"){$zTitle="Density (g/cm\@+3\@+)"; $epsTitle="Density (g/cm^3)"}
-elsif($dataType eq "poisson"){$zTitle="Poisson's Ratio"; $zTitle="Poisson's Ratio"}
 
 #get the data range
 $tmp=`gmt info $gmtFile`;
@@ -248,7 +265,6 @@ chomp($Rext);
 if($printStats==1){
 	print "Title             : $title\n";
 	print "Model             : $model\n";
-	print "Data Type         : $dataType\n";
 	print "Depth (km)        : $depth\n";
 	print "Spacing (deg)     : $spacing\n";
 	print "Num Points        : $numPts\n";
@@ -491,6 +507,6 @@ if($printStats==1){
 
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{\"type\": \"horizontal\", \"file\": \"$pdfFile\", \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
+	print "{\"type\": \"horizontal\", \"file\": \"$pdfFile\", \"plotParam\": $plotParam, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
 }
 exit;

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #plotCVM-vertSection.pl
-#Written 2024-08-29 by Scott T. Marshall
+#Written 2024-12/12 by Scott T. Marshall
 #-----------------------------------------------------------------------------------------------------------------------------#
 # 
 # This script processes a csv file containing a vertical cross section of data with a range of depths
@@ -13,9 +13,10 @@
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax
+#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotParam plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax
 #     Parameters are described below:
 #     path/to/file.csv : The csv file must be specified with a path (relative or absolute). ./ will not work.
+#     plotParam        : Select what is plotted 1=Vp; 2=Vs; 3=Density
 #     plotMap          : 1=Plots a simple location map showing the profile section. 0=Don't plot a map. Just plot the vertical profile data.
 #     plotFaults       : 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults
 #     plotCities       : 1=Plots selected CA/NV cities. 0=Don't plot cities
@@ -47,16 +48,17 @@ $openEPS=0;
 $printStats=0;
 
 #check for correct usage and make sure the csv file exists
-if   (@ARGV==10){($csvFile,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
-elsif(@ARGV==8){
-	($csvFile,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange)=@ARGV;
+if   (@ARGV==11){($csvFile,$plotParam,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
+elsif(@ARGV==9){
+	($csvFile,$plotParam,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange)=@ARGV;
 	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
 }
 #print usage for incorrect inputs
 else {
-	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax\n";
+	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotParam plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax\n";
 	print "    Parameters are described below:\n";
 	print "    path/to/file.csv: The csv file must be specified with a path (relative or absolute).\n";
+	print "    plotParam: Select what is plotted 1=Vp; 2=Vs; 3=Density\n";
 	print "    plotMap: 1=Plots a simple location map 0=Don't plot a map. Just plot the vertical profile data.\n";
 	print "    plotFaults: 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults\n";
 	print "    plotCities: 1=Plots selected CA/NV cities. 0=Don't plot cities\n";
@@ -156,7 +158,6 @@ while(<CSV>){
 		#grab useful portions of the header
 		if   ($data[0] eq "Title")          {$title       =$data[1]}
 		elsif($data[0] eq "CVM(abbr)")      {$model       =$data[1]}
-		elsif($data[0] eq "Data_type")      {$dataType    =$data[1]}
 		elsif($data[0] eq "Start_depth(m)") {$startDepth  =$data[1]}
 		elsif($data[0] eq "End_depth(m)")   {$endDepth    =$data[1]}
 		elsif($data[0] eq "Vert_spacing(m)"){$vertSpacing =$data[1]}
@@ -169,29 +170,51 @@ while(<CSV>){
 	#deal with data lines
 	else {
 		@data=split(",",$_);
-		if(@data!=4){
-			print "Error: Four columns of data should have been found. I found the line below\n";
+		if(@data!=6){
+			print "Error: Six columns of data should have been found. I found the line below\n";
 			print "$_\n";
 			exit;
 		}#end if
 		#write a simple header if this is the first data line
 		if($count==0){
-			if   ($dataType eq "vs")     {print GMT "#lon,lat,depth(km),vs(km/s)\n"}
-			elsif($dataType eq "vp")     {print GMT "#lon,lat,depth(km),vp(km/s)\n"}
-			elsif($dataType eq "density"){print GMT "#lon,lat,depth(km),density(g/cm^3)\n"}
-			elsif($dataType eq "poisson"){print GMT "#lon,lat,depth(km),poisson\n"}
+			if   ($plotParam==1){print GMT "#lon,lat,depth(km),vp(km/s)\n"}
+			elsif($plotParam==2){print GMT "#lon,lat,depth(km),vs(km/s)\n"}
+			elsif($plotParam==3){print GMT "#lon,lat,depth(km),density(g/cm^3)\n"}
 		}#end if
 		
-		#convert the parameter to more useful units
-		if($dataType eq "vs" || $dataType eq "vp" || $dataType eq "density"){
-			#the conversion is the same for m/s to km/s and kg/m^3 to g/cm^3. Cool!
+		#print Vp data to $gmtFile
+		if($plotParam==1){
+			#convert depth from m to km and Vp from m/s to km/s
+			$data[2]/=1000;
 			$data[3]/=1000;
+			#set the colorbar and eps file titles
+			$zTitle="Vp (km/s)";
+			$epsTitle="Vp (km/s)";
+			#print the line to the new GMT file (still a csv file, format-wise)
+			print GMT "$data[0],$data[1],$data[2],$data[3]\n";
 		}#end if
-		#depth is always converted to km
-		$data[2]/=1000;
-		
-		#print the line to the new GMT file (still a csv file, format-wise)
-		print GMT "$data[0],$data[1],$data[2],$data[3]\n";
+		#print Vs data to $gmtFile
+		if($plotParam==2){
+			#convert depth from m to km and Vp from m/s to km/s
+			$data[2]/=1000;
+			$data[4]/=1000;
+			#set the colorbar and eps file titles
+			$zTitle="Vs (km/s)";
+			$epsTitle="Vs (km/s)";
+			#print the line to the new GMT file (still a csv file, format-wise)
+			print GMT "$data[0],$data[1],$data[2],$data[4]\n";
+		}#end if
+		#print density data to $gmtFile
+		if($plotParam==3){
+			#convert depth from m to km and Vp from m/s to km/s
+			$data[2]/=1000;
+			$data[5]/=1000;
+			#set the colorbar and eps file titles
+			$zTitle="Density (g/cm\@+3\@+)";
+			$epsTitle="Density (g/cm^3)";
+			#print the line to the new GMT file (still a csv file, format-wise)
+			print GMT "$data[0],$data[1],$data[2],$data[5]\n";
+		}#end if
 		
 		#increment the line counter
 		$count++;
@@ -199,12 +222,6 @@ while(<CSV>){
 }#end while
 close(CSV);
 close(GMT);
-
-#set the colorbar title based on what parameter is in the csvFile header
-if   ($dataType eq "vs")     {$zTitle="Vs (km/s)"; $epsTitle="Vs (km/s)"}
-elsif($dataType eq "vp")     {$zTitle="Vp (km/s)"; $epsTitle="Vp (km/s)"}
-elsif($dataType eq "density"){$zTitle="Density (g/cm\@+3\@+)"; $epsTitle="Density (g/cm^3)"}
-elsif($dataType eq "poisson"){$zTitle="Poisson's Ratio"; $epsTitle="Poisson's Ratio"}
 
 #calculate the lon/lat ranges and midpts
 $lonRange=abs($begLon-$endLon);
@@ -312,7 +329,6 @@ if($printStats==1){
 	#print useful metadata to stdout
 	print "Title               : $title\n";
 	print "Model               : $model\n";
-	print "Data Type           : $dataType\n";
 	print "StartDepth (m)      : $startDepth\n";
 	print "EndDepth (m)        : $endDepth\n";
 	print "VertSpacing (m)     : $vertSpacing\n";
@@ -381,7 +397,7 @@ elsif($cMap==3){
 	$cpt="plasma";
 	system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile";
 }
-else {print "\n\n  Error: cMap must be 1-3. You entered $cMap\n\n"}
+else {print "\n\n  Error: cMap must be 1-3. You entered $cMap\n\n"; exit}
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -452,7 +468,6 @@ system "gmt pstext -R -JX -F+a0+f12p,Helvetica-Bold+jBR -D-0.18i/0.14i -N -O -K 
 $maxX $minY ($endLon, $endLat)
 END";
 
-
 #plot a colorbar below the plot
 system "gmt psscale -R -JX -C$cptFile -B$cAxis+l\"$zTitle\" -Dx0/-0.85i+w${width}i/0.25i+jBL+h -O -K >> $plotFile";
 
@@ -520,7 +535,8 @@ if($plotMap==1){
 	system "gmt psbasemap -R -JM -Bx$lonAxis -By$latAxis -BWeSn+t\"Model: $model | Vertical Profile Location ($begLon, $begLat) to ($endLon, $endLat)\" $mapScale -O >> $plotFile";
 	
 }#end if (plotting location map)	
-	
+
+
 #---------------------------------------------------------------------------------------------------------------------------#
 #------- WRITE A NEW EPS FILE JUST TO CHANGE THE TITLE ---------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------#
@@ -541,7 +557,7 @@ close(NEW);
 #------- VIEW THE MAP, CONVERT TO PDF/PNG AND PRINT TOTAL CPU TIME ---------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------------------------------#
 #open the eps file with a user-specified program
-if   ($openEPS==1){system "gv $epsFile -geometry +0+0 -scale=2.49 &"}
+if   ($openEPS==1){system "gv $epsFile -geometry +0+0 -scale=1.49 --watch &"}
 elsif($openEPS==2){system "evince $epsFile &"} 
 elsif($openEPS==3){system "illustrator $epsFile &"}
 
@@ -577,6 +593,6 @@ if($printStats==1){
 }
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"plotMap\": $plotMap, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
+	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"plotParam\": $plotParam, \"plotMap\": $plotMap, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
 }
 exit;

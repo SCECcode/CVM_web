@@ -323,11 +323,10 @@ TODO: need a new id
                     <label class="input-group-text" for="searchType">Select Profile Type</label>
                 </div>
                 <select id="searchType" class="custom-select custom-select-sm">
-                    <option value="pointClick" selected>0D Point</option>
-                    <option disabled>-- Advanced --</option>
-                    <option value="profileClick">1D Vertical Profile</option>
+                    <option id="searchType-areaClick" value="areaClick" selected>2D Horizontal Slice</option>
                     <option id="searchType-lineClick" value="lineClick">2D Vertical Cross Section</option>
-                    <option id="searchType-areaClick" value="areaClick">2D Horizontal Slice</option>
+                    <option value="profileClick">1D Vertical Profile</option>
+                    <option value="pointClick">0D Point</option>
                 </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalstype"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div> <!-- query option -->
 
@@ -336,8 +335,8 @@ TODO: need a new id
                     <label class="input-group-text" for="modelType">Select Z Mode</label>
                 </div>
                 <select id="zModeType" class="custom-select custom-select-sm">
-                    <option id="zMode-depthClick" value="d">Depth(km)</option>
-                    <option id="zMode-elevClick" value="e">Elevation(km)</option>
+                    <option id="zMode-depthClick" value="d">Depth (m)</option>
+                    <option id="zMode-elevClick" value="e">Elevation (m)</option>
                 </select>&nbsp;<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalzmode"><span class="glyphicon glyphicon-info-sign"></span></button>
             </div> <!-- z select -->
 
@@ -393,12 +392,15 @@ TODO: need a new id
 
                                 <div class="row d-flex mt-1">
                                     <div class="col-5 pr-0">
+                                        <div class="col-12" style="padding:5px 0px 10px 0px">
+                                               <button class="btn btn-dark" onclick="CVM.resetAll()" style="width:100%;border-radius:0.25rem">Reset All</button>
+                                        </div>
                                     </div>
                                     <div class="col-5 pr-0">
                                         <div class="col-12" style="padding:5px 0px 10px 0px">
-                                               <button id="pointBtn" class="btn btn-dark" onclick="CVM.processByLatlonForPoint(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+                                               <button id="pointBtn" class="btn btn-dark" onclick="CVM.processByLatlonForPoint(0)" style="width:100%;border-radius:0.25rem">Extract Data</button>
                                         </div>
-                                    <div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -471,12 +473,15 @@ TODO: need a new id
                                 </div>
                                 <div class="row d-flex mt-1">
                                     <div class="col-5 pr-0">
+                                        <div class="col-12" style="padding:5px 0px 10px 0px">
+                                               <button class="btn btn-dark" onclick="CVM.resetAll()" style="width:100%;border-radius:0.25rem">Reset All</button>
+                                        </div>
                                     </div>
                                     <div class="col-5 pr-0">
                                         <div class="col-12" style="padding:5px 0px 10px 0px">
-                                          <button id="profileBtn" class="btn btn-dark" onclick="CVM.processByLatlonForProfiles(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+                                          <button id="profileBtn" class="btn btn-dark" onclick="CVM.processByLatlonForProfile(0)" style="width:100%;border-radius:0.25rem">Extract Data</button>
                                         </div>
-                                    <div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -516,7 +521,9 @@ TODO: need a new id
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
+<!--
                                                <option value="poisson">poisson</option>
+-->
                                         </select>
                                     </div>
                                     <div class="col-5 pr-0">
@@ -550,12 +557,15 @@ TODO: need a new id
                                 </div>
                                 <div class="row d-flex mt-1">
                                     <div class="col-5 pr-0">
+                                        <div class="col-12" style="padding:5px 0px 10px 0px">
+                                               <button class="btn btn-dark" onclick="CVM.resetAll()" style="width:100%;border-radius:0.25rem">Reset All</button>
+                                        </div>
                                     </div>
                                     <div class="col-5 pr-0">
                                         <div class="col-12" style="padding:5px 0px 10px 0px">
-                                          <button id="lineBtn" class="btn btn-dark" onclick="CVM.processByLatlonForLine(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+                                          <button id="lineBtn" class="btn btn-dark" onclick="CVM.processByLatlonForLine(0)" style="width:100%;border-radius:0.25rem">Extract Data</button>
                                         </div>
-                                    <div>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -584,7 +594,7 @@ TODO: need a new id
                                                class="form-control mt-1">
                                         <input type="text"
                                                id="areaZTxt"
-                                               placeholder="Depth(km)"
+                                               placeholder="Depth (m)"
                                                title="areaZTxt"
                                                onfocus="this.value=''"
                                                class="form-control mt-1">
@@ -609,8 +619,10 @@ TODO: need a new id
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
+<!--
                                                <option value="poisson">poisson</option>
                                                <option value="vs30">vs30 etree</option>
+-->
                                         </select>
 
                                         <input type="text"
@@ -623,20 +635,20 @@ TODO: need a new id
                                 </div>
                                 <div class="row d-flex mt-1">
                                     <div class="col-5 pr-0">
+                                        <div class="col-12" style="padding:5px 0px 10px 0px">
+					       <button class="btn btn-dark" onclick="CVM.resetAll()" style="width:100%;border-radius:0.25rem">Reset All</button>
+                                        </div>
                                     </div>
                                     <div class="col-5 pr-0">
                                         <div class="col-12" style="padding:5px 0px 10px 0px">
-                                               <button id="areaBtn" class="btn btn-dark" onclick="CVM.processByLatlonForArea(0)" style="width:100%;border-radius:0.25rem">Extract and Plot Data</button>
+                                               <button id="areaBtn" class="btn btn-dark" onclick="CVM.processByLatlonForArea(0)" style="width:100%;border-radius:0.25rem">Extract Data</button>
                                         </div>
-                                    <div>
+                                    </div>
                                 </div>
 
                             </div>
                         </li>
                     </ul> 
-                    <div class="input-group-append">
-                         <button id="toReset" class="btn btn-dark">Reset All</button>
-                    </div>
                 </div>
 
             </div>
@@ -853,19 +865,6 @@ TODO: need a new id
 		     </label>
                      <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalcolorrange"><span class="glyphicon glyphicon-info-sign"></span></button>
    
-                     <div class="form-check form-check-inline">
-                          <label title='scale maximum'
-                                 style="margin-left:5px;width:5vw;"
-                                 for="maxScaleTxt">Maximum
-                          </label>
-                          <input type="text"
-                                 id="maxScaleTxt"
-                                 placeholder="max scale"
-                                 title="maxScale"
-                                 style="width:4vw"
-                                 onfocus="this.value=''">
-                     </div>
-
                      <div class="form-check form-check-inline mt-1">
 		           <label title='scale minimum'
                                   style="margin-left:5px;width:5vw;"
@@ -878,6 +877,53 @@ TODO: need a new id
                                   style="width:4vw"
                                   onfocus="this.value=''">
                      </div>
+
+                     <div class="form-check form-check-inline">
+                          <label title='scale maximum'
+                                 style="margin-left:5px;width:5vw;"
+                                 for="maxScaleTxt">Maximum
+                          </label>
+                          <input type="text"
+                                 id="maxScaleTxt"
+                                 placeholder="max scale"
+                                 title="maxScale"
+                                 style="width:4vw"
+                                 onfocus="this.value=''">
+                     </div>
+                 </div>
+
+                 <div id="plotoption-plotrange-option" class="mt-2" style="display:">
+                     <label title='range option'
+                        style="margin:0px 0px 0px 5px">Set Plot Range
+		     </label>
+                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalplotrange"><span class="glyphicon glyphicon-info-sign"></span></button>
+   
+                     <div class="form-check form-check-inline mt-1">
+                           <label title='scale minimum'
+                                  style="margin-left:5px;width:5vw;"
+                                  for="minPlotScaleTxt">Minimum
+                           </label>
+                           <input type="text"
+                                  id="minPlotScaleTxt"
+                                  placeholder="min scale"
+                                  title="minPlotScale"
+                                  style="width:4vw"
+                                  onfocus="this.value=''">
+                     </div>
+
+                     <div class="form-check form-check-inline">
+                          <label title='scale maximum'
+                                 style="margin-left:5px;width:5vw;"
+                                 for="maxPlotScaleTxt">Maximum
+                          </label>
+                          <input type="text"
+                                 id="maxPlotScaleTxt"
+                                 placeholder="max scale"
+                                 title="maxPlotScale"
+                                 style="width:4vw"
+                                 onfocus="this.value=''">
+                     </div>
+
                  </div>
 
 		 <div style="text-align:center">
@@ -964,7 +1010,7 @@ TODO: need a new id
     <div class="modal-content" id="modalpointsContent" style="font-size:20px">
       <!--Body-->
       <div class="modal-body" id="modalpointsBody">
-<p>Plots the source data point locations, which is useful to understand the resollution of the plotted datPlots the source data point locations, which is useful to understand the resollution of the plotted data.</p>
+<p>Plots the source data points, which is useful to better understand the resolution of the plotted data. Note that all points are interpolated.</p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -992,6 +1038,25 @@ TODO: need a new id
   </div>
 </div> <!--Modal: modalcolorrange-->
 
+<!--Modal: plotrange-->
+<div class="modal" id="modalplotrange" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalplotrangeDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalplotrangeContent" style="font-size:20px">
+      <!--Body-->
+      <div class="modal-body" id="modalplotrangeBody">
+<p>These values set the x-axis range. The plot defaults to cover the entire range of data; however, sometimes it is useful to force the plotted range to compare two plots with different data ranges.
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalplotrange-->
+
+
 <!--Modal: padding-->
 <div class="modal" id="modalpadding" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" id="modalpaddingDialog" role="document">
@@ -1000,7 +1065,7 @@ TODO: need a new id
     <div class="modal-content" id="modalpaddingContent" style="font-size:20px">
       <!--Body-->
       <div class="modal-body" id="modalpaddingBody">
-<p>This sets how far (in degrees) the map should extend beyond the selected 1D profile location. Amap that is too local may not show identifiable geographic features. If so, increase the padding to make the map cover a larger geographic area.</p>
+<p>This sets how far (in degrees) the map should extend beyond the selected 1D profile location. A map that is too local may not show identifiable geographic features. If so, increase the padding to make the map cover a larger geographic area.</p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -1064,10 +1129,10 @@ TODO: need a new id
       <div class="modal-body" id="modalstypeBody">
         <h4><b>Options:</b></h4>
 	<ul class="mb-1" id="info-list">
-           <li style="list-style-type:disc">Query for material properties with <b>0D&nbsp;Point</b> option</li> 
+           <li style="list-style-type:disc">Plot horizontal slice of vs, vp or density with <b>2D&nbsp;Horizontal&nbsp;Slice</b> option </li>
+           <li style="list-style-type:disc">Plot cross section for vs, vp or density data type with <b>2D&nbsp;Vertical&nbsp;Cross&nbsp;Section</b> option</li>
            <li style="list-style-type:disc">Plot depth or elevation profile with <b>1D&nbsp;Vertical&nbsp;Profile</b> option</li> 
-           <li style="list-style-type:disc">Plot cross section for vs, vp, density or poisson data type with <b>2D&nbsp;Vertical&nbsp;Cross&nbsp;Section</b> option</li>
-           <li style="list-style-type:disc">Plot horizontal slice of vs, vp, density, poisson or vs30 etree with <b>2D&nbsp;Horizontal&nbsp;Slice</b> option </li>
+           <li style="list-style-type:disc">Query for material properties with <b>0D&nbsp;Point</b> option</li> 
         </ul>
         <br>
         <p> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</p>

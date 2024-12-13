@@ -31,7 +31,7 @@ function plotly_profile_run(){
 
    var ulist=JSON.stringify(plist);
    var srcstr= "plotly_profile/compare.html?uidlist="+ulist;
-   window.console.log(srcstr);
+   window.console.log("calling pltly_profile.. >> ",srcstr);
 //   var frameHeight=window.innerHeight;
 //   document.getElementById("viewProfileIfram").height = frameHeight * 0.9 ;
    $('#viewProfileIfram').attr('src',srcstr);
@@ -66,7 +66,7 @@ function readVProfileDataFile(uid) {
 
   var fmeta=makeVProfileMetaFname(uid);
   var fmp=makeVProfileMPFname(uid);
-  var fcsv=makeVProfileCSVFname(uid);
+  //var fcsv=makeVProfileCSVFname(uid);
   fmeta="result/"+fmeta;
   fmp="result/"+fmp;
 
@@ -86,6 +86,7 @@ function send_to_profileIfram(data) {
   var loc = location.hostname;
   var profileWindow = document.getElementById('viewProfileIfram').contentWindow;
   // postMessage arguments: data to send, target origin
+  window.console.log("loc for profileIfam >> ", loc);
   if(loc=="moho.scec.org") {
     profileWindow.postMessage(data, 'http://moho.scec.org');
     } else {
