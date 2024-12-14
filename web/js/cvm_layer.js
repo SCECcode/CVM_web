@@ -260,7 +260,6 @@ function remove_a_layer(uid) {
 }
 
 function load_a_layergroup(uid,type,group,highlight) {
-window.console.log("load_a_layergroup with ",uid);
    var t=find_layer_from_list(uid);
    if(t) {
      window.console.log("already plotted this layer ",uid);
@@ -457,11 +456,19 @@ function add_bounding_profile(uid,a,b) {
   if(dirty_layer_uid) {
     remove_a_layer(dirty_layer_uid);
   }
-  var group=addProfileLayerGroup(a,b);
-  var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
-  if(load_a_layergroup(uid,PROFILE_ENUM,group,EYE_NORMAL)) {
-    cvm_profile_list.push(tmp);
-  }
+
+  // if the profile layer is already on the map, don't try to add again
+  let t=cvm_profile_list;
+
+  if(checkInList(cvm_profile_list,uid)!= undefined) {
+    window.console.log("add_bounding_profile, already in the list ", uid);
+    } else {
+      var group=addProfileLayerGroup(a,b);
+      var tmp={"uid":uid,"latlngs":[{"lat":a,"lon":b}]};
+      if(load_a_layergroup(uid,PROFILE_ENUM,group,EYE_NORMAL)) {
+        cvm_profile_list.push(tmp);
+     }
+   }
 }
 
 // came from the map

@@ -403,8 +403,6 @@ function readAndProcessLocalFileForProfile(fobj) {
       return;
     }
 
-    window.console.log("HERE");
-
     for(i=0;i<cnt;i++) {
       var fline=ffline[i];
       if(fline[0] == '#')

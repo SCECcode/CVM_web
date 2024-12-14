@@ -391,7 +391,7 @@ function plotVerticalProfileByList(dataarray,idx,total) {
                 var zstr=getZModeNameWithType(zmodestr);
                 var mstr=getModelNameWithType(modelstr);
                 var note="Vertical "+zstr+" Profile ("+datatypestr+") with "+mstr;
-                add_bounding_profile(uid,latstr,lonstr);
+		add_bounding_profile(uid,latstr,lonstr);
                 insertMetaPlotResultTable(note, uid,str);
                 reset_profile_UID();
                 } else { // failed to produce valid vertical profile plot, remove marker
