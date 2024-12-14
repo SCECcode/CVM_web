@@ -129,10 +129,9 @@ var CVM = new function () {
       return [spec, spec_idx, spec_data];
    }
 
-
-
    this.resetAll = function() {
 
+window.console.log("XXX calling resetAll");
      document.getElementById("phpResponseTxt").innerHTML = "";
 
      refreshMPTable();
@@ -143,20 +142,18 @@ var CVM = new function () {
      refresh_model_type();
      refresh_select(); // option
 
-// PIXI 
-//pixiResetAllOverlayOpacity();
-//pixiClearAllPixiOverlay();
-//this.setupPixiSegmentDebug(0,{});
-
-     // back to inital stte
+     // back to inital state
      $("#selectModelType").trigger("change");
-     reset_presets();
-
    };
 
-    this.refreshModelDescription = function (descript){
+   this.hardReset = function() {
+     window.location.reload();
+     return false;
+   }
+
+   this.refreshModelDescription = function (descript){
       $("#cvm-model-description").html(descript);
-    }
+   }
 
 /******************************************/
     this.processByLatlonForPoint = function(fromMap) {

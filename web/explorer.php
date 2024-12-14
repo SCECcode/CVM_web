@@ -231,28 +231,6 @@ TODO: need a new id
 
 <!-- model map control -->
     <div id="mapDataBig" class="row mapData">
-
-
-<!-- metric spec parking --> 
-<!--
-        <div id="metricData" class="col-5 button-container flex-column pr-0" style="overflow:hidden;border:solid 0px red;">         
-        <div class="row" style="border:solid 0px blue">
-             <div class="col-9">
-               <form id="cvm-search-type">
-                 <label><input type="radio" id="searchTypeModel" name="searchtype" onclick="CVM.showSearch('model')"><span>Explore Models</span></label>
-                 <label><input type="radio" id="searchTypeData" name="searchtype" onclick="CVM.showSearch('latlon')"><span>Select Region</span></label>
-               </form>
-             </div>
-
-             <div id="csm-reset-btn" class="col-2">
-               <div class="row justify-content-end">
-               <button id="toReset" type="button" class="btn btn-dark" >Reset</button>
-               </div>
-             </div>
-        </div>
-
--->
-
         <div id="search-container" class="col-5 button-container flex-column pr-0" style="overflow:hidden;border:solid 0px red;">
 
             <div class="input-group input-group-sm custom-control-inline" style="max-width:450px;border:solid 0px green;">
@@ -573,7 +551,7 @@ TODO: need a new id
                             <div id='areaMenu' class='menu'>
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <p>Draw a rectangle(click and drag) on the map or enter coordinates below</p>
+                                        <p>Draw a rectangle (click and drag) on the map or enter coordinates below</p>
                                     </div>
                                 </div>
                                 <div class="row d-flex ">
@@ -748,6 +726,9 @@ TODO: need a new id
 	     <p id="modalwaitonLabel2" style="text-align:center;font-size:14px; margin-left:3px; margin-right:6px; border:0px solid red">Please wait as this process is complex and may take a few minutes. Many CVMs contain a large amount of data and the data may be interpolated before extracting</p>
            </div>
         </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button id="giveUp" class="btn btn-dark" data-dismiss="modal">Cancel</button>
       </div>
 
     </div> <!--Content-->

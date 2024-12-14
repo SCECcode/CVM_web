@@ -33,7 +33,7 @@ function refresh_select() {
   reset_line_latlons();
   reset_area_latlons();
   // return to initial point state
-  $("#searchType").val('pointClick');
+  $("#searchType").val('areaClick');
   $("#searchType").trigger("change");
 }
 

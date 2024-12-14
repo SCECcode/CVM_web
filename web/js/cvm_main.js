@@ -170,6 +170,11 @@ jQuery(document).ready(function() {
  
   });
 
+  $('#giveUp').click(function() {
+      document.getElementById('spinIconForArea').style.display = "none";
+      document.getElementById('spinIconForLine').style.display = "none";
+      CVM.hardReset();
+  });
 
 /************
 const selectedOption = document.querySelector('.selected-option');
