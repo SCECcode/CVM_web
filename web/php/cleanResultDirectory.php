@@ -20,7 +20,7 @@ foreach ($Files as $file) {
     $fileAge = time() - filemtime($filePath);
 
     if($fileAge > $maxAge) {
-#       unlink($filePath); 
+       unlink($filePath); 
        $count=$count+1;
        array_push($result,$file);
     }

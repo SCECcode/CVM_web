@@ -143,11 +143,11 @@ TODO: need a new id
     </div>
 
 <!-- spinners -->
-    <div class="spinDialog" style="position:absolute;top:50%;left:50%; z-index:9999;">
+    <div class="spinDialog" style="position:absolute;top:53%;left:49%; z-index:9999;">
         <div id="spinIconForProperty" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
         <div id="spinIconForListProperty" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
         <div id="spinIconForProfile" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
-        <div id="spinIconForLine" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i> </div>
+        <div id="spinIconForLine" align="center" style="top:56%;display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i> </div>
         <div id="spinIconForArea" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
     </div> <!-- spinDialog -->
 
@@ -728,7 +728,7 @@ TODO: need a new id
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button id="giveUp" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+        <button id="giveUp" class="btn btn-dark" data-dismiss="modal">Reset</button>
       </div>
 
     </div> <!--Content-->
