@@ -12,7 +12,7 @@ $lon = ($_GET['lon']);
 $z = ($_GET['z']);
 $zstart = ($_GET['zstart']);
 $zstep = ($_GET['zstep']);
-$datatype = ($_GET['datatype']);
+$datatype_b = ($_GET['datatype']);
 $zmode = ($_GET['zmode']);
 $model = ($_GET['model']);
 $comment = "'".($_GET['comment'])."'";
@@ -32,6 +32,12 @@ $pdffile="../result/".$uid."_v_matprops.pdf";
 $gmtpl="../perl/plotCVM-1Dvert.pl";
 
 $envstr=makeEnvString();
+
+if ($datatype_b == "all") {
+  $datatype="vs,vp,density";
+  } else {
+    $datatype=$datatype_b;
+}
 
 $lstr = " -v ".$zstep." -b ".$zstart." -s ".$lat.",".$lon." -e ".$z;
 

@@ -56,8 +56,6 @@ $csvfile="../result/".$uid."_h_data.csv";
 $pngfile="../result/".$uid."_h_data.png";
 $pdffile="../result/".$uid."_h_data.pdf";
 
-$gmtpl="../perl/plotCVM-horzSlice.pl";
-
 if($datatype != 'vs30') {
   $zval=(int) $z;
   $lstr = " -b ".$firstlat.",".$firstlon." -u ".$secondlat.",".$secondlon." -e ".$zval;
@@ -92,7 +90,13 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
 #Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 1 0";
+if ($datatype == all) {
+    $gmtpl="../perl/plotCVM-horzSliceAll.pl";
+    $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 1 0 0 0 1 0";
+  } else {
+    $gmtpl="../perl/plotCVM-horzSlice.pl";
+    $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 1 0";
+}
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print($gmtcommand);

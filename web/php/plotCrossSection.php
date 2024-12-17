@@ -41,9 +41,6 @@ $csvfile="../result/".$uid."_c_data.csv";
 $pngfile="../result/".$uid."_c_data.png";
 $pdffile="../result/".$uid."_c_data.pdf";
 
-$gmtpl="../perl/plotCVM-vertSection.pl";
-
-
 $lstr = " -b ".$firstlat.",".$firstlon." -u ".$secondlat.",".$secondlon;
 if ($zrange != 'none') {
 	$lstr= ' -z '.$zrange.$lstr;
@@ -71,7 +68,14 @@ $cvsquery = $envstr." ucvm_cross_section2csv_line.py ".$binfile." ".$metafile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
 #Usage: ./plotCVM-vertSection.pl path/to/file.csv plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 1 0 0 0 1 1 0";
+
+if ($datatype == "all") { 
+  $gmtpl="../perl/plotCVM-vertSectionAll.pl";
+  $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 1 1 0 0 0 1 1 0";
+  } else {
+    $gmtpl="../perl/plotCVM-vertSection.pl";
+    $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 1 0 0 0 1 1 0";
+}
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print($gmtcommand);

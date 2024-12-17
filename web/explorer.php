@@ -432,7 +432,7 @@ TODO: need a new id
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
-                                               <option value="vs,vp,density">vs,vp,density</option>
+                                               <option value="all">vs,vp,density</option>
                                         </select>
 
                                         <input type="text"
@@ -499,6 +499,7 @@ TODO: need a new id
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
+                                               <option value="all">vs,vp,density</option>
 <!--
                                                <option value="poisson">poisson</option>
 -->
@@ -597,6 +598,7 @@ TODO: need a new id
                                                <option value="vs">vs</option>
                                                <option value="vp">vp</option>
                                                <option value="density">density</option>
+                                               <option value="all">vs,vp,density</option>
 <!--
                                                <option value="poisson">poisson</option>
                                                <option value="vs30">vs30 etree</option>
