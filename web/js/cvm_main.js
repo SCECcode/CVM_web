@@ -150,7 +150,7 @@ jQuery(document).ready(function() {
         // switch from ../reslut/pdffile to /cvm-explorer/result/pdffile 
         MODAL_REPLOT_SRC=myfile.replace("..","/cvm-explorer"); 
         MODAL_REPLOT_TYPE=type;
-        MODAL_REPLOT_PAR=true;
+        MODAL_REPLOT_PAR=false; // start as false initially
 
     // Set the modal content dynamically
         var modal = $(this);
@@ -161,12 +161,12 @@ jQuery(document).ready(function() {
         document.getElementById("plotoption-header").style.display="";
 
   });
-// special case.. if onpar get changed, need to track..it 
+// special case.. if onpar get changed, need to track and call refresh plot range
   $("#plotParTxt").change(function() {
         MODAL_REPLOT_PAR=true;
 	// clear the min/max 
-        document.getElementById("minScaleTxt").value=0;
-        document.getElementById("maxScaleTxt").value=0;
+        document.getElementById("minPlotScaleTxt").value=0;
+        document.getElementById("maxPlotScaleTxt").value=0;
  
   });
 
@@ -175,42 +175,6 @@ jQuery(document).ready(function() {
       document.getElementById('spinIconForLine').style.display = "none";
       CVM.hardReset();
   });
-
-/************
-const selectedOption = document.querySelector('.selected-option');
-const optionsContainer = document.querySelector('.options-container');
-const options = document.querySelectorAll('.option');
-
-// Toggle the options container visibility
-selectedOption.addEventListener('click', () => {
-  optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
-});
-
-// Handle option selection
-options.forEach(option => {
-  option.addEventListener('click', () => {
-    const selectedText = option.textContent.trim();
-    const selectedValue = option.getAttribute('data-value');
-    const selectedImg = option.querySelector('img').src;
-
-    // Update the selected option
-    selectedOption.innerHTML = `<img src="${selectedImg}" alt="selected option" class="option-img"> ${selectedText}`;
-
-    // Hide the options container
-    optionsContainer.style.display = 'none';
-
-    // Optionally, you can use the selected value (e.g., for form submission or other logic)
-    console.log('Selected Value:', selectedValue);
-  });
-});
-
-// Close the options container if clicked outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.png-custom-select')) {
-    optionsContainer.style.display = 'none';
-  }
-});
-***/
 
 
 // MAIN SETUP

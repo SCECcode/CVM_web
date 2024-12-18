@@ -131,7 +131,6 @@ var CVM = new function () {
 
    this.resetAll = function() {
 
-window.console.log("XXX calling resetAll");
      document.getElementById("phpResponseTxt").innerHTML = "";
 
      refreshMPTable();

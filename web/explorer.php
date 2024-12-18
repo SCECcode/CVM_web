@@ -143,11 +143,11 @@ TODO: need a new id
     </div>
 
 <!-- spinners -->
-    <div class="spinDialog" style="position:absolute;top:53%;left:49%; z-index:9999;">
+    <div class="spinDialog" style="position:absolute;top:52%;left:49%; z-index:9999;">
         <div id="spinIconForProperty" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
         <div id="spinIconForListProperty" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
         <div id="spinIconForProfile" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
-        <div id="spinIconForLine" align="center" style="top:56%;display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i> </div>
+        <div id="spinIconForLine" align="center" style="top:55%;display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i> </div>
         <div id="spinIconForArea" align="center" style="display:none;"><i class="glyphicon glyphicon-cog fa-spin" style="color:red"></i></div>
     </div> <!-- spinDialog -->
 
@@ -429,10 +429,10 @@ TODO: need a new id
                                                class="form-control mt-1">
                                         <select title="profileDatatype" id="profileDataTypeTxt" class="my-custom-select custom-select mt-1" style="border-radius:0.25rem">
                                                <option value="">Data Type</option>
-                                               <option value="vs">vs</option>
-                                               <option value="vp">vp</option>
-                                               <option value="density">density</option>
-                                               <option value="all">vs,vp,density</option>
+                                               <option value="vs">Vs</option>
+                                               <option value="vp">Vp</option>
+                                               <option value="density">Density</option>
+                                               <option value="all">Vs,Vp,Density</option>
                                         </select>
 
                                         <input type="text"
@@ -496,10 +496,9 @@ TODO: need a new id
                                                class="form-control mt-1">
                                         <select title="Datatype" id="lineDataTypeTxt" class="my-custom-select custom-select mt-1" style="border-radius:0.25rem">
                                                <option value="">Data Type</option>
-                                               <option value="vs">vs</option>
-                                               <option value="vp">vp</option>
-                                               <option value="density">density</option>
-                                               <option value="all">vs,vp,density</option>
+                                               <option value="vs">Vs</option>
+                                               <option value="vp">Vp</option>
+                                               <option value="density">Density</option>
 <!--
                                                <option value="poisson">poisson</option>
 -->
@@ -595,10 +594,9 @@ TODO: need a new id
                                                class="form-control mt-1">
                                         <select title="Datatype" id="areaDataTypeTxt" class="my-custom-select custom-select mt-1" style="border-radius:0.25rem" >
                                                <option value="">Data Type</option>
-                                               <option value="vs">vs</option>
-                                               <option value="vp">vp</option>
-                                               <option value="density">density</option>
-                                               <option value="all">vs,vp,density</option>
+                                               <option value="vs">Vs</option>
+                                               <option value="vp">Vp</option>
+                                               <option value="density">Density</option>
 <!--
                                                <option value="poisson">poisson</option>
                                                <option value="vs30">vs30 etree</option>
@@ -797,10 +795,10 @@ TODO: need a new id
                  <div id="plotoption-par-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class="input-group-text" for="plotParTxt">Select Parameter</label>
                      <select id="plotParTxt" class="my-custom-select custom-select">
-                        <option value="1">Vp</option>
-                        <option value="2">Vs</option>
-                        <option value="3">Density</option>
-                        <option value="4">All</option>
+                        <option value=1>Vp</option>
+                        <option value=2>Vs</option>
+                        <option value=3>Density</option>
+                        <option id="plotoption-par-all" value="4">All</option>
                       </select>
                   </div>
 
@@ -823,56 +821,6 @@ TODO: need a new id
                         <option value="2">Rainbow</option>
                         <option value="3">Plasma</option>
                       </select>
-                 </div>
-<!--
-                  <div id="plotoption-cmap2-option" class="form-check form-check-inline mt-4" style="display:">
-<div id="cmapTxt2" class="png-custom-select">
-  <div class="selected-option">Select an Option</div>
-  <div class="options-container">
-    <div class="option" data-value="1">
-      <img src="img/seis.png" alt="seis" class="option-img">Seis
-    </div>
-    <div class="option" data-value="2">
-      <img src="img/rainbow.png" alt="rainbow" class="option-img">Rainbow
-    </div>
-    <div class="option" data-value="3">
-      <img src="img/plasma.png" alt="plasma" class="option-img">Plasma
-    </div>
-  </div>
-</div>
--->
-
-                 <div id="plotoption-range-option" class="mt-2" style="display:">
-                     <label title='range option'
-                        style="margin:0px 0px 0px 5px">Set Color Range
-		     </label>
-                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalcolorrange"><span class="glyphicon glyphicon-info-sign"></span></button>
-   
-                     <div class="form-check form-check-inline mt-1">
-		           <label title='scale minimum'
-                                  style="margin-left:5px;width:5vw;"
-                                  for="minScaleTxt">Minimum
-                           </label>
-                           <input type="text"
-                                  id="minScaleTxt"
-                                  placeholder="min scale"
-                                  title="minScale"
-                                  style="width:4vw"
-                                  onfocus="this.value=''">
-                     </div>
-
-                     <div class="form-check form-check-inline">
-                          <label title='scale maximum'
-                                 style="margin-left:5px;width:5vw;"
-                                 for="maxScaleTxt">Maximum
-                          </label>
-                          <input type="text"
-                                 id="maxScaleTxt"
-                                 placeholder="max scale"
-                                 title="maxScale"
-                                 style="width:4vw"
-                                 onfocus="this.value=''">
-                     </div>
                  </div>
 
                  <div id="plotoption-plotrange-option" class="mt-2" style="display:">

@@ -243,15 +243,15 @@ function setup_viewer()
 
 // https://stackoverflow.com/questions/42092095/how-to-complete-a-polyline-in-leaflet-draw-after-clicking-second-point
   mymap.on('draw:drawvertex', function(e) {
-window.console.log("XXX In draw:drawvertex");
     if(in_drawing_line()) {
         const layerIds = Object.keys(e.layers._layers);
 window.console.log("In draw:drawvertex, length is ", layerIds.length);
         if (layerIds.length > 1) {
-//          const secondVertex = e.layers._layers[layerIds[1]]._icon;
+          const secondVertex = e.layers._layers[layerIds[1]]._icon;
 //window.console.log("In draw:drawvertex, click this one ");
-//          requestAnimationFrame(() => secondVertex.click());
-          lineDrawer.completeShape();
+          requestAnimationFrame(() => secondVertex.click());
+// this solution causes error message of undefined vertex in DRAW  code
+//          lineDrawer.completeShape();
         }
     }
   });

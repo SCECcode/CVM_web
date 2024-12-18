@@ -141,6 +141,8 @@ window.console.log("downloadlinks>>",str);
 
 function updatePlotOptions(blob) {
 
+window.console.log("XX calling updatePlotOptions.. with ",blob);
+
     let json=JSON.parse(blob);
     let range=json['range'];
     let minv=round2Four(range['min']);
@@ -149,18 +151,14 @@ function updatePlotOptions(blob) {
     let type=json['type']; // 'profile'
 	
 //for color scale: cross/horizonal
-    document.getElementById("minScaleTxt").value=minv;
-    document.getElementById("maxScaleTxt").value=maxv;
+    document.getElementById("minPlotScaleTxt").value=minv;
+    document.getElementById("maxPlotScaleTxt").value=maxv;
+    document.getElementById("plotoption-plotrange-option").style.display='block';
 
     if( type == 'profile') {
-//for plot scale: profile
-      document.getElementById("minPlotScaleTxt").value=minv;
-      document.getElementById("maxPlotScaleTxt").value=maxv;
-      document.getElementById("plotoption-plotrange-option").style.display='block';
-      document.getElementById("plotoption-range-option").style.display='none';
+      $("#plotoption-par-all" ).attr("disabled",false);
       } else {
-        document.getElementById("plotoption-plotrange-option").style.display='none';
-        document.getElementById("plotoption-range-option").style.display='block';
+        $("#plotoption-par-all" ).attr("disabled","disabled");
     }
 
     if(json['faults'] == 0) {
@@ -236,9 +234,11 @@ function replotPlots() {
 
    if(MODAL_REPLOT_TYPE == "horizontal") {
      replotHorizontalSlice();
+     MODAL_REPLOT_PAR=false;
    }
    if(MODAL_REPLOT_TYPE == "cross") {
      replotCrossSection();
+     MODAL_REPLOT_PAR=false;
    }
    if(MODAL_REPLOT_TYPE == "profile") {
      replotVerticalProfile();

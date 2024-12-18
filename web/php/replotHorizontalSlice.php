@@ -13,6 +13,7 @@ $onca = ($_GET['onca']);
 $onrange = ($_GET['onrange']);
 $onpoint = ($_GET['onpoint']);
 $oncmap = ($_GET['oncmap']);
+$onpar = ($_GET['onpar']);
 $onmin = ($_GET['onmin']);
 $onmax = ($_GET['onmax']);
 $fname = ($_GET['fname']);
@@ -20,23 +21,20 @@ $uid = ($_GET['uid']);
 
 $csvfile="../result/".$fname;
 
-$gmtpl="../perl/plotCVM-horzSlice.pl";
+$gmtpl="../perl/plotCVM-horzSliceAll.pl";
 
 $envstr=makeEnvString();
 
-#./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax
 if( $onrange == '1' ) {
-  $gmtlstr=" ".$oncfm." ".$onca." ".$onpoint." ".$oncmap." 1 ".$onmin." ".$onmax;
+  $gmtlstr=" ".$onpar." ".$oncfm." ".$onca." ".$onpoint." ".$oncmap." 1 ".$onmin." ".$onmax;
   } else {
-    $gmtlstr=" ".$oncfm." ".$onca." ".$onpoint." ".$oncmap." 0";
+    $gmtlstr=" ".$onpar." ".$oncfm." ".$onca." ".$onpoint." ".$oncmap." 0";
 }
-
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-#print($gmtcommand);
-
-#print("gmtresult:"); print($gmtresult); print("<br>");
+print($gmtcommand);print("<br>");
+print("gmtresult:"); print($gmtresult); print("<br>");
 #print("gmtstatus:"); print($gmtstatus); print("<br>");
 #print("gmtretval:"); 
 #print("<pre>");

@@ -35,8 +35,6 @@ $InstallLoc= getenv('UCVM_INSTALL_PATH');
 $envstr=makeEnvString();
 
 $file="../result/".$uid."_c.png";
-$metafile="../result/".$uid."_c_meta.json";
-$binfile="../result/".$uid."_c_data.bin";
 $csvfile="../result/".$uid."_c_data.csv";
 $pngfile="../result/".$uid."_c_data.png";
 $pdffile="../result/".$uid."_c_data.pdf";
@@ -53,7 +51,8 @@ if ($floors != 'none') {
 $vval= intval(((float)$z-(float)$zstart)/100); 
 
 $lstr=$lstr ." -e ".$z;
-$qstub=" -s ".$zstart." -h ".$hval." -d ".$datatype." -c ".$model." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc." -v ".$vval;
+// always get a full set
+$qstub=" -s ".$zstart." -h ".$hval." -d all -c ".$model." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc." -v ".$vval;
 if ($zmode == 'e') {
 	$query= $envstr." plot_elevation_cross_section.py".$qstub.$lstr;
 } else {
@@ -64,18 +63,24 @@ if ($zmode == 'e') {
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query, $result, $uid);
 
-$cvsquery = $envstr." ucvm_cross_section2csv_line.py ".$binfile." ".$metafile;
+$vp_metafile="../result/".$uid."_vp_meta.json";
+$vp_binfile="../result/".$uid."_vp_data.bin";
+$vs_metafile="../result/".$uid."_vs_meta.json";
+$vs_binfile="../result/".$uid."_vs_data.bin";
+$density_metafile="../result/".$uid."_density_meta.json";
+$density_binfile="../result/".$uid."_density_data.bin";
+$cvsquery = $envstr." ucvm_cross_section2csv_all.py ".$vp_binfile." ".$vp_metafile." ".$vs_binfile." ".$vs_metafile." ".$density_binfile." ".$density_metafile." ".$csvfile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
 #Usage: ./plotCVM-vertSection.pl path/to/file.csv plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax
 
-if ($datatype == "all") { 
-  $gmtpl="../perl/plotCVM-vertSectionAll.pl";
-  $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 1 1 0 0 0 1 1 0";
-  } else {
-    $gmtpl="../perl/plotCVM-vertSection.pl";
-    $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 1 0 0 0 1 1 0";
-}
+#1=Vp; 2=Vs; 3=Density
+$gtype=2;
+if($datatype == "vp" ) $gtype=1;
+if($datatype == "density" ) $gtype=3;
+
+$gmtpl="../perl/plotCVM-vertSectionAll.pl";
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$gtype." 1 0 0 0 1 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print($gmtcommand);

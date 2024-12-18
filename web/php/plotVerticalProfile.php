@@ -93,7 +93,6 @@ $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 #print("</pre>");
 #print("<br>");
 
-
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
 $resultarray->type= "vertical";
@@ -111,6 +110,14 @@ $jj->csv=$uid."_v_matprops.csv";
 $jj->uid=$uid;
 $gmtresult_n=json_encode($jj);
 $resultarray->gmtresult= $gmtresult_n;
+
+#print($pngfile);
+#print("<br>");
+#if (file_exists($pngfile)) {
+#   print("png exist...");
+#   } else {
+#   print("png NOT exist...");
+#}
 
 if ( $gmtstatus == 0 && file_exists($pngfile)) {
 $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');

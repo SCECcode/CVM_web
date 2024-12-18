@@ -49,9 +49,6 @@ return;
 }
 
 $file="../result/".$uid."_h.png";
-$metafile="../result/".$uid."_h_meta.json";
-$binfile="../result/".$uid."_h_data.bin";
-
 $csvfile="../result/".$uid."_h_data.csv";
 $pngfile="../result/".$uid."_h_data.png";
 $pdffile="../result/".$uid."_h_data.pdf";
@@ -67,7 +64,7 @@ if($datatype != 'vs30') {
    $lstr=" -L ".$floors.$lstr;
   }
 
-  $qstub=" -d ".$datatype." -c ".$model." -s ".$sval." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc;
+  $qstub=" -d all -c ".$model." -s ".$sval." -a sd -o ".$file." -n ".$InstallLoc."/conf/ucvm.conf -i ".$InstallLoc;
 
   if( $zmode == 'd') {
 #    $query= $envstr." plot_horizontal_slice.py ".$qstub.$lstr;
@@ -85,18 +82,22 @@ $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query,$result,$uid);
 #print($result);
 
-$cvsquery = $envstr." ucvm_horizontal_slice2csv_line.py ".$binfile." ".$metafile;
+$vp_metafile="../result/".$uid."_vp_meta.json";
+$vp_binfile="../result/".$uid."_vp_data.bin";
+$vs_metafile="../result/".$uid."_vs_meta.json";
+$vs_binfile="../result/".$uid."_vs_data.bin";
+$density_metafile="../result/".$uid."_density_meta.json";
+$density_binfile="../result/".$uid."_density_data.bin";
+$cvsquery = $envstr." ucvm_horizontal_slice2csv_all.py ".$vp_binfile." ".$vp_metafile." ".$vs_binfile." ".$vs_metafile." ".$density_binfile." ".$density_metafile." ".$csvfile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 #print($cvsquery);
 
-#Usage: ./plotCVM-horzSlice.pl path/to/file.csv plotFaults plotCities plotPts cMap forceRange zMin zMax
-if ($datatype == all) {
-    $gmtpl="../perl/plotCVM-horzSliceAll.pl";
-    $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 1 0 0 0 1 0";
-  } else {
-    $gmtpl="../perl/plotCVM-horzSlice.pl";
-    $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." 0 0 0 1 0";
-}
+#1=Vp; 2=Vs; 3=Density
+$gtype=2;
+if($datatype == "vp" ) $gtype=1;
+if($datatype == "density" ) $gtype=3;
+$gmtpl="../perl/plotCVM-horzSliceAll.pl";
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$gtype." 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print($gmtcommand);

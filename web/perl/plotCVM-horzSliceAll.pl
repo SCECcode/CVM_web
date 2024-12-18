@@ -507,6 +507,6 @@ if($printStats==1){
 
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{\"type\": \"horizontal\", \"file\": \"$pdfFile\", \"plotParam\": $plotParam, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
+	print "{\"type\": \"horizontal\", \"file\": \"$pdfFile\", \"plotPar\": $plotParam, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
 }
 exit;

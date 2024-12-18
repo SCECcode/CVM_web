@@ -316,11 +316,14 @@ function replotCrossSection() {
     if(point) onpoint=1;
 
     let onrange=1;
+    // if PAR means needs to get original min/max range
+    if(MODAL_REPLOT_PAR) onrange=0;
 
-    let onmin=document.getElementById("minScaleTxt").value;
-    let onmax=document.getElementById("maxScaleTxt").value;
+    let onmin=document.getElementById("minPlotScaleTxt").value;
+    let onmax=document.getElementById("maxPlotScaleTxt").value;
     let onpad=document.getElementById("plotPadTxt").value;
     let oncmap=document.getElementById("cmapTxt").value;
+    let onpar=document.getElementById("plotParTxt").value;
 
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -347,7 +350,7 @@ function replotCrossSection() {
         }
     }
 
-    xmlhttp.open("GET","php/replotCrossSection.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotCrossSection.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&onpar="+onpar+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 
@@ -470,9 +473,7 @@ function replotVerticalProfile() {
     let onpad=document.getElementById("plotPadTxt").value;
 
     let onrange=1;
-    if(MODAL_REPLOT_PAR == true) {
-        onrange=0;
-    }
+    if(MODAL_REPLOT_PAR == true) onrange=0;
 
     let onpar=document.getElementById("plotParTxt").value;
 
@@ -609,10 +610,13 @@ function replotHorizontalSlice() {
     if(point) onpoint=1;
 
     let onrange=1;
+    // if PAR means needs to get original min/max range
+    if(MODAL_REPLOT_PAR) onrange=0;
 
-    let onmin=document.getElementById("minScaleTxt").value;
-    let onmax=document.getElementById("maxScaleTxt").value;
+    let onmin=document.getElementById("minPlotScaleTxt").value;
+    let onmax=document.getElementById("maxPlotScaleTxt").value;
     let oncmap=document.getElementById("cmapTxt").value;
+    let onpar=document.getElementById("plotParTxt").value;
 
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -640,7 +644,7 @@ window.console.log("??? str",str);
         }
     }
 
-    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotHorizontalSlice.php?oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&onpar="+onpar+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 
