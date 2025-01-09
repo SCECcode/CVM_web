@@ -4,6 +4,8 @@ ENV CVM_WEB_TOP_DIR=/app/web
 ENV PLOTTING_TOP_DIR=/usr/local/share/plotting
 ENV ANACONDA3_TOP_DIR=/usr/local/share/anaconda3
 ENV UCVM_TOP_DIR=/usr/local/share/ucvm
+ENV UCVM_CVM_VOLUME=/usr/local/share/cvm_volume
+ENV UCVM_CVM_LARGE_DATASET=/usr/local/share/ucvm/cvm-large-dataset 
 
 ENV UCVM_SRC_PATH=$UCVM_TOP_DIR/src
 ENV UCVM_INSTALL_PATH=$UCVM_TOP_DIR/install
@@ -20,7 +22,7 @@ RUN yum install -y httpd && \
 
 RUN /app/setup/run-web-setup
 
-RUN source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
+#RUN source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 
 CMD ["apachectl", "-D", "FOREGROUND"]
 

@@ -11,9 +11,10 @@ cd $UCVM_TOP_DIR
 git clone https://github.com/SCECcode/ucvm.git -b testMei src
 
 cd $UCVM_SRC_PATH/largefiles
-./get_largefiles.py -m sfcvm,cvms,cvmsi,cca,cvmh,cvmhlabn,ivlsu,albacore,cvlsu
+./get_largefiles.py -m sfcvm,cvms,cvmsi,cca,cvmh,cvmhlabn,ivlsu,albacore,cvlsu,wfcvm
 ./check_largefiles_md5.py
 ./stage_largefiles.py
+
 
 cd $UCVM_SRC_PATH
 ./ucvm_setup.py -a -d -p $UCVM_INSTALL_PATH &> ucvm_setup_install.log

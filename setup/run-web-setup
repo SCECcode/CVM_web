@@ -34,8 +34,8 @@ source $ANACONDA3_TOP_DIR/bin/activate
 conda init
 
 ## python basemap, basemap-data-hires, matplotlib
+## Apparently, after python3.12, distutils got kicked out
 $ANACONDA3_TOP_DIR/bin/python -m pip install matplotlib basemap basemap-data-hires
-
 export PATH=$ANACONDA3_TOP_DIR/bin:$PATH
 
 conda config --add channels conda-forge
@@ -44,16 +44,20 @@ conda config --add channels conda-forge
 #conda install conda-forge::gmt -y
 
 # use environment
-# preprocess
+# preprocess to get a new yml file to be used during runtime 
 #   conda create --name cvm_explorer_conda_env
 #   conda activate cvm_explorer_conda_env
 #   conda install conda-forge::gmt -y
+#   conda install setuptools -y
+#   conda install anaconda::pybind11 -y
+#   conda install conda-forge::h5py -y
 #   conda env export > cvm_explorer_conda_env.yml
 
 conda env create -f ./setup/cvm_explorer_conda_env.yml
 conda activate cvm_explorer_conda_env
 echo "conda activate cvm_explorer_conda_env" >> ~/.bashrc
 
+$ANACONDA3_TOP_DIR/bin/pip install setuptools
 ## build UCVM 
 ./setup/run-build-ucvm
 # make sure the ucvm's datafile are readable by web user

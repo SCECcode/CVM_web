@@ -1,5 +1,6 @@
 name: cvm_explorer_conda_env
 channels:
+  - anaconda
   - conda-forge
   - defaults
 dependencies:
@@ -9,6 +10,8 @@ dependencies:
   - bzip2=1.0.8=h4bc722e_7
   - c-ares=1.32.3=h4bc722e_0
   - ca-certificates=2024.12.14=hbcca054_0
+  - cached-property=1.5.2=hd8ed1ab_1
+  - cached_property=1.5.2=pyha770c72_1
   - curl=8.10.1=hbbe4b11_0
   - dcw-gmt=2.2.0=ha770c72_0
   - fftw=3.3.10=nompi_hf1063bd_110
@@ -20,6 +23,7 @@ dependencies:
   - giflib=5.2.2=hd590300_0
   - gmt=6.5.0=h805b43f_6
   - gshhg-gmt=2.3.7=ha770c72_1003
+  - h5py=3.12.1=nompi_py313hff19e9a_103
   - hdf4=4.2.15=h2a13503_7
   - hdf5=1.14.3=nompi_hdf9ad27_105
   - icu=75.1=he02047a_0
@@ -80,6 +84,8 @@ dependencies:
   - pcre2=10.44=hba22ea6_2
   - pip=24.3.1=pyh145f28c_0
   - proj=9.5.0=h12925eb_0
+  - pybind11=2.13.6=py313hdb19cb5_0
+  - pybind11-global=2.13.6=py313hdb19cb5_0
   - python=3.13.0=h9ebbce0_100_cp313
   - python_abi=3.13=5_cp313
   - readline=8.2=h8228510_1

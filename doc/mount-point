@@ -1,0 +1,19 @@
+
+cvm_volume
+cvm-large-dataset
+
+Two directories are use as  mounting location between container and the host machine.
+These are not replicated into the container via .dockerignore file
+Internally, they are mounted with
+
+docker-compose-localhost.yml:        - ./cvm_volume:/usr/local/share/cvm_volume
+development.yml:    - ./cvm-large-dataset:/usr/local/share/ucvm/cvm-large-dataset # bind to $UCVM_SRC_PATH/cvm-large-dataset
+
+Dockerfile-web:ENV UCVM_CVM_VOLUME=/usr/local/share/cvm_volume
+Dockerfile-web:ENV UCVM_CVM_LARGE_DATASET=/usr/local/share/ucvm/cvm-large-dataset # bind to $UCVM_SRC_PATH/cvm-large-dataset
+
+
+environment setting is used to tell the underlying cvm whether the 'data' should be retrieved from
+external dataserver or 'picked up' from these mount points.
+
+ 
