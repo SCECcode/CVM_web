@@ -404,7 +404,7 @@ function switchMapFocus() {
         } 
     });
     if (bounds.isValid()) {
-        viewermap.fitBounds(bounds);
+        viewermap.fitBounds(bounds, {padding:[20,20]});
     }
 }
 

@@ -1,7 +1,7 @@
 
 pid=`docker ps | grep cvm_web_web | cut -f 1 -d ' '`
 
-docker container exec -it cvm_web_web_1 /bin/bash
-#docker container exec -u apache -it $pid /bin/bash
+#docker container exec -it cvm_web_web_1 /bin/bash
+docker container exec -u apache -it $pid /bin/bash
 
 

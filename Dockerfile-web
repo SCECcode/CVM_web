@@ -22,7 +22,7 @@ RUN yum install -y httpd && \
 
 RUN /app/setup/run-web-setup
 
-#RUN source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
+RUN source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 
 CMD ["apachectl", "-D", "FOREGROUND"]
 
