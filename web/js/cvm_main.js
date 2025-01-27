@@ -162,7 +162,7 @@ jQuery(document).ready(function() {
 
   });
 // special case.. if onpar get changed, need to track and call refresh plot range
-  $("#plotParTxt").change(function() {
+  $("#plotParamTxt").change(function() {
         MODAL_REPLOT_PAR=true;
 	// clear the min/max 
         document.getElementById("minPlotScaleTxt").value=0;

@@ -168,6 +168,26 @@ window.console.log("XX calling updatePlotOptions.. with ",blob);
         document.getElementById("plotoption-cfm").value=1;
         document.getElementById("plotoption-cfm").checked=true;
     }
+
+    if(json['intperp'] == 0) {
+      document.getElementById("plotoption-interp").value=0;
+      document.getElementById("plotoption-interp").checked=false;
+      } else {
+        document.getElementById("plotoption-interp").value=1;
+        document.getElementById("plotoption-interp").checked=true;
+    }
+
+    if('interp' in json) {
+      document.getElementById("plotoption-interp-option").style.display='block';
+      if(json['intperp'] == 0) {
+        document.getElementById("plotoption-interp").value=0;
+        document.getElementById("plotoption-interp").checked=false;
+        } else {
+          document.getElementById("plotoption-interp").value=1;
+          document.getElementById("plotoption-interp").checked=true;
+      }
+    }
+
     if(json['cities'] == 0) {
       document.getElementById("plotoption-ca").value=0;
       document.getElementById("plotoption-ca").checked=false;
@@ -213,9 +233,9 @@ window.console.log("XX calling updatePlotOptions.. with ",blob);
         document.getElementById("plotoption-pad-option").style.display='none';
     }
 
-    if('plotPar' in json) {
+    if('plotParam' in json) {
       document.getElementById("plotoption-par-option").style.display='block';
-      document.getElementById("plotParTxt").value=json['plotPar'];
+      document.getElementById("plotParamTxt").value=json['plotParam'];
       } else {
         document.getElementById("plotoption-par-option").style.display='none';
     }

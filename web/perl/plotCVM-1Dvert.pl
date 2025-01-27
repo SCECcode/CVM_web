@@ -46,9 +46,9 @@ $openEPS=0;
 $printStats=0;
 
 #check for correct usage and make sure the csv file exists
-if   (@ARGV==10){($csvFile,$plotPar,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$forceRange,$zMin,$zMax)=@ARGV}
+if   (@ARGV==10){($csvFile,$plotParam,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$forceRange,$zMin,$zMax)=@ARGV}
 elsif(@ARGV==8){
-	($csvFile,$plotPar,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$forceRange)=@ARGV;
+	($csvFile,$plotParam,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$forceRange)=@ARGV;
 	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
 }
 #print usage for incorrect inputs
@@ -179,10 +179,10 @@ close(GMT);
 
 #get the XY range of the data file...this depends on what is requested to be plotted 
 #if plotting Vp, Vs, Density, or all
-if   ($plotPar==1){$Rxy=`gmt info $gmtFile -I- -i1,0`; chomp($Rxy)}
-elsif($plotPar==2){$Rxy=`gmt info $gmtFile -I- -i2,0`; chomp($Rxy)}
-elsif($plotPar==3){$Rxy=`gmt info $gmtFile -I- -i3,0`; chomp($Rxy)}
-elsif($plotPar==4){
+if   ($plotParam==1){$Rxy=`gmt info $gmtFile -I- -i1,0`; chomp($Rxy)}
+elsif($plotParam==2){$Rxy=`gmt info $gmtFile -I- -i2,0`; chomp($Rxy)}
+elsif($plotParam==3){$Rxy=`gmt info $gmtFile -I- -i3,0`; chomp($Rxy)}
+elsif($plotParam==4){
 	#get the ranges of each column and split them into arrays
 	$R1=`gmt info $gmtFile -I- -i1,0`;
 	$R2=`gmt info $gmtFile -I- -i2,0`;
@@ -199,7 +199,7 @@ elsif($plotPar==4){
 	#make a new range string that covers all three columns of data
 	$Rxy="-R$list[0]/$list[-1]/$R1[2]/$R1[3]";
 }
-else {print "\n\n  Error: plotPar must be 1-4. You entered $plotPar\n\n"; exit}
+else {print "\n\n  Error: plotParam must be 1-4. You entered $plotParam\n\n"; exit}
 #print $Rxy before the padding, just for testing
 #print "$Rxy\n";
 #because the curves are often vertical, they can plot at the right or left axes. This can be fixed by adding some padding to xMin/xMax
@@ -314,7 +314,7 @@ if($printStats==1){
 
 #plot the 1D profile data
 #plot Vp
-if($plotPar==1){
+if($plotParam==1){
 	if   ($z eq "depth")    {system "gmt psbasemap  -X0.58i -Y0.56i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Vp (km/s)\" -By$yAxis+l\"Depth (km)\"     -BWeSn+t\"Model: ${model}at ($lon, $lat)\" -P -K --MAP_TITLE_OFFSET=0.12i > $plotFile"}
 	elsif($z eq "elevation"){system "gmt psbasemap  -X0.65i -Y0.56i $Rxy -JX4.0i/${plotHeight}i  -Gwhite -Bx$xAxis+l\"Vp (km/s)\" -By$yAxis+l\"Elevation (km)\" -BWeSn+t\"Model: ${model}at ($lon, $lat)\" -P -K --MAP_TITLE_OFFSET=0.12i > $plotFile"}
 	#no map, so eps file must be ended
@@ -334,7 +334,7 @@ if($plotPar==1){
 	}
 }
 #plot Vs
-elsif($plotPar==2){
+elsif($plotParam==2){
 	if   ($z eq "depth")    {system "gmt psbasemap -X0.58i -Y0.56i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Vs (km/s)\" -By$yAxis+l\"Depth (km)\"     -BWeSn+t\"Model: ${model}at ($lon, $lat)\" -P -K --MAP_TITLE_OFFSET=0.12i > $plotFile"}
 	elsif($z eq "elevation"){system "gmt psbasemap -X0.65i -Y0.56i $Rxy -JX4.0i/${plotHeight}i  -Gwhite -Bx$xAxis+l\"Vs (km/s)\" -By$yAxis+l\"Elevation (km)\" -BWeSn+t\"Model: ${model}at ($lon, $lat)\" -P -K --MAP_TITLE_OFFSET=0.12i > $plotFile"}
 	#no map, so eps file must be ended
@@ -354,7 +354,7 @@ elsif($plotPar==2){
 	}
 }
 #plot density
-elsif($plotPar==3){
+elsif($plotParam==3){
 	if   ($z eq "depth")    {system "gmt psbasemap -X0.58i -Y0.56i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Density (g/cm\@+3\@+)\" -By$yAxis+l\"Depth (km)\"     -BWeSn+t\"Model: ${model}at ($lon, $lat)\" -P -K --MAP_TITLE_OFFSET=0.12i > $plotFile"}
 	elsif($z eq "elevation"){system "gmt psbasemap -X0.65i -Y0.56i $Rxy -JX4.0i/${plotHeight}i  -Gwhite -Bx$xAxis+l\"Density (g/cm\@+3\@+)\" -By$yAxis+l\"Elevation (km)\" -BWeSn+t\"Model: ${model}at ($lon, $lat)\" -P -K --MAP_TITLE_OFFSET=0.12i > $plotFile"}
 	#no map, so eps file must be ended
@@ -374,7 +374,7 @@ elsif($plotPar==3){
 	}
 }
 #plot All
-if($plotPar==4){
+if($plotParam==4){
 	if   ($z eq "depth")    {system "gmt psbasemap -X0.58i -Y0.56i $Rxy -JX4.0i/-${plotHeight}i -Gwhite -Bx$xAxis+l\"Parameter Value (see legend for units)\" -By$yAxis+l\"Depth (km)\"     -BWeSn+t\"Model: ${model}at ($lon, $lat)\" -P -K --MAP_TITLE_OFFSET=0.12i > $plotFile"}
 	elsif($z eq "elevation"){system "gmt psbasemap -X0.65i -Y0.56i $Rxy -JX4.0i/${plotHeight}i  -Gwhite -Bx$xAxis+l\"Parameter Value (see legend for units)\" -By$yAxis+l\"Elevation (km)\" -BWeSn+t\"Model: ${model}at ($lon, $lat)\" -P -K --MAP_TITLE_OFFSET=0.12i > $plotFile"}
 	system "gmt psxy $gmtFile -R -JX -W2.0p,$blue  -i1,0 -O -K >> $plotFile";
@@ -455,10 +455,10 @@ while(<TMP>){
 	chomp;
 	#check and replace header lines. Otherwise print line as-is
 	if($_=~ "\%\%Title:"){
-		if   ($plotPar==1){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vp (km/s) | 1D Profile Location: ($lon, $lat)\n"}
-		elsif($plotPar==2){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vs (km/s) | 1D Profile Location: ($lon, $lat)\n"}
-		elsif($plotPar==3){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Density (g/cm^3) | 1D Profile Location: ($lon, $lat)\n"}
-		elsif($plotPar==4){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vp (km/s), Vs (km/s), and Density (g/cm^3) | 1D Profile Location: ($lon, $lat)\n"}
+		if   ($plotParam==1){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vp (km/s) | 1D Profile Location: ($lon, $lat)\n"}
+		elsif($plotParam==2){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vs (km/s) | 1D Profile Location: ($lon, $lat)\n"}
+		elsif($plotParam==3){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Density (g/cm^3) | 1D Profile Location: ($lon, $lat)\n"}
+		elsif($plotParam==4){print NEW "\%\%Title: SCEC CVM Explorer | Model: $model | Plot: Vp (km/s), Vs (km/s), and Density (g/cm^3) | 1D Profile Location: ($lon, $lat)\n"}
 	}
 	elsif($_=~ "\%\%Creator:"){print NEW "\%\%Creator: SCEC CVM Explorer\n"}
 	else {print NEW "$_\n";}
@@ -507,6 +507,6 @@ if($printStats==1){
 }
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{\"type\": \"profile\", \"file\": \"$pdfFile\", \"plotPar\": $plotPar, \"plotMap\": $plotMap, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
+	print "{\"type\": \"profile\", \"file\": \"$pdfFile\", \"plotParam\": $plotParam, \"plotMap\": $plotMap, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
 }
 exit;

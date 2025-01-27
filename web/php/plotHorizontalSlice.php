@@ -96,8 +96,11 @@ $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 $gtype=2;
 if($datatype == "vp" ) $gtype=1;
 if($datatype == "density" ) $gtype=3;
-$gmtpl="../perl/plotCVM-horzSliceAll.pl";
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$gtype." 0 0 0 1 0";
+
+##old: csv, plotparam, plotfault, plotcities, potpts, cmap, range
+##new: csv, plotparam, interp, plotpts, plotfault, plotcities, cmap, range
+$gmtpl="../perl/plotCVM-horzSlice.pl";
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$gtype." 0 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print($gmtcommand);

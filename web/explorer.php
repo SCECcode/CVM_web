@@ -751,6 +751,16 @@ TODO: need a new id
 
 <!-- Map Option -->
              <div class="mb-5" style="border:0px solid green;margin-left:4px;">
+                <div id="plotoption-interp-option" class="form-check form-check-inline mt-2" style="display:">
+                     <label class='form-check-label mini-option'
+                            title='Show in interpolated mode'
+			    for="plotoption-interp">
+                     <input class='form-check-inline mr-2'
+                            type="checkbox"
+			    id="plotoption-interp"/>Interp mode
+                     </label>
+                </div>
+
                 <div id="plotoption-cfm-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show Community Fault Model v7.0 on map'

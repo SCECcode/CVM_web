@@ -8,6 +8,7 @@
 /* replotHorizontalSlice.php */
 include ("util.php");
 
+$oninterp = ($_GET['oninterp']);
 $oncfm = ($_GET['oncfm']);
 $onca = ($_GET['onca']);
 $onrange = ($_GET['onrange']);
@@ -25,10 +26,14 @@ $gmtpl="../perl/plotCVM-horzSliceAll.pl";
 
 $envstr=makeEnvString();
 
+##old: csv, plotparam, plotfault, plotcities, potpts, cmap, range
+##new: csv, plotparam, interp, plotpts, plotfault, plotcities, cmap, range
+
+
 if( $onrange == '1' ) {
-  $gmtlstr=" ".$onpar." ".$oncfm." ".$onca." ".$onpoint." ".$oncmap." 1 ".$onmin." ".$onmax;
+  $gmtlstr=" ".$onpar." ".$oninterp." ".$onpoint." ".$oncfm." ".$onca." ".$oncmap." 1 ".$onmin." ".$onmax;
   } else {
-    $gmtlstr=" ".$onpar." ".$oncfm." ".$onca." ".$onpoint." ".$oncmap." 0";
+    $gmtlstr=" ".$onpar." ".$oninterp." ".$onpoint." ".$oncfm." ".$onca." ".$oncmap." 0";
 }
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
