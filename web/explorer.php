@@ -802,13 +802,13 @@ TODO: need a new id
                      <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalpoints"><span class="glyphicon glyphicon-info-sign"></span></button>
                  </div>
 
-                 <div id="plotoption-par-option" class="form-check form-check-inline mt-2" style="display:">
-                     <label class="input-group-text" for="plotParTxt">Select Parameter</label>
-                     <select id="plotParTxt" class="my-custom-select custom-select">
+                 <div id="plotoption-param-option" class="form-check form-check-inline mt-2" style="display:">
+                     <label class="input-group-text" for="plotParamTxt">Select Parameter</label>
+                     <select id="plotParamTxt" class="my-custom-select custom-select">
                         <option value=1>Vp</option>
                         <option value=2>Vs</option>
                         <option value=3>Density</option>
-                        <option id="plotoption-par-all" value="4">All</option>
+                        <option id="plotoption-param-all" value="4">All</option>
                       </select>
                   </div>
 

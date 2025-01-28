@@ -99,7 +99,7 @@ if($datatype == "density" ) $gtype=3;
 
 ##old: csv, plotparam, plotfault, plotcities, potpts, cmap, range
 ##new: csv, plotparam, interp, plotpts, plotfault, plotcities, cmap, range
-$gmtpl="../perl/plotCVM-horzSlice.pl";
+$gmtpl="../perl/plotCVM-horzSliceAll.pl";
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$gtype." 0 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 

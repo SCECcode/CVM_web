@@ -609,6 +609,7 @@ function replotHorizontalSlice() {
     if(ca) onca=1;
     let onpoint=0;
     if(point) onpoint=1;
+    let oninterp=0;
     if(interp) oninterp=1;
 
     let onrange=1;

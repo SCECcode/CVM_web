@@ -156,9 +156,9 @@ window.console.log("XX calling updatePlotOptions.. with ",blob);
     document.getElementById("plotoption-plotrange-option").style.display='block';
 
     if( type == 'profile') {
-      $("#plotoption-par-all" ).attr("disabled",false);
+      $("#plotoption-param-all" ).attr("disabled",false);
       } else {
-        $("#plotoption-par-all" ).attr("disabled","disabled");
+        $("#plotoption-param-all" ).attr("disabled","disabled");
     }
 
     if(json['faults'] == 0) {
@@ -169,23 +169,17 @@ window.console.log("XX calling updatePlotOptions.. with ",blob);
         document.getElementById("plotoption-cfm").checked=true;
     }
 
-    if(json['intperp'] == 0) {
-      document.getElementById("plotoption-interp").value=0;
-      document.getElementById("plotoption-interp").checked=false;
-      } else {
-        document.getElementById("plotoption-interp").value=1;
-        document.getElementById("plotoption-interp").checked=true;
-    }
-
     if('interp' in json) {
       document.getElementById("plotoption-interp-option").style.display='block';
-      if(json['intperp'] == 0) {
+      if(json['interp'] == 0) {
         document.getElementById("plotoption-interp").value=0;
         document.getElementById("plotoption-interp").checked=false;
         } else {
           document.getElementById("plotoption-interp").value=1;
           document.getElementById("plotoption-interp").checked=true;
       }
+      } else {
+        document.getElementById("plotoption-interp-option").style.display='none';
     }
 
     if(json['cities'] == 0) {
@@ -234,10 +228,10 @@ window.console.log("XX calling updatePlotOptions.. with ",blob);
     }
 
     if('plotParam' in json) {
-      document.getElementById("plotoption-par-option").style.display='block';
+      document.getElementById("plotoption-param-option").style.display='block';
       document.getElementById("plotParamTxt").value=json['plotParam'];
       } else {
-        document.getElementById("plotoption-par-option").style.display='none';
+        document.getElementById("plotoption-param-option").style.display='none';
     }
 
     if('cMap' in json) {

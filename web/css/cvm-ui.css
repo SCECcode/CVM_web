@@ -314,9 +314,14 @@ th {text-align: left; background: #D5D5D5;}
 
 
 .cvm-btn:disabled {
-         color: white;
+        color: white;
         }
 
+.cvm-btn:hover {
+        color: #990000;
+        background: #D5D5D5; 
+        }
+	
 .cvm-div {
         position:relative;
         left: 10px;
