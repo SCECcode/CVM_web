@@ -11,7 +11,7 @@ cd $UCVM_TOP_DIR
 git clone https://github.com/SCECcode/ucvm.git -b testMei src
 
 cd $UCVM_SRC_PATH/largefiles
-./get_largefiles.py -m sfcvm,cvms,cvmsi,cca,cvmh,cvmhlabn,ivlsu,albacore,cvlsu,wfcvm
+./get_largefiles.py -m sfcvm,cvms,cvmsi,cca,cvmh,cvmhlabn,ivlsu,albacore,cvlsu,wfcvm,linthurber
 ./check_largefiles_md5.py
 ./stage_largefiles.py
 

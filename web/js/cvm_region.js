@@ -12,6 +12,19 @@
 
 var CVM_tb={
 "models": [
+    {'id':25,
+     'model name':'LINTHURBER',
+     'abb name':'linthurber',
+     'path name':'linthurber',
+     'model filename':'linthurber.tar.gz',
+     'description':'Lin Thurber',
+     'coordinates': [
+{'lon':-126.9210,'lat':39.8816},
+{'lon':-121.4117,'lat':43.0597},
+{'lon':-112.8281,'lat':33.4362},
+{'lon':-118.1781,'lat':30.2581},
+         ],
+     'color':'#0F0F0F'},
     {'id':24,
      'model name':'CS 242',
      'abb name':'cs242',

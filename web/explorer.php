@@ -750,10 +750,10 @@ TODO: need a new id
              </div>
 
 <!-- Map Option -->
-             <div class="mb-5" style="border:0px solid green;margin-left:4px;">
+             <div class="mb-3" style="border:0px solid green;margin-left:4px;">
                 <div id="plotoption-interp-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class='form-check-label mini-option'
-                            title='Show in interpolated mode'
+                            title='Interpolates data using splines in tension (tension=0.2). This has the effect of smoothing the resultant data plot, but may produce undesirable results in some situations, especially for spatially discontinuous models or models with sharp velocity discontinuities. Leave unchecked to plot the raw extracted data'
 			    for="plotoption-interp">
                      <input class='form-check-inline mr-2'
                             type="checkbox"
@@ -761,7 +761,18 @@ TODO: need a new id
                      </label>
                 </div>
 
-                <div id="plotoption-cfm-option" class="form-check form-check-inline mt-2" style="display:">
+                 <div id="plotoption-point-option" class="form-check form-check-inline mt-1" style="display:">
+                     <label class='form-check-label mini-option'
+                            title='Show data points'
+                            for="plotoption-point">
+                     <input class='form-check-inline mr-2'
+                            type="checkbox"
+                            id="plotoption-point"/>Source Data Points
+                     </label>
+                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalpoints"><span class="glyphicon glyphicon-info-sign"></span></button>
+                 </div>
+
+                <div id="plotoption-cfm-option" class="form-check form-check-inline mt-0" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show Community Fault Model v7.0 on map'
 			    for="plotoption-cfm">
@@ -791,18 +802,7 @@ TODO: need a new id
                      </label>
                  </div>
 
-                 <div id="plotoption-point-option" class="form-check form-check-inline mt-1" style="display:">
-                     <label class='form-check-label mini-option'
-                            title='Show data points'
-                            for="plotoption-point">
-                     <input class='form-check-inline mr-2'
-                            type="checkbox"
-                            id="plotoption-point"/>Source Data Points
-                     </label>
-                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalpoints"><span class="glyphicon glyphicon-info-sign"></span></button>
-                 </div>
-
-                 <div id="plotoption-param-option" class="form-check form-check-inline mt-2" style="display:">
+                 <div id="plotoption-param-option" class="form-check form-check-inline mt-3" style="display:">
                      <label class="input-group-text" for="plotParamTxt">Select Parameter</label>
                      <select id="plotParamTxt" class="my-custom-select custom-select">
                         <option value=1>Vp</option>
@@ -824,7 +824,7 @@ TODO: need a new id
                   </div>
 
 
-                 <div id="plotoption-cmap-option" class="form-check form-check-inline mt-2" style="display:">
+                 <div id="plotoption-cmap-option" class="form-check form-check-inline mt-3" style="display:">
                      <label class="input-group-text" for="cmapTxt">Select Colormap</label>
                      <select id="cmapTxt" class="my-custom-select custom-select">
                         <option value="1">Seis</option>
@@ -868,7 +868,7 @@ TODO: need a new id
                  </div>
 
 		 <div style="text-align:center">
-                     <button id="replotNow" onclick="replotPlots()" class="btn btn-dark mt-3" style="width:50%;border-radius:0.25rem;font-size:1.25rem;">REPLOT</button>
+                     <button id="replotNow" onclick="replotPlots()" class="cvm2-btn btn btn-dark mt-5" style="width:50%;border-radius:0.25rem;font-size:1.25rem;">REPLOT</button>
                  </div>
 
                  <div class="form-check form-check-inline mt-2">
