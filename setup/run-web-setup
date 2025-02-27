@@ -64,6 +64,9 @@ $ANACONDA3_TOP_DIR/bin/pip install setuptools
 ls $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 echo "source $UCVM_INSTALL_PATH/conf/ucvm_env.sh" >> ~/.bashrc
 
+## setup largedata_dir's permission
+./setup/setup_largedata_dir.sh 
+
 ## setup plotting  
 mkdir -p $PLOTTING_TOP_DIR
 

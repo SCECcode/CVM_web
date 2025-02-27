@@ -12,6 +12,8 @@ services:
    volumes:
     - ./:/app
     - ./custom-php.ini:/etc/php.d/custom-php.ini
-    - ./cvm-large-dataset:/usr/local/share/ucvm/cvm-large-dataset # bind to $UCVM_SRC_PATH/cvm-large-dataset
+    - ./cvm-result:/usr/local/share/ucvm/cvm-result
+    - /home/mei/CVM_DATASET_DIRECTORY:/usr/local/share/cvm-largedata-dir:ro
    restart: unless-stopped
+
 

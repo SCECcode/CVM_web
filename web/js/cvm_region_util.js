@@ -176,22 +176,6 @@ function makeModelSelection()
 
 
 
-   if(isModelInstalled("sfcvm")) {
-     option = document.createElement("option");
-     option.text = "SFCVM,elygtl:taper";
-     option.label = "SFCVM,elygtl:taper";
-     option.value= "sfcvm,elygtl:taper"; 
-     sel.add(option);
-   }
-
-   if(isModelInstalled("sfcvm")) {
-     option = document.createElement("option");
-     option.text = "SFCVM,elygtl:ely";
-     option.label = "SFCVM,elygtl:ely";
-     option.value= "sfcvm,elygtl:ely"; 
-     sel.add(option);
-   }
-
    if(isModelInstalled("sjfz") && isModelInstalled("1d")) {
      option = document.createElement("option");
      option.text = "SJFZ,1D";
@@ -202,33 +186,9 @@ function makeModelSelection()
 
    if(isModelInstalled("sjfz")) {
      option = document.createElement("option");
-     option.text = "SJFZ,elygtl:ely";
-     option.label = "SJFZ,elygtl:ely";
-     option.value= "sjfz,elygtl:ely"; 
-     sel.add(option);
-   }
-
-   if(isModelInstalled("sjfz")) {
-     option = document.createElement("option");
      option.text = "SJFZ,elygtl:taper";
      option.label = "SJFZ,elygtl:taper";
      option.value= "sjfz,elygtl:taper"; 
-     sel.add(option);
-   }
-
-   if(isModelInstalled("cvmsi")) {
-     option = document.createElement("option");
-     option.text = "CVM-S4.26M01,elygtl:ely";
-     option.label = "CVM-S4.26M01,elygtl:ely";
-     option.value= "cvmsi,elygtl:ely";
-     sel.add(option);
-   }
-
-   if(isModelInstalled("cvmsi")) {
-     option = document.createElement("option");
-     option.text = "CVM-S4.26M01,elygtl:taper";
-     option.label = "CVM-S4.26M01,elygtl:taper";
-     option.value= "cvmsi,elygtl:taper";
      sel.add(option);
    }
 
@@ -296,14 +256,6 @@ function makeModelSelection()
       option.text = "CVM-S4.26,CVM-H v15.1.1";
       option.label = "CVM-S4.26,CVM-H v15.1.1";
       option.value= "cvms5,cvmh"; 
-      sel.add(option);
-   }
-
-   if(isModelInstalled("cvms5") && isModelInstalled("1d")) {
-      option = document.createElement("option");
-      option.text = "CVM-S4.26,1D";
-      option.label = "CVM-S4.26,1D";
-      option.value= "cvms5,1d"; 
       sel.add(option);
    }
 

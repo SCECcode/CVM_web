@@ -12,8 +12,21 @@
 
 var CVM_tb={
 "models": [
+    {'id':26,
+     'model name':'CANVAS',
+     'abb name':'canvas',
+     'path name':'canvas',
+     'model filename':'canvas.tar.gz',
+     'description':'CANVAS',
+     'coordinates': [
+{'lon':-114.0,'lat':31.5},
+{'lon':-125.0,'lat':31.5},
+{'lon':-125.0,'lat':42.0},
+{'lon':-114.0,'lat':42.0},
+         ],
+     'color':'#FF0F0F'},
     {'id':25,
-     'model name':'LINTHURBER',
+     'model name':'Lin-Thurber',
      'abb name':'linthurber',
      'path name':'linthurber',
      'model filename':'linthurber.tar.gz',

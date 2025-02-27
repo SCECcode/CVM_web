@@ -1,12 +1,8 @@
 FROM amazonlinux:2
 
-ENV CVM_WEB_TOP_DIR=/app/web
-ENV PLOTTING_TOP_DIR=/usr/local/share/plotting
-ENV ANACONDA3_TOP_DIR=/usr/local/share/anaconda3
+ENV CVM_VOLUME=/usr/local/share/cvm_volume
 ENV UCVM_TOP_DIR=/usr/local/share/ucvm
-ENV UCVM_CVM_VOLUME=/usr/local/share/cvm_volume
-ENV UCVM_CVM_LARGE_DATASET=/usr/local/share/ucvm/cvm-large-dataset 
-
+ENV CVM_LARGEDATA_DIR=/usr/local/share/cvm-largedata-dir
 ENV UCVM_SRC_PATH=$UCVM_TOP_DIR/src
 ENV UCVM_INSTALL_PATH=$UCVM_TOP_DIR/install
 
