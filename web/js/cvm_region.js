@@ -12,7 +12,7 @@
 
 var CVM_tb={
 "models": [
-    {'id':26,
+    {'id':27,
      'model name':'CANVAS',
      'abb name':'canvas',
      'path name':'canvas',
@@ -25,7 +25,7 @@ var CVM_tb={
 {'lon':-114.0,'lat':42.0},
          ],
      'color':'#FF0F0F'},
-    {'id':25,
+    {'id':26,
      'model name':'Lin-Thurber',
      'abb name':'linthurber',
      'path name':'linthurber',
@@ -38,6 +38,19 @@ var CVM_tb={
 {'lon':-118.1781,'lat':30.2581},
          ],
      'color':'#0F0F0F'},
+    {'id':25,
+     'model name':'CS 248',
+     'abb name':'cs248',
+     'path name':'cs248',
+     'model filename':'cs248.tar.gz',
+     'description':'CS 248',
+     'coordinates': [
+{'lon':-126.18649,'lat':39.750630},
+{'lon':-121.852810,'lat':42.277910},
+{'lon':-116.723950,'lat':36.561620},
+{'lon':-120.902940,'lat':34.222430}
+         ],
+     'color':'#663399'},
     {'id':24,
      'model name':'CS 242',
      'abb name':'cs242',
