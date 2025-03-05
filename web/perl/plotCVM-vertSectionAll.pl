@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#plotCVM-vertSection.pl
+#plotCVM-vertSection2.pl
 #Written 2024-12/12 by Scott T. Marshall
 #-----------------------------------------------------------------------------------------------------------------------------#
 # 
@@ -13,14 +13,15 @@
 # Note: The csv file must be in another directory and the path to the file must be included at the command line
 # as the path is used to set other filenames and to make a tmp directory for GMT.
 #  
-#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotParam plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax
+#   Usage: ./plotCVM-vertSection.pl path/to/file.csv plotParam interp plotPts plotMap plotFaults plotCities pad cMap forceRange zMin zMax
 #     Parameters are described below:
 #     path/to/file.csv : The csv file must be specified with a path (relative or absolute). ./ will not work.
 #     plotParam        : Select what is plotted 1=Vp; 2=Vs; 3=Density
+#     interp           : 1=Interpolates using splines in tension (GMT surface command) 0=Plots data with no interpolation 
+#     plotPts          : 1=Plots the source data points, so the user can see the resolution of the heatmap. 0=Don't plot points.
 #     plotMap          : 1=Plots a simple location map showing the profile section. 0=Don't plot a map. Just plot the vertical profile data.
 #     plotFaults       : 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults
 #     plotCities       : 1=Plots selected CA/NV cities. 0=Don't plot cities
-#     plotPts          : 1=Plots the source data points, so the user can see the resolution of the heatmap. 0=Don't plot points.
 #     pad              : Supply any value in degrees. This will be added to the map spatial range in all directions.
 #     cMap             : Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.
 #     forceRange       : Use a user-specified parameter range instead of the default which uses the range of the data.
@@ -48,21 +49,22 @@ $openEPS=0;
 $printStats=0;
 
 #check for correct usage and make sure the csv file exists
-if   (@ARGV==11){($csvFile,$plotParam,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
-elsif(@ARGV==9){
-	($csvFile,$plotParam,$plotMap,$plotFaults,$plotCities,$plotPts,$pad,$cMap,$forceRange)=@ARGV;
+if   (@ARGV==12){($csvFile,$plotParam,$interp,$plotPts,$plotMap,$plotFaults,$plotCities,$pad,$cMap,$forceRange,$zMin,$zMax)=@ARGV}
+elsif(@ARGV==10){
+	($csvFile,$plotParam,$interp,$plotPts,$plotMap,$plotFaults,$plotCities,$pad,$cMap,$forceRange)=@ARGV;
 	if($forceRange!=0){print "\n  Error! If forceRange=1, zMin and zMax must be specified\n\n"; exit}
 }
 #print usage for incorrect inputs
 else {
-	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotParam plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax\n";
+	print "\n  Usage: ./plotCVM-vertSection.pl path/to/file.csv plotParam interp plotPts plotMap plotFaults plotCities pad cMap forceRange zMin zMax\n";
 	print "    Parameters are described below:\n";
 	print "    path/to/file.csv: The csv file must be specified with a path (relative or absolute).\n";
 	print "    plotParam: Select what is plotted 1=Vp; 2=Vs; 3=Density\n";
+	print "    interp: 1=interpolates using splines in tension; 0=No interpolation\n";
+	print "    plotPts: 1=Plots the source data points. 0=Don't plot points.\n";
 	print "    plotMap: 1=Plots a simple location map 0=Don't plot a map. Just plot the vertical profile data.\n";
 	print "    plotFaults: 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults\n";
 	print "    plotCities: 1=Plots selected CA/NV cities. 0=Don't plot cities\n";
-	print "    plotPts: 1=Plots the source data points. 0=Don't plot points.\n";
 	print "    pad: Supply any value in degrees. This will be added to the map spatial range in all directions.\n";
 	print "    cMap: Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.\n";
 	print "    forceRange: 1=Use a user-specified parameter range, 0=Use the range of the data.\n";
@@ -100,7 +102,7 @@ $ENV{GMT_TMPDIR}="$gmtDir";
 # 0=don't plot, 1=colored vels
 $plotVels=1;
 #What tension value should I use with surface? 
-$t=0.1;
+$t=0.2;
 #What should the dimensions of the data plot be (in inches)?
 $width=7.6;
 $height=5.5;
@@ -156,16 +158,18 @@ while(<CSV>){
 		$_=~s/: /:/;
 		@data=split(":",$_);
 		#grab useful portions of the header
-		if   ($data[0] eq "Title")          {$title       =$data[1]}
-		elsif($data[0] eq "CVM(abbr)")      {$model       =$data[1]}
-		elsif($data[0] eq "Start_depth(m)") {$startDepth  =$data[1]}
-		elsif($data[0] eq "End_depth(m)")   {$endDepth    =$data[1]}
-		elsif($data[0] eq "Vert_spacing(m)"){$vertSpacing =$data[1]}
-		elsif($data[0] eq "Total_pts")      {$numPts      =$data[1]}
-		elsif($data[0] eq "Lat1")           {$begLat      =$data[1]}
-		elsif($data[0] eq "Lon1")           {$begLon      =$data[1]}
-		elsif($data[0] eq "Lat2")           {$endLat      =$data[1]}
-		elsif($data[0] eq "Lon2")           {$endLon      =$data[1]}
+		if   ($data[0] eq "Title")          {$title      =$data[1]}
+		elsif($data[0] eq "CVM(abbr)")      {$model      =$data[1]}
+		elsif($data[0] eq "Start_depth(m)") {$startDepth =$data[1]}
+		elsif($data[0] eq "End_depth(m)")   {$endDepth   =$data[1]}
+		elsif($data[0] eq "Vert_spacing(m)"){$vertSpacing=$data[1]}
+		elsif($data[0] eq "Depth_pts")      {$depthPts   =$data[1]; $depthPts =~ s/\s//g} #removes trailing spaces
+		elsif($data[0] eq "Horizontal_pts") {$horzPts    =$data[1]; $horzPts  =~ s/\s//g}
+		elsif($data[0] eq "Total_pts")      {$numPts     =$data[1]}
+		elsif($data[0] eq "Lat1")           {$begLat     =$data[1]}
+		elsif($data[0] eq "Lon1")           {$begLon     =$data[1]}
+		elsif($data[0] eq "Lat2")           {$endLat     =$data[1]}
+		elsif($data[0] eq "Lon2")           {$endLon     =$data[1]}
 	}#end if
 	#deal with data lines
 	else {
@@ -191,7 +195,7 @@ while(<CSV>){
 			$zTitle="Vp (km/s)";
 			$epsTitle="Vp (km/s)";
 			#print the line to the new GMT file (still a csv file, format-wise)
-			print GMT "$data[0],$data[1],$data[2],$data[3]\n";
+			print GMT "$data[0] $data[1] $data[2] $data[3]\n";
 		}#end if
 		#print Vs data to $gmtFile
 		if($plotParam==2){
@@ -243,6 +247,8 @@ if($lonRange>$latRange){
 	$maxLat=$midLat+0.5*$lonRange+$pad;
 	#set the offset for labeling the cross section
 	$offset="0p/15p";
+	#set a flag to let me know if I should plot lon or lat on non-interpolated cross sections. 0=use lon, 1=use lat
+	$llFlag=0;
 }
 #if lat range is larger (~n/s cross section)
 else{
@@ -253,6 +259,8 @@ else{
 	$maxLon=$midLon+0.5*$latRange+$pad;
 	#set the offset for labeling the cross section
 	$offset="15p/0p";
+	#set a flag to let me know if I should plot lon or lat on non-interpolated cross sections. 0=use lon, 1=use lat
+	$llFlag=1;
 }
 
 #set the -R range
@@ -264,6 +272,10 @@ $lonAxis=getLonTick($R);
 $latAxis=getLatTick($R);
 $mapScale=getMapScale($R);
 
+
+#-----------------------------------------------------------------------------------------------------------------------------#
+#------- PROJECT THE DATA TO ALONG TRACK DISTANCE (KM) -----------------------------------------------------------------------#
+#-----------------------------------------------------------------------------------------------------------------------------#
 if($printStats==1){
 	print "Calculating along profile distances using GMT\n";
 	print "-----------------------------------------------------------------------------\n";
@@ -274,6 +286,9 @@ system "gmt mapproject $gmtFile -G$begLon/$begLat+uk > $distFile";
 #get the exact xy range for plotting
 $Rxy=`gmt info $distFile -I- -i4,2`;
 chomp($Rxy);
+#get the axis labeling string using Tools.pm
+$xAxis=getXtick($Rxy);
+$yAxis=getYtick($Rxy);
 #parse out the min/max xy values
 $tmp=$Rxy;
 $tmp=~s/-R//;
@@ -282,6 +297,7 @@ $minX=$tmp[0]; $maxX=$tmp[1];
 $minY=$tmp[2]; $maxY=$tmp[3];
 $xRange=$maxX-$minX;
 $yRange=$maxY-$minY;
+$xSpacing=$maxX/($horzPts-1);
 #calculate the vertical exaggeration and round to one decimal (assumes the XY plot is 7.0i/5.0i) 
 $vertEx=sprintf("%.1f",$xRange/$yRange*($height/$width));
 
@@ -341,17 +357,31 @@ if($printStats==1){
 	print "Interpolation Res   : $xRes/$yRes\n";
 	print "-----------------------------------------------------------------------------\n";
 }
-
+	
 #-----------------------------------------------------------------------------------------------------------------------------#
-#------- INTERPOLATE THE DATA AND MAKE A COLORMAP ----------------------------------------------------------------------------#
+#------- INTERPOLATE THE DATA, IF SPECIFIED ----------------------------------------------------------------------------------#
 #-----------------------------------------------------------------------------------------------------------------------------#
-if($plotVels>0){
+#calculate ranges and project to along track distances, only if interpolation is on
+if($interp==1 && $plotVels>0){
 	#Need to run blockmean first because the cross section spacing is not even because it was converted from lon/lat to distance in meters\n";
 	if($printStats==1){print "Running blockmean to prevent aliasing\n"}
 	system "gmt blockmean $distFile $Rext -I$xRes/$yRes -i4,2,3 > $meanFile";
 	if($printStats==1){print "Interpolating data using GMT's surface\n"}
 	system "gmt surface $meanFile $Rext -G$grdFile -I$xRes/$yRes -T$t -M7c -Ll0 -rg";
-}
+}#end if $interp==1
+
+#if interpolation is OFF
+if($interp==0 && $plotVels>0){
+	#grid the data so it is on an exactly uniform grid
+	if($printStats==1){print "Running blockmean to prevent aliasing\n"}
+	system "gmt blockmean $distFile $Rxy -I${horzPts}+n/${depthPts}+n -i4,2,3 -G$grdFile";
+	#system "gmt grdinfo $grdFile";
+}#end interp==0
+
+
+#-----------------------------------------------------------------------------------------------------------------------------#
+#------- FIGURE OUT Z-RANGE AND MAKE A COLOR PALLETE FILE --------------------------------------------------------------------#
+#-----------------------------------------------------------------------------------------------------------------------------#
 #figure out the z-range
 if($forceRange==0){
 	$T=`gmt grdinfo $grdFile -T/2`;
@@ -385,18 +415,9 @@ $cAxis=getCBarTick($T);
 
 #set the color palette based on the user specified value
 if($printStats==1){print "Making color palette file\n"}
-if($cMap==1){
-	$cpt="seis";
-	system "gmt makecpt -C$cpt $T -D --COLOR_NAN=white > $cptFile";
-}
-elsif($cMap==2){
-	$cpt="rainbow";
-	system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile";
-}
-elsif($cMap==3){
-	$cpt="plasma";
-	system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile";
-}
+if   ($cMap==1){$cpt="seis";    system "gmt makecpt -C$cpt $T -D --COLOR_NAN=white > $cptFile"}
+elsif($cMap==2){$cpt="rainbow";	system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile"}
+elsif($cMap==3){$cpt="plasma";  system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile"}
 else {print "\n\n  Error: cMap must be 1-3. You entered $cMap\n\n"; exit}
 
 
@@ -451,10 +472,20 @@ if($printStats==1){
 }
 
 #plot the interpolated data
-system "gmt grdimage $grdFile -X0.57i -Y1.45i $Rxy -JX${width}i/-${height}i -C$cptFile -P -K > $plotFile";
-
-#plot the source data points, if specified
-if($plotPts==1){system "gmt psxy $distFile -R -JX -Sc1.5p -Gblack -i4,2 -O -K >> $plotFile"}
+if($interp==1){
+	#plot the interpolated data
+	system "gmt grdimage $grdFile -X0.57i -Y1.45i $Rxy -JX${width}i/-${height}i -C$cptFile -P -K > $plotFile";
+	#system "gmt grdview $grdFile -X0.57i -Y1.45i $Rxy -JX${width}i/-${height}i -C$cptFile -T+s -P -K > $plotFile";
+	#plot the source data points, if specified
+	if($plotPts==1){system "gmt psxy $distFile -R -JX -Sc1.5p -Gblack -i4,2 -O -K >> $plotFile"}
+}#end if $interp==1
+#plot the data not interpolated
+else {
+	#plot the interpolated data
+	system "gmt grdview $grdFile -X0.57i -Y1.45i $Rxy -JX${width}i/-${height}i -C$cptFile -T+s -P -K > $plotFile";
+	#plot the source data points, if specified
+	if($plotPts==1){system "gmt psxy $distFile -R -JX -Sc1.5p -Gblack -i4,2 -O -K >> $plotFile"}
+}
 
 #plot A and A' above the plot and the lon,lat locations of each
 system "gmt pstext -R -JX -F+a0+f18p,Helvetica-Bold+jBC -D0i/0.1i -N -O -K <<END>> $plotFile
@@ -472,8 +503,14 @@ END";
 system "gmt psscale -R -JX -C$cptFile -B$cAxis+l\"$zTitle\" -Dx0/-0.85i+w${width}i/0.25i+jBL+h -O -K >> $plotFile";
 
 #plot the axes last
-if($plotMap==0){system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile"}
-else           {system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile"}
+if($plotMap==0){
+	#system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile";
+	system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (m)\" -BWeSn+t\"Model: $model | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile";
+}
+else {
+	#system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile";
+	system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (m)\" -BWeSn+t\"Model: $model | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile";
+}
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
@@ -593,6 +630,6 @@ if($printStats==1){
 }
 #print a json string to tell the CVM Explorer the status of each plot parameter
 if($printStats==0){
-	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"plotParam\": $plotParam, \"plotMap\": $plotMap, \"faults\": $plotFaults, \"cities\": $plotCities, \"points\": $plotPts, \"pad\": $pad, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
+	print "{\"type\": \"cross\", \"file\": \"$pdfFile\", \"plotParam\": $plotParam, \"interp\": $interp, \"points\": $plotPts, \"plotMap\": $plotMap, \"faults\": $plotFaults, \"cities\": $plotCities, \"pad\": $pad, \"cMap\": $cMap, \"forceRange\": $forceRange, \"range\": { \"min\": $zMin, \"max\": $zMax } }\n";
 }
 exit;

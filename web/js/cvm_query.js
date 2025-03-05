@@ -297,6 +297,7 @@ function replotCrossSection() {
     let cfm=$('#plotoption-cfm').prop('checked');
     let ca=$('#plotoption-ca').prop('checked');
     let point=$('#plotoption-point').prop('checked');
+    let interp=$('#plotoption-interp').prop('checked');
 
     // replace src .pdf with .csv and grab just filename
     let file=MODAL_REPLOT_SRC.replace("pdf","csv");
@@ -314,6 +315,8 @@ function replotCrossSection() {
     if(ca) onca=1;
     let onpoint=0;
     if(point) onpoint=1;
+    let oninterp=0;
+    if(interp) oninterp=1;
 
     let onrange=1;
     // if PAR means needs to get original min/max range
@@ -350,7 +353,7 @@ function replotCrossSection() {
         }
     }
 
-    xmlhttp.open("GET","php/replotCrossSection.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&onpar="+onpar+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
+    xmlhttp.open("GET","php/replotCrossSection.php?onmap="+onmap+"&oncfm="+oncfm+"&onca="+onca+"&oncmap="+oncmap+"&onrange="+onrange+"&oninterp="+oninterp+"&onpoint="+onpoint+"&onmin="+onmin+"&onmax="+onmax+"&onpar="+onpar+"&onpad="+onpad+"&oncmap="+oncmap+"&fname="+fname+"&uid="+uid,true);
     xmlhttp.send();
 }
 

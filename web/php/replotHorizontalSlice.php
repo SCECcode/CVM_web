@@ -26,9 +26,7 @@ $gmtpl="../perl/plotCVM-horzSliceAll.pl";
 
 $envstr=makeEnvString();
 
-##old: csv, plotparam, plotfault, plotcities, potpts, cmap, range
-##new: csv, plotparam, interp, plotpts, plotfault, plotcities, cmap, range
-
+##Usage: csv, plotparam, interp, plotpts, plotfault, plotcities, cmap, range
 
 if( $onrange == '1' ) {
   $gmtlstr=" ".$onpar." ".$oninterp." ".$onpoint." ".$oncfm." ".$onca." ".$oncmap." 1 ".$onmin." ".$onmax;

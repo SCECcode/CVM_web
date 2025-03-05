@@ -72,7 +72,8 @@ $density_binfile="../result/".$uid."_density_data.bin";
 $cvsquery = $envstr." ucvm_cross_section2csv_all.py ".$vp_binfile." ".$vp_metafile." ".$vs_binfile." ".$vs_metafile." ".$density_binfile." ".$density_metafile." ".$csvfile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
 
-#Usage: ./plotCVM-vertSection.pl path/to/file.csv plotMap plotFaults plotCities plotPts pad cMap forceRange zMin zMax
+#Usage: ./plotCVM-vertSectionAll.pl path/to/file.csv 
+#              interp plotPts plotMap plotFaults plotCities pad cMap forceRange zMin zMax
 
 #1=Vp; 2=Vs; 3=Density
 $gtype=2;
@@ -80,7 +81,8 @@ if($datatype == "vp" ) $gtype=1;
 if($datatype == "density" ) $gtype=3;
 
 $gmtpl="../perl/plotCVM-vertSectionAll.pl";
-$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$gtype." 1 0 0 0 1 1 0";
+$gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$gtype. " 0 0 1 0 0 1 1 0"; 
+
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
 #print($gmtcommand);

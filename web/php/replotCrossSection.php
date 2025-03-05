@@ -10,6 +10,7 @@
 
 include ("util.php");
 
+$oninterp = ($_GET['oninterp']);
 $onmap = ($_GET['onmap']);
 $oncfm = ($_GET['oncfm']);
 $onca = ($_GET['onca']);
@@ -27,12 +28,15 @@ $csvfile="../result/".$fname;
 
 $envstr=makeEnvString();
 
+#Usage: ./plotCVM-vertSection.pl path/to/file.csv 
+#            plotParam interp plotPts plotMap plotFaults plotCities pad cMap forceRange zMin zMax
+
 $gmtpl="../perl/plotCVM-vertSectionAll.pl";
 
 if( $onrange == '1' ) {
-  $gmtlstr=" ".$onpar." ".$onmap." ".$oncfm." ".$onca." ".$onpoint." ".$onpad." ".$oncmap." 1 ".$onmin." ".$onmax;
+  $gmtlstr=" ".$onpar." ".$oninterp." ".$onpoint." ".$onmap." ".$oncfm." ".$onca." ".$onpad. " ".$oncmap." 1 ".$onmin." ".$onmax;
   } else {
-    $gmtlstr=" ".$onpar." ".$onmap." ".$oncfm." ".$onca." ".$onpoint." ".$onpad." ".$oncmap." 0 ";
+    $gmtlstr=" ".$onpar." ".$oninterp." ".$onpoint." ".$onmap." ".$oncfm." ".$onca." ".$onpad. " ".$oncmap." 0 ";
 }
 
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile.$gmtlstr;
