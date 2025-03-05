@@ -12,6 +12,19 @@
 
 var CVM_tb={
 "models": [
+    {'id':28,
+     'model name':'UM-SFBCVM',
+     'abb name':'sfbcvm',
+     'path name':'sfbcvm',
+     'model filename':'sfbcvm.tar.gz',
+     'description':'UM-SFBCVM',
+     'coordinates': [
+{'lon':-124.0070,'lat':35.7889},
+{'lon':-120.0249,'lat':35.7563},
+{'lon':-119.8760,'lat':39.4016},
+{'lon':-124.0575,'lat':39.4387},
+         ],
+     'color':'#220082'},
     {'id':27,
      'model name':'CANVAS',
      'abb name':'canvas',
