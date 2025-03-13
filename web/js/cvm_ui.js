@@ -24,6 +24,19 @@ var hold_mptable=1;
 var cvm_metaplottb_list=[];
 
 /******************************************/
+function refreshModelDescription(modelstr) {
+    let descript;
+    let mlist=modelstr.split(",");
+    let cnt=mlist.length;
+    if(cnt==1){ 
+      let nm=mlist[0];
+      descript=getModelDescript(nm);
+      } else {
+        descript=modelstr;
+    }
+   $("#cvm-model-description").html(descript);
+}
+
 function setup_modeltype() {
    var html=document.getElementById('modelTable-container').innerHTML=makeModelTable();
    makeModelSelection();

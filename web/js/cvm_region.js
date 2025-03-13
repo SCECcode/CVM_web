@@ -30,7 +30,7 @@ var CVM_tb={
      'abb name':'canvas',
      'path name':'canvas',
      'model filename':'canvas.tar.gz',
-     'description':'CANVAS',
+     'description':'California-Nevada Adjoint Simulations (CANVAS) adjoint waveform tomography model',
      'coordinates': [
 {'lon':-114.0,'lat':31.5},
 {'lon':-125.0,'lat':31.5},
@@ -56,7 +56,7 @@ var CVM_tb={
      'abb name':'cs248',
      'path name':'cs248',
      'model filename':'cs248.tar.gz',
-     'description':'CS 248',
+     'description':'CS 248 a word word word word',
      'coordinates': [
 {'lon':-126.18649,'lat':39.750630},
 {'lon':-121.852810,'lat':42.277910},
@@ -218,7 +218,7 @@ var CVM_tb={
      'path name':'wfcvm',
      'model filename':'wfcvm.tar.gz',
      'map':'ucvm_utah',
-     'description':'Wasatch Front North-eastern Utah Velocity Model',
+     'description':'Wasatch Front North-Eastern Utah Velocity Model',
      'coordinates': [
                {'lon':-112.699997,'lat':39.75},
                {'lon':-112.699997,'lat':42},
@@ -393,7 +393,7 @@ var CVM_tb={
      'abb name':'ucvm',
      'path name':'ucvm',
      'map filename':'ucvm.e',
-     'description':'UCVM Topography and Vs30 Coverage Region(Wills2015)',
+     'description':'UCVM Topography and Vs30 Coverage Region(Thompson 2022)',
      'coordinates': [
         {'lon':-129.25,'lat':41},
         {'lon':-117.4199,'lat':28.0268},

@@ -49,6 +49,7 @@ jQuery(document).ready(function() {
       var model = $(this).val();
       remove_all_models();
       load_selected_model(model);
+      refreshModelDescription(model);
       set_point_latlons_special();
       // special case.. elygtl:ely or elygtl:taper
       var v=document.getElementById('zrange').style.display;

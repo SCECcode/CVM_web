@@ -41,8 +41,7 @@ function isModelInstalled(pname) {
   return 0;
 }
 
-function makeModelSelection()
-{
+function makeModelSelection() {
    var tb=CVM_tb['models'];
    var cnt=tb.length;
    var i;
@@ -228,7 +227,22 @@ function makeModelSelection()
    makeLatlngsCoordinate('cvmh');
 }
 
+function getModelDescript(target_nm) {
+   var tb=CVM_tb['models'];
+   var icnt=tb.length;
+   var i;
+   for(i=0; i<icnt; i++) {
+     var item=tb[i];
+     if(item['abb name'] == target_nm) {
+        var descript=item['description'];
+        return descript;
+     }
+  }
+  return "ModelNotFound";
+}
+
 function getModelColor(target_nm) {
+// this is an optional field, vs30/topo etree map
    var tb=CVM_tb['models'];
    var icnt=tb.length;
    var i;

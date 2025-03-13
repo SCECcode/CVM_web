@@ -150,10 +150,6 @@ var CVM = new function () {
      return false;
    }
 
-   this.refreshModelDescription = function (descript){
-      $("#cvm-model-description").html(descript);
-   }
-
 /******************************************/
     this.processByLatlonForPoint = function(fromMap) {
       getMaterialPropertyByLatlon();
