@@ -25,16 +25,46 @@ var cvm_metaplottb_list=[];
 
 /******************************************/
 function refreshModelDescription(modelstr) {
-    let descript;
+    let description=" ";
+    let name=" ";
+    let reference=" ";
+    let i;
+
     let mlist=modelstr.split(",");
     let cnt=mlist.length;
-    if(cnt==1){ 
-      let nm=mlist[0];
-      descript=getModelDescript(nm);
-      } else {
-        descript=modelstr;
+    let sp="";
+    let rsp="";
+    for(let i=0; i<cnt; i++) {
+      let nm=mlist[i];
+      let idx=getModelIndex(nm);
+      if(idx != -1) {
+        description=description+sp+getModelDescriptionById(idx);
+        name=name+sp+getModelNameById(idx);
+        sp=", ";
+        let ref=getModelReferenceById(idx);
+        if(ref != undefined) {
+          reference=reference+rsp+ref;
+          rsp="; ";
+        }
+        } else { // something else ??
+          let idx=getInterpolatorIndex(nm);
+          if(idx != -1) {
+            description=description+sp+getInterpolatorDescriptionById(idx);
+            name=name+sp+getInterpolatorNameById(idx);
+            sp=", ";
+          }
+          let ref=getInterpolatorReferenceById(idx);
+          if(ref != undefined) {
+            reference=reference+rsp+ref;
+            rsp="; ";
+          }
+      }
     }
-   $("#cvm-model-description").html(descript);
+    $("#cvm-model-selected").html("<b>Model Selected:</b>"+name);
+    $("#cvm-model-description").html("<b>Description:</b>"+description);
+    if(rsp != ", ") {
+      $("#cvm-model-reference").html("<b>Reference:</b>"+reference);
+    }
 }
 
 function setup_modeltype() {

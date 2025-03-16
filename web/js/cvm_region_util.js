@@ -66,28 +66,27 @@ function makeModelSelection() {
    // special case
    var sel=document.getElementById('selectModelType');
    option = document.createElement("option");
-   option.text = "-- Advanced --";
+   option.text = "-- Tiled Models --";
    option.setAttribute("disabled", true);
    option.value= "disabled";
    sel.add(option);
 
-   if(isModelInstalled("sfcvm") && isModelInstalled("cca")) {
-   option = document.createElement("option");
-   option.text = "SFCVM,CCA,SF1D";
-   option.label = "SFCVM,CCA,SF1D";
-   option.value= "sfcvm,cca,sf1d";
-   sel.add(option);
-   }
-
    if(isModelInstalled("sfcvm") && isModelInstalled("cca")
 	   && isModelInstalled("cs248")) {
    option = document.createElement("option");
-   option.text = "SFCVM,CCA,CS248,SF1D";
-   option.label = "SFCVM,CCA,CS248,SF1D";
-   option.value= "sfcvm,cca,cs248,sf1d";
+   option.text = "SFCVM,CCA,SF1D,CS248";
+   option.label = "SFCVM,CCA,SF1D,CS248";
+   option.value= "sfcvm,cca,sf1d,cs248";
    sel.add(option);
    }
 
+   if(isModelInstalled("cvms5") && isModelInstalled("cca")) {
+   option = document.createElement("option");
+   option.text = "CCA,CVM-S4.26,elygtl:ely";
+   option.label = "CCA,CVM-S4.26,elygtl:ely";
+   option.value= "cca,cvms5,elygtl:ely";
+   sel.add(option);
+   }
 
 /***
  
@@ -182,8 +181,6 @@ function makeModelSelection() {
    }
 
 
-***/
-
    if(isModelInstalled("sjfz") && isModelInstalled("1d")) {
      option = document.createElement("option");
      option.text = "SJFZ,1D";
@@ -191,16 +188,17 @@ function makeModelSelection() {
      option.value= "sjfz,1d"; 
      sel.add(option);
    }
+***/
 
    if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn") &&
       isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn") &&
       isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn") &&
       isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn") &&
-      isModelInstalled("cvmhstbn")) {
+      isModelInstalled("cvmhstbn") && isModelInstalled("canvas")) {
         option = document.createElement("option");
-        option.text = "CVM-H All Basins";
-        option.label = "CVM-H All Basins";
-        option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn";
+        option.text = "CVM-H All Basins,CANVAS";
+        option.label = "CVM-H All Basins,CANVAS";
+        option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,canvas";
         sel.add(option);
    }
 
@@ -227,19 +225,74 @@ function makeModelSelection() {
    makeLatlngsCoordinate('cvmh');
 }
 
-function getModelDescript(target_nm) {
+function getModelIndex(target_nm) {
    var tb=CVM_tb['models'];
    var icnt=tb.length;
    var i;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
      if(item['abb name'] == target_nm) {
-        var descript=item['description'];
-        return descript;
+        return i;
      }
   }
-  return "ModelNotFound";
+  return -1;
 }
+
+function getModelDescriptionById(id) {
+   let tb=CVM_tb['models'];
+   let item=tb[id];
+   var descript=item['description'];
+   return descript;
+}
+
+function getModelNameById(id) {
+   let tb=CVM_tb['models'];
+   let item=tb[id];
+   var name=item['model name'];
+   return name;
+}
+
+function getModelReferenceById(id) {
+   let tb=CVM_tb['models'];
+   let item=tb[id];
+   var ref=item['reference'];
+   return ref;
+}
+
+function getInterpolatorIndex(target_nm) {
+   var tb=CVM_tb['interpolator'];
+   var icnt=tb.length;
+   var i;
+   for(i=0; i<icnt; i++) {
+     var item=tb[i];
+     if(item['name'] == target_nm) {
+        return i;
+     }
+  }
+  return -1;
+}
+
+function getInterpolatorDescriptionById(id) {
+   let tb=CVM_tb['interpolator'];
+   let item=tb[id];
+   var descript=item['description'];
+   return descript;
+}
+
+function getInterpolatorNameById(id) {
+   let tb=CVM_tb['interpolator'];
+   let item=tb[id];
+   var name=item['name'];
+   return name;
+}
+
+function getInterpolatorReferenceById(id) {
+   let tb=CVM_tb['interpolator'];
+   let item=tb[id];
+   var ref=item['reference'];
+   return ref;
+}
+
 
 function getModelColor(target_nm) {
 // this is an optional field, vs30/topo etree map

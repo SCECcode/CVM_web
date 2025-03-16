@@ -244,7 +244,7 @@ TODO: need a new id
             </div> <!-- model select -->
 
 <!-- special pull-out for elygtl -->
-            <div id="zrange" class="input-group mt-1" style="display:none;"> 
+            <div id="zrange" class="input-group mt-0 mb-1" style="display:none;"> 
                 <div class="row offset-2">
                 Z range:
                   <div class="col-4 pr-0">
@@ -649,9 +649,12 @@ TODO: need a new id
 <!-- description page -->
             <div id="cvm-description" class="col-12 pr-0" style="display:;" >
                <br>
-               <p><b>You Selected:</b></p>
-               <p id="cvm-model-description">model list: ...</p>
-               <p>For more model details, see  <a href="https://doi.org/10.5281/zenodo.8270631">CVM archive</a></p>
+               <div class="col-12">
+	       <p id="cvm-model-selected"></p>
+	       <p id="cvm-model-description"></p>
+	       <p id="cvm-model-reference"></p>
+               </div>
+	       <p>For additional information about UCVM and included models refer to the <a href="https://github.com/SCECcode/ucvm">UCVM Github homepage</a></p>
             </div>
 
         </div> <!-- search-container -->

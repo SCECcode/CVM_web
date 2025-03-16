@@ -480,6 +480,35 @@ var CVM_tb={
     {'id':'cmb_vs','label':'vs','show':1,'descript':'vs'},
     {'id':'cmb_rho','label':'rho','show':1,'descript':'rho'},
     {'id':'Zmode','label':'zmode','show':0,'descript':'zmode'},
- ]
+ ],
+"1D model": [
+    {'id': 1,
+     'name': '1D',
+     'app name': '1d',
+     'description': '1D background Velocity Model'
+    },
+    {'id': 2,
+     'name': 'BBP1D',
+     'app name': 'bbp1d',
+     'description': 'BroadBand 1D background Velocity Model'
+    },
+    {'id': 3,
+     'name': 'SF1D',
+     'app name': 'sf1d',
+     'description': 'SFCVM Sierra Foothills 1D Velocity Model'
+    },
+],
+"interpolator": [
+    {'id': 1,
+     'name': 'ely',
+     'app name': 'elygtl:ely',
+     'description': 'elygtl:ely...'
+    },
+    {'id': 2,
+     'name': 'taper',
+     'app name': 'elygtl:taper',
+     'description': 'elygtl:taper..'
+    },
+]
 };
 
