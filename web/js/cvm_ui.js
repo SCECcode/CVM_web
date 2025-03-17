@@ -62,7 +62,7 @@ function refreshModelDescription(modelstr) {
     }
     $("#cvm-model-selected").html("<b>Model Selected:</b>"+name);
     $("#cvm-model-description").html("<b>Description:</b>"+description);
-    if(rsp != ", ") {
+    if(rsp != "; ") {
       $("#cvm-model-reference").html("<b>Reference:</b>"+reference);
     }
 }

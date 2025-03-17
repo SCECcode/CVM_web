@@ -255,8 +255,10 @@ function getModelNameById(id) {
 function getModelReferenceById(id) {
    let tb=CVM_tb['models'];
    let item=tb[id];
-   var ref=item['reference'];
-   return ref;
+   if('reference' in item) {
+     return item['reference'];
+   }
+   return undefined;
 }
 
 function getInterpolatorIndex(target_nm) {
@@ -289,8 +291,10 @@ function getInterpolatorNameById(id) {
 function getInterpolatorReferenceById(id) {
    let tb=CVM_tb['interpolator'];
    let item=tb[id];
-   var ref=item['reference'];
-   return ref;
+   if ('reference' in item ) {
+     return item['reference'];
+   } 
+   return undefined;
 }
 
 
