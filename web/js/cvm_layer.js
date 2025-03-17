@@ -130,13 +130,6 @@ function make_all_model_layer() {
       var layer=makeModelLayer(latlngs,color);
       cvm_model_list.push({"model": name, "layer": layer, "visible": 0, "oidx":0 });
    }
-
-   { // initialize with the default model
-     var sel=document.getElementById('selectModelType');
-     var opt=sel[0]
-     var model=opt.value;
-     load_selected_model(model);
-   }
 }
 
 // can be "cvmh" or "cvmh,cvmsi"

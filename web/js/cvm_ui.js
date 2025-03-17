@@ -34,6 +34,7 @@ function refreshModelDescription(modelstr) {
     let cnt=mlist.length;
     let sp="";
     let rsp="";
+    let rcnt=0;
     for(let i=0; i<cnt; i++) {
       let nm=mlist[i];
       let idx=getModelIndex(nm);
@@ -45,6 +46,7 @@ function refreshModelDescription(modelstr) {
         if(ref != undefined) {
           reference=reference+rsp+ref;
           rsp="; ";
+          rcnt++;
         }
         } else { // something else ??
           let idx=getInterpolatorIndex(nm);
@@ -52,18 +54,44 @@ function refreshModelDescription(modelstr) {
             description=description+sp+getInterpolatorDescriptionById(idx);
             name=name+sp+getInterpolatorNameById(idx);
             sp=", ";
-          }
-          let ref=getInterpolatorReferenceById(idx);
-          if(ref != undefined) {
-            reference=reference+rsp+ref;
-            rsp="; ";
-          }
+            let ref=getInterpolatorReferenceById(idx);
+            if(ref != undefined) {
+              reference=reference+rsp+ref;
+              rsp="; ";
+              rcnt++;
+            }
+            } else {  // 1D ? 
+              let idx=get1DModelIndex(nm);
+              if(idx != -1) {
+                description=description+sp+get1DModelDescriptionById(idx);
+                name=name+sp+get1DModelNameById(idx);
+                sp=", ";
+                let ref=get1DModelReferenceById(idx);
+                if(ref != undefined) {
+                  reference=reference+rsp+ref;
+                  rsp="; ";
+                  rcnt++;
+                }
+                } else { //
+                     window.console.log("BAD BAD..wrong name ??",nm);
+              }
+         }
       }
     }
     $("#cvm-model-selected").html("<b>Model Selected:</b>"+name);
-    $("#cvm-model-description").html("<b>Description:</b>"+description);
-    if(rsp != "; ") {
-      $("#cvm-model-reference").html("<b>Reference:</b>"+reference);
+    if(description.length > 300) {
+      $("#modaldescriptionbody").html("<b>Model Selected:</b>"+name+"<br><br><b>Description:</b>"+description);
+      $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button></div>");
+      } else {
+        $("#cvm-model-description").html("<b>Description:</b>"+description);
+    } 
+    if(rcnt !=0) {
+      if(reference.length + description.length > 300) {
+        $("#modaldescriptionbody").html("<b>Model Selected:</b>"+name+"<br><br><b>Description:</b>"+description+"<br><br> <b>Reference:</b>"+reference);
+        $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button></div>");
+        } else {
+          $("#cvm-model-reference").html("<b>Reference:</b>"+reference);
+      }
     }
 }
 
@@ -71,6 +99,13 @@ function setup_modeltype() {
    var html=document.getElementById('modelTable-container').innerHTML=makeModelTable();
    makeModelSelection();
    make_all_model_layer();
+
+   // initialize with the default model
+   var sel=document.getElementById('selectModelType');
+   var opt=sel[0]
+   var model=opt.value;
+   load_selected_model(model);
+   refreshModelDescription(model);
 }
 
 // it is filelist

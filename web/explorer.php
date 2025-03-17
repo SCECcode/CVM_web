@@ -647,13 +647,11 @@ TODO: need a new id
 -->
 
 <!-- description page -->
-            <div id="cvm-description" class="col-12 pr-0" style="display:;" >
+            <div id="cvm-description" class="col-12 pr-5" style="display:;" >
                <br>
-               <div class="col-12">
 	       <p id="cvm-model-selected"></p>
 	       <p id="cvm-model-description"></p>
 	       <p id="cvm-model-reference"></p>
-               </div>
 	       <p>For additional information about UCVM and included models refer to the <a href="https://github.com/SCECcode/ucvm">UCVM Github homepage</a></p>
             </div>
 
@@ -712,6 +710,25 @@ TODO: need a new id
     </button>
   </div>
 </div>
+
+
+<div class="modal" id="modaldescription" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modaldescriptionDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modaldescriptionContent" style="font-size:20px">
+      <!--Body-->
+      <div class="modal-body" id="modaldescriptionBody">
+        <p id="modaldescriptionbody"></p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modaldescription-->
+
 
 <!--Modal: Model (modalwaiton)-->
 <div class="modal" id="modalwaiton" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

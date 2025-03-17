@@ -220,9 +220,6 @@ function makeModelSelection() {
       option.value= "cvmhsmbn,cvms5";
       sel.add(option);
    }
-
-// put in the default region on the map
-   makeLatlngsCoordinate('cvmh');
 }
 
 function getModelIndex(target_nm) {
@@ -248,7 +245,7 @@ function getModelDescriptionById(id) {
 function getModelNameById(id) {
    let tb=CVM_tb['models'];
    let item=tb[id];
-   var name=item['model name'];
+   var name=item['abb name'];
    return name;
 }
 
@@ -284,12 +281,49 @@ function getInterpolatorDescriptionById(id) {
 function getInterpolatorNameById(id) {
    let tb=CVM_tb['interpolator'];
    let item=tb[id];
-   var name=item['name'];
+   var name=item['app name'];
    return name;
 }
 
 function getInterpolatorReferenceById(id) {
    let tb=CVM_tb['interpolator'];
+   let item=tb[id];
+   if ('reference' in item ) {
+     return item['reference'];
+   } 
+   return undefined;
+}
+
+
+function get1DModelIndex(target_nm) {
+   var tb=CVM_tb['1D model'];
+   var icnt=tb.length;
+   var i;
+   for(i=0; i<icnt; i++) {
+     var item=tb[i];
+     if(item['app name'] == target_nm) {
+        return i;
+     }
+  }
+  return -1;
+}
+
+function get1DModelDescriptionById(id) {
+   let tb=CVM_tb['1D model'];
+   let item=tb[id];
+   var descript=item['description'];
+   return descript;
+}
+
+function get1DModelNameById(id) {
+   let tb=CVM_tb['1D model'];
+   let item=tb[id];
+   var name=item['app name'];
+   return name;
+}
+
+function get1DModelReferenceById(id) {
+   let tb=CVM_tb['1D model'];
    let item=tb[id];
    if ('reference' in item ) {
      return item['reference'];
@@ -330,7 +364,6 @@ function getModelMap(target_nm) {
 }
 
 function makeLatlngsCoordinate(target_nm) {
-
    var ret=[];
    var tb=CVM_tb['models'];
    var icnt=tb.length;

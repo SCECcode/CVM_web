@@ -5,17 +5,18 @@
 var CVM = new function () {
 
   this.model_debug = 0;
-  this.mdoel_initialized = false;
+  this.model_initialized = false;
 
 // gather up the valid cvm models for this instance
   this.setup_model = function() {
     getInstallModelList();
+    window.console.log("HERE");
+    //refreshModelDescription(model);
   };
 
   this.setupCVMInterface = function() {
 
-// setup various info tables
-// parameter table 
+// setup parameter table 
      document.getElementById('parametersTable-container').innerHTML=makeParametersTable();
    };
 

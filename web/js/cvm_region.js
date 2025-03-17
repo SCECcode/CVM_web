@@ -89,7 +89,7 @@ var CVM_tb={
      'abb name':'cs173h',
      'path name':'cs173h',
      'model filename':'cs173h.tar.gz',
-     'description':'CyberShake Study 17.3 Central California Velocity Model integrated with Harvard group's Santa Maria and San Joaquin Basin Models with an optional Ely-Jordan GTL',
+     'description':'CyberShake Study 17.3 Central California Velocity Model integrated with Harvard group\'s Santa Maria and San Joaquin Basin Models with an optional Ely-Jordan GTL',
      'coordinates': [ { 'lon':-127.65648, 'lat':37.08416 },
                       { 'lon':-116.48562, 'lat':31.26643 },
                       { 'lon':-112.92896, 'lat':35.33518 },
@@ -249,7 +249,7 @@ var CVM_tb={
                       {'lon':-122.300,'lat':34.7835},
                       {'lon':-118.9475,'lat':38.3035},
                       {'lon':-112.5182,'lat':33.7819} ],
-     'color':'#2E7D32'}
+     'color':'#2E7D32'},
 {'id':21,
      'model name':'CVM-S4.26.M01',
      'abb name':'cvmsi',
@@ -428,29 +428,29 @@ var CVM_tb={
  ],
 "1D model": [
     {'id': 1,
-     'name':'Modified Hadley Kanamori 1D',
-     'app name': '1d',
+     'name':'1D',
+     'app name':'1d',
      'description': 'Southern California regional 1D model based on Hadley-Kanamori Model',
     },
     {'id': 2,
-     'name':'Northridge Region 1D',
+     'name':'BBP1D',
      'app name': 'bbp1d',
-     'description': '1D Los Angeles Basin model used in SCEC Broadband Platform'
+     'description': 'Nortridge Region 1D Los Angeles Basin model used in SCEC Broadband Platform'
     },
     {'id': 3,
-     'name': 'Sierra Foothills 1D',
-     'app name': 'sf1d',
+     'name':'SF1D',
+     'app name':'sf1d',
      'description': 'SFCVM Sierra Foothills 1D Velocity Model'
     },
 ],
 "interpolator": [
     {'id': 1,
-     'name': 'ely',
+     'name': 'elygtl:ely',
      'app name': 'elygtl:ely',
      'description': 'elygtl:ely...'
     },
     {'id': 2,
-     'name': 'taper',
+     'name': 'elygtl:taper',
      'app name': 'elygtl:taper',
      'description': 'elygtl:taper..'
     },
