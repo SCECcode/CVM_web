@@ -485,12 +485,13 @@ var CVM_tb={
     {'id': 1,
      'name': '1D',
      'app name': '1d',
-     'description': '1D background Velocity Model'
+     'description': 'Modified (higher resolution, more layers) Hadley-Kanamori Model'
     },
     {'id': 2,
      'name': 'BBP1D',
      'app name': 'bbp1d',
-     'description': 'BroadBand 1D background Velocity Model'
+     'description': '1D Los Angeles Basin model used in SCEC Broadband Platform'
+
     },
     {'id': 3,
      'name': 'SF1D',
