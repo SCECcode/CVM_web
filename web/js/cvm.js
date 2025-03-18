@@ -10,8 +10,6 @@ var CVM = new function () {
 // gather up the valid cvm models for this instance
   this.setup_model = function() {
     getInstallModelList();
-    window.console.log("HERE");
-    //refreshModelDescription(model);
   };
 
   this.setupCVMInterface = function() {

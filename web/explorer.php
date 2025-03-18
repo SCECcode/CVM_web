@@ -729,6 +729,23 @@ TODO: need a new id
   </div>
 </div> <!--Modal: modaldescription-->
 
+<div class="modal" id="modalreference" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalreferenceDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalreferenceContent" style="font-size:20px">
+      <!--Body-->
+      <div class="modal-body" id="modalreferenceBody">
+        <p id="modalreferencebody"></p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalreference-->
+
 
 <!--Modal: Model (modalwaiton)-->
 <div class="modal" id="modalwaiton" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

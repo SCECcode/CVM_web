@@ -42,11 +42,14 @@ function refreshModelDescription(modelstr) {
         description=description+sp+getModelDescriptionById(idx);
         name=name+sp+getModelNameById(idx);
         sp=", ";
-        let ref=getModelReferenceById(idx);
-        if(ref != undefined) {
-          reference=reference+rsp+ref;
-          rsp="; ";
-          rcnt++;
+        let reflist=getModelReferenceById(idx);
+        if(reflist != undefined) {
+          let cnt=reflist.length;
+          for(let i=0; i<cnt; i++) {
+            reference=reference+rsp+reflist[i];
+            rsp="<br>";
+            rcnt++;
+          }
         }
         } else { // something else ??
           let idx=getInterpolatorIndex(nm);
@@ -54,11 +57,14 @@ function refreshModelDescription(modelstr) {
             description=description+sp+getInterpolatorDescriptionById(idx);
             name=name+sp+getInterpolatorNameById(idx);
             sp=", ";
-            let ref=getInterpolatorReferenceById(idx);
-            if(ref != undefined) {
-              reference=reference+rsp+ref;
-              rsp="; ";
-              rcnt++;
+            let reflist=getInterpolatorReferenceById(idx);
+            if(reflist != undefined) {
+              let cnt=reflist.length;
+              for(let i=0; i<cnt; i++) {
+                reference=reference+rsp+reflist[i];
+                rsp="<br>";
+                rcnt++;
+              }
             }
             } else {  // 1D ? 
               let idx=get1DModelIndex(nm);
@@ -66,11 +72,14 @@ function refreshModelDescription(modelstr) {
                 description=description+sp+get1DModelDescriptionById(idx);
                 name=name+sp+get1DModelNameById(idx);
                 sp=", ";
-                let ref=get1DModelReferenceById(idx);
-                if(ref != undefined) {
-                  reference=reference+rsp+ref;
-                  rsp="; ";
-                  rcnt++;
+                let reflist=get1DModelReferenceById(idx);
+                if(reflist != undefined) {
+                  let cnt=reflist.length; 
+                  for(let i=0; i<cnt; i++) {
+                    reference=reference+rsp+reflist[i];
+                    rsp="<br>";
+                    rcnt++;
+                  }
                 }
                 } else { //
                      window.console.log("BAD BAD..wrong name ??",nm);
@@ -79,16 +88,17 @@ function refreshModelDescription(modelstr) {
       }
     }
     $("#cvm-model-selected").html("<b>Model Selected:</b>"+name);
-    if(description.length > 300) {
-      $("#modaldescriptionbody").html("<b>Model Selected:</b>"+name+"<br><br><b>Description:</b>"+description);
-      $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button></div>");
+    if(description.length > 200) {
+      $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
+      $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
       } else {
         $("#cvm-model-description").html("<b>Description:</b>"+description);
     } 
     if(rcnt !=0) {
-      if(reference.length + description.length > 300) {
-        $("#modaldescriptionbody").html("<b>Model Selected:</b>"+name+"<br><br><b>Description:</b>"+description+"<br><br> <b>Reference:</b>"+reference);
-        $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button></div>");
+window.console.log("Total size", (reference.length + description.length));
+      if((reference.length + description.length) > 200) {
+        $("#modalreferencebody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"<br><b>Reference:</b>"+reference+"</div>");
+        $("#cvm-model-reference").html("<b>Reference:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modalreference\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
         } else {
           $("#cvm-model-reference").html("<b>Reference:</b>"+reference);
       }
