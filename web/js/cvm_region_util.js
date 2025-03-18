@@ -326,6 +326,15 @@ function getInterpolatorAuthorById(id) {
    return undefined;
 }
 
+function getInterpolatorAuthorById(id) {
+   let tb=CVM_tb['interpolator'];
+   let item=tb[id];
+   if ('authors' in item ) {
+     return item['authors'];
+   } 
+   return undefined;
+}
+
 
 function get1DModelIndex(target_nm) {
    var tb=CVM_tb['1D model'];
@@ -366,6 +375,15 @@ function get1DModelReferenceById(id) {
    let item=tb[id];
    if ('references' in item ) {
      return item['references'];
+   } 
+   return undefined;
+}
+
+function get1DModelAuthorById(id) {
+   let tb=CVM_tb['1D model'];
+   let item=tb[id];
+   if ('authors' in item ) {
+     return item['authors'];
    } 
    return undefined;
 }
