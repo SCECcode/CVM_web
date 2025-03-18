@@ -27,6 +27,7 @@ var cvm_metaplottb_list=[];
 function refreshModelDescription(modelstr) {
     let description=" ";
     let name=" ";
+    let abbname=" ";
     let reference=" ";
     let i;
 
@@ -41,6 +42,7 @@ function refreshModelDescription(modelstr) {
       if(idx != -1) {
         description=description+sp+getModelDescriptionById(idx);
         name=name+sp+getModelNameById(idx);
+        abbname=abbname+sp+getModelAbbNameById(idx);
         sp=", ";
         let reflist=getModelReferenceById(idx);
         if(reflist != undefined) {
@@ -56,6 +58,7 @@ function refreshModelDescription(modelstr) {
           if(idx != -1) {
             description=description+sp+getInterpolatorDescriptionById(idx);
             name=name+sp+getInterpolatorNameById(idx);
+            abbname=abbname+sp+getInterpolatorAbbNameById(idx);
             sp=", ";
             let reflist=getInterpolatorReferenceById(idx);
             if(reflist != undefined) {
@@ -71,6 +74,7 @@ function refreshModelDescription(modelstr) {
               if(idx != -1) {
                 description=description+sp+get1DModelDescriptionById(idx);
                 name=name+sp+get1DModelNameById(idx);
+                abbname=abbname+sp+get1DModelAbbNameById(idx);
                 sp=", ";
                 let reflist=get1DModelReferenceById(idx);
                 if(reflist != undefined) {
@@ -87,15 +91,18 @@ function refreshModelDescription(modelstr) {
          }
       }
     }
-    $("#cvm-model-selected").html("<b>Model Selected:</b>"+name);
+
+    $("#cvm-model-selected").html("<b>Model Selected:</b>"+name+"<br><b>UCVM Abbreviation:</b>"+abbname);
+//    $("#cvm-abb-model-selected").html("<b>UCVM Abbreviation:</b>"+abbname);
+
     if(description.length > 200) {
       $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
       $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
       } else {
         $("#cvm-model-description").html("<b>Description:</b>"+description);
     } 
+
     if(rcnt !=0) {
-window.console.log("Total size", (reference.length + description.length));
       if((reference.length + description.length) > 200) {
         $("#modalreferencebody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"<br><b>Reference:</b>"+reference+"</div>");
         $("#cvm-model-reference").html("<b>Reference:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modalreference\"><span class=\"glyphicon glyphicon-expand\"></span></button>");

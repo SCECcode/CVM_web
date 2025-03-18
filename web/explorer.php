@@ -153,8 +153,8 @@ TODO: need a new id
 
 <!-- intro -->
     <div id="top-intro">
-        <p>The <a href="https://www.scec.org/research/cvm">SCEC Community Velocity Model (CVM) Explorer </a> User can query for material property from selected Community Velocity Model, generate Elevation profile plot, Depth Profile plot, Cross Section plot, or Horizontal Slice plot on demand using the plotting utility tools from ucvm_plotting.  See the <a href="guide.php">user guide</a> for more details and site usage instructions.</p>
-    </div>
+	<p>The <a href="https://www.scec.org/research/cvm">SCEC Community Velocity Model (CVM) Explorer </a> 
+allows easy access to a range of seismic velocity models using the UCVM package. The interface allows for downloading data in csv format and various visualization capabilities including 2D horizonal slices, 2D vertical cross sections, and 1D vertical profiles. See the <a href="guide.php">user guide</a> for more details and usage instructions.</p> </div>
 
 <!-- leaflet control -->
     <div class="row" style="display:none;">
@@ -650,6 +650,7 @@ TODO: need a new id
             <div id="cvm-description" class="col-12 pr-5" style="display:;" >
                <br>
 	       <p id="cvm-model-selected"></p>
+	       <p id="cvm-abb-model-selected"></p>
 	       <p id="cvm-model-description"></p>
 	       <p id="cvm-model-reference"></p>
 	       <p>For additional information about UCVM and included models refer to the <a href="https://github.com/SCECcode/ucvm">UCVM Github homepage</a></p>

@@ -50,7 +50,7 @@ function makeModelSelection() {
      var item=tb[i];
      var color=item['color'];
      var aname=item['abb name'];
-     var mname=item['model name'];
+     var mname=item['name'];
      var pname=item['path name'];
      // check the model directory to make sure it exists before adding 
      // the option
@@ -222,6 +222,7 @@ function makeModelSelection() {
    }
 }
 
+// target_nm is abb_name
 function getModelIndex(target_nm) {
    var tb=CVM_tb['models'];
    var icnt=tb.length;
@@ -245,6 +246,12 @@ function getModelDescriptionById(id) {
 function getModelNameById(id) {
    let tb=CVM_tb['models'];
    let item=tb[id];
+   var name=item['name'];
+   return name;
+}
+function getModelAbbNameById(id) {
+   let tb=CVM_tb['models'];
+   let item=tb[id];
    var name=item['abb name'];
    return name;
 }
@@ -252,8 +259,17 @@ function getModelNameById(id) {
 function getModelReferenceById(id) {
    let tb=CVM_tb['models'];
    let item=tb[id];
-   if('reference' in item) {
-     return item['reference'];
+   if('references' in item) {
+     return item['references'];
+   }
+   return undefined;
+}
+
+function getModelAuthorById(id) {
+   let tb=CVM_tb['models'];
+   let item=tb[id];
+   if('authors' in item) {
+     return item['authors'];
    }
    return undefined;
 }
@@ -264,7 +280,7 @@ function getInterpolatorIndex(target_nm) {
    var i;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
-     if(item['name'] == target_nm) {
+     if(item['abb name'] == target_nm) {
         return i;
      }
   }
@@ -281,15 +297,31 @@ function getInterpolatorDescriptionById(id) {
 function getInterpolatorNameById(id) {
    let tb=CVM_tb['interpolator'];
    let item=tb[id];
-   var name=item['app name'];
+   var name=item['name'];
+   return name;
+}
+
+function getInterpolatorAbbNameById(id) {
+   let tb=CVM_tb['interpolator'];
+   let item=tb[id];
+   var name=item['abb name'];
    return name;
 }
 
 function getInterpolatorReferenceById(id) {
    let tb=CVM_tb['interpolator'];
    let item=tb[id];
-   if ('reference' in item ) {
-     return item['reference'];
+   if ('references' in item ) {
+     return item['references'];
+   } 
+   return undefined;
+}
+
+function getInterpolatorAuthorById(id) {
+   let tb=CVM_tb['interpolator'];
+   let item=tb[id];
+   if ('authors' in item ) {
+     return item['authors'];
    } 
    return undefined;
 }
@@ -301,7 +333,7 @@ function get1DModelIndex(target_nm) {
    var i;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
-     if(item['app name'] == target_nm) {
+     if(item['abb name'] == target_nm) {
         return i;
      }
   }
@@ -318,18 +350,35 @@ function get1DModelDescriptionById(id) {
 function get1DModelNameById(id) {
    let tb=CVM_tb['1D model'];
    let item=tb[id];
-   var name=item['app name'];
+   var name=item['name'];
+   return name;
+}
+
+function get1DModelAbbNameById(id) {
+   let tb=CVM_tb['1D model'];
+   let item=tb[id];
+   var name=item['abb name'];
    return name;
 }
 
 function get1DModelReferenceById(id) {
    let tb=CVM_tb['1D model'];
    let item=tb[id];
-   if ('reference' in item ) {
-     return item['reference'];
+   if ('references' in item ) {
+     return item['references'];
    } 
    return undefined;
 }
+
+function get1DModelAuthorById(id) {
+   let tb=CVM_tb['1D model'];
+   let item=tb[id];
+   if ('authors' in item ) {
+     return item['authors'];
+   } 
+   return undefined;
+}
+
 
 
 function getModelColor(target_nm) {
@@ -397,7 +446,7 @@ function makeModelTable() {
 
    for( i=0; i<cnt; i++) {
      var item=tb[i];
-     var mname=item['model name'];
+     var mname=item['name'];
      var aname=item['abb name'];
      var pname=item['path name'];
      if(isModelInstalled(pname)) {
@@ -426,7 +475,7 @@ function _getModelItemWithID(id) {
 function getModelNameWithID(id) {
    var item=_getModelItemWithID(id);
    if(item != undefined) {
-       var n= item['model name'];
+       var n= item['name'];
        return n;
    }
    return undefined;
@@ -445,7 +494,7 @@ function getModelNameWithType(t) {
       for(j=0; j<tcnt;j++) {
          var target=tlist[j];
          if(target['abb name'] == mlist[i]) {
-            rt=rt+target['model name'];
+            rt=rt+target['name'];
             if(mcnt>1 && i!=(mcnt-1))
                rt=rt+", ";
             break;
@@ -455,8 +504,10 @@ function getModelNameWithType(t) {
          rt=rt+mlist[i];
       }
    }
-   if(rt=="")
+   if(rt=="") {
        rt=undefined;
+   }
+
    return rt;
 }
 function getZModeNameWithType(t) {
