@@ -25,7 +25,7 @@ var cvm_metaplottb_list=[];
 
 /******************************************/
 function _makeReferenceLink(author, reference) {
-  let link="<button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modalreference\">"+author+"</button>";
+  let link="<button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-body=\"reference\" data-target=\"#modalreference\">"+author+"</button>";
   return link;
 }
 
@@ -115,7 +115,9 @@ function refreshModelDescription(modelstr) {
 
     $("#cvm-model-selected").html("<b>Model Selected:</b>"+name+"<br><b>UCVM Abbreviation:</b>"+abbname);
 
-    if(description.length > 300) {
+window.console.log("XX leng of desc ", description.length);
+
+    if(description.length > 400) {
       $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
 
       if(rcnt != 0) {

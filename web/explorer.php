@@ -231,7 +231,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 
 <!-- model map control -->
     <div id="mapDataBig" class="row mapData">
-        <div id="search-container" class="col-5 button-container flex-column pr-0" style="overflow:hidden;border:solid 0px red;">
+        <div id="search-container" class="col-5 button-container flex-column pr-0" style="overflow:hidden;border:solid 0px green;">
 
             <div class="input-group input-group-sm custom-control-inline" style="max-width:450px;border:solid 0px green;">
                <div class="input-group-prepend">
@@ -319,7 +319,13 @@ allows easy access to a range of seismic velocity models using the UCVM package.
             </div> <!-- z select -->
 
 <!-- selection -->
-	    <div id="option" class="row" style="max-width:480px"> 
+<div id="workspace" style="border:0px solid red">
+
+<!-- filler page ?? -->
+	    <div id="ghost-filler" style="background-color:#E4EBF1; width:100%;height:80%;bottom:10; position:absolute"></div>
+
+<!-- description page -->
+	    <div id="option" class="row" style="max-width:500px;"> 
                 <div class="col input-group">
 		    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="background:#E4EBF1;">
                         <li id='point' class='navigationLi' style="display:none">
@@ -499,9 +505,6 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                                                <option value="vs">Vs</option>
                                                <option value="vp">Vp</option>
                                                <option value="density">Density</option>
-<!--
-                                               <option value="poisson">poisson</option>
--->
                                         </select>
                                     </div>
                                     <div class="col-5 pr-0">
@@ -631,28 +634,14 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 
             </div>
 
-<!-- opacity slider
-            <div class="input-group input-group-sm custom-control-inline mt-2" style="max-width:450px">
-               <div class="input-group-prepend">
-                     <label class="input-group-text">Change Opacity</label>
-               </div>
-               <div class="row" style="min-width:300px;margin:5px 0px 0px 20px; border:solid 0px green;">
-                   0%
-                     <div class="col-8" id="opacitySlider" style="margin:5px 15px 5px 15px;border:1px solid rgb(206,212,218)">
-                        <div id="opacitySlider-handle" class="ui-slider-handle"></div>
-                     </div>
-                   100%
-               </div>
-            </div>
--->
-
 <!-- description page -->
-            <div id="cvm-description" class="col-12 pr-5" style="display:;" >
+            <div id="cvm-description" class="col-12 pr-5" style="display:;border:solid 0px blue" >
                <br>
 	       <p id="cvm-model-selected"></p>
 	       <p id="cvm-model-description"></p>
 	       <p>For additional information about UCVM and included models refer to the <a href="https://github.com/SCECcode/ucvm">UCVM Github homepage</a></p>
             </div>
+</div> <!-- workspace -->
 
         </div> <!-- search-container -->
 

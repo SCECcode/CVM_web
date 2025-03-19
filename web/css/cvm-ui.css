@@ -113,7 +113,7 @@
 
 #cvm-description {
   font-size: 14px;
-  max-width: 450px;
+  max-width: 500px;
   background-color: #E4EBF1;
   position: absolute;
   bottom: 2px;
@@ -261,6 +261,7 @@ th {text-align: left; background: #D5D5D5;}
           background: transparent; 
           color: #990000;
           border: none; 
+	  font-size: 14px;
           display: inline-block;
           }
 
