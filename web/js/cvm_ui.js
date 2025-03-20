@@ -110,7 +110,7 @@ function refreshModelDescription(modelstr) {
       justnamestring=justnamestring+" with " +justinterp[0];
     }
 
-    let t_description="A tiled CVM that combines the "+justnamestring+" into a single model. Tiling is accomplished by ???. For descriptions of the individual models refer to their descriptions by selecting the relevant model in the CVM Explorer";
+    let t_description="A tiled CVM that combines the "+justnamestring+" into a single model. Tiling is accomplished by model ordering. For descriptions of the individual models refer to their descriptions by selecting the relevant model in the CVM Explorer";
 
 // show model name and abbrevshow
     $("#cvm-model-selected").html("<b>Model Selected:</b>"+name+"<br><b>UCVM Abbreviation:</b>"+abbname);
