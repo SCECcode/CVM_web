@@ -262,20 +262,26 @@ function getModelAbbNameById(id) {
 
 // nm = 'abb name'
 // return unique index list into references array
-function getReferenceIndex(nm, olist) {
+function getReferenceIndex(nm, olist,alist,rlist) {
    let target=nm.trim();
    let mlist=CVM_tb['references'];
+   let foo=mlist[0];
    let mcnt=mlist.length;
    for(let i=0; i<mcnt; i++) {
-      let nlist=mlist[i]['name'];
+      let fitem=mlist[i];
+      let nlist=fitem['name'];
       let ncnt=nlist.length;
       for(let j=0; j<ncnt; j++) {
         if(nlist[j] == target) {
- window.console.log("XXX %d:%d, FOUND reference..%s",i,j,mlist[i]['name'][0]);
           if(olist.includes(i)) {
-            window.console.log("duplicate found..",i);
+//            window.console.log("duplicate found..",i);
             } else {
-              olist.push(i);
+             
+              if( 'author' in fitem ) {
+                olist.push(i);
+                alist.push(fitem['author']);
+                rlist.push(fitem['ref']);
+              }
           }
         }
       }

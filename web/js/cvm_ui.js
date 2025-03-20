@@ -42,7 +42,9 @@ function refreshModelDescription(modelstr) {
     let rsp="";
     let rcnt=0;
 
-    let reflist=[];	 
+    let reflist=[]; //reference index list	 
+    let alist=[];   //reference author list
+    let rlist=[];   //reference ref list
 
     for(let i=0; i<cnt; i++) {
       let nm=mlist[i];
@@ -53,7 +55,7 @@ function refreshModelDescription(modelstr) {
         name=name+sp+getModelNameById(idx);
         abbname=abbname+sp+getModelAbbNameById(idx);
         sp=", ";
-        getReferenceIndex(nm,reflist);
+        getReferenceIndex(nm,reflist,alist,rlist);
         } else { // something else ??
           let idx=getInterpolatorIndex(nm);
           if(idx != -1) {
@@ -62,7 +64,7 @@ function refreshModelDescription(modelstr) {
             name=name+sp+getInterpolatorNameById(idx);
             abbname=abbname+sp+getInterpolatorAbbNameById(idx);
             sp=", ";
-            getReferenceIndex(nm,reflist);
+            getReferenceIndex(nm,reflist,alist,rlist);
             } else {  // 1D ? 
               let idx=get1DModelIndex(nm);
               if(idx != -1) {
@@ -71,7 +73,7 @@ function refreshModelDescription(modelstr) {
                 name=name+sp+get1DModelNameById(idx);
                 abbname=abbname+sp+get1DModelAbbNameById(idx);
                 sp=", ";
-                getReferenceIndex(nm,reflist);
+                getReferenceIndex(nm,reflist,alist,rlist);
                 } else { //
                      window.console.log("BAD BAD..wrong name ??",nm);
               }
@@ -90,18 +92,20 @@ function refreshModelDescription(modelstr) {
           $("#cvm-model-description").html("<b>Description:</b>"+description);
     }
 
-window.console.log("XXX");
 // show author/references popup
-    let alist=[];
-    let rlist=[];
+    let astr="<b>Reference:</b>";
     if(reflist.length != 0) {
-	getReferenceByList(reflist,alist,rlist);
         let cnt=reflist.length;
-        let tmp="<b>Reference:</b> >>> ";
+        let tmp="";
         for(let i=0; i<cnt; i++) {
-          tmp=tmp+reflist[i]+" ";
+          astr=astr+rsp+"<button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modalreference\" data-ref=\""+rlist[i]+"\">"+alist[i]+"</button>";
+          tmp=tmp+rsp+reflist[i];
+          rsp=" ";
         }
-        $("#cvm-model-reference").html(tmp);
+        $("#cvm-model-reference").html(astr);
+//        window.console.log("reflist ..",tmp);
+        } else {
+          $("#cvm-model-reference").html("");
     }
 }
 

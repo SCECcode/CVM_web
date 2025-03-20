@@ -458,7 +458,7 @@ var CVM_tb={
 "references": [
 { 'type':'model','name': ['albacore'],
      'author': 'Bowden et al., (2016)',
-     'ref': 'Bowden, D. C., Kohler, M. D., Tsai, V. C., & Weeraratne, D. S. (2016). Offshore southern California lithospheric velocity structure from noise cross-correlation functions. Journal of Geophysical Research, 121(5), 3415-3427. doi: 10.1002/2016JB012919'
+     'ref': 'Bowden, D. C., Kohler, M. D., Tsai, V. C., & Weeraratne, D. S. (2016). Offshore southern California lithospheric velocity structure from noise cross-correlation functions. Journal of Geophysical Research, 121(5), 3415-3427. doi:10.1002/2016JB012919'
 },
 { 'type':'model','name':['canvas'],
      'author':'Doody et al., (2023)',
@@ -466,7 +466,7 @@ var CVM_tb={
 },
 { 'type':'model','name':['canvas'],
      'author':'Doody (2023)',
-     'ref':'Doody, C. (2023). Dataset for "CANVAS: An adjoint waveform tomography model of California and Nevada" [Data set]. In Journal of Geophysical Research: Solid Earth (Vol. 128, Number 12). Zenodo. https://doi.org/10.5281/zenodo.8415562'
+     'ref':'Doody, C. (2023). Dataset for `CANVAS: An adjoint waveform tomography model of California and Nevada` [Data set]. In Journal of Geophysical Research: Solid Earth (Vol. 128, Number 12). Zenodo. https://doi.org/10.5281/zenodo.8415562'
 },
 { 'type':'model','name':['cca'] },
 { 'type':'model','name':['cencal'] },
@@ -475,7 +475,7 @@ var CVM_tb={
 { 'type':'model','name':['cs248'] },
 { 'type':'model','name':['cvlsu'],
      'author':'Ajala et al., (2019)',
-     'ref':'Ajala, R., Persaud, P., Stock, J. M., Fuis, G. S., Hole, J. A., Goldman, M., & Scheirer, D. (2019). Three‐Dimensional Basin and Fault Structure From a Detailed Seismic Velocity Model of Coachella Valley, Southern California. Journal of Geophysical Research: Solid Earth,. doi: 10.1029/2018JB016260'
+     'ref':'Ajala, R., Persaud, P., Stock, J. M., Fuis, G. S., Hole, J. A., Goldman, M., & Scheirer, D. (2019). Three‐Dimensional Basin and Fault Structure From a Detailed Seismic Velocity Model of Coachella Valley, Southern California. Journal of Geophysical Research: Solid Earth,. doi:10.1029/2018JB016260'
 },
 { 'type':'model','name':['cvmh'],
      'author':'Shaw et al., (2015)',
@@ -503,7 +503,7 @@ var CVM_tb={
 },
 { 'type':'model','name':['linthurber'],
      'author':'Lin et al., (2010)',
-     'ref':'Lin, G., C. H. Thurber, H. Zhang, E. Hauksson, P. Shearer, F. Waldhauser, T. M. Brocher, and J. Hardebeck (2010), A California statewide three-dimensional seismic velocity model from both absolute and differential times. Bulletin of the Seismological Society of America, 100, 225-240. doi: 10.1785/0120090028. SCEC Contribution 1360',
+     'ref':'Lin, G., C. H. Thurber, H. Zhang, E. Hauksson, P. Shearer, F. Waldhauser, T. M. Brocher, and J. Hardebeck (2010), A California statewide three-dimensional seismic velocity model from both absolute and differential times. Bulletin of the Seismological Society of America, 100, 225-240. doi:10.1785/0120090028. SCEC Contribution 1360',
 },
 { 'type':'model','name':['sfcvm'] },
 { 'type':'model','name':['sjfz'] },
