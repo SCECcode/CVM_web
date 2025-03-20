@@ -34,7 +34,9 @@ function refreshModelDescription(modelstr) {
     let name=" ";
     let abbname=" ";
     let reference=" ";
-    let i;
+
+    let justname=[];
+    let justinterp=[];
 
     let mlist=modelstr.split(",");
     let cnt=mlist.length;
@@ -53,7 +55,9 @@ function refreshModelDescription(modelstr) {
 // found Model
         description=description+sp+getModelDescriptionById(idx);
         name=name+sp+getModelNameById(idx);
-        abbname=abbname+sp+getModelAbbNameById(idx);
+        let tmp=getModelAbbNameById(idx);
+        justname.push(tmp);
+        abbname=abbname+sp+tmp;
         sp=", ";
         getReferenceIndex(nm,reflist,alist,rlist);
         } else { // something else ??
@@ -62,7 +66,9 @@ function refreshModelDescription(modelstr) {
 // found Interpolator
             description=description+sp+getInterpolatorDescriptionById(idx);
             name=name+sp+getInterpolatorNameById(idx);
-            abbname=abbname+sp+getInterpolatorAbbNameById(idx);
+            let tmp=getInterpolatorAbbNameById(idx);
+            justinterp.push(tmp);
+            abbname=abbname+sp+tmp;
             sp=", ";
             getReferenceIndex(nm,reflist,alist,rlist);
             } else {  // 1D ? 
@@ -71,7 +77,9 @@ function refreshModelDescription(modelstr) {
 // found 1D
                 description=description+sp+get1DModelDescriptionById(idx);
                 name=name+sp+get1DModelNameById(idx);
-                abbname=abbname+sp+get1DModelAbbNameById(idx);
+                let tmp=get1DModelAbbNameById(idx);
+                justname.push(tmp);
+                abbname=abbname+sp+tmp;
                 sp=", ";
                 getReferenceIndex(nm,reflist,alist,rlist);
                 } else { //
@@ -81,14 +89,42 @@ function refreshModelDescription(modelstr) {
       }
     }
 
+    let jcnt=justname.length;
+    let justnamestring="";
+    sp="";
+    for(let i=0; i<jcnt; i++) {
+      justnamestring=justnamestring+sp+justname[i];
+      if(i == (jcnt-2)) {
+           sp=" and ";
+        } else {
+		sp= ", ";
+      }
+    }
+
+//should just be 1
+    let icnt=justinterp.length;
+    if(icnt > 1) {
+       window.console.log("BAD BAD,  should have just 1 interpolator function allowed..");
+    }
+    if(icnt == 1) {
+      justnamestring=justnamestring+" with " +justinterp[0];
+    }
+
+    let t_description="A tiled CVM that combines the "+justnamestring+" into a single model. Tiling is accomplished by XXX. For descriptions of the individual models refer to their descriptions by selecting the relevant model in the CVM Explorer";
+
 // show model name and abbrevshow
     $("#cvm-model-selected").html("<b>Model Selected:</b>"+name+"<br><b>UCVM Abbreviation:</b>"+abbname);
 
 // show description 
+    if(jcnt > 1) {
+      description=t_description;
+    }
+
+window.console.log("XXX  description length %d\n", description.length);
     if(description.length > 400) {
-      $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
-      $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
-      } else {
+        $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
+        $("#cvm-model-description").html("<b>Description: </b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
+        } else {
           $("#cvm-model-description").html("<b>Description:</b>"+description);
     }
 
