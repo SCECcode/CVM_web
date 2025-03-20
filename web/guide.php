@@ -50,8 +50,8 @@ $header = getHeader("User Guide");
               <p> When performing material property search, there are two location selection methods. The first method is to
                 enter the latitude/longitude values of the location into the text boxes, then clicking 
                 the search icon <span style="white-space: nowrap;">(<span
-                            style="color:#990000;font-size:20px" class="glyphicon glyphicon-search"></span>).</span>
-                The second method is to pick a point on the map with a mouse click. The text boxes will be populated with values from the selection. Next, initiate the search by clicking the search icon <span style="white-space: nowrap;">(<span style="color:#990000;font-size:20px" class="glyphicon glyphicon-search"></span>).</span>
+                            style="color:#C22B48;font-size:20px" class="glyphicon glyphicon-search"></span>).</span>
+                The second method is to pick a point on the map with a mouse click. The text boxes will be populated with values from the selection. Next, initiate the search by clicking the search icon <span style="white-space: nowrap;">(<span style="color:#C22B48;font-size:20px" class="glyphicon glyphicon-search"></span>).</span>
                 User can also select a local file to upload composed of latlongs and Z values. Remember to select the right Z mode for the Z values in the file.</p>
 
             <h3>1D Vertical Profile</h3>
