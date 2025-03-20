@@ -2,7 +2,7 @@
 .png-custom-select {
   position: relative;
   display: inline-block;
-  font-family: Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
 }
 
 .select-box {
@@ -132,7 +132,7 @@
 }
 
 #model-options {
-    border-bottom: 0; */
+    border-bottom: 0;
     padding:2px;
 }
 
@@ -168,9 +168,9 @@ table th {
 }
 
 @keyframes glowing {
-0% { color: #990000; box-shadow: 0 0 3px #D5D5D5; }
+0% { color: #C22B48; box-shadow: 0 0 3px #D5D5D5; }
 50% { color: #D5D5D5; box-shadow: 0 0 10px #99000; }
-100% { color: #990000; box-shadow: 0 0 3px #D5D5D5; }
+100% { color: #C22B48; box-shadow: 0 0 3px #D5D5D5; }
 }
 
 .blue-div-icon {
@@ -259,7 +259,7 @@ th {text-align: left; background: #D5D5D5;}
 
 .cvm-small-btn {
           background: transparent; 
-          color: #990000;
+          color: #C22B48;
           border: none; 
 	  font-size: 14px;
           display: inline-block;
@@ -292,15 +292,15 @@ th {text-align: left; background: #D5D5D5;}
         }
 
 .cvm-top-btn:hover {
-          color: #990000;
+          color: #C22B48;
 }
 
 .cvm-top-btn:active, .cvm-top-btn.active {
-          border:2px solid #990000; 
+          border:2px solid #C22B48;
 }
 
 #goBtn:active, #goBtn.active {
-	border:2px solid #990000;
+	border:2px solid #C22B48;
 }
 
 .cvm-btn {
@@ -319,7 +319,7 @@ th {text-align: left; background: #D5D5D5;}
         }
 
 .cvm-btn:hover {
-        color: #990000;
+        color: #C22B48;
         background: #D5D5D5; 
         }
 
@@ -393,7 +393,46 @@ input:hover {
 
 #fileSelectBtn:hover {
     background: #D9D9D9;
-    color: #990000;
+    color: #C22B48;
     border: 0;
     display: inline-block;
+}
+
+#top-intro {
+    margin-bottom: 15px;
+    margin-top: 40px;
+}
+
+#top-intro div.links {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+#top-intro div.links a:first-child {
+    display: block;
+    margin-bottom: 3px;
+}
+
+#top-intro p {
+    line-height: 19pt;
+    margin-bottom: 0;
+    padding-left: 55px;
+}
+
+@media only screen and (max-width: 990px) {
+    .scec-main-container {
+        border: 0;
+    }
+
+    ul.navbar-nav {
+        margin-top: 45px;
+        padding-bottom: 20px;
+    }
+
+    a.navbar-brand span {
+        font-size: 12pt;
+    }
+    .banner-container {
+        margin-bottom: 45px;
+    }
 }

@@ -152,8 +152,15 @@ TODO: need a new id
     </div> <!-- spinDialog -->
 
 <!-- intro -->
-    <div id="top-intro">
-	<p>The <a href="https://www.scec.org/research/cvm">SCEC Community Velocity Model (CVM) Explorer </a> 
+     <div id="top-intro" class="row">
+        <div class="col-1 links d-none d-md-block align-self-end">
+            <div>
+                <a href="https://www.scec.org/about">About SCEC</a>
+                <a href="https://www.scec.org/science/cem">About CEM</a>
+            </div>
+        </div>
+<p class="col-11 intro-text">
+	The <a href="https://www.scec.org/research/cvm">SCEC Community Velocity Model (CVM) Explorer </a>
 allows easy access to a range of seismic velocity models using the UCVM package. The interface allows for downloading data in csv format and various visualization capabilities including 2D horizonal slices, 2D vertical cross sections, and 1D vertical profiles. See the <a href="guide.php">user guide</a> for more details and usage instructions.</p> </div>
 
 <!-- leaflet control -->
