@@ -263,6 +263,7 @@ ul li {
     position: relative;
 }
 
+.info-page-container h3,
 .info-page-container h4 {
     margin-top: 20px;
 }

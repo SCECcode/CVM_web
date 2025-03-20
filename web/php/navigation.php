@@ -21,6 +21,7 @@ function getHeader($this_page) {
 		"explorer.php" => "CVM Explorer",
 		"guide.php" => "User Guide",
 		"disclaimer.php" => "Disclaimer",
+		"cite" => "How to Cite",
 		"contact.php" => "Contact"
 	];
 
