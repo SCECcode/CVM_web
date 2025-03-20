@@ -643,10 +643,10 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 
 <!-- description page -->
             <div id="cvm-description" class="col-12 pr-5" style="display:;border:solid 0px blue" >
-               <br>
-	       <p id="cvm-model-selected"></p>
-	       <p id="cvm-model-description"></p>
-	       <p>For additional information about UCVM and included models refer to the <a href="https://github.com/SCECcode/ucvm">UCVM Github homepage</a></p>
+	       <p id="cvm-model-selected" style="margin-bottom:0.5rem"></p>
+	       <p id="cvm-model-description" style="margin-bottom:0.5rem;"></p>
+	       <p id="cvm-model-reference" style="margin-bottom:0.5rem;"></p>
+	       <p style="margin-bottom:0.5rem;">For additional information about UCVM and included models refer to the <a href="https://github.com/SCECcode/ucvm">UCVM Github homepage</a></p>
             </div>
 </div> <!-- workspace -->
 
@@ -717,7 +717,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
         <p id="modaldescriptionbody"></p>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -734,7 +734,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
         <p id="modalreferencebody"></p>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -968,7 +968,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -986,7 +986,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 <p>Plots the source data points, which is useful to better understand the resolution of the plotted data. Note that all points are interpolated.</p>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1004,7 +1004,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 <p>The plot defaults to cover the entire range of the data; however sometimes it is useful to force a color range to compare two plots with different data ranges.</p>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1022,7 +1022,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 <p>These values set the x-axis range. The plot defaults to cover the entire range of data; however, sometimes it is useful to force the plotted range to compare two plots with different data ranges.
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1041,7 +1041,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 <p>This sets how far (in degrees) the map should extend beyond the selected 1D profile location. A map that is too local may not show identifiable geographic features. If so, increase the padding to make the map cover a larger geographic area.</p>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1060,7 +1060,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
           <p>The CVM Explorer hosts multiple models. Select the  model you wish to query or visualize in this list. The model bound will be displayed on the map except the 1D background models. </p>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1080,7 +1080,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1111,7 +1111,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
         <p> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</p>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1139,7 +1139,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal"">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal"">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1167,7 +1167,7 @@ lon2 lat2 z2      or     lon2,lat2,z2
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1199,7 +1199,7 @@ a label that is being used as datafile prefix separated by a comma or a space </
         </div>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 
     </div> <!--Content-->
@@ -1227,7 +1227,7 @@ a label that is being used as datafile prefix separated by a comma or a space </
       </div> 
 <!--
       <div class="modal-footer justify-content-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
       </div>
 --->
 

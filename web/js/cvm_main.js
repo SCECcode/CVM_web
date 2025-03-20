@@ -26,10 +26,12 @@ jQuery(document).ready(function() {
     $(".popup").fadeIn('slow');
   });
 
+/*
   $(".close").click(function() {
     $(this).parent().fadeOut("slow");
     $(".links").fadeIn("slow");
   });
+*/
 
   $("#searchType").change(function () {
       var s= document.getElementById("searchType").value;
@@ -137,6 +139,12 @@ jQuery(document).ready(function() {
     }
   });
 
+/***** reference popup modal *****/
+  $('#modalreference').on('show.bs.modal', function (event) {
+        var btn = $(event.relatedTarget); 
+        var ref_info=btn.data('ref');        
+	$("#modalreferencebody").html(ref_info);
+  });
 
 /***** plotoption popup modal *****/
   $('#modalplotoption').on('show.bs.modal', function (event) {
