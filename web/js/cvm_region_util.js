@@ -71,15 +71,6 @@ function makeModelSelection() {
    option.value= "disabled";
    sel.add(option);
 
-   if(isModelInstalled("sfcvm") && isModelInstalled("cca")
-	   && isModelInstalled("cs248")) {
-   option = document.createElement("option");
-   option.text = "SFCVM,CCA,SF1D,CS248";
-   option.label = "SFCVM,CCA,SF1D,CS248";
-   option.value= "sfcvm,cca,sf1d,cs248";
-   sel.add(option);
-   }
-
    if(isModelInstalled("cvms5") && isModelInstalled("cca")) {
    option = document.createElement("option");
    option.text = "CCA,CVM-S4.26,elygtl:ely";
@@ -188,7 +179,6 @@ function makeModelSelection() {
      option.value= "sjfz,1d"; 
      sel.add(option);
    }
-***/
 
    if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn") &&
       isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn") &&
@@ -212,30 +202,42 @@ function makeModelSelection() {
         option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,cvmsi";
         sel.add(option);
    }
+***/
 
-   if(isModelInstalled("cvmhsmbn") && isModelInstalled("cvms5") ) {
+   if(isModelInstalled("cvmhlabn") && isModelInstalled("cvms5") ) {
       option = document.createElement("option");
-      option.text = "CVM-H Santa Maria, CVM-S4.26";
-      option.label = "CVM-H Santa Maria, CVM-S4.26";
-      option.value= "cvmhsmbn,cvms5";
+      option.text = "CVM-H LA Basin, CVM-S4.26";
+      option.label = "CVM-H LA Basin, CVM-S4.26";
+      option.value= "cvmhlabn,cvms5";
       sel.add(option);
    }
+
+  if(isModelInstalled("sfcvm") && isModelInstalled("cca")) {
+   option = document.createElement("option");
+   option.text = "SFCVM,CCA,SF1D";
+   option.label = "SFCVM,CCA,SF1D";
+   option.value= "sfcvm,cca,sf1d";
+   sel.add(option);
+   }
+
 }
 
 // target_nm is abb_name
-function getModelIndex(target_nm) {
+function getModelIndex(nm) {
+   let target=nm.trim();
    var tb=CVM_tb['models'];
    var icnt=tb.length;
    var i;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
-     if(item['abb name'] == target_nm) {
+     if(item['abb name'] == target) {
         return i;
      }
   }
   return -1;
 }
 
+// using id in CVM_tb
 function getModelDescriptionById(id) {
    let tb=CVM_tb['models'];
    let item=tb[id];
@@ -256,31 +258,48 @@ function getModelAbbNameById(id) {
    return name;
 }
 
-function getModelReferenceById(id) {
-   let tb=CVM_tb['models'];
-   let item=tb[id];
-   if('references' in item) {
-     return item['references'];
+// nm = 'abb name'
+// return unique index list into references array
+function getReferenceIndex(nm, olist) {
+   let target=nm.trim();
+   let mlist=CVM_tb['references'];
+   let mcnt=mlist.length;
+   for(let i=0; i<mcnt; i++) {
+      let nlist=mlist[i]['name'];
+      let ncnt=nlist.length;
+      for(let j=0; j<ncnt; j++) {
+        if(nlist[j] == target) {
+          if( i in olist ) {
+            window.console.log("duplicate found..",i);
+            } else {
+              olist.push(i);
+          }
+        }
+      }
    }
-   return undefined;
 }
 
-function getModelAuthorById(id) {
-   let tb=CVM_tb['models'];
-   let item=tb[id];
-   if('authors' in item) {
-     return item['authors'];
+function getReferenceByList(reflist,alist,rlist) {
+   let mlist=CVM_tb['references'];
+   let cnt=reflist.length;
+   for(let i=0; i<cnt; i++) {
+      let item=mlist[i];
+      if('author' in item) {
+        alist.push(item['author']);
+        rlist.push(item['ref']);
+      }
    }
-   return undefined;
+   return alist,rlist;
 }
 
-function getInterpolatorIndex(target_nm) {
+function getInterpolatorIndex(nm) {
+   let target=nm.trim()
    var tb=CVM_tb['interpolator'];
    var icnt=tb.length;
    var i;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
-     if(item['abb name'] == target_nm) {
+     if(item['abb name'] == target) {
         return i;
      }
   }
@@ -336,13 +355,14 @@ function getInterpolatorAuthorById(id) {
 }
 
 
-function get1DModelIndex(target_nm) {
+function get1DModelIndex(nm) {
+   let target=nm.trim();
    var tb=CVM_tb['1D model'];
    var icnt=tb.length;
    var i;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
-     if(item['abb name'] == target_nm) {
+     if(item['abb name'] == target) {
         return i;
      }
   }
@@ -399,14 +419,15 @@ function get1DModelAuthorById(id) {
 
 
 
-function getModelColor(target_nm) {
+function getModelColor(nm) {
 // this is an optional field, vs30/topo etree map
+   let target=nm.trim();
    var tb=CVM_tb['models'];
    var icnt=tb.length;
    var i;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
-     if(item['abb name'] == target_nm) {
+     if(item['abb name'] == target) {
         var color=item['color'];
         return color;
      }
@@ -415,13 +436,14 @@ function getModelColor(target_nm) {
 }
 
 // this is an optional field, vs30/topo etree map
-function getModelMap(target_nm) {
+function getModelMap(nm) {
+   let target=nm.trim();
    var tb=CVM_tb['models'];
    var icnt=tb.length;
    var i;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
-     if(item['abb name'] == target_nm) {
+     if(item['abb name'] == target) {
         if(item.has('map')) {
            return item['map'];
         }
@@ -430,7 +452,8 @@ function getModelMap(target_nm) {
   return NULL;
 }
 
-function makeLatlngsCoordinate(target_nm) {
+function makeLatlngsCoordinate(nm) {
+   let target=nm.trim();
    var ret=[];
    var tb=CVM_tb['models'];
    var icnt=tb.length;
@@ -438,7 +461,7 @@ function makeLatlngsCoordinate(target_nm) {
    var i,j;
    for(i=0; i<icnt; i++) {
      var item=tb[i];
-     if(item['abb name'] == target_nm) {
+     if(item['abb name'] == target) {
         var coord=item['coordinates'];
         var jcnt=coord.length;
         for(j=0;j<jcnt;j++) {

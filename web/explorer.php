@@ -636,10 +636,10 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 
 <!-- description page -->
             <div id="cvm-description" class="col-12 pr-5" style="display:;border:solid 0px blue" >
-               <br>
-	       <p id="cvm-model-selected"></p>
-	       <p id="cvm-model-description"></p>
-	       <p>For additional information about UCVM and included models refer to the <a href="https://github.com/SCECcode/ucvm">UCVM Github homepage</a></p>
+	       <p id="cvm-model-selected" style="margin-bottom:0.5rem"></p>
+	       <p id="cvm-model-description" style="margin-bottom:0.5rem;"></p>
+	       <p id="cvm-model-reference" style="margin-bottom:0.5rem;"></p>
+	       <p style="margin-bottom:0.5rem;">For additional information about UCVM and included models refer to the <a href="https://github.com/SCECcode/ucvm">UCVM Github homepage</a></p>
             </div>
 </div> <!-- workspace -->
 

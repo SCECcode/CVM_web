@@ -42,6 +42,8 @@ function refreshModelDescription(modelstr) {
     let rsp="";
     let rcnt=0;
 
+    let reflist=[];	 
+
     for(let i=0; i<cnt; i++) {
       let nm=mlist[i];
       let idx=getModelIndex(nm);
@@ -50,20 +52,8 @@ function refreshModelDescription(modelstr) {
         description=description+sp+getModelDescriptionById(idx);
         name=name+sp+getModelNameById(idx);
         abbname=abbname+sp+getModelAbbNameById(idx);
-        sp=", ";
-
-        let reflist=getModelReferenceById(idx);
-        let authlist=getModelAuthorById(idx);
-        if(reflist != undefined && authlist != undefined) {
-          let cnt=reflist.length;
-          for(let i=0; i<cnt; i++) {
-            let refblob=_makeReferenceLink(authlist[i],reflist[i]);
-            reference=reference+rsp+refblob;
-            rsp="&nbsp;";
-            rcnt++;
-          }
-        }
-
+        sp="; ";
+        getReferenceIndex(abbname,reflist);
         } else { // something else ??
           let idx=getInterpolatorIndex(nm);
           if(idx != -1) {
@@ -71,20 +61,8 @@ function refreshModelDescription(modelstr) {
             description=description+sp+getInterpolatorDescriptionById(idx);
             name=name+sp+getInterpolatorNameById(idx);
             abbname=abbname+sp+getInterpolatorAbbNameById(idx);
-            sp=", ";
-
-            let reflist=getInterpolatorReferenceById(idx);
-            let authlist=getInterpolatorAuthorById(idx);
-            if(reflist != undefined && authlist != undefined) {
-              let cnt=reflist.length;
-              for(let i=0; i<cnt; i++) {
-                let refblob=_makeReferenceLink(authlist[i],reflist[i]);
-                reference=reference+rsp+refblob;
-                rsp="&nbsp;";
-                rcnt++;
-              }
-            }
-
+            sp="; ";
+            getReferenceIndex(abbname,reflist);
             } else {  // 1D ? 
               let idx=get1DModelIndex(nm);
               if(idx != -1) {
@@ -92,20 +70,8 @@ function refreshModelDescription(modelstr) {
                 description=description+sp+get1DModelDescriptionById(idx);
                 name=name+sp+get1DModelNameById(idx);
                 abbname=abbname+sp+get1DModelAbbNameById(idx);
-                sp=", ";
-
-                let reflist=get1DModelReferenceById(idx);
-                let authlist=get1DModelAuthorById(idx);
-                if(reflist != undefined && authlist != undefined) {
-                  let cnt=reflist.length; 
-                  for(let i=0; i<cnt; i++) {
-                    let refblob=_makeReferenceLink(authlist[i],reflist[i]);
-                    reference=reference+rsp+refblob;
-                    rsp="&nbsp;";
-                    rcnt++;
-                  }
-                }
-
+                sp="; ";
+                getReferenceIndex(abbname,reflist);
                 } else { //
                      window.console.log("BAD BAD..wrong name ??",nm);
               }
@@ -113,26 +79,25 @@ function refreshModelDescription(modelstr) {
       }
     }
 
+// show model name and abbrevshow
     $("#cvm-model-selected").html("<b>Model Selected:</b>"+name+"<br><b>UCVM Abbreviation:</b>"+abbname);
 
-window.console.log("XX leng of desc ", description.length);
-
+// show description 
     if(description.length > 400) {
       $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
-
-      if(rcnt != 0) {
-        $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button><br><b>Reference:</b>"+reference);
-        } else {
-          $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
-      }
-
+      $("#cvm-model-description").html("<b>Description:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
       } else {
-        $("#cvm-model-description").html("<b>Description:</b>"+description+"<br><b>Reference:</b>"+reference);
-        if(rcnt != 0) {
-          } else {
-            $("#cvm-model-description").html("<b>Description:</b>"+description);
-        }
-    } 
+          $("#cvm-model-description").html("<b>Description:</b>"+description);
+    }
+
+window.console.log("XXX");
+// show author/references popup
+    let alist=[];
+    let rlist=[];
+    if(reflist.length != 0) {
+	getReferenceByList(reflist,alist,rlist);
+        $("#cvm-model-reference").html("<b>Reference:</b> >>> "+reflist[0]);
+    }
 }
 
 function setup_modeltype() {
