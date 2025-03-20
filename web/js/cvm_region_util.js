@@ -204,11 +204,13 @@ function makeModelSelection() {
    }
 ***/
 
-   if(isModelInstalled("cvmhlabn") && isModelInstalled("cvms5") ) {
+   if(isModelInstalled("cvmhlabn") 
+	   && isModelInstalled("cvmhsmbn")
+	   && isModelInstalled("cvms5") ) {
       option = document.createElement("option");
-      option.text = "CVM-H LA Basin, CVM-S4.26";
-      option.label = "CVM-H LA Basin, CVM-S4.26";
-      option.value= "cvmhlabn,cvms5";
+      option.text = "CVM-H LA Basin,CVM-H Santa Maria Basin,CVM-S4.26";
+      option.label = "CVM-H LA Basin,CVM-H Santa Maria Basin,CVM-S4.26";
+      option.value= "cvmhlabn,cvmhsmbn,cvms5";
       sel.add(option);
    }
 
@@ -269,7 +271,8 @@ function getReferenceIndex(nm, olist) {
       let ncnt=nlist.length;
       for(let j=0; j<ncnt; j++) {
         if(nlist[j] == target) {
-          if( i in olist ) {
+ window.console.log("XXX %d:%d, FOUND reference..%s",i,j,mlist[i]['name'][0]);
+          if(olist.includes(i)) {
             window.console.log("duplicate found..",i);
             } else {
               olist.push(i);

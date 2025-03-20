@@ -52,8 +52,8 @@ function refreshModelDescription(modelstr) {
         description=description+sp+getModelDescriptionById(idx);
         name=name+sp+getModelNameById(idx);
         abbname=abbname+sp+getModelAbbNameById(idx);
-        sp="; ";
-        getReferenceIndex(abbname,reflist);
+        sp=", ";
+        getReferenceIndex(nm,reflist);
         } else { // something else ??
           let idx=getInterpolatorIndex(nm);
           if(idx != -1) {
@@ -61,8 +61,8 @@ function refreshModelDescription(modelstr) {
             description=description+sp+getInterpolatorDescriptionById(idx);
             name=name+sp+getInterpolatorNameById(idx);
             abbname=abbname+sp+getInterpolatorAbbNameById(idx);
-            sp="; ";
-            getReferenceIndex(abbname,reflist);
+            sp=", ";
+            getReferenceIndex(nm,reflist);
             } else {  // 1D ? 
               let idx=get1DModelIndex(nm);
               if(idx != -1) {
@@ -70,8 +70,8 @@ function refreshModelDescription(modelstr) {
                 description=description+sp+get1DModelDescriptionById(idx);
                 name=name+sp+get1DModelNameById(idx);
                 abbname=abbname+sp+get1DModelAbbNameById(idx);
-                sp="; ";
-                getReferenceIndex(abbname,reflist);
+                sp=", ";
+                getReferenceIndex(nm,reflist);
                 } else { //
                      window.console.log("BAD BAD..wrong name ??",nm);
               }
@@ -96,7 +96,12 @@ window.console.log("XXX");
     let rlist=[];
     if(reflist.length != 0) {
 	getReferenceByList(reflist,alist,rlist);
-        $("#cvm-model-reference").html("<b>Reference:</b> >>> "+reflist[0]);
+        let cnt=reflist.length;
+        let tmp="<b>Reference:</b> >>> ";
+        for(let i=0; i<cnt; i++) {
+          tmp=tmp+reflist[i]+" ";
+        }
+        $("#cvm-model-reference").html(tmp);
     }
 }
 
