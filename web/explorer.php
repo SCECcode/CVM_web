@@ -777,9 +777,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 
       <div id="plotoption-header" class="modal-header" style="text-align:left; border:0px solid blue;display:">
 	  <div class="col-12" style="border:0px solid orange;padding:10px 0px 0px 0px">
-             <div>
-                 <button class="btn btn-dark mb-2" style="width:100%; font-size:1.25rem" >Map Options</button>
-             </div>
+             <div id="options-container">
 
 <!-- Map Option -->
              <div class="mb-3" style="border:0px solid green;margin-left:4px;">
@@ -900,19 +898,19 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                  </div>
 
 		 <div style="text-align:center">
-                     <button id="replotNow" onclick="replotPlots()" class="cvm2-btn btn btn-dark mt-5" style="width:50%;border-radius:0.25rem;font-size:1.25rem;">REPLOT</button>
+                     <button id="replotNow" onclick="replotPlots()" class="cvm2-btn btn btn-dark mt-5" style="width:50%;border-radius:0.25rem;"><i class="fa fa-refresh" aria-hidden="true"></i>
+ REPLOT</button>
                  </div>
 
                  <div class="form-check form-check-inline mt-2" style="margin-left:-4px;">
-                    <button id="viewPlotSavePNGbtn" class="cvm-btn ml-1" onclick="savePNGPlotview()">Save PNG</button>
-                    <button id="viewPlotSavePDFbtn" class="cvm-btn ml-2" onclick="savePDFPlotview()">Save PDF</button>
+                    <button id="viewPlotSavePNGbtn" class="cvm-btn ml-1" onclick="savePNGPlotview()"><i class="fa fa-picture-o" aria-hidden="true"></i>
+ PNG</button>
+                    <button id="viewPlotSavePDFbtn" class="cvm-btn ml-2" onclick="savePDFPlotview()"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+ PDF</button>
                  </div>
              </div>
 
 <!-- Window Options -->
-             <div>
-                 <button class="btn btn-dark" style="width:100%; font-size:1.25rem" >Window Options</button>
-             </div>
 
              <div style="border:solid 0px red; margin-left:0px;">
                  <div class="form-check form-check-inline mt-2">
@@ -921,8 +919,9 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                  </div>
              </div>
 
-          </div>
       </div>
+     </div>
+     </div>
 
       <!--Body-->
       <div id="plotoption-body" class="modal-body">

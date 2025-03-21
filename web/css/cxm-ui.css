@@ -298,3 +298,18 @@ div.guide div ul li {
 div.guide ul {
     padding-left: 20px;
 }
+
+#modalplotoptionContent .btn-dark {
+    background-color: #577399;
+    border-color: #577399;
+}
+
+#modalplotoptionContent .cvm-btn {
+    background-color: #C22B48;
+    color: white;
+}
+
+#modalplotoptionContent div#options-container {
+    border: 1px solid lightgray;
+    padding: 7px;
+}

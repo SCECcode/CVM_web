@@ -157,7 +157,7 @@ jQuery(document).ready(function() {
  	let json=JSON.parse(blob);
         let myfile=json['file'];
         // switch from ../reslut/pdffile to /cvm-explorer/result/pdffile 
-        MODAL_REPLOT_SRC=myfile.replace("..","/cvm-explorer"); 
+        MODAL_REPLOT_SRC=myfile.replace("..","/research/cvm-explorer");
         MODAL_REPLOT_TYPE=type;
         MODAL_REPLOT_PAR=false; // start as false initially
 
