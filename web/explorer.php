@@ -329,12 +329,12 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 <div id="workspace" style="border:0px solid red">
 
 <!-- filler page ?? -->
-	    <div id="ghost-filler" style="background-color:#E4EBF1; width:100%;height:80%;bottom:10; position:absolute"></div>
+	    <div id="ghost-filler" style="background-color:whitesmoke; width:100%;height:80%;bottom:10; position:absolute"></div>
 
 <!-- description page -->
 	    <div id="option" class="row" style="max-width:500px;"> 
                 <div class="col input-group">
-		    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="background:#E4EBF1;">
+		    <ul class="navigation col-12 pl-2 pb-2 pr-1" style="background:whitesmoke;">
                         <li id='point' class='navigationLi' style="display:none">
                             <div id='pointMenu' class='menu'>
                                 <div class="row mt-2">
@@ -903,7 +903,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                      <button id="replotNow" onclick="replotPlots()" class="cvm2-btn btn btn-dark mt-5" style="width:50%;border-radius:0.25rem;font-size:1.25rem;">REPLOT</button>
                  </div>
 
-                 <div class="form-check form-check-inline mt-2">
+                 <div class="form-check form-check-inline mt-2" style="margin-left:-4px;">
                     <button id="viewPlotSavePNGbtn" class="cvm-btn ml-1" onclick="savePNGPlotview()">Save PNG</button>
                     <button id="viewPlotSavePDFbtn" class="cvm-btn ml-2" onclick="savePDFPlotview()">Save PDF</button>
                  </div>
@@ -914,7 +914,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                  <button class="btn btn-dark" style="width:100%; font-size:1.25rem" >Window Options</button>
              </div>
 
-             <div style="border:solid 0px red; margin-left:4px;">
+             <div style="border:solid 0px red; margin-left:0px;">
                  <div class="form-check form-check-inline mt-2">
                    <button id="viewPlotMovebtn" class="cvm-btn ml-1" onclick="movePlotview()">New Window</button>
                    <button id="viewPlotClosebtn" class="cvm-btn ml-2" data-dismiss="modal">Close</button>
