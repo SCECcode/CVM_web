@@ -120,7 +120,6 @@ function refreshModelDescription(modelstr) {
       description=t_description;
     }
 
-window.console.log("XXX  description length %d\n", description.length);
     if(description.length > 400) {
         $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
         $("#cvm-model-description").html("<b>Description: </b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");

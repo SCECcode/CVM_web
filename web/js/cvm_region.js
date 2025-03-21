@@ -100,7 +100,7 @@ var CVM_tb={
      'abb name':'cs248',
      'path name':'cs248',
      'model filename':'cs248.tar.gz',
-     'description':'CyberShake Study 24.8 Central California Velocity Model',
+     'description':'CS248 is the velocity model used for CyberShake Study 24.8 in Northern California. It was constructed by tiling together the USGS SFCVM v21.1, CCA-06, and a 1D velocity model derived from the Sierra region of the SFCVM. The Nakata/Pitarka correction was applied to the gabbro.  The minimum Vs was 400 m/s, interfaces were smoothed at a distance of 20km, an Ely-Jordan taper was applied to the top 700m, the Vp/Vs ratio was capped at 4, and the surface point was populated at a depth of 20m',
      'coordinates': [ {'lon':-126.18649,'lat':39.750630},
                       {'lon':-121.852810,'lat':42.277910},
                       {'lon':-116.723950,'lat':36.561620},
