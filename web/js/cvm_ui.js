@@ -30,6 +30,7 @@ function _makeReferenceLink(author, reference) {
 }
 
 function refreshModelDescription(modelstr) {
+    let b_description=null;
     let description=" ";
     let name=" ";
     let abbname=" ";
@@ -54,6 +55,7 @@ function refreshModelDescription(modelstr) {
       if(idx != -1) {
 // found Model
         description=description+sp+getModelDescriptionById(idx);
+        b_description=getModelDescriptionBriefById(idx);
         name=name+sp+getModelNameById(idx);
         let tmp=getModelAbbNameById(idx);
         justname.push(tmp);
@@ -121,8 +123,15 @@ function refreshModelDescription(modelstr) {
     }
 
     if(description.length > 400) {
+
         $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
-        $("#cvm-model-description").html("<b>Description: </b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
+        // if there is a description_brief.. prepend it
+        if(b_description == null) {
+          $("#cvm-model-description").html("<b>Description: </b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
+          } else {
+              $("#cvm-model-description").html("<b>Description: </b>"+b_description+" <button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
+        }
+
         } else {
           $("#cvm-model-description").html("<b>Description:</b>"+description);
     }

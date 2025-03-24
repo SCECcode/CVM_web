@@ -29,5 +29,7 @@ RUN chown apache /app/web/php && \
     chown apache /app/web/perl && \
     chown apache /app/web/result
 
+RUN ln -s /usr/local/share/plotting/plotly_profile /app/web
+
 CMD ["apachectl", "-D", "FOREGROUND"]
 

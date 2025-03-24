@@ -247,6 +247,16 @@ function getModelDescriptionById(id) {
    return descript;
 }
 
+function getModelDescriptionBriefById(id) {
+   let tb=CVM_tb['models'];
+   let item=tb[id];
+
+   let tmp=item['description_brief'];
+   if('description_brief' in item) { 
+       return item['description_brief'];
+   } else return null;
+}
+
 function getModelNameById(id) {
    let tb=CVM_tb['models'];
    let item=tb[id];
