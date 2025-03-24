@@ -25,5 +25,9 @@ RUN /app/setup/run-web-setup
 
 RUN source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 
+RUN chown apache /app/web/php && \
+    chown apache /app/web/perl && \
+    chown apache /app/web/result
+
 CMD ["apachectl", "-D", "FOREGROUND"]
 

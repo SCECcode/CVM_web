@@ -1,9 +1,9 @@
 ## if result directory does not exist, create it
 
-chmod og+rw web/php
-chmod og+rw web/perl
-chmod og+rw web/result
-chmod +x web/result
+#chmod og+rw web/php
+#chmod og+rw web/perl
+#chmod og+rw web/result
+#chmod +x web/result
 
 docker rmi $(docker images -f dangling=true -q ) -f
 docker-compose -f docker-compose-localhost.yml -f development.yml down

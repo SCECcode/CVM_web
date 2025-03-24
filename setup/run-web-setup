@@ -88,11 +88,7 @@ if [ -f $UCVM_INSTALL_PATH/conf/ucvm_env.sh ]; then
   source $PLOTTING_TOP_DIR/metadata_utilities/setup.sh
 fi    
 
-## setup web result permission
+## setup plotly in web
 cd $CVM_WEB_TOP_DIR
-mkdir result
-chmod -R og+rw php
-chmod -R og+rwx perl
-chmod -R og+rw  result
 ln -s $PLOTTING_TOP_DIR/plotly_profile .
 

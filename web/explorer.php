@@ -1018,7 +1018,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
     <div class="modal-content" id="modalplotrangeContent" style="font-size:20px">
       <!--Body-->
       <div class="modal-body" id="modalplotrangeBody">
-<p>These values set the x-axis range. The plot defaults to cover the entire range of data; however, sometimes it is useful to force the plotted range to compare two plots with different data ranges.
+         <p>The plot defaults to cover the entire range of the selected parameter; however sometimes it is useful to force the plotted range to directly compare two plots with different parameter ranges. To force the plot to cover a user-specified range, enter the minimum and maximum parameter values here and then click REPLOT.</p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn close" data-dismiss="modal">&times;</button>
