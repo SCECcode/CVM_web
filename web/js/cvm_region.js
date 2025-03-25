@@ -500,7 +500,7 @@ var CVM_tb={
      'ref':'Lee, E.-J., P. Chen, T. H. Jordan, P. J. Maechling, M. A. M. Denolle, and G. C.Beroza (2014), Full 3-D tomography for crustal structure in Southern California based on the scattering-integral and the adjoint-waveﬁeld methods, J. Geophys. Res. Solid Earth, 119, doi:10.1002/2014JB011346. SCEC Contribution 6093',
 },
 { 'type':'model','name':['ivlsu'],
-     'author':'Peraud et al., (2016)',
+     'author':'Persaud et al., (2016)',
      'refs': 'Persaud P., Y. Ma, J. M. Stock, J. Hole, G. Fuis and L. Han (2016), Fault zone characteristics and basin complexity in the southern Salton Trough, California , Geology, 44(9), p. 747-750, doi:10.1130/G38033.1',
 },
 { 'type':'model','name':['uwlinca'],
