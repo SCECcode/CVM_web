@@ -122,7 +122,7 @@ function refreshModelDescription(modelstr) {
       description=t_description;
     }
 
-    if(description.length > 400) {
+    if(description.length > 370) {
 
         $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
         // if there is a description_brief.. prepend it

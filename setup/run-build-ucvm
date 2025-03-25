@@ -13,7 +13,7 @@ git clone https://github.com/SCECcode/ucvm.git -b testMei src
 
 cd $UCVM_SRC_PATH/largefiles
 #./get_largefiles.py -m cs248,sfcvm,cvmh
-./get_largefiles.py -m wfcvm,cca,sfcvm,cvms,cvmsi,cvms5,cvmh,ivlsu,cvlsu,albacore,sjfz,cvmhlabn,cvmhsgbn,cvmhvbn,cvmhibbn,cvmhrbn,cvmhsbbn,cvmhsbcbn,cvmhsmbn,cvmhstbn,cs248,canvas,uwsfbcvm
+./get_largefiles.py -m wfcvm,cca,sfcvm,cvms,cvmsi,cvms5,cvmh,ivlsu,cvlsu,albacore,sjfz,cvmhlabn,cvmhsgbn,cvmhvbn,cvmhibbn,cvmhrbn,cvmhsbbn,cvmhsbcbn,cvmhsmbn,cvmhstbn,cs248,canvas,uwsfbcvm,uwlinca
 #./get_largefiles.py -m cvmh
 ./check_largefiles_md5.py
 ./stage_largefiles.py
