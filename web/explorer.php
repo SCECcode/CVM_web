@@ -778,6 +778,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
       <div id="plotoption-header" class="modal-header" style="text-align:left; border:0px solid blue;display:">
 	  <div class="col-12" style="border:0px solid orange;padding:10px 0px 0px 0px">
              <div id="options-container">
+                 <h4 style="margin-bottom: 17px;">SCEC Community Velocity Model Explorer</h4>
 
 <!-- Map Option -->
              <div class="mb-3" style="border:0px solid green;margin-left:4px;">
@@ -871,52 +872,53 @@ allows easy access to a range of seismic velocity models using the UCVM package.
    
                      <div class="form-check form-check-inline mt-1">
                            <label title='scale minimum'
-                                  style="margin-left:5px;width:5vw;"
+                                  style="margin-left:5px;width:100px;"
                                   for="minPlotScaleTxt">Minimum
                            </label>
                            <input type="text"
                                   id="minPlotScaleTxt"
                                   placeholder="min scale"
                                   title="minPlotScale"
-                                  style="width:4vw"
+                                  style="width:100px;"
                                   onfocus="this.value=''">
                      </div>
 
                      <div class="form-check form-check-inline">
                           <label title='scale maximum'
-                                 style="margin-left:5px;width:5vw;"
+                                 style="margin-left:5px;width:100px;"
                                  for="maxPlotScaleTxt">Maximum
                           </label>
                           <input type="text"
                                  id="maxPlotScaleTxt"
                                  placeholder="max scale"
                                  title="maxPlotScale"
-                                 style="width:4vw"
+                                 style="width:100px;"
                                  onfocus="this.value=''">
                      </div>
 
                  </div>
 
 		 <div style="text-align:center">
-                     <button id="replotNow" onclick="replotPlots()" class="cvm2-btn btn btn-dark mt-5" style="width:50%;border-radius:0.25rem;"><i class="fa fa-refresh" aria-hidden="true"></i>
+                     <button id="replotNow" onclick="replotPlots()" class="cvm2-btn btn btn-dark mt-4" style="width:50%;border-radius:0.25rem;"><i class="fa fa-refresh" aria-hidden="true"></i>
  REPLOT</button>
                  </div>
 
-                 <div class="form-check form-check-inline mt-2" style="margin-left:-4px;">
+                 <div class="form-check form-check-inline mt-2" style="">
                     <button id="viewPlotSavePNGbtn" class="cvm-btn ml-1" onclick="savePNGPlotview()"><i class="fa fa-picture-o" aria-hidden="true"></i>
  PNG</button>
                     <button id="viewPlotSavePDFbtn" class="cvm-btn ml-2" onclick="savePDFPlotview()"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>
  PDF</button>
                  </div>
-             </div>
 
+                          <div style="border:solid 0px red; margin-left:0px;">
 <!-- Window Options -->
-
-             <div style="border:solid 0px red; margin-left:0px;">
                  <div class="form-check form-check-inline mt-2">
-                   <button id="viewPlotMovebtn" class="cvm-btn ml-1" onclick="movePlotview()">New Window</button>
-                   <button id="viewPlotClosebtn" class="cvm-btn ml-2" data-dismiss="modal">Close</button>
+                   <button id="viewPlotMovebtn" class="cvm-btn ml-1" onclick="movePlotview()"><i class="fa fa-window-restore" aria-hidden="true"></i>
+ Pop Out</button>
+                   <button id="viewPlotClosebtn" class="cvm-btn ml-2" data-dismiss="modal"><i class="fa fa-window-close" aria-hidden="true"></i>
+ Close</button>
                  </div>
+             </div>
              </div>
 
       </div>
