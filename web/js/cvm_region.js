@@ -305,6 +305,7 @@ var CVM_tb={
      'path name':'uwlinca',
      'model filename':'uwlinca.tar.gz',
      'description':'The UW statewide model is a three-dimensional (3D) tomographic model of the P wave velocity (Vp) structure of northern California. It was obtained using a regional-scale double-difference tomography algorithm that incorporates a finite-difference travel time calculator and spatial smoothing constraints. Arrival times from earthquakes and travel times from controlled-source explosions, recorded at network and/or temporary stations, were inverted for Vp on a 3D grid with horizontal node spacing of 10 to 20 km and vertical node spacing of 3 to 8.',
+     'description_brief':'The UW statewide model is a three-dimensional (3D) tomographic model of the P wave velocity (Vp) structure of northern California. It was obtained using a regional-scale double-difference tomography algorithm that incorporates a finite-difference travel time calculator and ...',
      'coordinates': [ {'lon':-126.9210,'lat':39.8816},
                       {'lon':-121.4117,'lat':43.0597},
                       {'lon':-112.8281,'lat':33.4362},

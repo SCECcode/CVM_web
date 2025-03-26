@@ -792,19 +792,20 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 			    id="plotoption-interp"/>Interp mode
                      </label>
                 </div>
-
                  <div id="plotoption-point-option" class="form-check form-check-inline mt-1" style="display:">
                      <label class='form-check-label mini-option'
-                            title='Show data points'
+			    title='Plots the source data points, which is useful to better understand the resolution of the plotted data. Note that all points are interpolated'
                             for="plotoption-point">
                      <input class='form-check-inline mr-2'
                             type="checkbox"
                             id="plotoption-point"/>Source Data Points
                      </label>
+<!--
                      <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalpoints"><span class="glyphicon glyphicon-info-sign"></span></button>
+-->
                  </div>
 
-                <div id="plotoption-cfm-option" class="form-check form-check-inline mt-0" style="display:">
+                <div id="plotoption-cfm-option" class="form-check form-check-inline mt-2" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show Community Fault Model v7.0 on map'
 			    for="plotoption-cfm">
@@ -866,12 +867,13 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                  </div>
 
                  <div id="plotoption-plotrange-option" class="mt-2" style="display:">
-                     <label title='range option'
+		     <label title='The plot defaults to cover the entire range of the data; however sometimes it is useful to force a color range to compare two plots with different data ranges'
                         style="margin:0px 0px 0px 5px">Set Plot Range
 		     </label>
+<!-- 
                      <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalplotrange"><span class="glyphicon glyphicon-info-sign"></span></button>
-   
-                     <div class="form-check form-check-inline mt-1">
+-->
+                     <div class="form-check form-check-inline ml-2 mt-1">
                            <label title='scale minimum'
                                   style="margin-left:5px;width:5vw;"
                                   for="minPlotScaleTxt">Minimum
@@ -884,7 +886,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                                   onfocus="this.value=''">
                      </div>
 
-                     <div class="form-check form-check-inline">
+                     <div class="form-check form-check-inline ml-2">
                           <label title='scale maximum'
                                  style="margin-left:5px;width:5vw;"
                                  for="maxPlotScaleTxt">Maximum
