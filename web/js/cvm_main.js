@@ -145,6 +145,18 @@ jQuery(document).ready(function() {
         var ref_info=btn.data('ref');        
 	$("#modalreferencebody").html(ref_info);
   });
+/***** info popup modal *****/
+  $('#modalinfo').on('show.bs.modal', function (event) {
+        var btn = $(event.relatedTarget); 
+        var info_info=btn.data('info');        
+	$("#modalinfobody").html(info_info);
+  });
+/***** tinyinfo popup modal *****/
+  $('#modaltinyinfo').on('show.bs.modal', function (event) {
+        var btn = $(event.relatedTarget); 
+        var tinyinfo_info=btn.data('info');        
+	$("#modaltinyinfobody").html(tinyinfo_info);
+  });
 
 /***** plotoption popup modal *****/
   $('#modalplotoption').on('show.bs.modal', function (event) {

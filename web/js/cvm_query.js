@@ -5,7 +5,7 @@
 
 // if there are too many file points, do not generate the mp layer
 // limit it to 200 maximum
-var MAX_FILEPOINTS=200;
+var MAX_FILEPOINTS=500;
 var MODAL_REPLOT_SRC="";
 var MODAL_REPLOT_TYPE="";
 var MODAL_REPLOT_PAR=false; // start from a-fresh

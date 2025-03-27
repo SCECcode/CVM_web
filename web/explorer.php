@@ -681,7 +681,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                 <ul id='processMetaPlotResultTableList' class="dropdown-menu list-inline" role="menu">
                    <li data-id='s' hidden >Save All</li>
                    <li id='mprCollapseLi' data-id='c' hidden>Collapse</li>
-                   <li data-id='p'>plot Depth Profile</li>
+		   <li data-id='p'>Click here to plot the comparison plot <br>after select 1 or more vertical profiles <br>from the result table below</li>
                 </ul>
             </div>
             <div class="col-12  mt-0 mb-4" id="result-table" style="display:">
@@ -783,7 +783,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 
 <!-- Map Option -->
              <div class="mb-3" style="border:0px solid green;margin-left:4px;">
-                <div id="plotoption-interp-option" class="form-check form-check-inline mt-2" style="display:">
+                <div id="plotoption-interp-option" class="form-check form-check-inline" style="display:">
                      <label class='form-check-label mini-option'
                             title='Interpolates data using splines in tension (tension=0.2). This has the effect of smoothing the resultant data plot, but may produce undesirable results in some situations, especially for spatially discontinuous models or models with sharp velocity discontinuities. Leave unchecked to plot the raw extracted data'
 			    for="plotoption-interp">
@@ -791,8 +791,9 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                             type="checkbox"
 			    id="plotoption-interp"/>Interp mode
                      </label>
+                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalinfo" data-info='Interpolates data using splines in tension (tension=0.2). This has the effect of smoothing the resultant data plot, but may produce undesirable results in some situations, especially for spatially discontinuous models or models with sharp velocity discontinuities. Leave unchecked to plot the raw extracted data'><span class="glyphicon glyphicon-info-sign"></span></button>
                 </div>
-                 <div id="plotoption-point-option" class="form-check form-check-inline mt-1" style="display:">
+                <div id="plotoption-point-option" class="form-check form-check-inline" style="display:">
                      <label class='form-check-label mini-option'
 			    title='Plots the source data points, which is useful to better understand the resolution of the plotted data. Note that all points are interpolated'
                             for="plotoption-point">
@@ -800,12 +801,10 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                             type="checkbox"
                             id="plotoption-point"/>Source Data Points
                      </label>
-<!--
-                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalpoints"><span class="glyphicon glyphicon-info-sign"></span></button>
--->
-                 </div>
+		     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalinfo" data-info='Plots the source data points, which is useful to better understand the resolution of the plotted data. Note that all points are interpolated'><span class="glyphicon glyphicon-info-sign"></span></button>
+                </div>
 
-                <div id="plotoption-cfm-option" class="form-check form-check-inline mt-2" style="display:">
+                 <div id="plotoption-cfm-option" class="form-check form-check-inline" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show Community Fault Model v7.0 on map'
 			    for="plotoption-cfm">
@@ -813,9 +812,10 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                             type="checkbox"
                             id="plotoption-cfm"/>CFM7.0 faults
                      </label>
+		     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modaltinyinfo" data-info='Show Community Fault Model v7.0 on map'><span class="glyphicon glyphicon-info-sign"></span></button>
                 </div>
 
-                <div id="plotoption-ca-option" class="form-check form-check-inline mt-2" style="display:">
+                <div id="plotoption-ca-option" class="form-check form-check-inline" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show Cities on map'
 			    for="plotoption-ca">
@@ -823,9 +823,10 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                             type="checkbox"
 			    id="plotoption-ca"/>Plot Cities
                      </label>
+		     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modaltinyinfo" data-info='Show Cities on map'><span class="glyphicon glyphicon-info-sign"></span></button>
                  </div>
   
-                 <div id="plotoption-map-option" class="form-check form-check-inline mt-2" style="display:">
+                 <div id="plotoption-map-option" class="form-check form-check-inline mt-1" style="display:">
                      <label class='form-check-label mini-option'
                             title='Show plot only'
 			    for="plotoption-map">
@@ -833,6 +834,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                             type="checkbox"
 			    id="plotoption-map"/>Plot with Map
                      </label>
+		     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modaltinyinfo" data-info='Show plot only'><span class="glyphicon glyphicon-info-sign"></span></button>
                  </div>
 
                  <div id="plotoption-param-option" class="form-check form-check-inline mt-3" style="display:">
@@ -845,8 +847,12 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                       </select>
                   </div>
 
-                  <div id="plotoption-pad-option" class="form-check form-check-inline mt-2" style="display:">
-		     <label class="input-group-text" for="plotPadTxt">Select Map Padding<button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalpadding"><span class="glyphicon glyphicon-info-sign"></span></button></label>
+                  <div id="plotoption-pad-option" class="form-check form-check-inline mt-3" style="display:">
+		     <label class="input-group-text" for="plotPadTxt">Select Map Padding
+
+		     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalinfo" data-info='This sets how far (in degrees) the map should extend beyond the selected 1D profile location. A map that is too local may not show identifiable geographic features. If so, increase the padding to make the map cover a larger geographic area'><span class="glyphicon glyphicon-info-sign"></span></button>
+
+                     </label>
                      <select id="plotPadTxt" class="my-custom-select custom-select">
                         <option value="0.1">0.1</option>
                         <option value="0.5">0.5</option>
@@ -866,13 +872,13 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                       </select>
                  </div>
 
-                 <div id="plotoption-plotrange-option" class="mt-2" style="display:">
+                 <div id="plotoption-plotrange-option" class="mt-3" style="display:">
 		     <label title='The plot defaults to cover the entire range of the data; however sometimes it is useful to force a color range to compare two plots with different data ranges'
                         style="margin:0px 0px 0px 5px">Set Plot Range
 		     </label>
-<!-- 
-                     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalplotrange"><span class="glyphicon glyphicon-info-sign"></span></button>
--->
+
+		     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalinfo" data-info='The plot defaults to cover the entire range of the data; however sometimes it is useful to force a color range to compare two plots with different data ranges'><span class="glyphicon glyphicon-info-sign"></span></button>
+
                      <div class="form-check form-check-inline ml-2 mt-1">
                            <label title='scale minimum'
                                   style="margin-left:5px;width:5vw;"
@@ -977,15 +983,15 @@ allows easy access to a range of seismic velocity models using the UCVM package.
   </div>
 </div> <!--Modal: modalparameters-->
 
-<!--Modal: points -->
-<div class="modal" id="modalpoints" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalpointsDialog" role="document">
+<!--Modal: info -->
+<div class="modal" id="modalinfo" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalinfoDialog" role="document">
 
     <!--Content-->
-    <div class="modal-content" id="modalpointsContent" style="font-size:20px">
+    <div class="modal-content" id="modalinfoContent" style="font-size:20px">
       <!--Body-->
-      <div class="modal-body" id="modalpointsBody">
-<p>Plots the source data points, which is useful to better understand the resolution of the plotted data. Note that all points are interpolated.</p>
+      <div class="modal-body" id="modalinfoBody">
+        <p id="modalinfobody"></p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn close" data-dismiss="modal">&times;</button>
@@ -993,7 +999,26 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 
     </div> <!--Content-->
   </div>
-</div> <!--Modal: modalpoints-->
+</div> <!--Modal: modalinfo-->
+
+<!--Modal: info -->
+<div class="modal" id="modaltinyinfo" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-small" id="modaltinyinfoDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modaltinyinfoContent" style="font-size:20px">
+      <!--Body-->
+      <div class="modal-body" style="text-align:center" id="modaltinyinfoBody">
+        <p id="modaltinyinfobody"></p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modaltinyinfo-->
+
 
 <!--Modal: colorrange-->
 <div class="modal" id="modalcolorrange" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1012,25 +1037,6 @@ allows easy access to a range of seismic velocity models using the UCVM package.
     </div> <!--Content-->
   </div>
 </div> <!--Modal: modalcolorrange-->
-
-<!--Modal: plotrange-->
-<div class="modal" id="modalplotrange" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalplotrangeDialog" role="document">
-
-    <!--Content-->
-    <div class="modal-content" id="modalplotrangeContent" style="font-size:20px">
-      <!--Body-->
-      <div class="modal-body" id="modalplotrangeBody">
-         <p>The plot defaults to cover the entire range of the selected parameter; however sometimes it is useful to force the plotted range to directly compare two plots with different parameter ranges. To force the plot to cover a user-specified range, enter the minimum and maximum parameter values here and then click REPLOT.</p>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
-      </div>
-
-    </div> <!--Content-->
-  </div>
-</div> <!--Modal: modalplotrange-->
-
 
 <!--Modal: padding-->
 <div class="modal" id="modalpadding" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1109,8 +1115,6 @@ allows easy access to a range of seismic velocity models using the UCVM package.
            <li style="list-style-type:disc">Plot depth or elevation profile with <b>1D&nbsp;Vertical&nbsp;Profile</b> option</li> 
            <li style="list-style-type:disc">Query for material properties with <b>0D&nbsp;Point</b> option</li> 
         </ul>
-        <br>
-        <p> Preliminary: Plot vertical profile comparison plot with 1 or more vertical profiles(<span style="font-size:6px" class="glyphicon glyphicon-triangle-bottom"></span>)</p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn close" data-dismiss="modal">&times;</button>
