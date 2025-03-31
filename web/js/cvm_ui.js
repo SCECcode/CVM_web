@@ -624,7 +624,13 @@ function processMetaPlotResultTable(v)
       save_mpr_table();
       break;
     case 'p':
-      $("#plotProfileBtn").click();
+      let plist=get_all_highlight_profile_list();
+      if(plist.length !=0) {
+        $("#plotProfileBtn").click();
+        } else {
+          alert("Please select one or more profile to compare");
+          return;
+      }
       break;
   }
 }

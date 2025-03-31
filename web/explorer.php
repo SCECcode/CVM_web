@@ -681,7 +681,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                 <ul id='processMetaPlotResultTableList' class="dropdown-menu list-inline" role="menu">
                    <li data-id='s' hidden >Save All</li>
                    <li id='mprCollapseLi' data-id='c' hidden>Collapse</li>
-		   <li data-id='p'>Click here to plot the comparison plot <br>after select 1 or more vertical profiles <br>from the result table below</li>
+		   <li data-id='p'>Click here to plot the comparison plot <br>after select 1 or more vertical profiles <br>from the result table</li>
                 </ul>
             </div>
             <div class="col-12  mt-0 mb-4" id="result-table" style="display:">

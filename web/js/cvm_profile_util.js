@@ -22,6 +22,11 @@ function plotly_profile_run(){
    var sz=plist.length;
    var i;
 
+   if(sz==0) {
+     alert("Please select one or more profile to compare");
+     return;
+   }
+
    for(i=0;i<sz;i++) {
      var d=readVProfileDataFile(plist[i]);
      if(d) {
