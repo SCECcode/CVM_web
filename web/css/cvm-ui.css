@@ -304,15 +304,21 @@ th {text-align: left; background: #D5D5D5;}
 }
 
 .cvm-btn {
-          background: #e9ecef; 
-          border: 1px solid #ced5da;
+          background: #577399;
+          border: 1px solid #577399;
           color: black;
           width: 7.5rem;
           height: 3vh;
           display: inline-block;
           border-radius: 0.25rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
+.cvm2-btn {
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
 .cvm-btn:disabled {
         color: white;
@@ -323,9 +329,9 @@ th {text-align: left; background: #D5D5D5;}
         background: #D5D5D5; 
         }
 
-.cvm2-btn:hover {
-        color: #C22B48; 
-        }	
+/*.cvm2-btn:hover {*/
+/*        color: #C22B48; */
+/*        }	*/
 .cvm-div {
         position:relative;
         left: 10px;
