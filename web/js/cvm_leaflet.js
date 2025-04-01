@@ -334,6 +334,16 @@ function makeModelLayer(latlngs,color) {
   return layer;
 }
 
+function makeModelLayer2(latlngs,color,note) {
+  var mypoly=polygon_options;
+  mypoly['color']=color;
+  let poly=new L.polygon(latlngs, mypoly);
+  poly.bindToolTip(note);
+  var layer= new L.FeatureGroup([ poly ]);
+
+  return layer;
+}
+
 function addAreaLayerGroup(latA,lonA,latB,lonB) {
   var bounds = [[latA, lonA], [latB, lonB]];
   var layer =new L.rectangle(bounds,rectangle_options);

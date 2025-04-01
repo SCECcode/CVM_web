@@ -139,6 +139,10 @@ jQuery(document).ready(function() {
     }
   });
 
+  $("#cvm-model-cvm").change(function() {
+    toggleShowModels();
+  });
+
 /***** reference popup modal *****/
   $('#modalreference').on('show.bs.modal', function (event) {
         var btn = $(event.relatedTarget); 

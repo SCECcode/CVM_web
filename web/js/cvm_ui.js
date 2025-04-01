@@ -24,6 +24,25 @@ var hold_mptable=1;
 var cvm_metaplottb_list=[];
 
 /******************************************/
+// tracking showing all loaded models
+var show_cvm_save_list=[];
+var show_cvm=false;
+
+function reset_cvm_save_list() {
+   show_cvm_save_list=[];
+}
+
+function toggleShowModels() {
+   show_cvm=!show_cvm;
+   if(show_cvm) {
+     show_cvm_save_list=load_all_models();
+     } else {
+       reload_models_from_list(show_cvm_save_list);
+       show_cvm_save_list=[];
+   }
+}
+
+/******************************************/
 function _makeReferenceLink(author, reference) {
   let link="<button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-body=\"reference\" data-target=\"#modalreference\">"+author+"</button>";
   return link;

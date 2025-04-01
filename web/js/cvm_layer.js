@@ -67,6 +67,7 @@ var cvm_area_list=[];
 
 /*****************************************************************
 *****************************************************************/
+
 // suppress all  model layer on the map
 function remove_all_models() {
   cvm_model_list.forEach(function(element) {
@@ -134,6 +135,13 @@ function make_all_model_layer() {
 
 // can be "cvmh" or "cvmh,cvmsi"
 function load_selected_model(modelstr) {
+   // special case,  if cvm_model_cvm btn is enabled.. clear it
+   if ($("#cvm-model-cvm").prop('checked')) {
+      // just uncheck it
+      reset_cvm_save_list();
+      $("#cvm-model-cvm").click();
+   }
+	
    var mlist=modelstr.split(",");
    var i;
    var cnt=mlist.length;
@@ -142,6 +150,51 @@ function load_selected_model(modelstr) {
    }
    /* call refocus on map */
    switchMapFocus();
+}
+
+// show all model layers on the map
+// show_cvm_save_list in cvm_ui.c
+function load_all_models() {
+   var save_list=[];
+   var install_list=[];
+   let cnt=cvm_model_list.length;
+
+   for(let i=0;i<cnt;i++) {
+     let t=cvm_model_list[i];
+     if(isModelInstalled(t['model'])) {
+       if(t['visible']==1) {
+          save_list.push(i);
+       }
+       install_list.push(i);
+     }
+   }
+   remove_all_models();
+   cnt=install_list.length;
+   for(let j=0;j<cnt;j++) {
+     let idx=install_list[j];
+     let t=cvm_model_list[idx];
+     t['visible']=1;
+     t['oidx']=(j+1);
+     let layer=t['layer'];
+     viewermap.addLayer(layer);
+   }
+
+   return save_list;
+}
+
+// from a saved list reload what is in there
+function reload_models_from_list(mlist) {
+   remove_all_models();
+   let cnt=mlist.length;
+   for(let i=0; i < cnt; i++) {
+     let idx=mlist[i];
+     let t=cvm_model_list[idx];
+     t['visible']=1;
+     t['oidx']=(i+1);
+     let layer=t['layer'];
+     viewermap.addLayer(layer);
+   }
+   return 0;
 }
 
 function refresh_model_type() {

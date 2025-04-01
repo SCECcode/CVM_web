@@ -203,6 +203,17 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                     </label>
                 </div>
 
+                <div class="form-check form-check-inline">
+                    <label class='form-check-label ml-1 mini-option'
+                             title='Show All Available CVMs on map'
+                             for="cvm-model-cvm">
+                    <input class='form-check-inline mr-1'
+                             type="checkbox"
+                             id="cvm-model-cvm" value="1" />CVM
+                    </label>
+                </div>
+
+
             </div>
 
 <!-- KML/KMZ overlay -->
