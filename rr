@@ -1,9 +1,3 @@
-## if result directory does not exist, create it
-
-#chmod og+rw web/php
-#chmod og+rw web/perl
-#chmod og+rw web/result
-#chmod +x web/result
 
 docker rmi $(docker images -f dangling=true -q ) -f
 docker-compose -f docker-compose-localhost.yml -f development.yml down
@@ -12,4 +6,5 @@ docker-compose -f docker-compose-localhost.yml -f development.yml up --build --f
 
 pid=`docker ps | grep cvm_web_web | cut -f 1 -d ' '`
 docker container exec -it $pid chmod og+rwx web/php web/perl web/result
+docker container exec -it $pid ln -s /usr/local/share/plotting/plotly_profile web
 
