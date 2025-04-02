@@ -32,7 +32,7 @@ $header = getHeader("User Guide");
     <div class="row">
         <div class="col-12">
             <figure class="ucvm-interface figure float-lg-right">
-                <img src="img/ucvm-explorer.png" class="figure-img img-fluid" alt="Screen capture of CVM Explorer interface">
+                <img src="img/cvm-explorer.png" class="figure-img img-fluid" alt="Screen capture of CVM Explorer interface">
                 <figcaption class="figure-caption">Screen capture of CVM Explorer interface</figcaption>
             </figure>
             <h3>SCEC Community Velocity Model Explorer Overview</h3>
