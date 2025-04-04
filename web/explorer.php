@@ -5,7 +5,7 @@ $header = getHeader("Explorer");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SCEC Community Velocity Model Explorer (ANOTHER prototype)</title>
+    <title>SCEC Community Velocity Model Explorer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -203,6 +203,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                     </label>
                 </div>
 
+<!--
                 <div class="form-check form-check-inline">
                     <label class='form-check-label ml-1 mini-option'
                              title='Show All Available CVMs on map'
@@ -212,6 +213,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                              id="cvm-model-cvm" value="1" />CVM
                     </label>
                 </div>
+-->
 
 
             </div>
