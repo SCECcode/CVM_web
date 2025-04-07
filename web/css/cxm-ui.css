@@ -59,7 +59,7 @@
 .modal-full .modal-body, modal-full-body {
     top: 10px;
     height: 100%;
-    margin-left: 200px;
+    margin-left: 240px;
     overflow-y: auto;
 }
 
@@ -68,7 +68,7 @@
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  width: 230px; /* Adjust width as needed */
+  width: 275px; /* Adjust width as needed */
   height: 100%; /* Make it take the full height of the modal */
   text-align: center;
 }
@@ -190,6 +190,10 @@ a.navbar-brand span {
     color: white;
 }
 
+.navbar-light .navbar-nav .nav-link {
+    color: #577399;
+}
+
 .navbar-toggler {
     border: 0;
 }
@@ -297,4 +301,22 @@ div.guide div ul li {
 
 div.guide ul {
     padding-left: 20px;
+}
+
+#modalplotoptionContent .btn-dark {
+    background-color: #577399;
+    border-color: #577399;
+}
+
+#modalplotoptionContent .cvm-btn {
+    background-color: #C22B48;
+    color: white;
+    cursor: pointer;
+    width: 100px;
+    height: 28px;
+}
+
+#modalplotoptionContent div#options-container {
+    border: 1px solid lightgray;
+    padding: 7px;
 }
