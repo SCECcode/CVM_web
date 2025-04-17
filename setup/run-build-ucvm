@@ -18,7 +18,7 @@ cd $UCVM_SRC_PATH/largefiles
 ./check_largefiles_md5.py
 ./stage_largefiles.py
 
-
+export PYTHONUNBUFFERED=TRUE
 cd $UCVM_SRC_PATH
 ./ucvm_setup.py -a -d -p $UCVM_INSTALL_PATH &> ucvm_setup_install.log
 

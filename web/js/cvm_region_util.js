@@ -79,6 +79,22 @@ function makeModelSelection() {
    sel.add(option);
    }
 
+   if(isModelInstalled("cvmsi")) {
+   option = document.createElement("option");
+   option.text = "CVM-S4.26M01,elygtl:taper";
+   option.label = "CVM-S4.26M01,elygtl:taper";
+   option.value= "cvmsi,elygtl:taper";
+   sel.add(option);
+   }
+
+   if(isModelInstalled("cvmsi")) {
+   option = document.createElement("option");
+   option.text = "CVM-S4.26M01,elygtl:ely";
+   option.label = "CVM-S4.26M01,elygtl:ely";
+   option.value= "cvmsi,elygtl:ely";
+   sel.add(option);
+   }
+
 /***
  
    if(isModelInstalled("sfcvm") && isModelInstalled("cca")
