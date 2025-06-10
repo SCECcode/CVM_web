@@ -6,5 +6,5 @@ docker-compose -f docker-compose-localhost.yml -f development.yml up --build --f
 
 pid=`docker ps | grep cvm_web_web | cut -f 1 -d ' '`
 docker container exec -it $pid chmod og+rwx web/php web/perl web/result
-docker container exec -it $pid ln -s /usr/local/share/plotting/plotly_profile web
+docker container exec -it $pid ln -f -s /usr/local/share/plotting/plotly_profile web
 
