@@ -1,4 +1,3 @@
-
 # run-web-setup
 
 source setup/setup_cvm_web.sh
