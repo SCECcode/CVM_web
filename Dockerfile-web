@@ -10,6 +10,7 @@ ENV CVM_LARGEDATA_DIR=/usr/local/share/cvm-largedata-dir
 ENV UCVM_TOP_DIR=/usr/local/share/ucvm
 ENV UCVM_SRC_PATH=$UCVM_TOP_DIR/src
 ENV UCVM_INSTALL_PATH=$UCVM_TOP_DIR/install
+ENV CVM_IN_DOCKER='#'
 
 WORKDIR /app
 

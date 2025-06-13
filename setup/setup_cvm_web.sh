@@ -8,6 +8,7 @@ export UCVM_TOP_DIR=/usr/local/share/ucvm
 
 export CVM_VOLUME=/usr/local/share/cvm_volume
 export CVM_LARGEDATA_DIR=/usr/local/share/cvm-largedata-dir
+export CVM_IN_DOCKER='#'
 
 export UCVM_SRC_PATH=$UCVM_TOP_DIR/src
 export UCVM_INSTALL_PATH=$UCVM_TOP_DIR/install
