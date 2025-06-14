@@ -134,7 +134,12 @@ function refreshModelDescription(modelstr) {
     let t_description=" A tiled CVM that combines the "+justnamestring+" into a single model. Tiling is accomplished by model ordering using UCVM. For descriptions of the individual models refer to their descriptions by selecting the relevant model in the CVM Explorer";
 
 // show model name and abbrevshow
-    $("#cvm-model-selected").html("<b>Model Selected:</b>"+name+"<br><b>UCVM Abbreviation:</b>"+abbname);
+    if(name.length + abbname.length > 200) {
+      $("#modalselectedbody").html("<div><b>Model Selected:</b>"+name+"</div>");
+      $("#cvm-model-selected").html("<b>Model Selected:</b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modalselected\"><span class=\"glyphicon glyphicon-expand\"></span></button><br><b>UCVM Abbreviation:</b>"+abbname);
+      } else {
+        $("#cvm-model-selected").html("<b>Model Selected:</b>"+name+"<br><b>UCVM Abbreviation:</b>"+abbname);
+    }
 
 // show description 
     if(jcnt > 1) {
@@ -143,7 +148,7 @@ function refreshModelDescription(modelstr) {
 
     if(description.length > 350 || b_description != null) {
 
-        $("#modaldescriptionbody").html("<div><b>Model Selected:</b>"+name+"<br><b>Description:</b>"+description+"</div>");
+        $("#modaldescriptionbody").html("<div><b>Description:</b>"+description+"</div>");
         // if there is a description_brief.. prepend it
         if(b_description == null) {
           $("#cvm-model-description").html("<b>Description: </b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modaldescription\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
@@ -165,8 +170,13 @@ function refreshModelDescription(modelstr) {
           tmp=tmp+rsp+reflist[i];
           rsp=" ";
         }
-        $("#cvm-model-reference").html(astr);
-//        window.console.log("reflist ..",tmp);
+        if(cnt > 4 ) {
+          $("#modalreferencebody").html("<div>"+astr+"</div>");
+          $("#cvm-model-reference").html("<b>Reference: </b><button class=\"btn btn-sm cvm-small-btn\" data-toggle=\"modal\" data-target=\"#modalreference\"><span class=\"glyphicon glyphicon-expand\"></span></button>");
+          } else {
+              $("#cvm-model-reference").html(astr);
+        }
+
         } else {
           $("#cvm-model-reference").html("");
     }

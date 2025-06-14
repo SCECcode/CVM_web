@@ -755,6 +755,24 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 </div> <!--Modal: modalreference-->
 
 
+<div class="modal" id="modalselected" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalselectedDialog" role="document">
+
+    <!--Content-->
+    <div class="modal-content" id="modalselectedContent" style="font-size:20px">
+      <!--Body-->
+      <div class="modal-body" id="modalselectedBody">
+        <p id="modalselectedbody"></p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn close" data-dismiss="modal">&times;</button>
+      </div>
+
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalselected-->
+
+
 <!--Modal: Model (modalwaiton)-->
 <div class="modal" id="modalwaiton" tabindex="-1" style="z-index:8999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" style="width:45%" id="modalwaitonDialog" role="document">

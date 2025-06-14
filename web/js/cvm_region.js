@@ -302,7 +302,7 @@ var CVM_tb={
                       {'lon':-116.051578,'lat':33.356203} ],
      'color':'#FF3C00'},
 {'id':25,
-     'name':'UW Lin Thurber',
+     'name':'UW Statewide',
      'abb name':'uwlinca',
      'path name':'uwlinca',
      'model filename':'uwlinca.tar.gz',
