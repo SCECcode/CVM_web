@@ -50,7 +50,7 @@ var lineDrawer;
 var polygon_options = {
     color:'red',
     fillOpacity:0.01,
-    opacity:0.8,
+    opacity:1.0,
     weight:1.8,
     shapeOptions: {
               clickable: false
