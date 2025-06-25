@@ -173,9 +173,11 @@ jQuery(document).ready(function() {
  	let json=JSON.parse(blob);
         let myfile=json['file'];
         // switch from ../reslut/pdffile to /cvm-explorer/result/pdffile 
+//window.console.log("  myfile is  -->", myfile);
         MODAL_REPLOT_SRC=myfile.replace("..","/research/cvm-explorer");
         MODAL_REPLOT_TYPE=type;
         MODAL_REPLOT_PAR=false; // start as false initially
+//window.console.log("  new myfile is  -->", MODAL_REPLOT_SRC);
 
     // Set the modal content dynamically
         var modal = $(this);
