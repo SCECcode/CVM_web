@@ -1,0 +1,16 @@
+
+from Edric,
+
+
+------
+
+sudo systemctl restart httpd
+ 
+If the processes were hung and not giving up the HTTP and HTTPS ports.
+ 
+sudo killall httpd
+ 
+to kill all the processes then started apache:
+ 
+sudo systemctl start httpd
+

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 ## using the json CVM_tb from cvm_region.js and create googl map kml
+## pip install simplekml
 
 import simplekml
 import pdb
@@ -255,7 +256,7 @@ CVM_tb={
                        {'lon':-123.2775,'lat':41.4586},
                        {'lon':-126.3216,'lat':39.6755},
                        {'lon':-121.9309,'lat':35.0364} ],
-     'color':'#FFFFFF'},
+     'color':'#B2B2B2'},
 {'id':22,
      'name':'San Jacinto Fault Zone',
      'abb name':'sjfz',
@@ -266,7 +267,7 @@ CVM_tb={
                       {'lon':-118.17,'lat':32.38},
                       {'lon':-118.17,'lat':34.54},
                       {'lon':-115.38,'lat':34.54} ],
-     'color':'#FFF400'},
+     'color':'#B2B2B2'},
 {'id':23,
      'name':'SSIP Coachella Valley',
      'abb name':'cvlsu',
