@@ -549,13 +549,23 @@ def _hex_2_kml(HEX) :
 
 ## gen kml commands
 def _gen_polygon(pname,albacore_coords,color) :
-  aplot = kml.newpolygon(name=pname)
+#  aplot = kml.newpolygon(name=pname)
+  aplot = kml.newpolygon()
   kmlcolor=_hex_2_kml(color)
-  print(pname," ",color, " ",kmlcolor)
   aplot.outerboundaryis= albacore_coords
   aplot.style.polystyle.color='000000'
   aplot.style.linestyle.width=2
   aplot.style.linestyle.color=kmlcolor
+  aplot.description=pname
+
+def _gen_linestring(pname,albacore_coords,color) :
+  aplot = kml.newlinestring()
+  kmlcolor=_hex_2_kml(color)
+  aplot.coords= albacore_coords
+  aplot.style.polystyle.color='000000'
+  aplot.style.linestyle.width=2
+  aplot.style.linestyle.color=kmlcolor
+  aplot.description=pname
 
 ## extract info
 model_cnt=len(CVM_tb['models'])
@@ -576,6 +586,6 @@ for model in CVM_tb['models'] :
   coords_list.append(clist)
 
 for i in range(0,model_cnt) :
-   _gen_polygon(abb_list[i],coords_list[i],color_list[i])
+   _gen_linestring(abb_list[i],coords_list[i],color_list[i])
 
 kml.save("ucvm.kml")

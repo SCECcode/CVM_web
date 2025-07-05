@@ -73,6 +73,22 @@ function makeModelSelection() {
    option.value= "disabled";
    sel.add(option);
 
+   if(isModelInstalled("cvmh") && isModelInstalled("cs248")) {
+   option = document.createElement("option");
+   option.text = "CS 248,CVM-H v15.1.1";
+   option.label = "CS 248,CVM-H v15.1.1";
+   option.value= "cs248,cvmh";
+   sel.add(option);
+   }
+
+   if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmsi")) {
+   option = document.createElement("option");
+   option.text = "CVM-H LA Basin,CVM-S4.26M01";
+   option.label = "CVM-H LA Basin,CVM-S4.26M01";
+   option.value= "cvmhlabn,cvmsi";
+   sel.add(option);
+   }
+
    if(isModelInstalled("cvms5") && isModelInstalled("cca")) {
    option = document.createElement("option");
    option.text = "CCA,CVM-S4.26,elygtl:ely";
@@ -121,7 +137,7 @@ function makeModelSelection() {
       isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn"),
       isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")) {
         option = document.createElement("option");
-        option.text = "CVM-H All Basins, CVMH-S4.26.M01";
+        option.text = "CVM-H All Basins, CVM-S4.26.M01";
         option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn,cvmsi";
         sel.add(option);
    }
