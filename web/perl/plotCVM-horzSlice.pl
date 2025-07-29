@@ -432,7 +432,7 @@ $midX $maxY Bounding Box Corners: ($begLon, $begLat) ($endLon, $endLat)
 END";
 
 #plot the basemap axes. Use this to plot a map scale -Lx0.35i/0.35i+jBL+w200k+u+f
-system "gmt psbasemap -R -JM -Bx$xAxis -By$yAxis -BWeSn+t\"Model: $model | Depth: $depth (km) | numPoints=$numPts\" $mapScale -O >> $plotFile";
+system "gmt psbasemap -R -JM -Bx$xAxis -By$yAxis -BWeSn+t\"Model: $model | Depth: $depth (km) | Query Points=$numPts\" $mapScale -O >> $plotFile";
 
 
 #---------------------------------------------------------------------------------------------------------------------------#

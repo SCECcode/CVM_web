@@ -206,6 +206,22 @@ table th {
     border-radius: 0.25rem;
 }
 
+.my-custom-select {
+    padding: 0.375remm .75rem;
+    display: block;
+    width: 100%;
+    height: calc(2.15rem);
+    color: #67727b;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+}
+
 
 .my-popup {pointer-events: none;}
 

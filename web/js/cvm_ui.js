@@ -142,8 +142,17 @@ function refreshModelDescription(modelstr) {
     }
 
 // show description 
-    if(jcnt > 1) {
+    if(jcnt+icnt > 1) {
       description=t_description;
+      if(t_description.length > 200) {
+        let idx= t_description.indexOf(".");
+        b_description = idx !== -1 ? t_description.substring(0, idx) : t_description;
+        if(b_description.length > 200) {
+          b_description = " A Tiled CVM that combines ";
+        }
+        } else {
+          b_description=null;
+      }
     }
 
     if(description.length > 350 || b_description != null) {
@@ -314,8 +323,23 @@ window.console.log("XX calling updatePlotOptions.. with ",blob);
     let maxv=round2Four(range['max']);
 
     let type=json['type']; // 'profile'
+    let plotparam = json['plotParam'];
 	
-//for color scale: cross/horizonal
+
+// for color scale: cross/horizonal, vs=1, vp=2, density=3
+    switch (plotparam) {
+      case 1:
+      case 2:	 
+        document.getElementById("setPlotRange").innerHTML="Set Plot Range (km/s)";
+	break;
+      case 3:
+        document.getElementById("setPlotRange").innerHTML="Set Plot Range (g/cm^3)";
+        break;
+      case 4:
+        document.getElementById("setPlotRange").innerHTML="Set Plot Range";
+        break;
+    }
+
     document.getElementById("minPlotScaleTxt").value=minv;
     document.getElementById("maxPlotScaleTxt").value=maxv;
     document.getElementById("plotoption-plotrange-option").style.display='block';

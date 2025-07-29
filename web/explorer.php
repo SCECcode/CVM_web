@@ -135,7 +135,7 @@ TODO: need a new id
 
 <div class="container container-fluid">
 
-<div id="cvmMain" class="main">
+<div id="cvmMain" class="main" style="border:solid 1 red;">
 
 <!-- hidden btn to do profile comparison -->
     <div>
@@ -674,7 +674,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
          </div> <!-- map-container -->
     </div> <!-- mapDataBig -->
 
-    <div id="result-container" class="row" style="display:;">
+    <div id="result-container" class="row">
            <div class="col-12 flex-row" align="end">
                <button class="btn cvm-top-small-btn" title="download all the material property in the table" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
                <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalparameters"><span class="glyphicon glyphicon-info-sign"></span></button></td>
@@ -697,7 +697,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 		   <li data-id='p'>Click here to plot the comparison plot <br>after select 1 or more vertical profiles <br>from the result table</li>
                 </ul>
             </div>
-            <div class="col-12  mt-0 mb-4" id="result-table" style="display:">
+            <div class="col-12  mt-0 mb-1" id="result-table" style="display:">
                <div id="metadataPlotTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
                     <table id="metadataPlotTable">
                         <tr id="placeholder-row">
@@ -708,8 +708,11 @@ allows easy access to a range of seismic velocity models using the UCVM package.
             </div>
             <div id="phpResponseTxt"></div>
      </div> <!-- result-container -->
-
   </div> <!-- cvmMain -->
+  <div class="col-12 mb-2">
+    <p> <b>Disclaimer:</b> SCEC and the CEM development teams do not make any representations or warranties as to the accuracy, completeness, reliability, currency, or quality of any data provided herein
+    </p>
+  </div>
 </div> <!-- container -->
 
 <div id="expand-view-key-container" style="display:none;">
@@ -829,7 +832,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                             for="plotoption-point">
                      <input class='form-check-inline mr-2'
                             type="checkbox"
-                            id="plotoption-point"/>Source Data Points
+                            id="plotoption-point"/>Query Points
                      </label>
 		     <button class="btn cvm-top-small-btn" data-toggle="modal" data-target="#modalinfo" data-info='Plots the source data points, which is useful to better understand the resolution of the plotted data. Note that all points are interpolated'><span class="glyphicon glyphicon-info-sign"></span></button>
                 </div>
@@ -903,7 +906,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                  </div>
 
                  <div id="plotoption-plotrange-option" class="mt-3" style="display:">
-		     <label title='The plot defaults to cover the entire range of the data; however sometimes it is useful to force a color range to compare two plots with different data ranges'
+		     <label id="setPlotRange" title='The plot defaults to cover the entire range of the data; however sometimes it is useful to force a color range to compare two plots with different data ranges'
                         style="margin:0px 0px 0px 5px">Set Plot Range
 		     </label>
 

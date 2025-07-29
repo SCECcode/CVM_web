@@ -504,12 +504,12 @@ system "gmt psscale -R -JX -C$cptFile -B$cAxis+l\"$zTitle\" -Dx0/-0.85i+w${width
 
 #plot the axes last
 if($plotMap==0){
-	#system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile";
-	system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile";
+	#system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | Query Points=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile";
+	system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model | Query Points=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile";
 }
 else {
-	#system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile";
-	system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile";
+	#system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | Query Points=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile";
+	system "gmt psbasemap -R -JX -Bx$xAxis+l\"Distance (km)\" -By$yAxis+l\"Depth (km)\" -BWeSn+t\"Model: $model | Query Points=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile";
 }
 
 

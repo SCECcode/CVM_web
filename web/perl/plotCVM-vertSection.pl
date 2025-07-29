@@ -457,8 +457,8 @@ END";
 system "gmt psscale -R -JX -C$cptFile -B$cAxis+l\"$zTitle\" -Dx0/-0.85i+w${width}i/0.25i+jBL+h -O -K >> $plotFile";
 
 #plot the axes last
-if($plotMap==0){system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile"}
-else           {system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | numPoints=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile"}
+if($plotMap==0){system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | Query Points=$numPts\" -O --MAP_TITLE_OFFSET=0.32i >> $plotFile"}
+else           {system "gmt psbasemap -R -JX -Bxa+l\"Distance (km)\" -Bya+l\"Depth (m)\" -BWeSn+t\"Model: $model | Vertical Exaggeration: ${vertEx}x | Query Points=$numPts\" -O -K --MAP_TITLE_OFFSET=0.32i >> $plotFile"}
 
 
 #-----------------------------------------------------------------------------------------------------------------------------#
