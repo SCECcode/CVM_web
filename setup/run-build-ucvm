@@ -19,7 +19,7 @@ cd $UCVM_SRC_PATH/largefiles
 
 export PYTHONUNBUFFERED=TRUE
 cd $UCVM_SRC_PATH
-./ucvm_setup.py -a -d -p $UCVM_INSTALL_PATH &> ucvm_setup_install.log 
+./ucvm_setup.py -a -f -d -p $UCVM_INSTALL_PATH &> ucvm_setup_install.log 
 
 cd $UCVM_SRC_PATH; make runcheck
 
