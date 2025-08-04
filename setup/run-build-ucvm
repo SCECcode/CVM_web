@@ -21,7 +21,9 @@ export PYTHONUNBUFFERED=TRUE
 cd $UCVM_SRC_PATH
 ./ucvm_setup.py -a -f -d -p $UCVM_INSTALL_PATH &> ucvm_setup_install.log 
 
-cd $UCVM_SRC_PATH; make runcheck
+#can not run this while in docker compose's build because largedata dir is not mounted yet
+#echo "running runcheck .."
+#cd $UCVM_SRC_PATH; source conf/ucvm_env.sh; make runcheck
 
 ## make sure everything in installed model is globally readable
 chmod -R og+r $UCVM_INSTALL_PATH/model
