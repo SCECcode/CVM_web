@@ -166,7 +166,7 @@ function makeModelSelection() {
      sel.add(option);
    }
 
-// nc1d is with 1d
+// sf1d is with 1d
    if(isModelInstalled("sfcvm") && isModelInstalled("cca") && isModelInstalled("1d")) {
      option = document.createElement("option");
      option.text = "SFCVM,CCA,SF1D";

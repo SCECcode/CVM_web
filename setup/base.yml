@@ -524,5 +524,5 @@ dependencies:
       - basemap-data-hires==1.3.2
       - pyproj==3.6.1
       - pyshp==2.3.1
-      - ucvm-plotting==0.0.5
+      - ucvm-plotting==0.0.6
 prefix: /usr/local/share/anaconda3
