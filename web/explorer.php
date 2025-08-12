@@ -674,7 +674,10 @@ allows easy access to a range of seismic velocity models using the UCVM package.
          </div> <!-- map-container -->
     </div> <!-- mapDataBig -->
 
-    <div id="result-container" class="row">
+    <div id="result-container" class="row mt-2">
+	   <div class="col-12 pr-0">
+              <p style="margin-bottom:0"><b>Disclaimer:</b> SCEC and the CEM development teams do not make any representations or warranties as to the accuracy, completeness, reliability, currency, or quality of any data provided herein </p>
+           </div>
            <div class="col-12 flex-row" align="end">
                <button class="btn cvm-top-small-btn" title="download all the material property in the table" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
                <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalparameters"><span class="glyphicon glyphicon-info-sign"></span></button></td>
@@ -688,7 +691,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                     </table>
                 </div>
 	    </div> 
-
+<!--- plotly plot  for comparison plot
             <div class="col-12 flex-row" align="end">
                 <button class="btn cvm-top-small-btn dropdown-toggle" data-toggle="dropdown"></button>
                 <ul id='processMetaPlotResultTableList' class="dropdown-menu list-inline" role="menu">
@@ -697,7 +700,8 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 		   <li data-id='p'>Click here to plot the comparison plot <br>after select 1 or more vertical profiles <br>from the result table</li>
                 </ul>
             </div>
-            <div class="col-12  mt-0 mb-1" id="result-table" style="display:">
+--->
+            <div class="col-12  mt-0 mb-3" id="result-table" style="display:">
                <div id="metadataPlotTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
                     <table id="metadataPlotTable">
                         <tr id="placeholder-row">
@@ -709,10 +713,6 @@ allows easy access to a range of seismic velocity models using the UCVM package.
             <div id="phpResponseTxt"></div>
      </div> <!-- result-container -->
   </div> <!-- cvmMain -->
-  <div class="col-12 mb-2">
-    <p> <b>Disclaimer:</b> SCEC and the CEM development teams do not make any representations or warranties as to the accuracy, completeness, reliability, currency, or quality of any data provided herein
-    </p>
-  </div>
 </div> <!-- container -->
 
 <div id="expand-view-key-container" style="display:none;">
@@ -786,10 +786,11 @@ allows easy access to a range of seismic velocity models using the UCVM package.
       <div class="modal-body" id="modalwaitonBody">
         <div class="row col-md-12 ml-auto" style="overflow:hidden; font-size:10pt">
            <div class="col-12">
-           <p id="modalwaitonLabel" style="text-align:center;font-size:25px">Extracting Model Data</p>
+	   <p id="modalwaitonLabel" style="text-align:center;font-size:25px">Using UCVM to Interpolate and Extract Model Data
+</p>
            </div>
            <div class="row mt-2" style="border:0px solid blue">
-	     <p id="modalwaitonLabel2" style="text-align:center;font-size:14px; margin-left:3px; margin-right:6px; border:0px solid red">Please wait as this process is complex and may take a few minutes. Many CVMs contain a large amount of data and the data may be interpolated before extracting</p>
+	     <p id="modalwaitonLabel2" style="text-align:center;font-size:14px; margin-left:3px; margin-right:6px; border:0px solid red">Please wait as this process is complex and may take a few minutes in some cases. CVMs have a wide range of resolutions, but the extracted data will always be interpolated so that approximately 10,000 data points are returned. The extracted data is therefore not equivalent to the source data and may not be appropriate for all uses</p>
            </div>
         </div>
       </div>

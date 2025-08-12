@@ -81,6 +81,8 @@ if($datatype != 'vs30') {
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query,$result,$uid);
 #print($result);
+#print($query);
+#print($rc);
 
 $vp_metafile="../result/".$uid."_vp_meta.json";
 $vp_binfile="../result/".$uid."_vp_data.bin";
@@ -90,7 +92,7 @@ $density_metafile="../result/".$uid."_density_meta.json";
 $density_binfile="../result/".$uid."_density_data.bin";
 $cvsquery = $envstr." ucvm_horizontal_slice2csv_all.py ".$vp_binfile." ".$vp_metafile." ".$vs_binfile." ".$vs_metafile." ".$density_binfile." ".$density_metafile." ".$csvfile;
 $cvsresult = exec(escapeshellcmd($cvsquery), $cvsretval, $cvsstatus);
-#print($cvsquery);
+//print($cvsquery);
 
 #1=Vp; 2=Vs; 3=Density
 $gtype=2;
@@ -103,19 +105,18 @@ $gmtpl="../perl/plotCVM-horzSliceAll.pl";
 $gmtcommand = $envstr." ".$gmtpl." ".$csvfile." ".$gtype." 0 0 0 0 1 0";
 $gmtresult = exec(escapeshellcmd($gmtcommand), $gmtretval, $gmtstatus);
 
-#print($gmtcommand);
-#print("gmtresult:"); print($gmtresult); print("<br>");
-#print("gmtstatus:"); print($gmtstatus); print("<br>");
-#print("gmtretval:"); 
-#print("<pre>");
-#print_r($gmtretval);
-#print("</pre>");
-#print("<br>");
-#
-#
+//print($gmtcommand); print("<br>");
+//print("gmtresult:"); print($gmtresult); print("<br>");
+//print("gmtstatus:"); print($gmtstatus); print("<br>");
+//print("gmtretval:"); 
+//print("<pre>");
+//print_r($gmtretval);
+//print("</pre>");
+//print("<br>");
+ 
 $end_time = microtime(true);
 $elapsed_time = $end_time - $start_time;
-#print("Elapsed time: ".round($elapsed_time, 2)." sec\n");
+//print("Elapsed time: ".round($elapsed_time, 2)." sec\n");
 
 $resultarray = new \stdClass();
 $resultarray->uid= $uid;
@@ -136,7 +137,10 @@ $jj->uid=$uid;
 $gmtresult_n=json_encode($jj);
 $resultarray->gmtresult= $gmtresult_n;
 
-if ( $gmtstatus == 0 && file_exists($pngfile)) {
+//print_r($gmtresult_n);
+
+
+if ( $gmtstatus == 0 && file_exists($pngfile) ) {
     $resultstring = htmlspecialchars(json_encode($resultarray), ENT_QUOTES, 'UTF-8');
     echo "<div data-side=\"horizontalSlice".$uid."\" data-params=\"";
     echo $resultstring;
