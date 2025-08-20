@@ -5,7 +5,7 @@ docker rmi $(docker images -f dangling=true -q ) -f
 docker-compose -f docker-compose-localhost.yml -f development.yml down
 docker system prune -a -f --volumes
 
-docker-compose -f docker-compose-localhost.yml -f development.yml up --build --force -d 
+#docker-compose -f docker-compose-localhost.yml -f development.yml up --build --force -d 
 
 #DOCKER_BUILDKIT=1 BUILDKIT_PROGRESS=plain docker-compose -f docker-compose-localhost.yml -f development.yml up --build --force -d  2>&1  | tee docker-build.log
 

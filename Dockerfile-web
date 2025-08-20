@@ -26,9 +26,5 @@ RUN /app/setup/run-web-setup
 
 RUN source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 
-RUN chmod og+rw /app/web/php && \
-    chmod og+rw /app/web/perl && \
-    chmod og+rw /app/web/result
-
 CMD ["apachectl", "-D", "FOREGROUND"]
 
