@@ -13,10 +13,6 @@ export CVM_IN_DOCKER='#'
 export UCVM_SRC_PATH=$UCVM_TOP_DIR/src
 export UCVM_INSTALL_PATH=$UCVM_TOP_DIR/install
 
-# make sure web/php web/perl web/result is og+rw
-
-chmod og+rw ../web/php ../web/perl ../web/result
-
 if [ -f $UCVM_INSTALL_PATH/conf/ucvm_env.sh ]; then
   source $UCVM_INSTALL_PATH/conf/ucvm_env.sh
 fi
