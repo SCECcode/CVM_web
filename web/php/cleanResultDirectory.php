@@ -6,6 +6,8 @@
 
 <?php
 
+include ("util.php");
+
 $result=array();
 $ResultLoc=("../result/");
 $Files = glob($ResultLoc."*");
@@ -20,9 +22,16 @@ foreach ($Files as $file) {
     $fileAge = time() - filemtime($filePath);
 
     if($fileAge > $maxAge) {
-       unlink($filePath); 
-       $count=$count+1;
-       array_push($result,$file);
+	         
+       if(is_dir($filePath)) {
+	 deleteDirectory($filePath);
+         $count=$count+1;
+         array_push($result,$file);
+       } else {
+         unlink($filePath); 
+         $count=$count+1;
+         array_push($result,$file);
+       }
     }
 }
 
