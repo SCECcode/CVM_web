@@ -679,8 +679,8 @@ allows easy access to a range of seismic velocity models using the UCVM package.
               <p style="margin-bottom:0"><b>Disclaimer:</b> SCEC and the CEM development teams do not make any representations or warranties as to the accuracy, completeness, reliability, currency, or quality of any data provided herein </p>
            </div>
            <div class="col-12 flex-row" align="end">
-               <button class="btn cvm-top-small-btn" title="download all the material property in the table" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
-               <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the table" data-toggle="modal" data-target="#modalparameters"><span class="glyphicon glyphicon-info-sign"></span></button></td>
+               <button class="btn cvm-top-small-btn" title="download all the material property in the table from 0D Point Profile" onclick="downloadMPTable()" ><span class="glyphicon glyphicon-download"></span></button>
+               <button class="btn cvm-top-small-btn" title="material property  parameters displayed in the 0D Point Profile table" data-toggle="modal" data-target="#modalparameters"><span class="glyphicon glyphicon-info-sign"></span></button></td>
             </div>
             <div class="col-12 mb-0" id="mp-table">
                 <div id="materialPropertyTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
@@ -700,7 +700,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 		   <li data-id='p'>Click here to plot the comparison plot <br>after select 1 or more vertical profiles <br>from the result table</li>
                 </ul>
             </div>
---->
+-- plotly --->
             <div class="col-12  mt-0 mb-3" id="result-table" style="display:">
                <div id="metadataPlotTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
                     <table id="metadataPlotTable">
@@ -1204,7 +1204,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 lon1 lat1 z1             lon1,lat1,z1
 lon2 lat2 z2      or     lon2,lat2,z2
 </pre>
-<h5> Z value should match the Z mode selection from the main explorer, maximum display points is 200</h5>
+<h5> Z value should match the Z mode selection from the main explorer, maximum is 10000 points</h5>
           </div>
         </div>
       </div>
@@ -1277,5 +1277,23 @@ a label that is being used as datafile prefix separated by a comma or a space </
     </div> <!--Content-->
    </div>
 </div> <!--Modal: Name-->
+
+<div class="modal" id="modalnotify" tabindex="-1" style="z-index:9999" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-small" id="modalnotifyDialog" role="document">
+    <!--Content-->
+    <div class="modal-content" id="modalnotifyContent">
+      <!--Body-->
+      <div class="modal-body" id="modalnotifyBody">
+        <div class="row col-md-12 ml-auto" style="overflow:hidden;">
+          <div class="col-12" style="font-size:14pt">
+            <p id="notify-container">blah blah</p>
+          </div>
+        </div>
+      </div>
+    </div> <!--Content-->
+  </div>
+</div> <!--Modal: modalnotify-->
+
+</div> <!-- container -->
 </body>
 </html>

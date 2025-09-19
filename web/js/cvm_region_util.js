@@ -97,16 +97,21 @@ function makeModelSelection() {
    sel.add(option);
    }
 
-/***
-   if(isModelInstalled("1d")) {
-     option = document.createElement("option");
-     option.text = "1D";
-     option.label = "1D";
-     option.value= "1d"; 
-     sel.add(option);
+   if(isModelInstalled("cvms5")) {
+   option = document.createElement("option");
+   option.text = "CVM-S4.26,elygtl:taper";
+   option.label = "CVM-S4.26,elygtl:taper";
+   option.value= "cvms5,elygtl:taper";
+   sel.add(option);
    }
 
-***/
+   if(isModelInstalled("cvmsi")) {
+   option = document.createElement("option");
+   option.text = "CVM-S4.26M01,elygtl:taper";
+   option.label = "CVM-S4.26M01,elygtl:taper";
+   option.value= "cvmsi,elygtl:taper";
+   sel.add(option);
+   }
 
    if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn"),
       isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn"),
@@ -135,6 +140,29 @@ function makeModelSelection() {
    option.value= all_model_list.toString();
    sel.add(option);
    }
+
+   if(isModelInstalled("1d")) {
+     option = document.createElement("option");
+     option.text = "1D";
+     option.label = "1D";
+     option.value= "1d";
+     sel.add(option);
+   }
+   if(isModelInstalled("1d")) {
+     option = document.createElement("option");
+     option.text = "SF1D";
+     option.label = "SF1D";
+     option.value= "sf1d";
+     sel.add(option);
+   }
+   if(isModelInstalled("1d")) {
+     option = document.createElement("option");
+     option.text = "BBP1D";
+     option.label = "BBP1D";
+     option.value= "bbp1d";
+     sel.add(option);
+   }
+
 
 }
 

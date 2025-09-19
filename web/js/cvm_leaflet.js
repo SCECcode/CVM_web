@@ -357,6 +357,7 @@ function addPointsLayerGroup(latlngs) {
   if(cnt < 1)
     return null;
   var group = L.layerGroup();
+window.console.log("XXX COUNT...", cnt);
   var i;
   for(i=0;i<cnt;i++) {
      var item=latlngs[i];

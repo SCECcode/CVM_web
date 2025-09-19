@@ -4,8 +4,8 @@
 ***/
 
 // if there are too many file points, do not generate the mp layer
-// limit it to 200 maximum
-var MAX_FILEPOINTS=500;
+// limit it to 200 maximum ??
+var MAX_FILEPOINTS=10000;
 var MODAL_REPLOT_SRC="";
 var MODAL_REPLOT_TYPE="";
 var MODAL_REPLOT_PAR=false; // start from a-fresh
@@ -142,6 +142,7 @@ function _getMaterialPropertyByLatlonChunk(uid,datastr, dataarray, current_chunk
             if(current_chunk==0) { // first one, must have uid
               if( dataarray.length < MAX_FILEPOINTS) {
                 set_point_UID(uid);    
+window.console.log("XXX first chunk.. ",dataarray.length);
                 add_bounding_file_points(uid,dataarray);
               }
             }
@@ -152,6 +153,7 @@ function _getMaterialPropertyByLatlonChunk(uid,datastr, dataarray, current_chunk
               var zstr=getZModeNameWithType(zmodestr);
               var mstr=getModelNameWithType(modelstr);
               var note="Material Property with "+mstr + " search by "+zstr;
+window.console.log("XXX Last chunk.. ",current_chunk);
               insertMetaPlotResultTable(note,uid, {"materialproperty":mpname});
               document.getElementById('spinIconForListProperty').style.display = "none";
               if( dataarray.length < MAX_FILEPOINTS) {
