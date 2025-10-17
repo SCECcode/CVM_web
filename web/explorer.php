@@ -99,10 +99,8 @@ $header = getHeader("Explorer");
     <!-- plotly profile -->
     <script type="text/javascript" src="js/cvm_profile_util.js"></script>
 
-<!-- Global site tag (gtag.js) - Google Analytics o
-TODO: need a new id
+<!-- Global site tag (gtag.js) - Google Analytics --> 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-495056-12"></script>
--->
     <script type="text/javascript">
         $ = jQuery;
         var tableLoadCompleted = false;
@@ -692,6 +690,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                 </div>
 	    </div> 
 <!--- plotly plot  for comparison plot
+-->
             <div class="col-12 flex-row" align="end">
                 <button class="btn cvm-top-small-btn dropdown-toggle" data-toggle="dropdown"></button>
                 <ul id='processMetaPlotResultTableList' class="dropdown-menu list-inline" role="menu">
@@ -700,7 +699,7 @@ allows easy access to a range of seismic velocity models using the UCVM package.
 		   <li data-id='p'>Click here to plot the comparison plot <br>after select 1 or more vertical profiles <br>from the result table</li>
                 </ul>
             </div>
--- plotly --->
+<!--- plotly --->
             <div class="col-12  mt-0 mb-3" id="result-table" style="display:">
                <div id="metadataPlotTable-container" style="overflow:auto;max-height:20vh;margin:0px 0px 0px 0px;">
                     <table id="metadataPlotTable">
