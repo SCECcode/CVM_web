@@ -12,10 +12,25 @@ git clone https://github.com/SCECcode/ucvm.git src
 
 
 cd $UCVM_SRC_PATH/largefiles
-./get_largefiles.py -m wfcvm,cca,sfcvm,cvms,cvmsi,cvms5,cvmh,ivlsu,cvlsu,albacore,sjfz,cvmhlabn,cvmhsgbn,cvmhvbn,cvmhibbn,cvmhrbn,cvmhsbbn,cvmhsbcbn,cvmhsmbn,cvmhstbn,canvas,uwsfbcvm,uwlinca,cs248
-#./get_largefiles.py -m cvmh,cs248
+./get_largefiles.py -m wfcvm,cca,sfcvm,cvms,cvmsi,cvms5,cvmh,ivlsu,cvlsu,albacore,sjfz,cvmhlabn,cvmhsgbn,cvmhvbn,cvmhibbn,cvmhrbn,cvmhsbbn,cvmhsbcbn,cvmhsmbn,cvmhstbn,canvas,uwsfbcvm,uwlinca,cs248,mscal
 ./check_largefiles_md5.py
 ./stage_largefiles.py
+
+### for system that has really old gcc
+#This is for linux/moho
+#if command -v gcc10-gcc &> /dev/null; then
+#  echo "gcc10-gcc exists"
+#  export CC=gcc10-gcc
+#  export CXX=gcc10-g++
+#else
+#  if command -v gcc-10 &> /dev/null; then
+#    echo "gcc-10 exists"
+#    export CC=gcc-10
+#    export CXX=g++-10
+#  else
+#    echo "use default gcc"
+#  fi
+#fi
 
 export PYTHONUNBUFFERED=TRUE
 cd $UCVM_SRC_PATH

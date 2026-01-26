@@ -20,7 +20,7 @@
 #     plotPts          : 1=Plots the source data points, so the user can see the resolution of the heatmap. 0=Don't plot points.
 #     plotFaults       : 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults
 #     plotCities       : 1=Plots selected CA/NV cities. 0=Don't plot cities
-#     cMap             : Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.
+#     cMap             : Select the colormap to use. 1=seis, 2=rainbow, 3=plasma, 4=seis_i, 5=plasma_i.
 #     forceRange       : Use a user-specified parameter range instead of the default which uses the range of the data.
 #                        Note: zMin and zMax only need to be specified if forceRange=1.
 #
@@ -61,7 +61,7 @@ else {
 	print "    plotPts: 1=Plots the source data points. 0=Don't plot points.\n";
 	print "    plotFaults: 1=Plots CFM 7.0 fault traces (blind faults dashed). 0=Don't plot faults\n";
 	print "    plotCities: 1=Plots selected CA/NV cities. 0=Don't plot cities\n";
-	print "    cMap: Select the colormap to use. 1=seis, 2=rainbow, 3=plasma.\n";
+	print "    cMap: Select the colormap to use. 1=seis, 2=rainbow, 3=plasma, 4=seis_i, 5=plasma_i.\n";
 	print "    forceRange: 1=Use a user-specified parameter range, 0=Use the range of the data.\n";
 	print "    Note: zMin and zMax only need to be specified if forceRange=1\n\n";
 	exit;
@@ -350,6 +350,14 @@ elsif($cMap==2){
 elsif($cMap==3){
 	$cpt="plasma";
 	system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile";
+}
+elsif($cMap==4){
+	$cpt="seis";
+	system "gmt makecpt -C$cpt $T -D -I --COLOR_NAN=white > $cptFile";
+}
+elsif($cMap==5){
+	$cpt="plasma";
+	system "gmt makecpt -C$cpt $T -D --COLOR_NAN=white > $cptFile";
 }
 else {print "\n\n  Error: cMap must be 1-3. You entered $cMap\n\n"}
 

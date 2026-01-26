@@ -902,6 +902,8 @@ allows easy access to a range of seismic velocity models using the UCVM package.
                         <option value="1">Seis</option>
                         <option value="2">Rainbow</option>
                         <option value="3">Plasma</option>
+                        <option value="4">Seis_i</option>
+                        <option value="5">Plasma_i</option>
                       </select>
                  </div>
 

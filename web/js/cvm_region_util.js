@@ -89,11 +89,27 @@ function makeModelSelection() {
    sel.add(option);
    }
 
+   if(isModelInstalled("cvmh")) {
+   option = document.createElement("option");
+   option.text = "CVM-H v15.1.1,elygtl:ely";
+   option.label = "CVM-H v15.1.1,elygtl:ely";
+   option.value= "cvmh,elygtl:ely";
+   sel.add(option);
+   }
+
    if(isModelInstalled("cvms5") && isModelInstalled("cca")) {
    option = document.createElement("option");
    option.text = "CCA,CVM-S4.26,elygtl:ely";
    option.label = "CCA,CVM-S4.26,elygtl:ely";
    option.value= "cca,cvms5,elygtl:ely";
+   sel.add(option);
+   }
+
+   if(isModelInstalled("cvms")) {
+   option = document.createElement("option");
+   option.text = "CVM-S4,elygtl:taper";
+   option.label = "CVM-S4,elygtl:taper";
+   option.value= "cvms,elygtl:taper";
    sel.add(option);
    }
 
@@ -589,4 +605,3 @@ function makeParametersTable() {
    tbhtml=tbhtml+"</tbody></table></div>";
    return tbhtml;
 }
-
