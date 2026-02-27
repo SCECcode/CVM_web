@@ -80,8 +80,8 @@ if($datatype != 'vs30') {
 
 $result = exec(escapeshellcmd($query), $retval, $status);
 $rc=checkResult($query,$result,$uid);
-#print($result);
 #print($query);
+#print($result);
 #print($rc);
 
 $vp_metafile="../result/".$uid."_vp_meta.json";
