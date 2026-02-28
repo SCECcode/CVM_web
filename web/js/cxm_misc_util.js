@@ -57,6 +57,7 @@ function round2Four(val) {
   return ret;
 }
 
+
 //"latlngs":[{"lat":a,"lon":b},{"lat":c,"lon":d}]
 function sameLatlngs(first, second) {
    let lat1_f=first[0].lat; let lon1_f=first[0].lon;
@@ -79,6 +80,14 @@ function notify(msg) {
   setTimeout(function() {$('#modalnotify').modal('hide')}, 2000);
 }
 
+// meter to degree in lat
+function metersToDegreesLat(meters) {
+    return meters / 111320;
+}
+// meter to degree lon
+function metersToDegreesLon(meters, latitude) {
+    return meters / (111320 * Math.cos(latitude * Math.PI / 180));
+}
 
 function calculateDistanceMeter(start_latlng, end_latlng) {
     let start_lat = start_latlng.lat;

@@ -241,18 +241,16 @@ function plotCrossSection() {
         return;
     }
 
-    // precalculate the spacing
+    // precalculate the spacing in meter, divide by 100 (since layer = 100 already)
     var flat1=parseFloat(firstlatstr);
     var flon1=parseFloat(firstlonstr);
     var flat2=parseFloat(secondlatstr);
     var flon2=parseFloat(secondlonstr);
-
-    var dlon=flon2-flon1;
-    var dlat=flat2-flat1;
-
-    var z=Math.sqrt((dlon*dlon) + (dlat*dlat));
-
-    var dz4 = (round2Four(z) * 1000.0);
+    //var dlon=flon2-flon1;
+    //var dlat=flat2-flat1;
+    //var z=Math.sqrt((dlon*dlon) + (dlat*dlat));
+    //var dz4 = (round2Four(z) * 1000.0);
+    var dz4= round2Four(calculateDistanceMeter({lat:flat1,lng:flon1}, {lat:flat2,lng:flon2})/100.0);
 
     var uid=document.getElementById("lineUIDTxt").value;
 
@@ -553,16 +551,25 @@ function plotHorizontalSlice() {
     var flon2=parseFloat(secondlonstr);
     [flat1,flon1,flat2,flon2]=fixAreaOrdering(flat1,flon1,flat2,flon2)
 
-    // precalculate the spacing
-    var dlon=flon2-flon1;
-    var dlat=flat2-flat1;
-    var ds= Math.sqrt((dlon * dlat) / 10000.0);
-    var ds4=round2Four(ds);
+    // precalculate the spacing, horizontal slice's spacing needs to be in degree
+    //var dlon=flon2-flon1;
+    //var dlat=flat2-flat1;
+    //var ds= Math.sqrt((dlon * dlat) / 10000.0);
+    //var ods4=round2Four(ds);
+    //var nds4= round2Four(calculateDistanceMeter({lat:flat1,lng:flon1}, {lat:flat2,lng:flon2})/20000000.0);
+
+    var dx=calculateDistanceMeter({lat:flat1,lng:flon1}, {lat:flat1,lng:flon2});
+    var dy=calculateDistanceMeter({lat:flat1,lng:flon1}, {lat:flat2,lng:flon1});
+    var dz= Math.sqrt(dx * dy)/100;
+    var sx=metersToDegreesLat(dz);
+    var sy=metersToDegreesLon(dz, flat1);
+    var ds4=round2Four((sx+sy)/2);
+
     if(ds4 == 0) {
       ds4=0.001; 
     }
 
-    var dchk= (dlat/ds4) * (dlon/ds4);
+// spacing for horizontal slice is in degree --> usually around 0.01
 
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
