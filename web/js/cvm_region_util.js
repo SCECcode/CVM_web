@@ -133,6 +133,17 @@ function makeModelSelection() {
       isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn"),
       isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn"),
       isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn"),
+      isModelInstalled("cvmhstbn")) {
+        option = document.createElement("option");
+        option.text = "CVM-H All Basins";
+        option.value= "cvmhlabn,cvmhsgbn,cvmhvbn,cvmhrbn,cvmhibbn,cvmhsmbn,cvmhsbbn,cvmhsbcbn,cvmhstbn";
+        sel.add(option);
+   }
+   
+   if(isModelInstalled("cvmhlabn") && isModelInstalled("cvmhsgbn"),
+      isModelInstalled("cvmhvbn") && isModelInstalled("cvmhrbn"),
+      isModelInstalled("cvmhibbn") && isModelInstalled("cvmhsmbn"),
+      isModelInstalled("cvmhsbbn") && isModelInstalled("cvmhsbcbn"),
       isModelInstalled("cvmhstbn") && isModelInstalled("cvmsi")) {
         option = document.createElement("option");
         option.text = "CVM-H All Basins, CVM-S4.26.M01";
