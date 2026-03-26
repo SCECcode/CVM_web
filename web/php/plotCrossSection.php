@@ -48,7 +48,8 @@ if ($floors != 'none') {
 }
 
 // keep vertical to be 100 layers
-$vval= intval(((float)$z-(float)$zstart)/100); 
+// $vval= intval(((float)$z-(float)$zstart)/100); 
+$vval= (((float)$z-(float)$zstart)/100); 
 
 $lstr=$lstr ." -e ".$z;
 // always get a full set
