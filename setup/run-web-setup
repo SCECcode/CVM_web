@@ -4,22 +4,25 @@ source setup/setup_cvm_web.sh
 
 rm -rf  Anaconda3-2024.02-1-Linux-x86_64.sh 
 
-yum install -y tar mkdir sudo which git wget gawk zip
-yum install -y gcc10.x86_64 gcc10-gfortran.x86_64 binutils.x86_64 gcc10-c++.x86_64 gcc10-binutils.x86_64
-yum install -y autotools autoconf aclocal automake libtool.x86_64 file
-yum install -y perl-CPAN.noarch 
-yum install -y pkgconfig.x86_64
-yum install -y zlib.x86_64
-yum install -y zlib-devel.x86_64
+dnf install -y yum perl libxml2-devel zip unzip
+dnf install -y tar wget gawk zip coreutils 
+dnf install -y autoconf automake libtool file pkgconfig
+dnf install -y zlib zlib-devel
+dnf install -y gcc gcc-c++ gcc-gfortran binutils
 
-yum install -y gcc.x86_64 gcc-c++.x86_64
-yum install -y gcc-gfortran.x86_64 gcc-binutils.x86_64
-
-## install for perl (openssl needs these)
-yum install -y perl-Module-Load.noarch perl-ExtUtils-MakeMaker.noarch perl-ExtUtils-Install.noarch perl-ExtUtils-Manifest.noarch perl.x86_64 perl-Module-Load.noarch perl-Module-Load-Conditional.noarch perl-Params-Check.noarch perl-version.x86_64 
+dnf install -y \
+  perl \
+  perl-CPAN \
+  perl-Module-Load \
+  perl-Module-Load-Conditional \
+  perl-ExtUtils-MakeMaker \
+  perl-ExtUtils-Install \
+  perl-ExtUtils-Manifest \
+  perl-Params-Check \
+  perl-version
 
 ## for tiledb, Time/Piece.pm, IPC::Cmd.pm
-yum install -y perl-IPC-Cmd.noarch perl-Time-Piece.x86_64
+dnf install -y perl-IPC-Cmd perl-Time-Piece
 
 #yum install -y ghostscript
 #yum install -y GraphicsMagick1.3 ffmpeg gdal
@@ -47,6 +50,7 @@ conda config --add channels conda-forge
 
 # use environment
 # preprocess to get a new yml file to be used during runtime 
+#   conda create --name cvm_explorer_conda_env python=3.11 -y
 #   conda create --name cvm_explorer_conda_env
 #   conda activate cvm_explorer_conda_env
 #   conda install conda-forge::gmt -y

@@ -26,7 +26,6 @@ function makeInstallModelList(str) {
     var item=mlist[i];
     CVM_installed.push(item);
   }
-
   setup_modeltype();
 }
 
@@ -73,23 +72,13 @@ function makeModelSelection() {
    option.value= "disabled";
    sel.add(option);
 
-/*
-   if(isModelInstalled("muscal") && isModelInstalled("1d")) {
+   if(isModelInstalled("muscalnc") && isModelInstalled("1d")) {
    option = document.createElement("option");
-   option.text = "MUSCAL,SF1D";
-   option.label = "MUSCAL,SF1D";
-   option.value= "muscal,sf1d";
+   option.text = "MUSCALNC,1D";
+   option.label = "MUSCALNC,1D";
+   option.value= "muscalnc,1d";
    sel.add(option);
    }
-
-   if(isModelInstalled("muscal") && isModelInstalled("1d")) {
-   option = document.createElement("option");
-   option.text = "MUSCAL,MUSCAL1D";
-   option.label = "MUSCAL,MUSCAL1D";
-   option.value= "muscal,muscal1d";
-   sel.add(option);
-   }
-*/
 
    if(isModelInstalled("cvmh") && isModelInstalled("cs248")) {
    option = document.createElement("option");
@@ -144,6 +133,14 @@ function makeModelSelection() {
    option.text = "CVM-S4.26M01,elygtl:taper";
    option.label = "CVM-S4.26M01,elygtl:taper";
    option.value= "cvmsi,elygtl:taper";
+   sel.add(option);
+   }
+
+   if(isModelInstalled("cvmsi")) {
+   option = document.createElement("option");
+   option.text = "CVM-S4.26M01,elygtl:ely";
+   option.label = "CVM-S4.26M01,elygtl:ely";
+   option.value= "cvmsi,elygtl:ely";
    sel.add(option);
    }
 

@@ -8,13 +8,18 @@
 
 $result=array();
 
-$InstallLoc= getenv('UCVM_INSTALL_PATH');
-$Files = glob($InstallLoc."/model/*");
+$InstallLoc= getenv('UCVM_INSTALL_PATH') ?: '';
 
-foreach ($Files as $file) {
-    $bname=basename($file);
-    array_push($result,$bname);
-}
+$modelDir = $installLoc . '/model/*';
+$result = is_dir(dirname($modelDir)) 
+    ? array_map('basename', glob($modelDir) ?: []) 
+    : [];
+
+#$Files = glob($InstallLoc."/model/*");
+#foreach ($Files as $file) {
+#    $bname=basename($file);
+#    array_push($result,$bname);
+#}
 
 $itemlist = new \stdClass();
 $itemlist->models=$result;
