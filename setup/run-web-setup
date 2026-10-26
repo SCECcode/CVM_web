@@ -51,12 +51,12 @@ conda config --add channels conda-forge
 # use environment
 # preprocess to get a new yml file to be used during runtime 
 #   conda create --name cvm_explorer_conda_env python=3.11 -y
-#   conda create --name cvm_explorer_conda_env
 #   conda activate cvm_explorer_conda_env
 #   conda install conda-forge::gmt -y
 #   conda install setuptools -y
 #   conda install anaconda::pybind11 -y
 #   conda install conda-forge::h5py -y
+#   conda install php -y
 #   conda env export > cvm_explorer_conda_env.yml
 
 conda env create -f ./setup/cvm_explorer_conda_env.yml

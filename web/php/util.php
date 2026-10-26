@@ -1,4 +1,5 @@
 <?php
+
 function deleteDirectory($dir) {
     $items = scandir($dir);
     foreach ($items as $item) {
