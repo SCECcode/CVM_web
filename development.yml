@@ -11,7 +11,7 @@ services:
   web:
    volumes:
     - ./:/app
-    - ./custom-php.ini:/etc/php.d/custom-php.ini
+    - ./scec-php.ini:/etc/php.d/scec-php.ini
     - ./cvm-result:/usr/local/share/ucvm/cvm-result
     - /var/www/html/CVM_DATASET_DIRECTORY:/usr/local/share/cvm-largedata-dir:ro
    restart: unless-stopped
